@@ -48,7 +48,7 @@
   <div class="footer-inner">
     <div class="footer-left">
       <p class="footer-brand">Unified Solutions Inc.</p>
-      <p>Maplewood, MN<br>ICF PCC · ACTC Candidate<br>© 2025 Unified Solutions Inc.</p>
+      <p>Maplewood, MN<br>ICF PCC · ACTC Candidate<br>© 2026 Unified Solutions Inc.</p>
     </div>
     <div class="footer-center">
       <nav>
@@ -70,7 +70,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p style="color:rgba(255,255,255,0.25);">Unified Solutions Inc. · Maplewood, MN · unifiedsolutionsinc.com</p>
+    <p style="color:rgba(255,255,255,0.25);">Unified Solutions Inc. · Plymouth, MN · unifiedsolutionsinc.com</p>
   </div>
 </footer>`;
 
