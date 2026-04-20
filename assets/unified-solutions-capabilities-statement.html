@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unified Solutions Inc. — Federal Capabilities Statement | SDVOSB | CAGE 8CX74</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ── PRINT ─────────────────────────────────────────────── */
+@page{size:letter;margin:.48in .55in .48in .55in}
+@media print{
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .no-print{display:none!important}
+  .page{box-shadow:none;margin:0;max-width:none;border-radius:0}
+}
+/* ── BASE ─────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#D8D8D8;font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:8pt;color:#1E1E1E;line-height:1.42}
+/* ── PRINT BAR ───────────────────────────────────────── */
+.print-bar{background:#1B3A5A;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;max-width:8.5in;margin:0 auto 14px}
+.print-bar p{color:rgba(255,255,255,.65);font-size:11px;font-family:'DM Sans',sans-serif}
+.print-btn{background:#7A9C28;color:white;border:none;padding:7px 18px;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+/* ── PAGE ─────────────────────────────────────────────── */
+.page{background:white;width:8.5in;min-height:11in;margin:0 auto;padding:.48in .55in .48in .55in;display:flex;flex-direction:column;gap:8px;position:relative}
+/* ── HEADER ───────────────────────────────────────────── */
+.header{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding-bottom:8px;border-bottom:3pt solid #1B3A5A;margin-bottom:0}
+.logo-circle{width:44px;height:44px;border-radius:50%;background:#7A9C28;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-circle svg{width:24px;height:24px}
+.co-block .co-name{font-family:'Playfair Display',Georgia,serif;font-size:14pt;font-weight:700;color:#1B3A5A;line-height:1.1}
+.co-block .co-sub{font-size:6.5pt;color:#888;letter-spacing:.06em;text-transform:uppercase;font-family:'Space Mono',monospace;margin-top:2px}
+.co-block .co-tagline{font-size:7.5pt;font-style:italic;color:#555;margin-top:3px}
+.header-right{text-align:right}
+.sdvosb-pill{display:inline-block;background:#1B3A5A;color:white;font-size:6pt;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.06em;padding:2.5px 8px;border-radius:2px;text-transform:uppercase;margin-bottom:3px}
+.sdvosb-pill.olive{background:#7A9C28}
+.contact-r{font-size:6.5pt;color:#555;font-family:'Space Mono',monospace;line-height:1.75;text-align:right}
+/* ── REG BAR ──────────────────────────────────────────── */
+.reg-bar{background:#12273D;border-radius:3px;padding:5px 10px;display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.reg-cell{text-align:center;border-right:1px solid rgba(255,255,255,.1);padding:0 6px}.reg-cell:last-child{border-right:none}
+.reg-label{font-size:5.5pt;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;font-family:'Space Mono',monospace;display:block;margin-bottom:1px}
+.reg-val{font-family:'Space Mono',monospace;font-size:7.5pt;font-weight:700;color:#A8C846}
+/* ── SECTION HEADS ────────────────────────────────────── */
+.sh{font-size:6pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7A9C28;font-family:'Space Mono',monospace;padding-bottom:4px;border-bottom:1pt solid #E0DDD6;margin-bottom:6px}
+/* ── MAIN BODY GRID ───────────────────────────────────── */
+.main-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:12px}
+/* ── NAICS/PSC BLOCK ──────────────────────────────────── */
+.code-table{width:100%;border-collapse:collapse;font-size:6.8pt}
+.code-table th{background:#1B3A5A;color:rgba(255,255,255,.75);font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;text-align:left;font-family:'Space Mono',monospace}
+.code-table td{padding:4px 7px;border-bottom:.5pt solid #E8E4DE;vertical-align:top;line-height:1.45}
+.code-table tr:nth-child(even) td{background:#FAFAF7}
+.code-num{font-family:'Space Mono',monospace;font-weight:700;color:#1B3A5A}
+.code-primary{color:#7A9C28;font-weight:700}
+/* ── COMPETENCIES ─────────────────────────────────────── */
+.comp-item{display:grid;grid-template-columns:15px 1fr;gap:5px;margin-bottom:5px;align-items:start}
+.comp-num{width:15px;height:15px;border-radius:50%;background:#1B3A5A;color:#A8C846;font-family:'Space Mono',monospace;font-size:5.5pt;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.comp-title{font-size:7.2pt;font-weight:700;color:#1B3A5A}
+.comp-kw{font-size:5.8pt;color:#999;font-family:'Space Mono',monospace;margin-top:1px}
+.comp-desc{font-size:6.5pt;color:#444;line-height:1.5}
+/* ── PERF TABLE ───────────────────────────────────────── */
+.perf-table{width:100%;border-collapse:collapse;font-size:6.5pt}
+.perf-table th{background:#1B3A5A;color:rgba(255,255,255,.75);font-size:5.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 6px;text-align:left;font-family:'Space Mono',monospace}
+.perf-table td{padding:4px 6px;border-bottom:.5pt solid #E8E4DE;vertical-align:top;color:#333;line-height:1.4}
+.perf-table tr:nth-child(even) td{background:#FAFAF7}
+.pbadge{display:inline-block;font-size:5.2pt;padding:1px 4px;border-radius:2px;font-weight:700;font-family:'Space Mono',monospace}
+.pbadge-c{background:rgba(122,156,40,.12);color:#4A6B10}
+.pbadge-h{background:rgba(76,175,154,.12);color:#1A6B5A}
+.pbadge-e{background:rgba(27,58,90,.08);color:#1B3A5A}
+/* ── DIFFERENTIATORS ──────────────────────────────────── */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.diff-item{background:#F4F2EC;border-radius:3px;padding:5px 7px;border-left:2pt solid #7A9C28}
+.diff-title{font-size:6pt;font-weight:700;color:#1B3A5A;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.diff-desc{font-size:6pt;color:#555;line-height:1.52}
+/* ── THRESHOLD ROW ────────────────────────────────────── */
+.thresh-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.thresh-block{background:#1B3A5A;border-radius:3px;padding:6px 8px;color:white}
+.thresh-amount{font-family:'Space Mono',monospace;font-size:10pt;font-weight:700;color:#A8C846;display:block}
+.thresh-title{font-size:6.5pt;font-weight:700;color:white;margin:.15rem 0 .2rem}
+.thresh-desc{font-size:5.8pt;color:rgba(255,255,255,.58);line-height:1.52}
+/* ── TARGET AGENCIES ──────────────────────────────────── */
+.agency-pills{display:flex;flex-wrap:wrap;gap:4px}
+.agency-pill{display:inline-block;background:#1B3A5A;color:white;font-size:6pt;font-family:'Space Mono',monospace;font-weight:700;padding:2px 7px;border-radius:2px}
+.agency-pill.sdv{background:#7A9C28}
+/* ── FOOTER ───────────────────────────────────────────── */
+.caps-footer{border-top:2pt solid #1B3A5A;padding-top:6px;display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.caps-footer-l{font-size:6pt;color:#888;font-family:'Space Mono',monospace;line-height:1.75}
+.caps-footer-r{text-align:right;font-size:6pt;color:#888;font-family:'Space Mono',monospace;line-height:1.75}
+</style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar no-print">
+  <p>Capabilities Statement — Unified Solutions Inc. | CAGE 8CX74 | SDVOSB | To save as PDF: File → Print → Save as PDF (set margins to None)</p>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-circle">
+      <svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11" stroke="white" stroke-width="1.5" fill="none"/><path d="M13 6 L13 20 M6 13 L20 13" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="white" opacity="0.9"/></svg>
+    </div>
+    <div class="co-block">
+      <div class="co-name">Unified Solutions Inc.</div>
+      <div class="co-sub">ICF PCC Executive Coaching &nbsp;|&nbsp; Leadership Development Training &nbsp;|&nbsp; Management Consulting</div>
+      <div class="co-tagline">"Before coaching was my profession, it was what the role demanded." — Julian C. Johnson, President &amp; CEO</div>
+    </div>
+    <div class="header-right">
+      <div><span class="sdvosb-pill">SDVOSB — SBA Certified</span></div>
+      <div><span class="sdvosb-pill olive">Minority-Owned</span></div>
+      <div class="contact-r">
+        Julian C. Johnson, President &amp; CEO<br>
+        contact@unifiedsolutionsinc.com &nbsp;|&nbsp; 952.594.8611<br>
+        13800 61st Ave N., Plymouth, MN 55446<br>
+        unifiedsolutionsinc.com/government
+      </div>
+    </div>
+  </div>
+
+  <!-- REG BAR -->
+  <div class="reg-bar">
+    <div class="reg-cell"><span class="reg-label">CAGE Code</span><span class="reg-val">8CX74</span></div>
+    <div class="reg-cell"><span class="reg-label">UEI (SAM)</span><span class="reg-val">LU14TAVD5JS7</span></div>
+    <div class="reg-cell"><span class="reg-label">DUNS</span><span class="reg-val">08-127-2068</span></div>
+    <div class="reg-cell"><span class="reg-label">Primary NAICS</span><span class="reg-val">611430</span></div>
+    <div class="reg-cell"><span class="reg-label">SAM.gov</span><span class="reg-val" style="color:#A8C846;">ACTIVE</span></div>
+    <div class="reg-cell"><span class="reg-label">Business Type</span><span class="reg-val" style="font-size:6.5pt;">SB / SDVOSB</span></div>
+  </div>
+
+  <!-- CAPABILITY STATEMENT INTRO -->
+  <div style="background:#F4F2EC;border-radius:3px;padding:7px 10px;border-left:2.5pt solid #7A9C28;">
+    <p style="font-size:7pt;color:#333;line-height:1.65;">Unified Solutions Inc. delivers ICF PCC-credentialed executive leadership coaching, group coaching cohorts, team coaching, and professional management development training to federal agencies. We prioritize a unique blend of operational military experience, Fortune 500 consulting depth, and ICF-accredited coaching rigor to support leaders navigating high-stakes organizational leadership and personal transition. Service-Disabled Veteran Owned Small Business (SDVOSB) headquartered in Plymouth, Minnesota. Available for Micropurchase, Simplified Acquisition, and SDVOSB set-aside engagements.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT COL -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- CORE COMPETENCIES -->
+      <div>
+        <div class="sh">Core Competencies</div>
+        <div class="comp-item">
+          <div class="comp-num">1</div>
+          <div>
+            <div class="comp-title">ICF PCC 1:1 Executive Leadership Coaching</div>
+            <div class="comp-kw">executive coaching · SES coaching · GS-14/15 coaching · senior leader coaching</div>
+            <div class="comp-desc">Holistic, laser-focused 1:1 coaching for senior civilian and military leadership. Bi-weekly 60-minute sessions, defined outcomes, assessment-informed. 3-month minimum; invoiceable to agency. ICF PCC-credentialed. Micropurchase eligible for kick-off engagements.</div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-num">2</div>
+          <div>
+            <div class="comp-title">Group Leadership Coaching Cohorts</div>
+            <div class="comp-kw">group coaching · leadership cohort · peer coaching program · leadership facilitation</div>
+            <div class="comp-desc">Structured 4–12 person peer cohort programs for federal leaders. Positive psychology-grounded methodology proven across Cornell, Yale SOM, MIT Sloan, Wharton, and Columbia via ExecOnline. 6–12 week programs. Virtual, in-person, or hybrid delivery.</div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-num">3</div>
+          <div>
+            <div class="comp-title">Team Coaching — ICF ACTC-Level Competency</div>
+            <div class="comp-kw">team coaching · leadership team effectiveness · organizational alignment · team development</div>
+            <div class="comp-desc">ICF ACTC-level team coaching addressing trust, alignment, accountability, and communication. Team diagnostic + facilitated full-team sessions + individual touchpoints. 60–90 day standard engagement. Scoped to team size and complexity.</div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-num">4</div>
+          <div>
+            <div class="comp-title">Leadership Workshop &amp; Off-Site Facilitation</div>
+            <div class="comp-kw">leadership workshop · executive off-site · leadership training · facilitation</div>
+            <div class="comp-desc">Half-day and full-day evidence-based leadership workshops for agency-wide development events, senior leadership off-sites, and mission-specific programs. SOW-based with pre-event design, facilitation, and post-event summary deliverables.</div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-num">5</div>
+          <div>
+            <div class="comp-title">Assessment-Informed Leadership Development</div>
+            <div class="comp-kw">leadership assessment · 360 feedback · personality assessment · development planning</div>
+            <div class="comp-desc">12+ validated instruments: Big Five, HEXACO, TRACOM, SCARF, 360-degree multi-rater. HPTI-certified (Thomas International) and AgileBrain-certified. Assessment + debrief + development plan as discrete contract line item. Micropurchase eligible standalone.</div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-num">6</div>
+          <div>
+            <div class="comp-title">Organizational Leadership Development Program Design</div>
+            <div class="comp-kw">leadership development program · workforce development · leadership pipeline · org development</div>
+            <div class="comp-desc">End-to-end design and delivery of multi-cohort agency leadership programs. Needs assessment, curriculum design, facilitation, evaluation. Strategic partnership with Fluence for scale. Proof of delivery: Navy Federal Credit Union VP Cohort, Oct 2025.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAST PERFORMANCE -->
+      <div>
+        <div class="sh">Past Performance — FAR 15.305(a)(2)(iii) Analog Experience</div>
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th style="width:28%;">Client</th>
+              <th style="width:30%;">Engagement</th>
+              <th style="width:32%;">Scope</th>
+              <th style="width:10%;">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ExecOnline</strong><br><span style="font-size:5.5pt;color:#888;">Cornell, Yale SOM, MIT Sloan, Wharton, Columbia, Berkeley Haas, Michigan Ross, UVA Darden</span></td>
+              <td>1:1 Exec Coaching &amp; Group Cohort Facilitation</td>
+              <td>460+ hrs. Senior execs. 9 univ. partners. Virtual. Multi-cohort.</td>
+              <td><span class="pbadge pbadge-e">Edu</span></td>
+            </tr>
+            <tr>
+              <td><strong>Navy Federal Credit Union</strong><br><span style="font-size:5.5pt;color:#888;">Oct 2025</span></td>
+              <td>VP Leadership Cohort Workshop</td>
+              <td>Senior cohort design &amp; facilitation. VP-level. Custom program.</td>
+              <td><span class="pbadge pbadge-c">Fin</span></td>
+            </tr>
+            <tr>
+              <td><strong>United Health Group</strong></td>
+              <td>Business Transformation Programs</td>
+              <td>Leadership coaching during major organizational transformation.</td>
+              <td><span class="pbadge pbadge-h">Health</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cigna Health</strong></td>
+              <td>Leading Transformation Group</td>
+              <td>Group leadership coaching during transformation. Executive-level.</td>
+              <td><span class="pbadge pbadge-h">Health</span></td>
+            </tr>
+            <tr>
+              <td><strong>Pitney Bowes</strong></td>
+              <td>Leadership &amp; Executive Presence</td>
+              <td>Executive presence and senior leadership coaching.</td>
+              <td><span class="pbadge pbadge-c">Tech</span></td>
+            </tr>
+            <tr>
+              <td><strong>Takeda Pharmaceuticals</strong></td>
+              <td>Management Essential Program</td>
+              <td>Management development program facilitation. Multi-session.</td>
+              <td><span class="pbadge pbadge-c">Pharma</span></td>
+            </tr>
+            <tr>
+              <td><strong>Torch Platform</strong></td>
+              <td>1:1 Coaching — 360 &amp; Big Five</td>
+              <td>780+ hrs. 222+ clients. All sectors. Assessment-informed.</td>
+              <td><span class="pbadge pbadge-c">Multi</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size:5.8pt;color:#999;margin-top:3px;font-style:italic;">References available upon request. Government agency references from strategic partners available for programs requiring past federal experience.</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COL -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- NAICS CODES -->
+      <div>
+        <div class="sh">NAICS Classifications</div>
+        <table class="code-table">
+          <thead><tr><th>Code</th><th>Title</th><th>Size Std.</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="code-num code-primary">611430 ★</span></td>
+              <td><strong>Professional &amp; Management Development Training</strong> — Exec coaching, cohort facilitation, team coaching, leadership workshops</td>
+              <td style="white-space:nowrap;font-family:'Space Mono',monospace;font-size:6pt;">$15M</td>
+            </tr>
+            <tr>
+              <td><span class="code-num">541611</span></td>
+              <td>Administrative Management &amp; General Management Consulting — Strategic leadership consulting, org effectiveness, change management</td>
+              <td style="white-space:nowrap;font-family:'Space Mono',monospace;font-size:6pt;">$24.5M</td>
+            </tr>
+            <tr>
+              <td><span class="code-num">541612</span></td>
+              <td>Human Resources Consulting Services — Assessment-informed leadership development, 360 debrief, talent strategy</td>
+              <td style="white-space:nowrap;font-family:'Space Mono',monospace;font-size:6pt;">$29M</td>
+            </tr>
+            <tr>
+              <td><span class="code-num">541990</span></td>
+              <td>All Other Professional, Scientific &amp; Technical Services — Holistic coaching &amp; professional services catch-all</td>
+              <td style="white-space:nowrap;font-family:'Space Mono',monospace;font-size:6pt;">$19M</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PSC CODES -->
+      <div>
+        <div class="sh">PSC Codes — What Agencies Are Buying</div>
+        <table class="code-table">
+          <thead><tr><th>PSC</th><th>Description &amp; Application</th></tr></thead>
+          <tbody>
+            <tr><td><span class="code-num" style="color:#7A9C28;">U008</span></td><td>Education/Training: Training/Curriculum Development — Group cohorts, workshop design, facilitated learning programs</td></tr>
+            <tr><td><span class="code-num" style="color:#7A9C28;">U099</span></td><td>Education/Training: Other — 1:1 coaching, team coaching, coaching-as-a-service engagements (high-use CO search code)</td></tr>
+            <tr><td><span class="code-num">R408</span></td><td>Support-Professional: Program Management — Sustained leadership programs requiring delivery coordination</td></tr>
+            <tr><td><span class="code-num">R499</span></td><td>Support-Professional: Other — Coaching and advisory services outside specific R-codes; used by HHS, DHS</td></tr>
+            <tr><td><span class="code-num">R799</span></td><td>Support-Management: Other — Team coaching and organizational effectiveness engagements</td></tr>
+            <tr><td><span class="code-num">R699</span></td><td>Support-Administrative: Other — Coaching tied to organizational change and leadership transitions</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PROCUREMENT THRESHOLDS -->
+      <div>
+        <div class="sh">Procurement Thresholds (FAC 2025-06, Effective Oct 1 2025)</div>
+        <div class="thresh-row">
+          <div class="thresh-block">
+            <span class="thresh-amount">$15,000</span>
+            <div class="thresh-title">Micropurchase — FAR 13.2</div>
+            <div class="thresh-desc">Single sessions, assessment debriefs, kick-off engagements. GPC accepted. No competition required. Fastest engagement pathway.</div>
+          </div>
+          <div class="thresh-block">
+            <span class="thresh-amount">$350,000</span>
+            <div class="thresh-title">Simplified Acquisition — FAR 13</div>
+            <div class="thresh-desc">Multi-month coaching, cohort programs, team coaching, workshop series. Streamlined procedures. SDVOSB set-aside available.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TARGET AGENCIES -->
+      <div>
+        <div class="sh">Primary Target Agencies (by NAICS 611430 spend &amp; mission alignment)</div>
+        <div style="margin-bottom:4px;">
+          <div style="font-size:6pt;color:#888;margin-bottom:4px;font-family:'Space Mono',monospace;">High SDVOSB preference:</div>
+          <div class="agency-pills">
+            <span class="agency-pill sdv">VA — Vets First</span>
+            <span class="agency-pill sdv">DoD</span>
+            <span class="agency-pill sdv">DHS</span>
+          </div>
+        </div>
+        <div style="margin-top:5px;">
+          <div style="font-size:6pt;color:#888;margin-bottom:4px;font-family:'Space Mono',monospace;">Highest NAICS 611430 volume:</div>
+          <div class="agency-pills">
+            <span class="agency-pill">OPM</span>
+            <span class="agency-pill">HHS / NIH</span>
+            <span class="agency-pill">DOJ</span>
+            <span class="agency-pill">Treasury</span>
+            <span class="agency-pill">USDA</span>
+            <span class="agency-pill">DOE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIFFERENTIATORS -->
+      <div>
+        <div class="sh">Differentiators</div>
+        <div class="diff-grid">
+          <div class="diff-item">
+            <div class="diff-title">SDVOSB — SBA Certified</div>
+            <div class="diff-desc">U.S. Army veteran (31R, Kosovo &amp; Iraq, 1999–2003). NDAA FY2024 expanded SDVOSB target to 5% of all federal prime contracts — $31B+ annually. VA Vets First sole-source available.</div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">ICF PCC — Verified Credential</div>
+            <div class="diff-desc">Independently verified by ICF. Requires 500+ coaching hours, 125+ hours coach education, and competency assessment. ACTC candidate for team coaching. Not self-declared.</div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">1,200+ Hours — All Sectors</div>
+            <div class="diff-desc">222+ clients. Healthcare, finance, technology, pharma, education, nonprofit. Demonstrated capacity at scale across complex organizations.</div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Fortune 500 Operational Depth</div>
+            <div class="diff-desc">12+ years at Express Scripts, Optum, Securian, LifeTouch/Shutterfly. M&amp;A, Agile, ERP, business transformation. Operational credibility that directly informs the coaching.</div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Assessment Certified</div>
+            <div class="diff-desc">Thomas HPTI-certified and AgileBrain-certified. 12+ validated instruments. Data-driven development plans as discrete contract line items.</div>
+          </div>
+          <div class="diff-item">
+            <div class="diff-title">Fluence Scale Partnership</div>
+            <div class="diff-desc">Strategic partnership with Fluence provides vetted bench of coaches for programs requiring scale. Prime contractor capacity with qualified subcontractors.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="caps-footer">
+    <div class="caps-footer-l">
+      Unified Solutions Inc. &nbsp;|&nbsp; Julian C. Johnson, President &amp; CEO &nbsp;|&nbsp; SDVOSB / Minority-Owned SB<br>
+      13800 61st Ave N., Plymouth, MN 55446 &nbsp;|&nbsp; contact@unifiedsolutionsinc.com &nbsp;|&nbsp; 952.594.8611 &nbsp;|&nbsp; unifiedsolutionsinc.com
+    </div>
+    <div class="caps-footer-r">
+      CAGE: 8CX74 &nbsp;|&nbsp; UEI: LU14TAVD5JS7 &nbsp;|&nbsp; DUNS: 08-127-2068<br>
+      Primary NAICS: 611430 &nbsp;|&nbsp; SAM.gov: ACTIVE &nbsp;|&nbsp; Updated: April 2026
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
