@@ -51,6 +51,13 @@
   </url>
 
 
+  <!-- Government Contracting -->
+  <url>
+    <loc>https://unifiedsolutionsinc.com/government</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>quarterly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <!-- Articles -->
   <url>
     <loc>https://unifiedsolutionsinc.com/articles/laser-focused-coaching</loc>
