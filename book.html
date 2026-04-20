@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Call | Julian Johnson | Unified Solutions Inc.</title>
+<meta name="description" content="Book a 30-minute discovery call with Julian Johnson, ICF PCC executive coach. No obligation. A real conversation about your leadership challenges.">
+<link rel="stylesheet" href="style.css">
+<style>
+.book-page { min-height: 100vh; background: var(--offwhite); }
+.book-inner { max-width: 860px; margin: 0 auto; padding: 5rem 2rem; }
+.book-header { margin-bottom: 3rem; }
+.book-header h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); color: var(--navy); margin-bottom: 0.75rem; }
+.book-header p { font-size: 1.05rem; color: rgba(61,61,61,0.72); max-width: 52ch; line-height: 1.8; }
+.calendly-block { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.07); min-height: 700px; display: flex; align-items: center; justify-content: center; }
+.calendly-placeholder { text-align: center; padding: 4rem 2rem; }
+.calendly-placeholder .icon { width: 56px; height: 56px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+.calendly-placeholder .icon svg { width: 24px; height: 24px; }
+.calendly-placeholder h3 { font-family: var(--serif); font-size: 1.4rem; color: var(--navy); margin-bottom: 0.6rem; }
+.calendly-placeholder p { font-size: 0.9rem; color: rgba(61,61,61,0.6); margin-bottom: 1.5rem; max-width: 36ch; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.contact-below { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.08); }
+.contact-below p { font-size: 0.9rem; color: rgba(61,61,61,0.6); margin-bottom: 0.5rem; }
+.contact-below a { color: var(--olive); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div id="nav-mount"></div>
+
+<div class="book-page" data-screen-label="01 Book a Call">
+  <div class="book-inner">
+    <div class="book-header" data-aos>
+      <h1>Let us talk.</h1>
+      <p>30 minutes. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating. If it is not the right fit, you will hear that directly.</p>
+    </div>
+
+    <!-- Calendly inline embed -->
+    <div class="calendly-block" id="calendly-container">
+      <div class="calendly-placeholder">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <h3>Book a 30-minute discovery call</h3>
+        <p>Loading calendar — if it does not appear, click below to open directly.</p>
+        <a href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" target="_blank" class="btn btn-primary">Open Calendly</a>
+      </div>
+    </div>
+
+    <div class="contact-below">
+      <p>Or reach us directly:</p>
+      <p><a href="mailto:contact@unifiedsolutionsinc.com">contact@unifiedsolutionsinc.com</a> &nbsp;·&nbsp; <a href="tel:9525948611">952.594.8611</a></p>
+    </div>
+  </div>
+</div>
+
+<div id="footer-mount"></div>
+<script src="nav.js"></script>
+<script>
+// Load Calendly widget
+(function() {
+  var link = document.createElement('link');
+  link.href = 'https://assets.calendly.com/assets/external/widget.css';
+  link.rel = 'stylesheet';
+  document.head.appendChild(link);
+
+  var script = document.createElement('script');
+  script.src = 'https://assets.calendly.com/assets/external/widget.js';
+  script.onload = function() {
+    var container = document.getElementById('calendly-container');
+    container.innerHTML = '';
+    container.style.minHeight = '700px';
+    Calendly.initInlineWidget({
+      url: 'https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone',
+      parentElement: container,
+      prefill: {},
+      utm: {}
+    });
+  };
+  script.onerror = function() {
+    // Keep placeholder visible on error
+  };
+  document.body.appendChild(script);
+})();
+</script>
+</body>
+</html>
