@@ -80,15 +80,15 @@ button{cursor:pointer;font-family:var(--sans);border:none}
 .q-domain-label::after{content:'';flex:1;height:1px;background:rgba(122,156,40,.25)}
 .q-num{font-size:.78rem;color:rgba(61,61,61,.45);margin-bottom:.5rem;font-family:var(--mono)}
 .q-text{font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:500;color:var(--navy);line-height:1.35;margin-bottom:2.25rem}
-.scale-wrap{display:flex;flex-direction:column;gap:.6rem}
-.scale-row{display:flex;align-items:stretch;gap:.5rem}
-.scale-btn{flex:1;background:white;border:2px solid rgba(27,58,90,.12);border-radius:8px;padding:.875rem .5rem;display:flex;flex-direction:column;align-items:center;gap:.3rem;transition:all .2s var(--ease);cursor:pointer}
-.scale-btn:hover{border-color:var(--olive);transform:translateY(-2px);box-shadow:0 4px 16px rgba(122,156,40,.12)}
-.scale-btn.selected{background:var(--navy);border-color:var(--navy);color:white}
-.scale-btn.selected .scale-num{color:var(--lime)}
-.scale-num{font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--navy);transition:color .2s}
-.scale-label{font-size:.65rem;color:rgba(61,61,61,.5);text-align:center;line-height:1.3;transition:color .2s}
-.scale-btn.selected .scale-label{color:rgba(255,255,255,.6)}
+.scale-wrap{display:flex;flex-direction:column;gap:.55rem}
+.opt-btn{width:100%;background:white;border:2px solid rgba(27,58,90,.1);border-radius:8px;padding:1rem 1.1rem;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:.875rem;transition:all .18s var(--ease)}
+.opt-btn:hover{border-color:rgba(122,156,40,.4);box-shadow:0 2px 12px rgba(122,156,40,.08)}
+.opt-btn.selected{background:var(--navy);border-color:var(--navy)}
+.opt-radio{width:18px;height:18px;border-radius:50%;border:2px solid rgba(27,58,90,.2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.opt-btn.selected .opt-radio{border-color:var(--olive);background:var(--olive)}
+.opt-radio-dot{width:7px;height:7px;border-radius:50%;background:white}
+.opt-text{font-size:.875rem;line-height:1.65;color:var(--charcoal);transition:color .18s}
+.opt-btn.selected .opt-text{color:rgba(255,255,255,.9)}
 .q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem}
 .q-prev{background:none;border:1px solid rgba(27,58,90,.15);color:rgba(61,61,61,.6);border-radius:6px;padding:.6rem 1.25rem;font-size:.85rem;transition:all .2s}
 .q-prev:hover{border-color:var(--navy);color:var(--navy)}
@@ -202,6 +202,8 @@ button{cursor:pointer;font-family:var(--sans);border:none}
 .footer-right{text-align:right}
 .footer-bottom{max-width:1180px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);text-align:center;font-size:.72rem;color:rgba(255,255,255,.2)}
 @media(max-width:680px){.footer-inner{grid-template-columns:1fr}.footer-right{text-align:left}.scale-row{gap:.3rem}.scores-grid{grid-template-columns:1fr 1fr}}
+
+#screen-setup{display:none!important}
 </style>
 </head>
 <body>
@@ -225,7 +227,7 @@ button{cursor:pointer;font-family:var(--sans);border:none}
   </div>
 </nav>
 
-<!-- ═══════════════ SETUP SCREEN ═══════════════ -->
+<!-- SETUP SCREEN DISABLED — values hardcoded -->
 <div class="screen" id="screen-setup">
   <div class="admin-pin-wrap">
     <div class="setup-card">
@@ -279,7 +281,10 @@ button{cursor:pointer;font-family:var(--sans);border:none}
       <div class="pp-desc" id="primaryDesc"></div>
     </div>
     <div class="scores-grid" id="scoresGrid"></div>
-    <div class="email-capture" id="emailCapture">
+    <!-- Research + Coaching Focus panels -->
+    <div id="domainDetail"></div>
+
+        <div class="email-capture" id="emailCapture">
       <h3>Get a personalized note from Julian</h3>
       <p>Share your email and Julian will send you a note based on your specific results, including what the research says about your primary pressure point and what it would actually take to address it. No automation. A real message from a real coach.</p>
       <div class="email-row">
@@ -355,7 +360,7 @@ const ADMIN_PIN    = 'USC2026';
 const STORAGE_KEY  = 'usc_assessment_config';
 const LEADS_KEY    = 'usc_leads_backup';
 
-let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev', apiKey: '' };
+let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev', apiKey: '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' };
 
 function loadConfig() {
   try { CFG = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
@@ -385,39 +390,170 @@ const DOMAINS = [
 ];
 
 const QUESTIONS = [
-  // Identity & Presence
-  { domain:0, text:'When you walk into a high-stakes meeting, how confident are you that you are projecting the leadership presence the room expects of you?' },
-  { domain:0, text:'How clearly defined is your leadership identity, the consistent sense of who you are as a leader that holds across different contexts and pressures?' },
-  { domain:0, text:'How often do you feel you are leading from who you actually are, rather than performing a version of leadership the role seems to require?' },
-  // Decision Quality
-  { domain:1, text:'How satisfied are you with the quality of your decisions when operating under significant time pressure or genuine uncertainty?' },
-  { domain:1, text:'How clear and repeatable is your personal decision-making process for high-stakes, hard-to-reverse choices?' },
-  { domain:1, text:'How often, after making an important decision, do you feel settled and clear rather than second-guessing your own judgment?' },
-  // Relational Intelligence
-  { domain:2, text:'How effectively do you navigate the complex relational dynamics within your senior leadership team right now?' },
-  { domain:2, text:'How skilled are you at influencing critical outcomes through people you do not directly control or manage?' },
-  { domain:2, text:'How well do you maintain strong working relationships through periods of conflict, tension, or organizational upheaval?' },
-  // Team Vitality
-  { domain:3, text:'How would you honestly rate the level of trust, collective accountability, and shared performance on your senior team right now?' },
-  { domain:3, text:'How effectively does your team surface and resolve difficult conversations rather than avoiding, deferring, or going around them?' },
-  { domain:3, text:'How clearly does your team share ownership of outcomes rather than protecting individual domains or agendas?' },
-  // Personal Sustainability
-  { domain:4, text:'How sustainable is your current pace of work, honestly, not aspirationally?' },
-  { domain:4, text:'How well are you managing the personal cost of what this role demands, across energy, relationships, and the things that matter most to you outside of work?' },
-  { domain:4, text:'How often do you feel that the demands of the role are depleting internal resources that you are not adequately replenishing?' },
-  // Strategic Clarity
-  { domain:5, text:'How clear are you right now on the two or three things that genuinely need your personal attention, versus what can and should be delegated?' },
-  { domain:5, text:'How aligned is your current day-to-day focus with where you and your organization need to be in the next 12 to 24 months?' },
-  { domain:5, text:'How much personal clarity do you have on what success looks like for you specifically, and not just for the organization, over the next two years?' },
+  {id:'q1',domain:'identity',number:1,
+   text:'When you are pulled into an unexpected high-stakes situation with no preparation time, how reliably do your actions reflect the leader you work to be?',
+   options:[
+    {score:1,text:'Rarely — pressure tends to surface patterns I am not proud of, and I recognize them after the fact.'},
+    {score:2,text:'Inconsistently — my response depends heavily on the specific stakes and who is in the room.'},
+    {score:3,text:'Moderately — I hold my standard in most situations, but the hardest ones expose gaps I have not yet resolved.'},
+    {score:4,text:'Usually — I have lapses, but I recognize them quickly and course-correct.'},
+    {score:5,text:'Consistently — pressure tends to clarify rather than distort how I lead. I know who I am in those moments.'},
+   ]},
+  {id:'q2',domain:'identity',number:2,
+   text:'When you receive direct, substantive critical feedback about your leadership from someone whose perspective you respect, your honest first internal response is typically:',
+   options:[
+    {score:1,text:'Defensive — I find myself building a counterargument before they have finished speaking.'},
+    {score:2,text:'Anxious — my first concern tends to be about how this affects my standing or credibility.'},
+    {score:3,text:'Mixed — I can hear it, but I am not confident I process it without distortion.'},
+    {score:4,text:'Curious — I genuinely want to understand what is behind it, even when the discomfort is real.'},
+    {score:5,text:'Grounded — I can take it in fully without it destabilizing my sense of direction or identity.'},
+   ]},
+  {id:'q3',domain:'identity',number:3,
+   text:'In the past 90 days, how aware have you been of a meaningful gap between how you were actually leading and how you believe you should lead?',
+   options:[
+    {score:1,text:'Frequently — the gap feels persistent and I have not found a reliable way to close it.'},
+    {score:2,text:'Regularly — I notice it but my attempts to address it have not been consistent enough to matter.'},
+    {score:3,text:'Occasionally — I identify it in specific situations but have not seen it as a broader pattern requiring attention.'},
+    {score:4,text:'Rarely — when it appears, I tend to recognize and self-correct relatively quickly.'},
+    {score:5,text:'Very rarely — my behavior feels genuinely aligned with my values as a leader most of the time.'},
+   ]},
+  {id:'q4',domain:'decision',number:4,
+   text:'When you face a high-consequence decision with genuinely incomplete information, your most reliable approach is:',
+   options:[
+    {score:1,text:'I tend to delay until I feel more certain — even when I know the delay carries its own costs.'},
+    {score:2,text:'I move forward but often revisit and second-guess, which creates instability for the people around me.'},
+    {score:3,text:'I use a mix of intuition and available data, but I am not consistently confident in my own process.'},
+    {score:4,text:'I have a reasonably clear framework for judging when enough information is enough, and I use it.'},
+    {score:5,text:'I can move decisively with incomplete information and hold that decision with appropriate confidence — revising when facts change, not when doubt returns.'},
+   ]},
+  {id:'q5',domain:'decision',number:5,
+   text:'When facing a genuinely complex problem — one where cause and effect relationships are unclear and no expert can give you the right answer — you typically:',
+   options:[
+    {score:1,text:'Apply a familiar framework even when I sense it does not really fit the situation.'},
+    {score:2,text:'Feel uncomfortable with the ambiguity and push for a cleaner problem definition than the situation actually warrants.'},
+    {score:3,text:'Recognize the complexity but struggle to deliberately adapt how I approach it.'},
+    {score:4,text:'Slow down, invite diverse perspectives, and distinguish explicitly between what I know and what I am assuming.'},
+    {score:5,text:'Move into the complexity with genuine curiosity — I iterate and probe rather than seek premature resolution.'},
+   ]},
+  {id:'q6',domain:'decision',number:6,
+   text:'How often do you find yourself mentally revisiting decisions you have already made and implemented?',
+   options:[
+    {score:1,text:'Very often — it is a significant and persistent drain on my mental energy.'},
+    {score:2,text:'Often — it affects my ability to be fully present in what comes after the decision.'},
+    {score:3,text:'Sometimes — it happens but does not usually derail me or affect those around me.'},
+    {score:4,text:'Rarely — I generally trust my process and move forward without extended rumination.'},
+    {score:5,text:'Almost never — once a decision is made and implemented, my energy moves completely to execution.'},
+   ]},
+  {id:'q7',domain:'relational',number:7,
+   text:'When a colleague or direct report consistently resists your direction without a clearly stated reason, your most typical response is:',
+   options:[
+    {score:1,text:'Frustration — I tend to either escalate pressure or gradually disengage from the relationship.'},
+    {score:2,text:'Avoidance — I find ways to work around the resistance rather than addressing it directly.'},
+    {score:3,text:'Concern — I notice it but I am not consistently sure how to approach it productively.'},
+    {score:4,text:'Curiosity — I try to understand the underlying concern before addressing the behavior.'},
+    {score:5,text:'Engagement — I move toward the friction because I know the conversation will clarify something important for both of us.'},
+   ]},
+  {id:'q8',domain:'relational',number:8,
+   text:'In the past 90 days, how many times have you initiated a direct, substantive conversation with a peer specifically about how your working styles or priorities create friction between you?',
+   options:[
+    {score:1,text:'Zero — those conversations feel too risky, uncomfortable, or politically costly.'},
+    {score:2,text:'Once or twice, but only because a circumstance or the other person forced it.'},
+    {score:3,text:'A few — I engage when it clearly becomes necessary, but I do not seek them out.'},
+    {score:4,text:'Regularly — I treat this as a normal part of how I maintain high-quality working relationships.'},
+    {score:5,text:'Proactively and consistently — I see these conversations as a leadership responsibility, not an optional act of courage.'},
+   ]},
+  {id:'q9',domain:'relational',number:9,
+   text:'When you sense interpersonal tension within your leadership team, your most common response is:',
+   options:[
+    {score:1,text:'I hope it resolves on its own and avoid naming it directly.'},
+    {score:2,text:'I address it in private one-on-ones but rarely bring it to the team level where it actually lives.'},
+    {score:3,text:'I address it when it is clearly affecting performance, but I often miss the earlier signals.'},
+    {score:4,text:'I name it when I see it and create structured space for the team to work through it.'},
+    {score:5,text:'I treat surface tension as useful information and actively develop the team's capacity to navigate it together — not just manage it.'},
+   ]},
+  {id:'q10',domain:'team',number:10,
+   text:'If your team were asked anonymously what typically happens when they raise a problem that implicates your decisions or priorities, the most honest answer would be:',
+   options:[
+    {score:1,text:'They would say it is not safe — the personal cost of raising it outweighs the organizational benefit.'},
+    {score:2,text:'They would say it depends heavily on your mood or the magnitude of what they are questioning.'},
+    {score:3,text:'They would say you listen, but that meaningful change rarely follows what they surface.'},
+    {score:4,text:'They would say you engage genuinely and sometimes adjust your direction based on what you hear.'},
+    {score:5,text:'They would say raising hard things is how the team gets better — and that you actively model that.'},
+   ]},
+  {id:'q11',domain:'team',number:11,
+   text:'When your team underperforms relative to expectations on something that genuinely matters, your instinctive first response is:',
+   options:[
+    {score:1,text:'Identify who is responsible and address it directly and immediately with that person.'},
+    {score:2,text:'Increase oversight and accountability mechanisms to prevent recurrence.'},
+    {score:3,text:'Clarify expectations more explicitly — my first assumption is usually a communication gap.'},
+    {score:4,text:'Understand what the team actually experienced and distinguish between execution failure and system failure.'},
+    {score:5,text:'Treat it as a signal about the performance environment and examine what I may have contributed to the conditions.'},
+   ]},
+  {id:'q12',domain:'team',number:12,
+   text:'How clearly does each member of your team currently understand how their specific role connects to the organization's highest priorities?',
+   options:[
+    {score:1,text:'Most of them probably could not articulate it with real confidence if asked today.'},
+    {score:2,text:'They understand their own work but the connection to what matters most is fuzzy for most.'},
+    {score:3,text:'Some have genuine clarity; others have a general sense but not one that is specific enough to guide their decisions.'},
+    {score:4,text:'Most have solid clarity — I have invested in making this connection explicit and visible.'},
+    {score:5,text:'All of them can draw a direct line from their daily work to what matters most — and I can verify this, because I ask.'},
+   ]},
+  {id:'q13',domain:'sustainability',number:13,
+   text:'At the end of a demanding week, how reliably do you have sufficient capacity — mental, emotional, and physical — for the leadership the following week will require?',
+   options:[
+    {score:1,text:'Rarely — I am operating on deficit most of the time and managing it as a permanent condition.'},
+    {score:2,text:'Sometimes — I can recover when the circumstances allow, but I cannot consistently count on it.'},
+    {score:3,text:'Moderately — I manage, but I know I am not operating at full capacity and I notice the effects.'},
+    {score:4,text:'Usually — I have practices that work for me most of the time, even under pressure.'},
+    {score:5,text:'Reliably — I treat my own recovery as a leadership responsibility and protect it with the same discipline I apply to my professional commitments.'},
+   ]},
+  {id:'q14',domain:'sustainability',number:14,
+   text:'Which best describes your current relationship with the practices that sustain your performance capacity — sleep, physical activity, genuine disconnection from work, and meaningful relationships outside of it?',
+   options:[
+    {score:1,text:'They are largely absent — work has crowded them out and I have normalized the absence.'},
+    {score:2,text:'They exist but inconsistently — they are the first things to disappear when pressure increases.'},
+    {score:3,text:'Some are in place. Others I know I need and have not yet made non-negotiable.'},
+    {score:4,text:'Most are reasonably consistent — I protect them even when pressure would justify abandoning them.'},
+    {score:5,text:'They are anchors, not rewards. They are what make sustained high performance possible — I do not negotiate with them.'},
+   ]},
+  {id:'q15',domain:'sustainability',number:15,
+   text:'Over the past three months, how often have you noticed your leadership effectiveness declining specifically because of accumulated fatigue or sustained stress — in your patience, your presence, your judgment, or your emotional regulation?',
+   options:[
+    {score:1,text:'Regularly — it is affecting how I lead and I am not fully in control of it.'},
+    {score:2,text:'Often — especially in the second half of intense periods, I can see it in how I show up.'},
+    {score:3,text:'Sometimes — I notice it but I can usually compensate, at least in the moments that most matter.'},
+    {score:4,text:'Rarely — I have enough recovery built in that it does not typically compound to the point of affecting my leadership.'},
+    {score:5,text:'Very rarely — my practices prevent the accumulation from reaching a level that meaningfully compromises my effectiveness.'},
+   ]},
+  {id:'q16',domain:'clarity',number:16,
+   text:'How often does the daily reality of your leadership feel genuinely aligned with what you believe your most important contribution could be?',
+   options:[
+    {score:1,text:'Rarely — there is a significant gap between where my energy goes and what I believe actually matters most.'},
+    {score:2,text:'Sometimes — alignment comes in moments but is not the steady state of how I lead.'},
+    {score:3,text:'Moderately — there is reasonable overlap, but also meaningful drift that I have not fully resolved.'},
+    {score:4,text:'Usually — I have made active choices that create significant alignment between my priorities and my contribution.'},
+    {score:5,text:'Consistently — my daily work is a direct expression of what I am here to contribute, and I can name exactly what that is.'},
+   ]},
+  {id:'q17',domain:'clarity',number:17,
+   text:'If three of your most senior stakeholders were independently asked what you stand for as a leader and what your primary contribution is, the answers would be:',
+   options:[
+    {score:1,text:'Significantly different — I do not believe I have established a clear, consistent identity in their minds.'},
+    {score:2,text:'Somewhat consistent in broad strokes but divergent on the specifics that actually matter.'},
+    {score:3,text:'Reasonably consistent — they share a general picture but may miss important dimensions of how I see my role.'},
+    {score:4,text:'Largely consistent — I have been deliberate about communicating what I stand for.'},
+    {score:5,text:'Highly consistent — I have worked to ensure the people who matter most see me accurately and clearly, and I have verified this.'},
+   ]},
+  {id:'q18',domain:'clarity',number:18,
+   text:"When your organization's demands and your personal leadership values genuinely conflict, you typically:",
+   options:[
+    {score:1,text:'Default to what the organization demands — I have not fully reckoned with the accumulating personal cost of that pattern.'},
+    {score:2,text:'Comply while carrying increasing friction — I manage the tension but it wears on me in ways I recognize.'},
+    {score:3,text:'Raise the tension internally but rarely succeed in changing either the demand or my response to it.'},
+    {score:4,text:'Navigate it case by case — I can hold the tension productively most of the time without losing myself in it.'},
+    {score:5,text:'Treat the conflict as important information and work to resolve it at a systemic level — changing conditions rather than just managing symptoms.'},
+   ]},
 ];
 
-const SCALE_LABELS = [
-  ['1','Not at all'],
-  ['2','Rarely'],
-  ['3','Sometimes'],
-  ['4','Often'],
-  ['5','Consistently'],
-];
 
 const PP_DESCRIPTIONS = {
   'Identity & Presence':     'The gap between who you are as a leader and how you show up in the moments that matter most. This is the pressure point underneath executive presence, authentic leadership, and the sense that the role is asking you to be someone you are not quite sure you are.',
@@ -431,64 +567,61 @@ const PP_DESCRIPTIONS = {
 // ══════════════════════════════════════════════════════════════════
 // ASSESSMENT STATE
 // ══════════════════════════════════════════════════════════════════
-let answers   = new Array(QUESTIONS.length).fill(null);
+let answers   = {}; // keyed by question id, value is option score
 let currentQ  = 0;
 let results   = null;
 
 function initAssessment() {
-  answers  = new Array(QUESTIONS.length).fill(null);
+  answers  = {};
   currentQ = 0;
   results  = null;
   renderQuestion();
 }
 
 function renderQuestion() {
-  const q    = QUESTIONS[currentQ];
-  const dom  = DOMAINS[q.domain];
-  const pip  = currentQ === 0 ? 0 : Math.floor(currentQ / 3);
+  const q   = QUESTIONS[currentQ];
+  const dom = DOMAINS[q.domain];
+  const pip = Math.floor(currentQ / 3);
 
   // Update domain pips
   for(let i = 0; i < 6; i++) {
     const el = document.getElementById('pip-' + i);
-    el.className = 'domain-pip' +
-      (i < pip ? ' done' : i === pip ? ' active' : '');
+    el.className = 'domain-pip' + (i < pip ? ' done' : i === pip ? ' active' : '');
   }
+
+  const cur = answers[q.id] ?? null;
 
   const wrap = document.getElementById('qWrap');
   wrap.innerHTML = `
     <div class="q-anim">
-      <div class="q-domain-label">${dom.label}</div>
+      <div class="q-domain-label">${dom.name}</div>
       <div class="q-num">Question ${currentQ + 1} of ${QUESTIONS.length}</div>
       <div class="q-text">${q.text}</div>
       <div class="scale-wrap">
-        <div class="scale-row">
-          ${SCALE_LABELS.map(([num, lbl], i) => `
-            <button class="scale-btn ${answers[currentQ] === (i+1) ? 'selected' : ''}"
-                    onclick="selectAnswer(${i+1})" data-val="${i+1}">
-              <span class="scale-num">${num}</span>
-              <span class="scale-label">${lbl}</span>
-            </button>
-          `).join('')}
-        </div>
+        ${q.options.map(opt => `
+          <button class="opt-btn ${cur === opt.score ? 'selected' : ''}"
+                  onclick="selectAnswer(${opt.score})">
+            <div class="opt-radio ${cur === opt.score ? 'checked' : ''}">
+              ${cur === opt.score ? '<div class="opt-radio-dot"></div>' : ''}
+            </div>
+            <span class="opt-text">${opt.text}</span>
+          </button>
+        `).join('')}
       </div>
       <div class="q-nav">
-        <button class="q-prev" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>
-          &larr; Back
-        </button>
+        <button class="q-prev" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>&larr; Back</button>
         <span class="q-progress">${currentQ + 1} / ${QUESTIONS.length}</span>
-        <button class="q-next ${answers[currentQ] !== null ? 'enabled' : ''}" id="nextBtn" onclick="nextQ()">
+        <button class="q-next ${cur !== null ? 'enabled' : ''}" id="nextBtn" onclick="nextQ()">
           ${currentQ === QUESTIONS.length - 1 ? 'See results' : 'Next &rarr;'}
         </button>
       </div>
     </div>`;
 }
 
-function selectAnswer(val) {
-  answers[currentQ] = val;
-  document.querySelectorAll('.scale-btn').forEach((btn, i) => {
-    btn.classList.toggle('selected', i + 1 === val);
-  });
-  document.getElementById('nextBtn').classList.add('enabled');
+function selectAnswer(score) {
+  const q = QUESTIONS[currentQ];
+  answers[q.id] = score;
+  renderQuestion(); // re-render to show selection state
 }
 
 function prevQ() {
@@ -496,7 +629,8 @@ function prevQ() {
 }
 
 function nextQ() {
-  if(answers[currentQ] === null) return;
+  const q = QUESTIONS[currentQ];
+  if(answers[q.id] === undefined || answers[q.id] === null) return;
   if(currentQ < QUESTIONS.length - 1) {
     currentQ++;
     renderQuestion();
@@ -508,16 +642,28 @@ function nextQ() {
 // ══════════════════════════════════════════════════════════════════
 // RESULTS COMPUTATION
 // ══════════════════════════════════════════════════════════════════
+function getScoreLabel(score) {
+  if(score >= 80) return { label:'High functioning',      color:'#2E6B3E' };
+  if(score >= 60) return { label:'Adequate',              color:'#7A9C28' };
+  if(score >= 40) return { label:'Under strain',          color:'#B07820' };
+  if(score >= 20) return { label:'Significant pressure',  color:'#B04A20' };
+  return                  { label:'Critical gap',         color:'#8B1A1A' };
+}
+
 function computeResults() {
-  // Average score per domain (lower = more pressure)
-  const domainScores = DOMAINS.map((d, di) => {
-    const qs = QUESTIONS.map((q, qi) => ({ q, qi })).filter(({q}) => q.domain === di);
-    const avg = qs.reduce((sum, {qi}) => sum + (answers[qi] || 3), 0) / qs.length;
-    return { ...d, score: Math.round(avg * 10) / 10 };
+  // Score each domain: average option scores (1-5), normalize to 0-100
+  // Lower score = more pressure = primary pressure point
+  const domainScores = Object.keys(DOMAINS).map(dk => {
+    const d  = DOMAINS[dk];
+    const qs = QUESTIONS.filter(q => q.domain === dk);
+    const total = qs.reduce((sum, q) => sum + (answers[q.id] || 3), 0);
+    const avg   = qs.length > 0 ? total / qs.length : 3;
+    const score = Math.round(((avg - 1) / 4) * 100);
+    return { ...d, score };
   });
 
-  const sorted  = [...domainScores].sort((a, b) => a.score - b.score);
-  const primary = sorted[0];
+  const sorted    = [...domainScores].sort((a, b) => a.score - b.score);
+  const primary   = sorted[0];
   const secondary = sorted[1];
 
   results = { domainScores, primary, secondary, timestamp: new Date().toISOString() };
@@ -525,25 +671,41 @@ function computeResults() {
   // Render results
   document.getElementById('results-headline').textContent =
     `Your primary pressure point: ${primary.label}`;
+  const { label: primaryLabel } = getScoreLabel(primary.score);
   document.getElementById('results-sub').textContent =
-    `With a score of ${primary.score.toFixed(1)} out of 5, this is the domain where the gap between where you are and where you need to be is costing you most right now.`;
-  document.getElementById('primaryTitle').textContent = primary.label;
-  document.getElementById('primaryDesc').textContent  = PP_DESCRIPTIONS[primary.label] || '';
+    `Scoring ${primary.score}/100 (${primaryLabel}), this is the domain where the gap between where you are and where you need to be is costing you most right now.`;
+  document.getElementById('primaryTitle').textContent = primary.name;
+  document.getElementById('primaryDesc').textContent  = primary.lowScore || '';
 
   // Scores grid
-  const sorted2 = [...domainScores].sort((a, b) => a.score - b.score);
+  // Sort by score ascending (lowest = most pressure = primary)
+  const sortedScores = [...domainScores].sort((a, b) => a.score - b.score);
   let gridHtml = '';
-  domainScores.forEach(d => {
+  sortedScores.forEach((d, idx) => {
     const isPrimary   = d.id === primary.id;
     const isSecondary = d.id === secondary.id;
-    const pct = Math.round((d.score / 5) * 100);
+    const { label: scoreLabel, color: labelColor } = getScoreLabel(d.score);
     gridHtml += `<div class="score-card ${isPrimary ? 'primary' : isSecondary ? 'secondary' : ''}">
-      <div class="score-domain">${d.label}</div>
-      <div class="score-bar-wrap"><div class="score-bar" style="width:${pct}%;background:${d.color}"></div></div>
-      <div class="score-val">${d.score.toFixed(1)} / 5 ${isPrimary ? '⬇ Primary' : isSecondary ? '⬇ Secondary' : ''}</div>
+      <div class="score-domain">${d.name}</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:${d.score}%;background:${d.color}"></div></div>
+      <div class="score-val" style="color:${labelColor}">${d.score} <span style="font-size:.65rem;font-weight:400">${scoreLabel}</span></div>
+      ${isPrimary ? '<div style="font-size:.65rem;color:var(--olive);margin-top:2px;font-family:var(--mono)">PRIMARY</div>' : ''}
+      ${isSecondary ? '<div style="font-size:.65rem;color:rgba(27,58,90,.6);margin-top:2px;font-family:var(--mono)">SECONDARY</div>' : ''}
     </div>`;
   });
   document.getElementById('scoresGrid').innerHTML = gridHtml;
+
+  // Populate research + coaching panels
+  const dd = document.getElementById('domainDetail');
+  if(dd) dd.innerHTML = `
+    <div style="background:white;border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1rem;border-left:3px solid ${primary.color};border:1px solid rgba(0,0,0,.07)">
+      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:${primary.color};margin-bottom:.65rem">Research basis</div>
+      <p style="font-size:.875rem;line-height:1.8;color:rgba(61,61,61,.75);margin:0">${primary.researchBasis}</p>
+    </div>
+    <div style="background:var(--navy);border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1.5rem">
+      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:.65rem">How coaching addresses this</div>
+      <p style="font-size:.875rem;line-height:1.8;color:rgba(255,255,255,.75);margin:0">${primary.coachingFocus}</p>
+    </div>`;
 
   showScreen('screen-results');
 }
@@ -567,11 +729,11 @@ async function submitEmail() {
 
   const contactName = name || email.split('@')[0];
   const today       = new Date().toISOString().slice(0, 10);
-  const { domainScores, primary, secondary } = results;
+  const { primary, secondary } = results;
 
-  // Score map
+  // Score map (domain id -> 0-100 score)
   const sc = {};
-  domainScores.forEach(d => sc[d.id] = d.score);
+  results.domainScores.forEach(d => sc[d.id] = d.score);
 
   // Backup to localStorage
   const lead = { contactName, email, today, primary: primary.label, secondary: secondary.label,
@@ -948,8 +1110,9 @@ function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt
 // ══════════════════════════════════════════════════════════════════
 (function boot() {
   loadConfig();
-  // Worker URL is hardcoded — always go straight to assessment
+  // Both values hardcoded — skip setup entirely
   CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
+  CFG.apiKey    = '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';
   showScreen('screen-assessment');
   initAssessment();
 })();
