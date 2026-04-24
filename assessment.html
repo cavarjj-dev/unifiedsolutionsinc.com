@@ -584,43 +584,58 @@ function initAssessment() {
 }
 
 function renderQuestion() {
-  const q   = QUESTIONS[currentQ];
-  const dom = DOMAINS[q.domain];
-  const pip = Math.floor(currentQ / 3);
+  try {
+    const q   = QUESTIONS[currentQ];
+    const dom = DOMAINS[q.domain];
+    const pip = Math.floor(currentQ / 3);
+    const cur = answers[q.id] !== undefined ? answers[q.id] : null;
 
-  // Update domain pips
-  for(let i = 0; i < 6; i++) {
-    const el = document.getElementById('pip-' + i);
-    el.className = 'domain-pip' + (i < pip ? ' done' : i === pip ? ' active' : '');
+    // Update domain pips
+    for(let i = 0; i < 6; i++) {
+      const el = document.getElementById('pip-' + i);
+      if(el) el.className = 'domain-pip' + (i < pip ? ' done' : i === pip ? ' active' : '');
+    }
+
+    const wrap = document.getElementById('qWrap');
+    if(!wrap) { console.error('qWrap not found'); return; }
+
+    // Build options HTML without nested template literals
+    let optHtml = '';
+    for(let oi = 0; oi < q.options.length; oi++) {
+      const opt = q.options[oi];
+      const sel = cur === opt.score;
+      optHtml +=
+        '<button class="opt-btn' + (sel ? ' selected' : '') + '" onclick="selectAnswer(' + opt.score + ')">' +
+          '<div class="opt-radio' + (sel ? ' checked' : '') + '">' +
+            (sel ? '<div class="opt-radio-dot"></div>' : '') +
+          '</div>' +
+          '<span class="opt-text">' + opt.text + '</span>' +
+        '</button>';
+    }
+
+    const isLast  = currentQ === QUESTIONS.length - 1;
+    const prevVis = currentQ === 0 ? ' style="visibility:hidden"' : '';
+    const nextEn  = cur !== null ? ' enabled' : '';
+
+    wrap.innerHTML =
+      '<div class="q-anim">' +
+        '<div class="q-domain-label">' + dom.name + '</div>' +
+        '<div class="q-num">Question ' + (currentQ + 1) + ' of ' + QUESTIONS.length + '</div>' +
+        '<div class="q-text">' + q.text + '</div>' +
+        '<div class="scale-wrap">' + optHtml + '</div>' +
+        '<div class="q-nav">' +
+          '<button class="q-prev"' + prevVis + ' onclick="prevQ()">&larr; Back</button>' +
+          '<span class="q-progress">' + (currentQ + 1) + ' / ' + QUESTIONS.length + '</span>' +
+          '<button class="q-next' + nextEn + '" id="nextBtn" onclick="nextQ()">' +
+            (isLast ? 'See results' : 'Next &rarr;') +
+          '</button>' +
+        '</div>' +
+      '</div>';
+  } catch(e) {
+    console.error('renderQuestion error:', e);
+    const wrap = document.getElementById('qWrap');
+    if(wrap) wrap.innerHTML = '<div style="padding:2rem;color:red">Error loading question: ' + e.message + '</div>';
   }
-
-  const cur = answers[q.id] ?? null;
-
-  const wrap = document.getElementById('qWrap');
-  wrap.innerHTML = `
-    <div class="q-anim">
-      <div class="q-domain-label">${dom.name}</div>
-      <div class="q-num">Question ${currentQ + 1} of ${QUESTIONS.length}</div>
-      <div class="q-text">${q.text}</div>
-      <div class="scale-wrap">
-        ${q.options.map(opt => `
-          <button class="opt-btn ${cur === opt.score ? 'selected' : ''}"
-                  onclick="selectAnswer(${opt.score})">
-            <div class="opt-radio ${cur === opt.score ? 'checked' : ''}">
-              ${cur === opt.score ? '<div class="opt-radio-dot"></div>' : ''}
-            </div>
-            <span class="opt-text">${opt.text}</span>
-          </button>
-        `).join('')}
-      </div>
-      <div class="q-nav">
-        <button class="q-prev" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>&larr; Back</button>
-        <span class="q-progress">${currentQ + 1} / ${QUESTIONS.length}</span>
-        <button class="q-next ${cur !== null ? 'enabled' : ''}" id="nextBtn" onclick="nextQ()">
-          ${currentQ === QUESTIONS.length - 1 ? 'See results' : 'Next &rarr;'}
-        </button>
-      </div>
-    </div>`;
 }
 
 function selectAnswer(score) {
