@@ -360,7 +360,7 @@ const ADMIN_PIN    = 'USC2026';
 const STORAGE_KEY  = 'usc_assessment_config';
 const LEADS_KEY    = 'usc_leads_backup';
 
-let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev', apiKey: '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' };
+let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev'};
 
 function loadConfig() {
   try { CFG = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
