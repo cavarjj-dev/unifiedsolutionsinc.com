@@ -279,6 +279,9 @@ button{cursor:pointer;font-family:var(--sans);border:none}
     <!-- Research + Coaching Focus panels -->
     <div id="domainDetail"></div>
 
+        <!-- Secondary pressure point note -->
+    <div id="secondaryNote" style="display:none;background:var(--offwhite);border:1px solid rgba(0,0,0,.1);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem"></div>
+
         <div class="email-capture" id="emailCapture">
       <h3>Get a personalized note from Julian</h3>
       <p>Share your email and Julian will send you a note based on your specific results, including what the research says about your primary pressure point and what it would actually take to address it. No automation. A real message from a real coach.</p>
@@ -294,6 +297,11 @@ button{cursor:pointer;font-family:var(--sans);border:none}
       <h4>Thanks. Julian will be in touch.</h4>
       <p>A real, personalized note is coming. In the meantime, book a free 30-minute discovery call if you'd like to go deeper on what your results are pointing toward.</p>
       <p style="margin-top:1rem"><a href="/book-a-call" style="color:var(--teal);font-weight:600">Book a discovery call &rarr;</a></p>
+    </div>
+    <div style="margin-top:2rem;padding:1.25rem 1.5rem;border-top:1px solid rgba(0,0,0,.08)">
+      <p style="font-size:.75rem;color:rgba(61,61,61,.45);line-height:1.8;text-align:center;max-width:62ch;margin:0 auto">
+        This instrument was developed by Julian Johnson, ICF PCC, ACTC Candidate, and draws on peer-reviewed leadership research across six validated domains. It is a reflective self-assessment, not a validated psychometric instrument. Results are most useful as a starting point for structured coaching conversation, not as a definitive diagnostic.
+      </p>
     </div>
   </div>
 </div>
@@ -434,6 +442,15 @@ const DOMAINS = {
     lowScore:'A meaningful gap between where you spend your leadership energy and where you believe it should go is creating friction, not just in your performance, but in your experience of leading. Strategic misalignment tends to deepen over time when left unaddressed.',
     coachingFocus:'This is the terrain where Julian\'s laser-focused methodology does its most distinctive work, quickly identifying the specific nature of the clarity gap and building toward a direction that is genuinely yours, not a version of what the role demands.',
   },
+};
+
+const DOMAIN_ARTICLES = {
+  identity: { url:'/articles/leadership-identity', title:'The Leadership Identity Question Every Senior Leader Eventually Faces' },
+  decision: { url:'/articles/decision-making-under-pressure', title:'What the Research Says About Decision-Making Under Pressure' },
+  relational: { url:'/articles/psychological-safety-leadership', title:'Psychological Safety Is Not About Being Nice' },
+  team: { url:'/articles/group-vs-team-coaching', title:'Group Coaching vs Team Coaching: What Senior Leaders Need to Know' },
+  sustainability: { url:'/articles/sustainable-high-performance', title:'Sustainable High Performance: What It Actually Takes at the Top' },
+  clarity: { url:'/articles/csuite-board-communication', title:'C-Suite and Board Communication: What Senior Leaders Get Wrong and Why' },
 };
 
 const QUESTIONS = [
@@ -732,10 +749,10 @@ function computeResults() {
 
   // Render results
   document.getElementById('results-headline').textContent =
-    `Your primary pressure point: ${primary.label}`;
+    `Your primary pressure point: ${primary.name}`;
   const { label: primaryLabel } = getScoreLabel(primary.score);
   document.getElementById('results-sub').textContent =
-    `Scoring ${primary.score}/100 (${primaryLabel}), this is the domain where the gap between where you are and where you need to be is costing you most right now.`;
+    `Scoring ' + primary.score + '/100 (' + primaryLabel + '), this is the domain where the gap between where you are and where you need to be is costing you most right now.`;
   document.getElementById('primaryTitle').textContent = primary.name;
   document.getElementById('primaryDesc').textContent  = primary.lowScore || '';
 
@@ -757,17 +774,74 @@ function computeResults() {
   });
   document.getElementById('scoresGrid').innerHTML = gridHtml;
 
-  // Populate research + coaching panels
+  // Populate expandable all-domain cards (sorted by score, lowest first)
   const dd = document.getElementById('domainDetail');
-  if(dd) dd.innerHTML = `
-    <div style="background:white;border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1rem;border-left:3px solid ${primary.color};border:1px solid rgba(0,0,0,.07)">
-      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:${primary.color};margin-bottom:.65rem">Research basis</div>
-      <p style="font-size:.875rem;line-height:1.8;color:rgba(61,61,61,.75);margin:0">${primary.researchBasis}</p>
-    </div>
-    <div style="background:var(--navy);border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1.5rem">
-      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:.65rem">How coaching addresses this</div>
-      <p style="font-size:.875rem;line-height:1.8;color:rgba(255,255,255,.75);margin:0">${primary.coachingFocus}</p>
-    </div>`;
+  if(dd) {
+    let ddHtml = '<h3 style="font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:.5rem">All six domains</h3>';
+    ddHtml += '<p style="font-size:.82rem;color:rgba(61,61,61,.55);margin-bottom:1.25rem;line-height:1.7">Your lowest-scoring domain is your primary pressure point. Click any domain to see the research basis and how coaching addresses it.</p>';
+    sortedScores.forEach((d, idx) => {
+      const isPrimary   = d.id === primary.id;
+      const isSecondary = d.id === secondary.id;
+      const { label: sLabel, color: sColor } = getScoreLabel(d.score);
+      const article = DOMAIN_ARTICLES[d.id];
+      const expanded = isPrimary ? 'block' : 'none';
+      const arrow    = isPrimary ? '▲' : '▼';
+      ddHtml +=
+        '<div class="domain-expand-card" style="background:white;border-radius:8px;border:' +
+          (isPrimary ? '2px solid ' + d.color : '1px solid rgba(0,0,0,.08)') +
+          ';margin-bottom:.65rem;overflow:hidden">' +
+          `<div class="dex-header" onclick="toggleDomain('${d.id}')" style="padding:1rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:.75rem">` +
+            '<div style="width:10px;height:10px;border-radius:50%;background:' + d.color + ';flex-shrink:0"></div>' +
+            '<div style="flex:1">' +
+              '<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">' +
+                '<span style="font-size:.9rem;font-weight:600;color:var(--navy)">' + d.name + '</span>' +
+                (isPrimary ? '<span style="font-size:.62rem;background:' + d.color + ';color:white;padding:2px 7px;border-radius:3px;font-family:var(--mono)">PRIMARY</span>' : '') +
+                (isSecondary ? '<span style="font-size:.62rem;background:rgba(0,0,0,.07);color:rgba(61,61,61,.6);padding:2px 7px;border-radius:3px;font-family:var(--mono)">SECONDARY</span>' : '') +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:.5rem;margin-top:3px">' +
+                '<div style="height:4px;width:80px;background:rgba(0,0,0,.07);border-radius:2px;overflow:hidden">' +
+                  '<div style="height:100%;width:' + d.score + '%;background:' + d.color + '"></div>' +
+                '</div>' +
+                '<span style="font-family:var(--mono);font-size:.72rem;color:' + sColor + '">' + d.score + ' — ' + sLabel + '</span>' +
+              '</div>' +
+            '</div>' +
+            `<span style="font-size:.7rem;color:rgba(0,0,0,.3)" id="arr-${d.id}">${arrow}</span>` +
+          '</div>' +
+          `<div id="dex-${d.id}" style="display:${expanded};border-top:1px solid rgba(0,0,0,.07);padding:1.1rem 1.1rem 1.25rem">` +
+            '<p style="font-size:.85rem;line-height:1.8;color:rgba(61,61,61,.8);margin-bottom:1rem">' + d.lowScore + '</p>' +
+            '<div style="background:rgba(27,58,90,.04);border-left:3px solid ' + d.color + ';border-radius:0 6px 6px 0;padding:.875rem 1rem;margin-bottom:.875rem">' +
+              '<div style="font-size:.62rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:' + d.color + ';margin-bottom:.45rem">Research basis</div>' +
+              '<p style="font-size:.78rem;line-height:1.8;color:rgba(61,61,61,.65);margin:0">' + d.researchBasis + '</p>' +
+            '</div>' +
+            '<div style="background:var(--navy);border-radius:6px;padding:.875rem 1rem;margin-bottom:.875rem">' +
+              '<div style="font-size:.62rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:.45rem">How coaching addresses this</div>' +
+              '<p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.78);margin:0">' + d.coachingFocus + '</p>' +
+            '</div>' +
+            (article ?
+              `<a href="${article.url}" style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--olive);font-weight:600;text-decoration:none;padding:.5rem .75rem;background:rgba(122,156,40,.07);border-radius:6px" class="art-link">` +
+                `<span style="font-size:1rem">&#128196;</span>` +
+                `<span>Read: ${article.title}</span>` +
+                `<span style="margin-left:auto">&#8594;</span>` +
+              `</a>`
+              : '') +
+          '</div>' +
+        '</div>';
+    });
+    dd.innerHTML = ddHtml;
+  }
+
+  // Secondary pressure point callout
+  const secEl = document.getElementById('secondaryNote');
+  if(secEl) {
+    secEl.innerHTML =
+      '<div style="font-size:.62rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:' + secondary.color + ';margin-bottom:.5rem">A note on your secondary pressure point</div>' +
+      '<p style="font-size:.85rem;line-height:1.8;color:rgba(61,61,61,.8);margin:0">' +
+      'Your second-lowest domain is <strong>' + secondary.name + '</strong>. In most cases a primary pressure point creates downstream effects in one or two adjacent domains. The two tend to reinforce each other until one of them is addressed at the root level. ' +
+      secondary.lowScore +
+      '</p>';
+    secEl.style.borderColor = secondary.color + '40';
+    secEl.style.display = 'block';
+  }
 
   showScreen('screen-results');
 }
@@ -798,7 +872,7 @@ async function submitEmail() {
   results.domainScores.forEach(d => sc[d.id] = d.score);
 
   // Backup to localStorage
-  const lead = { contactName, email, today, primary: primary.label, secondary: secondary.label,
+  const lead = { contactName, email, today, primary: primary.name, secondary: secondary.name,
     scores: sc, timestamp: results.timestamp };
   try {
     const backup = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
@@ -817,8 +891,8 @@ async function submitEmail() {
           Email:             { email: email },
           Status:            { select: { name: 'New Lead' } },
           Source:            { select: { name: 'Assessment' } },
-          'Primary Pressure Point':   { select: { name: primary.label } },
-          'Secondary Pressure Point': { select: { name: secondary.label } },
+          'Primary Pressure Point':   { select: { name: primary.name } },
+          'Secondary Pressure Point': { select: { name: secondary.name } },
           'Identity Score':      { number: sc.identity },
           'Decision Score':      { number: sc.decision },
           'Relational Score':    { number: sc.relational },
@@ -855,13 +929,24 @@ async function submitEmail() {
   setTimeout(() => {
     document.getElementById('emailCapture').style.display  = 'none';
     document.getElementById('emailSuccess').style.display  = 'block';
+    document.getElementById('emailSuccess').scrollIntoView({ behavior:'smooth', block:'center' });
   }, 1200);
 }
 
 function skipEmail() {
   document.getElementById('emailCapture').style.display = 'none';
+  // Results remain fully visible — user can still book a call
 }
 
+
+function toggleDomain(id) {
+  const panel = document.getElementById('dex-' + id);
+  const arrow  = document.getElementById('arr-' + id);
+  if(!panel) return;
+  const open = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  if(arrow) arrow.textContent = open ? '▼' : '▲';
+}
 // ══════════════════════════════════════════════════════════════════
 // ADMIN DASHBOARD
 // ══════════════════════════════════════════════════════════════════
