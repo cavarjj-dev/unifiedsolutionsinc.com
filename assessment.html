@@ -49,7 +49,7 @@ button{cursor:pointer;font-family:var(--sans);border:none}
 
 /* ── SETUP SCREEN ── */
 #screen-setup{background:var(--deepnavy);padding:3rem 1.5rem;align-items:center;justify-content:center}
-#screen-setup.active{display:flex!important}
+#screen-setup{display:none!important}
 .setup-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:2.5rem;max-width:540px;width:100%}
 .setup-title{font-family:var(--serif);font-size:1.4rem;color:white;margin-bottom:.4rem}
 .setup-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:2rem;line-height:1.7}
@@ -329,6 +329,15 @@ button{cursor:pointer;font-family:var(--sans);border:none}
         </div>
       </div>
       <div class="admin-stats" id="adminStats"></div>
+
+      <!-- API Key config — admin only -->
+      <div id="apiKeyPanel" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;flex-wrap:wrap;gap:.75rem">
+        <div style="flex:1;min-width:220px">
+          <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.4rem">Anthropic API Key <span id="apiKeyStatus" style="color:var(--lime)"></span></div>
+          <input type="password" id="adminApiKey" placeholder="sk-ant-..." style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;color:white;font-family:var(--mono);font-size:.78rem;padding:.45rem .75rem;outline:none">
+        </div>
+        <button onclick="saveApiKey()" style="background:var(--olive);color:white;border-radius:5px;padding:.45rem 1rem;font-size:.78rem;font-family:var(--mono);white-space:nowrap">Save Key</button>
+      </div>
       <div class="admin-err-banner" id="adminErr" style="display:none"></div>
       <div id="contactsList"></div>
     </div>
@@ -959,11 +968,38 @@ function showAdmin() {
   document.getElementById('adminDashboard').style.display = 'none';
 }
 
+function saveApiKey() {
+  const key = document.getElementById('adminApiKey').value.trim();
+  if(key && key.startsWith('sk-ant')) {
+    CFG.apiKey = key;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(CFG));
+    const statusEl = document.getElementById('apiKeyStatus');
+    if(statusEl) statusEl.textContent = '✓ Saved';
+    setTimeout(() => { if(statusEl) statusEl.textContent = ''; }, 3000);
+  } else {
+    const statusEl = document.getElementById('apiKeyStatus');
+    if(statusEl) { statusEl.style.color = '#e05c5c'; statusEl.textContent = 'Invalid key format'; }
+    setTimeout(() => { if(statusEl) { statusEl.textContent = ''; statusEl.style.color = 'var(--lime)'; } }, 3000);
+  }
+}
+
+function updateApiKeyPanel() {
+  const input    = document.getElementById('adminApiKey');
+  const statusEl = document.getElementById('apiKeyStatus');
+  if(input && CFG.apiKey && CFG.apiKey.startsWith('sk-ant')) {
+    input.value = CFG.apiKey;
+    if(statusEl) statusEl.textContent = '✓ Active';
+  } else {
+    if(statusEl) { statusEl.textContent = 'Not set'; statusEl.style.color = 'rgba(255,255,255,.3)'; }
+  }
+}
+
 function checkPin() {
   const pin = document.getElementById('pinInput').value.trim();
   if(pin === ADMIN_PIN) {
     document.getElementById('adminPinWrap').style.display = 'none';
     document.getElementById('adminDashboard').style.display = 'block';
+    updateApiKeyPanel();
     loadContacts();
   } else {
     document.getElementById('pinErr').textContent = 'Incorrect PIN.';
@@ -1257,16 +1293,10 @@ function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt
 // ══════════════════════════════════════════════════════════════════
 (function boot() {
   loadConfig();
-  // Worker URL is always hardcoded
   CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
-  if (!CFG.apiKey || !CFG.apiKey.startsWith('sk-ant')) {
-    // No API key saved yet — show setup screen
-    showScreen('screen-setup');
-  } else {
-    // API key already saved — go straight to assessment
-    showScreen('screen-assessment');
-    initAssessment();
-  }
+  // Public always goes straight to assessment — API key setup is admin-only
+  showScreen('screen-assessment');
+  initAssessment();
 })();
 </script>
 </body>
