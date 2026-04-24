@@ -385,14 +385,56 @@ function skipSetup() {
 // QUESTION DATA — 18 questions, 3 per domain, 1-5 scale
 // Lower score = more pressure in that domain
 // ══════════════════════════════════════════════════════════════════
-const DOMAINS = [
-  { id:'identity',       label:'Identity & Presence',      color:'#4CAF9A' },
-  { id:'decision',       label:'Decision Quality',         color:'#A8C846' },
-  { id:'relational',     label:'Relational Intelligence',  color:'#7A9C28' },
-  { id:'team',           label:'Team Vitality',            color:'#4a8fd4' },
-  { id:'sustainability', label:'Personal Sustainability',  color:'#e0856a' },
-  { id:'clarity',        label:'Strategic Clarity',        color:'#b07fd4' },
-];
+const DOMAINS = {
+  identity: {
+    id:'identity', name:'Identity & Presence', color:'#1B3A5A',
+    tagline:'Who you are as a leader under real pressure',
+    researchBasis:'Authentic Leadership theory (Avolio & Gardner, 2005; Walumbwa et al., 2008) identifies self-awareness, internalized moral perspective, balanced information processing, and relational transparency as the four pillars of authentic leadership. Under pressure, leaders whose identity is not yet consolidated tend to revert to patterns incongruent with their values.',
+    highScore:'Your leadership identity is stable under pressure. Your behavior under duress is largely congruent with your values, and you can take in critical feedback without it destabilizing your direction.',
+    lowScore:'The gap between who you want to be as a leader and how you actually show up under pressure is generating real costs to your relationships, your influence, and your own experience of leading. This is the most foundational pressure point, because it affects every other domain.',
+    coachingFocus:'This is the deepest work Julian does with upper-level leaders. Laser-focused, holistic coaching creates the conditions for closing the gap between leadership aspiration and leadership reality, not through behavioral scripts, but through the self-awareness that makes congruence possible.',
+  },
+  decision: {
+    id:'decision', name:'Decision Quality', color:'#3A6B3E',
+    tagline:'How you process decisions when complexity is high',
+    researchBasis:'Kahneman\'s dual-process theory (2011) demonstrates that under cognitive load, leaders default to System 1 (fast, pattern-based) thinking even when situations require deliberate System 2 reasoning. Artinger et al. (2025) found that low psychological safety and low authentic leadership significantly increase defensive decision making. The Cynefin framework shows most leaders misclassify complex problems as complicated ones, applying the wrong decision approach.',
+    highScore:'You have a reliable process for navigating decisions under ambiguity. You can distinguish between situations requiring speed and those requiring more deliberation, and you move through decisions without excessive second-guessing.',
+    lowScore:'Decision-making under pressure or ambiguity is extracting a disproportionate cost, either through delayed decisions, revisited decisions, defensive choices, or a persistent sense of uncertainty about your own judgment. This tends to compound under sustained pressure.',
+    coachingFocus:'1:1 coaching with Julian works directly on the decision-making process: identifying the cognitive patterns and threat responses that distort judgment under pressure, and building a more deliberate, trustworthy internal framework.',
+  },
+  relational: {
+    id:'relational', name:'Relational Intelligence', color:'#2E6B7A',
+    tagline:'How you navigate relationships, friction, and influence',
+    researchBasis:'Rock\'s SCARF model (2008) identifies five social domains that trigger threat or reward responses in the brain. Sustained threat states significantly reduce cognitive performance and collaboration quality. Goleman\'s emotional intelligence research identifies empathy and social skills as the dimensions that most distinguish outstanding leaders at the senior level. Edmondson\'s psychological safety research shows relational safety is a prerequisite for organizational learning.',
+    highScore:'You move toward friction rather than away from it. Your relational intelligence enables you to navigate complex interpersonal dynamics without avoidance, and you invest proactively in the relationships that enable collective performance.',
+    lowScore:'Relational friction, avoided conflict, unspoken tension, and misaligned stakeholder relationships are creating drag on your ability to lead effectively. The cost tends to be underestimated because it accumulates gradually rather than showing up as a discrete event.',
+    coachingFocus:'Group coaching is particularly powerful for this pressure point. The peer environment creates live relational dynamics that individual coaching cannot replicate. Team coaching addresses this at the collective level.',
+  },
+  team: {
+    id:'team', name:'Team Vitality', color:'#7A5C28',
+    tagline:'The performance environment your leadership creates',
+    researchBasis:'Edmondson\'s psychological safety research (1999, 2018), including Google\'s Project Aristotle, found psychological safety to be the single strongest predictor of team effectiveness across 180 teams. Hackman\'s team effectiveness model identifies three conditions required for team performance: a real team, a compelling direction, and an enabling structure. Lencioni\'s dysfunction model maps the cascade from absence of trust through fear of conflict, lack of commitment, avoidance of accountability, and inattention to results.',
+    highScore:'Your team has a high-performance environment. Psychological safety, clear direction, and accountability that runs in multiple directions. People say what they actually think, including when it implicates you.',
+    lowScore:'The environment your leadership creates is limiting what your team can do. High-talent teams under low psychological safety systematically underperform their potential, suppressing information, avoiding risk, and managing upward rather than solving problems.',
+    coachingFocus:'Team coaching directly addresses this pressure point by working with the team as a system, not just developing individuals within it. Julian\'s ACTC-level team coaching competency focuses on the patterns between people, not just within them.',
+  },
+  sustainability: {
+    id:'sustainability', name:'Personal Sustainability', color:'#7A2E2E',
+    tagline:'Your capacity to lead sustainably over time',
+    researchBasis:'Maslach\'s burnout research identifies a predictable three-stage depletion sequence: emotional exhaustion, depersonalization, and reduced personal efficacy, each stage compounding the next. The Job Demands-Resources model demonstrates that performance requires an active balance between demands and resources. Loehr and Schwartz\'s energy management research reframes performance as fundamentally about capacity, physical, emotional, mental, and spiritual, rather than time.',
+    highScore:'You treat your own performance capacity as a leadership responsibility. Your recovery practices are consistent enough that sustained pressure does not produce the depletion pattern that compromises your judgment, presence, and effectiveness.',
+    lowScore:'Your performance capacity is being drawn down faster than it is being replenished. The effects on your leadership are likely already visible in your patience, your presence, your decision quality, or your emotional regulation, even if you have not fully reckoned with the pattern.',
+    coachingFocus:'Holistic coaching is specifically designed for this pressure point. Julian\'s training through the Goal Imagery Institute addresses the whole person. The leader\'s relationship with their own capacity is inseparable from how they lead others.',
+  },
+  clarity: {
+    id:'clarity', name:'Strategic Clarity', color:'#4A3A7A',
+    tagline:'Alignment between your leadership and your direction',
+    researchBasis:'Kegan\'s constructive developmental theory identifies qualitatively distinct stages of adult meaning-making. Senior leaders increasingly face demands that require moving toward a Self-Transforming mind, holding multiple frameworks simultaneously without losing perspective. McKinsey research (2023) found that leaders with strong purpose clarity are 4x more likely to be highly engaged and significantly more likely to navigate organizational change successfully.',
+    highScore:'You have a clear sense of what your most important contribution is as a leader, and your daily reality is substantially aligned with that direction. The people who matter most have a consistent, accurate picture of who you are and what you stand for.',
+    lowScore:'A meaningful gap between where you spend your leadership energy and where you believe it should go is creating friction, not just in your performance, but in your experience of leading. Strategic misalignment tends to deepen over time when left unaddressed.',
+    coachingFocus:'This is the terrain where Julian\'s laser-focused methodology does its most distinctive work, quickly identifying the specific nature of the clarity gap and building toward a direction that is genuinely yours, not a version of what the role demands.',
+  },
+};
 
 const QUESTIONS = [
   {id:'q1',domain:'identity',number:1,
