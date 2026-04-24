@@ -352,7 +352,7 @@ button{cursor:pointer;font-family:var(--sans);border:none}
 // ══════════════════════════════════════════════════════════════════
 const NOTION_DB_ID = '2607b51163ef4049a44e08d10a36a959';
 const ADMIN_PIN    = 'USC2026';
-const STORAGE_KEY  = 'usc_assessment_config';
+const STORAGE_KEY  = 'usc_assessment_config_v2'; // bump version to clear old cached config
 const LEADS_KEY    = 'usc_leads_backup';
 
 let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev', apiKey: '' };
@@ -474,7 +474,7 @@ const QUESTIONS = [
     {score:2,text:'I address it in private one-on-ones but rarely bring it to the team level where it actually lives.'},
     {score:3,text:'I address it when it is clearly affecting performance, but I often miss the earlier signals.'},
     {score:4,text:'I name it when I see it and create structured space for the team to work through it.'},
-    {score:5,text:'I treat surface tension as useful information and actively develop the team's capacity to navigate it together — not just manage it.'},
+    {score:5,text:'I treat surface tension as useful information and actively develop the team\'s capacity to navigate it together — not just manage it.'},
    ]},
   {id:'q10',domain:'team',number:10,
    text:'If your team were asked anonymously what typically happens when they raise a problem that implicates your decisions or priorities, the most honest answer would be:',
@@ -495,7 +495,7 @@ const QUESTIONS = [
     {score:5,text:'Treat it as a signal about the performance environment and examine what I may have contributed to the conditions.'},
    ]},
   {id:'q12',domain:'team',number:12,
-   text:'How clearly does each member of your team currently understand how their specific role connects to the organization's highest priorities?',
+   text:'How clearly does each member of your team currently understand how their specific role connects to the organization\'s highest priorities?',
    options:[
     {score:1,text:'Most of them probably could not articulate it with real confidence if asked today.'},
     {score:2,text:'They understand their own work but the connection to what matters most is fuzzy for most.'},
@@ -549,7 +549,7 @@ const QUESTIONS = [
     {score:5,text:'Highly consistent — I have worked to ensure the people who matter most see me accurately and clearly, and I have verified this.'},
    ]},
   {id:'q18',domain:'clarity',number:18,
-   text:"When your organization's demands and your personal leadership values genuinely conflict, you typically:",
+   text:"When your organization\'s demands and your personal leadership values genuinely conflict, you typically:",
    options:[
     {score:1,text:'Default to what the organization demands — I have not fully reckoned with the accumulating personal cost of that pattern.'},
     {score:2,text:'Comply while carrying increasing friction — I manage the tension but it wears on me in ways I recognize.'},
@@ -974,7 +974,7 @@ function renderDashboard(contacts, source) {
 function buildMailto(c) {
   const subject = encodeURIComponent(`Following up on your Leadership Pressure Point: ${c.primary || ''}`);
   const body    = encodeURIComponent(
-    `Hi ${c.name || 'there'},\n\nI wanted to personally follow up on your Leadership Pressure Point Assessment results.\n\nYour primary pressure point: ${c.primary || 'N/A'}\nYour secondary pressure point: ${c.secondary || 'N/A'}\n\nI'd love to connect and talk through what this is pointing toward for you.\n\nBest,\nJulian Johnson, ICF PCC\nUnified Solutions Inc.\n952.594.8611`
+    `Hi ${c.name || 'there'},\n\nI wanted to personally follow up on your Leadership Pressure Point Assessment results.\n\nYour primary pressure point: ${c.primary || 'N/A'}\nYour secondary pressure point: ${c.secondary || 'N/A'}\n\nI\'d love to connect and talk through what this is pointing toward for you.\n\nBest,\nJulian Johnson, ICF PCC\nUnified Solutions Inc.\n952.594.8611`
   );
   return `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(c.email)}&su=${subject}&body=${body}`;
 }
@@ -1022,7 +1022,7 @@ Your results show that your primary pressure point right now is ${c.primary || '
 
 ${PP_DESCRIPTIONS[c.primary] || ''}
 
-I'd love to connect for a brief discovery call to talk through what this is pointing toward for you specifically — what it looks like in practice and what addressing it would actually require.
+I\'d love to connect for a brief discovery call to talk through what this is pointing toward for you specifically — what it looks like in practice and what addressing it would actually require.
 
 Would a 30-minute call work? You can book directly at unifiedsolutionsinc.com/book-a-call.
 
@@ -1117,7 +1117,7 @@ function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt
   loadConfig();
   // Worker URL is always hardcoded
   CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
-  if (!CFG.apiKey) {
+  if (!CFG.apiKey || !CFG.apiKey.startsWith('sk-ant')) {
     // No API key saved yet — show setup screen
     showScreen('screen-setup');
   } else {
