@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership Pressure Point Assessment | Julian Johnson, ICF PCC</title>
+<meta name="description" content="Discover your primary leadership pressure point: the domain where the gap between where you are and where you need to be is costing you most.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://unifiedsolutionsinc.com/assessment">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --navy:#1B3A5A; --deepnavy:#12273D; --olive:#7A9C28; --lime:#A8C846;
+  --teal:#4CAF9A; --charcoal:#3D3D3D; --offwhite:#F5F3EE; --white:#FFFFFF;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans','Helvetica Neue',sans-serif;
+  --mono:'Space Mono','Courier New',monospace;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--offwhite);color:var(--charcoal);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--sans);border:none}
+
+/* ── NAV ── */
+.site-nav{background:var(--navy);position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.nav-logo{display:flex;align-items:center;gap:.75rem}
+.nav-logo-mark{width:38px;height:38px;border-radius:50%;background:var(--olive);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-logo-mark svg{width:22px;height:22px}
+.nav-brand{display:flex;flex-direction:column}
+.nav-company{font-family:var(--serif);color:white;font-size:.95rem;font-weight:600}
+.nav-cred{font-size:.6rem;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;align-items:center;gap:.2rem}
+.nav-links a{color:rgba(255,255,255,.75);font-size:.85rem;font-weight:500;padding:.45rem .8rem;border-radius:4px;transition:color .2s}
+.nav-links a:hover{color:white}
+.nav-cta-btn{background:var(--olive);color:white!important;padding:.45rem 1rem!important;border-radius:4px;font-weight:600!important}
+.nav-cta-btn:hover{background:#8aad2e!important}
+.nav-admin-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5)!important;font-size:.72rem!important;font-family:var(--mono)!important;padding:.3rem .65rem!important;border-radius:3px;transition:all .2s}
+.nav-admin-btn:hover{border-color:rgba(255,255,255,.5)!important;color:rgba(255,255,255,.8)!important}
+
+/* ── SCREEN SYSTEM ── */
+.screen{display:none;min-height:calc(100vh - 68px)}
+.screen.active{display:block}
+
+/* ── SETUP SCREEN ── */
+#screen-setup{background:var(--deepnavy);display:flex;align-items:center;justify-content:center;padding:3rem 1.5rem}
+.setup-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:2.5rem;max-width:540px;width:100%}
+.setup-title{font-family:var(--serif);font-size:1.4rem;color:white;margin-bottom:.4rem}
+.setup-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:2rem;line-height:1.7}
+.setup-field{margin-bottom:1.25rem}
+.setup-label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem;font-family:var(--mono)}
+.setup-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:.75rem 1rem;color:white;font-family:var(--mono);font-size:.82rem;outline:none;transition:border-color .2s}
+.setup-input:focus{border-color:var(--olive)}
+.setup-input::placeholder{color:rgba(255,255,255,.25)}
+.setup-hint{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:.4rem;line-height:1.6}
+.setup-btn{width:100%;background:var(--olive);color:white;border-radius:6px;padding:.875rem;font-weight:600;font-size:.9rem;margin-top:.75rem;transition:background .2s}
+.setup-btn:hover{background:#8aad2e}
+.setup-skip{display:block;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3);margin-top:1rem;cursor:pointer;transition:color .2s}
+.setup-skip:hover{color:rgba(255,255,255,.6)}
+
+/* ── ASSESSMENT HERO ── */
+#screen-assessment{background:var(--offwhite)}
+.assessment-hero{background:var(--navy);padding:3.5rem 2rem 3rem;text-align:center;color:white}
+.assessment-hero .eyebrow{font-size:.7rem;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:1.1rem}
+.assessment-hero h1{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:500;max-width:22ch;margin:0 auto 1rem;line-height:1.2}
+.assessment-hero p{max-width:52ch;margin:0 auto;color:rgba(255,255,255,.65);font-size:.9rem;line-height:1.8}
+.domain-bar{max-width:600px;margin:2rem auto 0;display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap}
+.domain-pip{height:4px;flex:1;min-width:40px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .4s var(--ease)}
+.domain-pip.done{background:var(--olive)}
+.domain-pip.active{background:var(--lime)}
+
+/* ── QUESTION AREA ── */
+.q-wrap{max-width:680px;margin:0 auto;padding:3rem 2rem 5rem}
+.q-domain-label{font-size:.7rem;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive);margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
+.q-domain-label::after{content:'';flex:1;height:1px;background:rgba(122,156,40,.25)}
+.q-num{font-size:.78rem;color:rgba(61,61,61,.45);margin-bottom:.5rem;font-family:var(--mono)}
+.q-text{font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:500;color:var(--navy);line-height:1.35;margin-bottom:2.25rem}
+.scale-wrap{display:flex;flex-direction:column;gap:.55rem}
+.opt-btn{width:100%;background:white;border:2px solid rgba(27,58,90,.1);border-radius:8px;padding:1rem 1.1rem;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:.875rem;transition:all .18s var(--ease)}
+.opt-btn:hover{border-color:rgba(122,156,40,.4);box-shadow:0 2px 12px rgba(122,156,40,.08)}
+.opt-btn.selected{background:var(--navy);border-color:var(--navy)}
+.opt-radio{width:18px;height:18px;border-radius:50%;border:2px solid rgba(27,58,90,.2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.opt-btn.selected .opt-radio{border-color:var(--olive);background:var(--olive)}
+.opt-radio-dot{width:7px;height:7px;border-radius:50%;background:white}
+.opt-text{font-size:.875rem;line-height:1.65;color:var(--charcoal);transition:color .18s}
+.opt-btn.selected .opt-text{color:rgba(255,255,255,.9)}
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem}
+.q-prev{background:none;border:1px solid rgba(27,58,90,.15);color:rgba(61,61,61,.6);border-radius:6px;padding:.6rem 1.25rem;font-size:.85rem;transition:all .2s}
+.q-prev:hover{border-color:var(--navy);color:var(--navy)}
+.q-next{background:var(--navy);color:white;border-radius:6px;padding:.7rem 1.75rem;font-size:.875rem;font-weight:600;transition:all .2s;opacity:.4;pointer-events:none}
+.q-next.enabled{opacity:1;pointer-events:auto}
+.q-next.enabled:hover{background:var(--olive)}
+.q-progress{font-family:var(--mono);font-size:.72rem;color:rgba(61,61,61,.4)}
+.q-anim{animation:fadeUp .35s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ── RESULTS SCREEN ── */
+#screen-results{background:var(--offwhite)}
+.results-hero{background:var(--navy);padding:3rem 2rem;text-align:center;color:white}
+.results-hero .eyebrow{font-size:.7rem;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:.9rem}
+.results-hero h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:500;max-width:24ch;margin:0 auto .75rem}
+.results-hero .sub{color:rgba(255,255,255,.6);font-size:.875rem;max-width:48ch;margin:0 auto;line-height:1.75}
+.results-body{max-width:720px;margin:0 auto;padding:2.5rem 2rem 4rem}
+.primary-pp-card{background:var(--navy);border-radius:10px;padding:2rem 2.25rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.primary-pp-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(168,200,70,.08)}
+.pp-badge{font-size:.68rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:.6rem}
+.pp-title{font-family:var(--serif);font-size:1.5rem;color:white;font-weight:500;margin-bottom:.75rem}
+.pp-desc{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.8}
+.scores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:2rem}
+@media(max-width:600px){.scores-grid{grid-template-columns:1fr 1fr}}
+.score-card{background:white;border-radius:8px;padding:1.1rem;border:1px solid rgba(0,0,0,.07)}
+.score-card.primary{border-color:var(--olive);background:rgba(122,156,40,.04)}
+.score-card.secondary{border-color:rgba(27,58,90,.2)}
+.score-domain{font-size:.65rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:rgba(61,61,61,.5);margin-bottom:.4rem}
+.score-bar-wrap{height:5px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden;margin:.5rem 0}
+.score-bar{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+.score-val{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--navy)}
+.score-card.primary .score-val{color:var(--olive)}
+
+/* ── EMAIL CAPTURE ── */
+.email-capture{background:white;border-radius:10px;padding:2rem 2.25rem;border:1px solid rgba(0,0,0,.08)}
+.email-capture h3{font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:.5rem}
+.email-capture p{font-size:.85rem;color:rgba(61,61,61,.7);line-height:1.8;margin-bottom:1.5rem}
+.email-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.email-field{flex:1;min-width:180px;padding:.75rem 1rem;border:1.5px solid rgba(27,58,90,.15);border-radius:6px;font-family:var(--sans);font-size:.875rem;outline:none;color:var(--charcoal);transition:border-color .2s}
+.email-field:focus{border-color:var(--olive)}
+.email-submit{background:var(--olive);color:white;border-radius:6px;padding:.75rem 1.75rem;font-weight:600;font-size:.875rem;white-space:nowrap;transition:background .2s}
+.email-submit:hover{background:#8aad2e}
+.email-skip{display:block;text-align:center;font-size:.78rem;color:rgba(61,61,61,.4);margin-top:.85rem;cursor:pointer;transition:color .2s}
+.email-skip:hover{color:var(--charcoal)}
+.email-success{background:rgba(76,175,154,.1);border:1px solid rgba(76,175,154,.3);border-radius:8px;padding:1.25rem 1.5rem;text-align:center}
+.email-success h4{font-family:var(--serif);color:var(--teal);margin-bottom:.3rem}
+.email-success p{font-size:.82rem;color:rgba(61,61,61,.65);line-height:1.7}
+.email-status{font-size:.78rem;margin-top:.65rem;font-family:var(--mono);min-height:1.2em}
+.email-status.ok{color:var(--teal)}
+.email-status.err{color:#e05c5c}
+.email-status.loading{color:rgba(61,61,61,.4)}
+
+/* ── ADMIN SCREEN ── */
+#screen-admin{background:var(--deepnavy);min-height:calc(100vh - 68px)}
+.admin-pin-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 68px);padding:2rem}
+.admin-pin-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:2.5rem;max-width:380px;width:100%;text-align:center}
+.admin-pin-card h3{font-family:var(--serif);color:white;font-size:1.2rem;margin-bottom:.4rem}
+.admin-pin-card p{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:1.5rem}
+.pin-input{width:100%;text-align:center;letter-spacing:.3em;font-family:var(--mono);font-size:1.5rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:.875rem;color:white;outline:none;transition:border-color .2s}
+.pin-input:focus{border-color:var(--olive)}
+.pin-btn{width:100%;background:var(--olive);color:white;border-radius:6px;padding:.8rem;font-weight:600;margin-top:.875rem;font-size:.9rem;transition:background .2s}
+.pin-btn:hover{background:#8aad2e}
+.pin-err{font-size:.78rem;color:#e05c5c;margin-top:.5rem;font-family:var(--mono)}
+.admin-dashboard{padding:2rem;max-width:1100px;margin:0 auto}
+.admin-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.75rem}
+.admin-title{font-family:var(--serif);color:white;font-size:1.4rem}
+.admin-stats{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.stat-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem .9rem;font-size:.75rem;font-family:var(--mono);color:rgba(255,255,255,.65)}
+.stat-pill strong{color:var(--lime)}
+.admin-refresh{background:rgba(122,156,40,.15);border:1px solid rgba(122,156,40,.3);color:var(--lime);border-radius:6px;padding:.5rem 1.1rem;font-size:.78rem;font-family:var(--mono);transition:all .2s}
+.admin-refresh:hover{background:rgba(122,156,40,.25)}
+.contact-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1.25rem 1.4rem;margin-bottom:.75rem;transition:border-color .2s}
+.contact-card:hover{border-color:rgba(255,255,255,.2)}
+.contact-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:.85rem}
+.contact-name{font-weight:600;color:white;font-size:.95rem}
+.contact-email{font-size:.78rem;color:rgba(255,255,255,.45);font-family:var(--mono);margin-top:2px}
+.contact-date{font-size:.7rem;color:rgba(255,255,255,.3);font-family:var(--mono)}
+.contact-scores{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.85rem}
+.cscore{font-size:.68rem;font-family:var(--mono);padding:.25rem .6rem;border-radius:100px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.55)}
+.cscore.primary{background:rgba(122,156,40,.2);color:var(--lime);border:1px solid rgba(122,156,40,.3)}
+.cscore.secondary{background:rgba(27,58,90,.4);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+.contact-bottom{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem}
+.status-select{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:white;padding:.35rem .65rem;font-size:.78rem;font-family:var(--mono);outline:none;cursor:pointer;transition:border-color .2s}
+.status-select:focus{border-color:var(--olive)}
+.status-select option{background:var(--deepnavy)}
+.followup-btn{background:rgba(122,156,40,.15);border:1px solid rgba(122,156,40,.3);color:var(--lime);border-radius:6px;padding:.35rem .85rem;font-size:.75rem;font-family:var(--mono);transition:all .2s}
+.followup-btn:hover{background:rgba(122,156,40,.3)}
+.gmail-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);border-radius:6px;padding:.35rem .85rem;font-size:.75rem;font-family:var(--mono);transition:all .2s;text-decoration:none;display:inline-block}
+.gmail-btn:hover{background:rgba(255,255,255,.12)}
+.followup-panel{background:rgba(0,0,0,.2);border-radius:6px;padding:1rem 1.1rem;margin-top:.85rem;border:1px solid rgba(255,255,255,.07)}
+.followup-panel textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:white;font-family:var(--sans);font-size:.82rem;padding:.75rem .9rem;resize:vertical;outline:none;min-height:150px;line-height:1.7;transition:border-color .2s}
+.followup-panel textarea:focus{border-color:var(--olive)}
+.followup-subject{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:white;font-family:var(--mono);font-size:.78rem;padding:.5rem .75rem;outline:none;margin-bottom:.5rem;transition:border-color .2s}
+.followup-subject:focus{border-color:var(--olive)}
+.copy-btn{background:var(--olive);color:white;border-radius:5px;padding:.4rem .9rem;font-size:.75rem;font-family:var(--mono);transition:background .2s}
+.copy-btn:hover{background:#8aad2e}
+.gen-btn{background:rgba(122,156,40,.2);border:1px solid rgba(122,156,40,.4);color:var(--lime);border-radius:5px;padding:.4rem .9rem;font-size:.75rem;font-family:var(--mono);transition:all .2s}
+.gen-btn:hover{background:rgba(122,156,40,.35)}
+.empty-state{text-align:center;padding:3.5rem 1rem;color:rgba(255,255,255,.3);font-family:var(--mono);font-size:.82rem;line-height:2}
+.admin-loading{text-align:center;padding:2rem;color:rgba(255,255,255,.3);font-family:var(--mono);font-size:.8rem}
+.admin-err-banner{background:rgba(224,92,92,.1);border:1px solid rgba(224,92,92,.25);border-radius:6px;padding:.75rem 1rem;margin-bottom:1rem;font-size:.8rem;color:#e05c5c;font-family:var(--mono)}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--deepnavy);color:rgba(255,255,255,.5);padding:2.5rem 0 1.5rem;margin-top:0}
+.footer-inner{max-width:1180px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem}
+.footer-brand{font-family:var(--serif);color:white;font-size:.9rem;margin-bottom:.3rem}
+.footer-inner p,.footer-inner nav a{font-size:.78rem}
+.footer-inner nav{display:flex;flex-direction:column;gap:.3rem}
+.footer-inner nav a{color:rgba(255,255,255,.5);transition:color .2s}
+.footer-inner nav a:hover{color:white}
+.footer-right{text-align:right}
+.footer-bottom{max-width:1180px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);text-align:center;font-size:.72rem;color:rgba(255,255,255,.2)}
+@media(max-width:680px){.footer-inner{grid-template-columns:1fr}.footer-right{text-align:left}.scale-row{gap:.3rem}.scores-grid{grid-template-columns:1fr 1fr}}
+
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark"><svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11" stroke="white" stroke-width="1.5"/><path d="M13 6L13 20M6 13L20 13" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="white" opacity=".9"/></svg></div>
+      <div class="nav-brand">
+        <span class="nav-company">Unified Solutions Inc.</span>
+        <span class="nav-cred">ICF PCC · ACTC Candidate · ExecOnline Faculty</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/coaching">Coaching</a>
+      <a href="/book-a-call" class="nav-cta-btn">Book a Call</a>
+      <button class="nav-links nav-admin-btn" onclick="showAdmin()">Admin</button>
+    </div>
+  </div>
+</nav>
+
+<!-- SETUP SCREEN DISABLED — values hardcoded -->
+<div class="screen" id="screen-setup">
+  <div class="admin-pin-wrap">
+    <div class="setup-card">
+      <div class="setup-title">One-time setup</div>
+      <div class="setup-sub">Enter your Anthropic API key to enable one-click AI email generation in the Admin dashboard. This is stored only on this device and never transmitted anywhere except directly to Anthropic when you generate an email.</div>
+      <div class="setup-field">
+        <label class="setup-label">Anthropic API Key</label>
+        <input class="setup-input" id="setup-apikey" type="password" placeholder="sk-ant-...">
+        <div class="setup-hint">Found at console.anthropic.com &rarr; API Keys. Only used for the Admin dashboard email generator.</div>
+      </div>
+      <button class="setup-btn" onclick="saveSetup()">Save and start assessment</button>
+      <span class="setup-skip" onclick="skipSetup()">Skip &mdash; I'll add the API key later</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ASSESSMENT SCREEN ═══════════════ -->
+<div class="screen" id="screen-assessment">
+  <div class="assessment-hero">
+    <div class="eyebrow">Leadership Pressure Point Assessment</div>
+    <h1>Where is the gap between where you are and where you need to be costing you most?</h1>
+    <p>18 questions across 6 leadership domains. No right answers. Honest answers only. Takes about 5 minutes.</p>
+    <div class="domain-bar" id="domainBar">
+      <div class="domain-pip" id="pip-0"></div>
+      <div class="domain-pip" id="pip-1"></div>
+      <div class="domain-pip" id="pip-2"></div>
+      <div class="domain-pip" id="pip-3"></div>
+      <div class="domain-pip" id="pip-4"></div>
+      <div class="domain-pip" id="pip-5"></div>
+    </div>
+  </div>
+  <div class="q-wrap" id="qWrap"></div>
+</div>
+
+<!-- ═══════════════ RESULTS SCREEN ═══════════════ -->
+<div class="screen" id="screen-results">
+  <div class="results-hero">
+    <div class="eyebrow">Your Results</div>
+    <h2 id="results-headline"></h2>
+    <p class="sub" id="results-sub"></p>
+  </div>
+  <div class="results-body">
+    <div class="primary-pp-card" id="primaryCard">
+      <div class="pp-badge">Primary Pressure Point</div>
+      <div class="pp-title" id="primaryTitle"></div>
+      <div class="pp-desc" id="primaryDesc"></div>
+    </div>
+    <div class="scores-grid" id="scoresGrid"></div>
+    <!-- Research + Coaching Focus panels -->
+    <div id="domainDetail"></div>
+
+        <div class="email-capture" id="emailCapture">
+      <h3>Get a personalized note from Julian</h3>
+      <p>Share your email and Julian will send you a note based on your specific results, including what the research says about your primary pressure point and what it would actually take to address it. No automation. A real message from a real coach.</p>
+      <div class="email-row">
+        <input class="email-field" id="captureName" type="text" placeholder="First name">
+        <input class="email-field" id="captureEmail" type="email" placeholder="Your email address">
+        <button class="email-submit" onclick="submitEmail()">Send my results</button>
+      </div>
+      <div class="email-status" id="emailStatus"></div>
+      <span class="email-skip" onclick="skipEmail()">No thanks, I'll keep my results private</span>
+    </div>
+    <div class="email-success" id="emailSuccess" style="display:none">
+      <h4>Thanks. Julian will be in touch.</h4>
+      <p>A real, personalized note is coming. In the meantime, book a free 30-minute discovery call if you'd like to go deeper on what your results are pointing toward.</p>
+      <p style="margin-top:1rem"><a href="/book-a-call" style="color:var(--teal);font-weight:600">Book a discovery call &rarr;</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN SCREEN ═══════════════ -->
+<div class="screen" id="screen-admin">
+  <!-- PIN gate -->
+  <div class="admin-pin-wrap" id="adminPinWrap">
+    <div class="admin-pin-card">
+      <h3>Admin Access</h3>
+      <p>Enter PIN to access the CRM dashboard</p>
+      <input class="pin-input" id="pinInput" type="password" maxlength="7" placeholder="·······" onkeydown="if(event.key==='Enter')checkPin()">
+      <button class="pin-btn" onclick="checkPin()">Unlock Dashboard</button>
+      <div class="pin-err" id="pinErr"></div>
+    </div>
+  </div>
+  <!-- Dashboard -->
+  <div id="adminDashboard" style="display:none">
+    <div class="admin-dashboard">
+      <div class="admin-header">
+        <div class="admin-title">CRM Dashboard</div>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <button class="admin-refresh" onclick="loadContacts()">&#8635; Refresh</button>
+          <button class="admin-refresh" style="color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.12)" onclick="lockAdmin()">Lock</button>
+        </div>
+      </div>
+      <div class="admin-stats" id="adminStats"></div>
+      <div class="admin-err-banner" id="adminErr" style="display:none"></div>
+      <div id="contactsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer" id="mainFooter">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand">Unified Solutions Inc.</p>
+      <p>Plymouth, MN<br>ICF PCC · ACTC Candidate<br>&copy; 2026 Unified Solutions Inc.</p>
+    </div>
+    <div><nav>
+      <a href="/">Home</a><a href="/about">About</a>
+      <a href="/coaching">Coaching</a><a href="/resources">Resources</a>
+      <a href="/government">Government Contracting</a>
+    </nav></div>
+    <div class="footer-right">
+      <p>contact@unifiedsolutionsinc.com<br>952.594.8611</p>
+    </div>
+  </div>
+  <div class="footer-bottom">Unified Solutions Inc. · unifiedsolutionsinc.com</div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// CONFIGURATION
+// ══════════════════════════════════════════════════════════════════
+const NOTION_DB_ID = '2607b51163ef4049a44e08d10a36a959';
+const ADMIN_PIN    = 'USC2026';
+const STORAGE_KEY  = 'usc_assessment_config';
+const LEADS_KEY    = 'usc_leads_backup';
+
+let CFG = { workerUrl: 'https://divine-glade-6d7e.cavarjj.workers.dev', apiKey: '' };
+
+function loadConfig() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    CFG.apiKey = saved.apiKey || '';
+    // Always use the hardcoded worker URL, never the saved one
+  } catch(e) {}
+}
+
+function saveSetup() {
+  const key = document.getElementById('setup-apikey').value.trim();
+  CFG.apiKey = key;
+  // Worker URL is hardcoded — always preserve it
+  CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(CFG));
+  showScreen('screen-assessment');
+  initAssessment();
+}
+function skipSetup() {
+  CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(CFG));
+  showScreen('screen-assessment');
+  initAssessment();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// QUESTION DATA — 18 questions, 3 per domain, 1-5 scale
+// Lower score = more pressure in that domain
+// ══════════════════════════════════════════════════════════════════
+const DOMAINS = [
+  { id:'identity',       label:'Identity & Presence',      color:'#4CAF9A' },
+  { id:'decision',       label:'Decision Quality',         color:'#A8C846' },
+  { id:'relational',     label:'Relational Intelligence',  color:'#7A9C28' },
+  { id:'team',           label:'Team Vitality',            color:'#4a8fd4' },
+  { id:'sustainability', label:'Personal Sustainability',  color:'#e0856a' },
+  { id:'clarity',        label:'Strategic Clarity',        color:'#b07fd4' },
+];
+
+const QUESTIONS = [
+  {id:'q1',domain:'identity',number:1,
+   text:'When you are pulled into an unexpected high-stakes situation with no preparation time, how reliably do your actions reflect the leader you work to be?',
+   options:[
+    {score:1,text:'Rarely — pressure tends to surface patterns I am not proud of, and I recognize them after the fact.'},
+    {score:2,text:'Inconsistently — my response depends heavily on the specific stakes and who is in the room.'},
+    {score:3,text:'Moderately — I hold my standard in most situations, but the hardest ones expose gaps I have not yet resolved.'},
+    {score:4,text:'Usually — I have lapses, but I recognize them quickly and course-correct.'},
+    {score:5,text:'Consistently — pressure tends to clarify rather than distort how I lead. I know who I am in those moments.'},
+   ]},
+  {id:'q2',domain:'identity',number:2,
+   text:'When you receive direct, substantive critical feedback about your leadership from someone whose perspective you respect, your honest first internal response is typically:',
+   options:[
+    {score:1,text:'Defensive — I find myself building a counterargument before they have finished speaking.'},
+    {score:2,text:'Anxious — my first concern tends to be about how this affects my standing or credibility.'},
+    {score:3,text:'Mixed — I can hear it, but I am not confident I process it without distortion.'},
+    {score:4,text:'Curious — I genuinely want to understand what is behind it, even when the discomfort is real.'},
+    {score:5,text:'Grounded — I can take it in fully without it destabilizing my sense of direction or identity.'},
+   ]},
+  {id:'q3',domain:'identity',number:3,
+   text:'In the past 90 days, how aware have you been of a meaningful gap between how you were actually leading and how you believe you should lead?',
+   options:[
+    {score:1,text:'Frequently — the gap feels persistent and I have not found a reliable way to close it.'},
+    {score:2,text:'Regularly — I notice it but my attempts to address it have not been consistent enough to matter.'},
+    {score:3,text:'Occasionally — I identify it in specific situations but have not seen it as a broader pattern requiring attention.'},
+    {score:4,text:'Rarely — when it appears, I tend to recognize and self-correct relatively quickly.'},
+    {score:5,text:'Very rarely — my behavior feels genuinely aligned with my values as a leader most of the time.'},
+   ]},
+  {id:'q4',domain:'decision',number:4,
+   text:'When you face a high-consequence decision with genuinely incomplete information, your most reliable approach is:',
+   options:[
+    {score:1,text:'I tend to delay until I feel more certain — even when I know the delay carries its own costs.'},
+    {score:2,text:'I move forward but often revisit and second-guess, which creates instability for the people around me.'},
+    {score:3,text:'I use a mix of intuition and available data, but I am not consistently confident in my own process.'},
+    {score:4,text:'I have a reasonably clear framework for judging when enough information is enough, and I use it.'},
+    {score:5,text:'I can move decisively with incomplete information and hold that decision with appropriate confidence — revising when facts change, not when doubt returns.'},
+   ]},
+  {id:'q5',domain:'decision',number:5,
+   text:'When facing a genuinely complex problem — one where cause and effect relationships are unclear and no expert can give you the right answer — you typically:',
+   options:[
+    {score:1,text:'Apply a familiar framework even when I sense it does not really fit the situation.'},
+    {score:2,text:'Feel uncomfortable with the ambiguity and push for a cleaner problem definition than the situation actually warrants.'},
+    {score:3,text:'Recognize the complexity but struggle to deliberately adapt how I approach it.'},
+    {score:4,text:'Slow down, invite diverse perspectives, and distinguish explicitly between what I know and what I am assuming.'},
+    {score:5,text:'Move into the complexity with genuine curiosity — I iterate and probe rather than seek premature resolution.'},
+   ]},
+  {id:'q6',domain:'decision',number:6,
+   text:'How often do you find yourself mentally revisiting decisions you have already made and implemented?',
+   options:[
+    {score:1,text:'Very often — it is a significant and persistent drain on my mental energy.'},
+    {score:2,text:'Often — it affects my ability to be fully present in what comes after the decision.'},
+    {score:3,text:'Sometimes — it happens but does not usually derail me or affect those around me.'},
+    {score:4,text:'Rarely — I generally trust my process and move forward without extended rumination.'},
+    {score:5,text:'Almost never — once a decision is made and implemented, my energy moves completely to execution.'},
+   ]},
+  {id:'q7',domain:'relational',number:7,
+   text:'When a colleague or direct report consistently resists your direction without a clearly stated reason, your most typical response is:',
+   options:[
+    {score:1,text:'Frustration — I tend to either escalate pressure or gradually disengage from the relationship.'},
+    {score:2,text:'Avoidance — I find ways to work around the resistance rather than addressing it directly.'},
+    {score:3,text:'Concern — I notice it but I am not consistently sure how to approach it productively.'},
+    {score:4,text:'Curiosity — I try to understand the underlying concern before addressing the behavior.'},
+    {score:5,text:'Engagement — I move toward the friction because I know the conversation will clarify something important for both of us.'},
+   ]},
+  {id:'q8',domain:'relational',number:8,
+   text:'In the past 90 days, how many times have you initiated a direct, substantive conversation with a peer specifically about how your working styles or priorities create friction between you?',
+   options:[
+    {score:1,text:'Zero — those conversations feel too risky, uncomfortable, or politically costly.'},
+    {score:2,text:'Once or twice, but only because a circumstance or the other person forced it.'},
+    {score:3,text:'A few — I engage when it clearly becomes necessary, but I do not seek them out.'},
+    {score:4,text:'Regularly — I treat this as a normal part of how I maintain high-quality working relationships.'},
+    {score:5,text:'Proactively and consistently — I see these conversations as a leadership responsibility, not an optional act of courage.'},
+   ]},
+  {id:'q9',domain:'relational',number:9,
+   text:'When you sense interpersonal tension within your leadership team, your most common response is:',
+   options:[
+    {score:1,text:'I hope it resolves on its own and avoid naming it directly.'},
+    {score:2,text:'I address it in private one-on-ones but rarely bring it to the team level where it actually lives.'},
+    {score:3,text:'I address it when it is clearly affecting performance, but I often miss the earlier signals.'},
+    {score:4,text:'I name it when I see it and create structured space for the team to work through it.'},
+    {score:5,text:'I treat surface tension as useful information and actively develop the team's capacity to navigate it together — not just manage it.'},
+   ]},
+  {id:'q10',domain:'team',number:10,
+   text:'If your team were asked anonymously what typically happens when they raise a problem that implicates your decisions or priorities, the most honest answer would be:',
+   options:[
+    {score:1,text:'They would say it is not safe — the personal cost of raising it outweighs the organizational benefit.'},
+    {score:2,text:'They would say it depends heavily on your mood or the magnitude of what they are questioning.'},
+    {score:3,text:'They would say you listen, but that meaningful change rarely follows what they surface.'},
+    {score:4,text:'They would say you engage genuinely and sometimes adjust your direction based on what you hear.'},
+    {score:5,text:'They would say raising hard things is how the team gets better — and that you actively model that.'},
+   ]},
+  {id:'q11',domain:'team',number:11,
+   text:'When your team underperforms relative to expectations on something that genuinely matters, your instinctive first response is:',
+   options:[
+    {score:1,text:'Identify who is responsible and address it directly and immediately with that person.'},
+    {score:2,text:'Increase oversight and accountability mechanisms to prevent recurrence.'},
+    {score:3,text:'Clarify expectations more explicitly — my first assumption is usually a communication gap.'},
+    {score:4,text:'Understand what the team actually experienced and distinguish between execution failure and system failure.'},
+    {score:5,text:'Treat it as a signal about the performance environment and examine what I may have contributed to the conditions.'},
+   ]},
+  {id:'q12',domain:'team',number:12,
+   text:'How clearly does each member of your team currently understand how their specific role connects to the organization's highest priorities?',
+   options:[
+    {score:1,text:'Most of them probably could not articulate it with real confidence if asked today.'},
+    {score:2,text:'They understand their own work but the connection to what matters most is fuzzy for most.'},
+    {score:3,text:'Some have genuine clarity; others have a general sense but not one that is specific enough to guide their decisions.'},
+    {score:4,text:'Most have solid clarity — I have invested in making this connection explicit and visible.'},
+    {score:5,text:'All of them can draw a direct line from their daily work to what matters most — and I can verify this, because I ask.'},
+   ]},
+  {id:'q13',domain:'sustainability',number:13,
+   text:'At the end of a demanding week, how reliably do you have sufficient capacity — mental, emotional, and physical — for the leadership the following week will require?',
+   options:[
+    {score:1,text:'Rarely — I am operating on deficit most of the time and managing it as a permanent condition.'},
+    {score:2,text:'Sometimes — I can recover when the circumstances allow, but I cannot consistently count on it.'},
+    {score:3,text:'Moderately — I manage, but I know I am not operating at full capacity and I notice the effects.'},
+    {score:4,text:'Usually — I have practices that work for me most of the time, even under pressure.'},
+    {score:5,text:'Reliably — I treat my own recovery as a leadership responsibility and protect it with the same discipline I apply to my professional commitments.'},
+   ]},
+  {id:'q14',domain:'sustainability',number:14,
+   text:'Which best describes your current relationship with the practices that sustain your performance capacity — sleep, physical activity, genuine disconnection from work, and meaningful relationships outside of it?',
+   options:[
+    {score:1,text:'They are largely absent — work has crowded them out and I have normalized the absence.'},
+    {score:2,text:'They exist but inconsistently — they are the first things to disappear when pressure increases.'},
+    {score:3,text:'Some are in place. Others I know I need and have not yet made non-negotiable.'},
+    {score:4,text:'Most are reasonably consistent — I protect them even when pressure would justify abandoning them.'},
+    {score:5,text:'They are anchors, not rewards. They are what make sustained high performance possible — I do not negotiate with them.'},
+   ]},
+  {id:'q15',domain:'sustainability',number:15,
+   text:'Over the past three months, how often have you noticed your leadership effectiveness declining specifically because of accumulated fatigue or sustained stress — in your patience, your presence, your judgment, or your emotional regulation?',
+   options:[
+    {score:1,text:'Regularly — it is affecting how I lead and I am not fully in control of it.'},
+    {score:2,text:'Often — especially in the second half of intense periods, I can see it in how I show up.'},
+    {score:3,text:'Sometimes — I notice it but I can usually compensate, at least in the moments that most matter.'},
+    {score:4,text:'Rarely — I have enough recovery built in that it does not typically compound to the point of affecting my leadership.'},
+    {score:5,text:'Very rarely — my practices prevent the accumulation from reaching a level that meaningfully compromises my effectiveness.'},
+   ]},
+  {id:'q16',domain:'clarity',number:16,
+   text:'How often does the daily reality of your leadership feel genuinely aligned with what you believe your most important contribution could be?',
+   options:[
+    {score:1,text:'Rarely — there is a significant gap between where my energy goes and what I believe actually matters most.'},
+    {score:2,text:'Sometimes — alignment comes in moments but is not the steady state of how I lead.'},
+    {score:3,text:'Moderately — there is reasonable overlap, but also meaningful drift that I have not fully resolved.'},
+    {score:4,text:'Usually — I have made active choices that create significant alignment between my priorities and my contribution.'},
+    {score:5,text:'Consistently — my daily work is a direct expression of what I am here to contribute, and I can name exactly what that is.'},
+   ]},
+  {id:'q17',domain:'clarity',number:17,
+   text:'If three of your most senior stakeholders were independently asked what you stand for as a leader and what your primary contribution is, the answers would be:',
+   options:[
+    {score:1,text:'Significantly different — I do not believe I have established a clear, consistent identity in their minds.'},
+    {score:2,text:'Somewhat consistent in broad strokes but divergent on the specifics that actually matter.'},
+    {score:3,text:'Reasonably consistent — they share a general picture but may miss important dimensions of how I see my role.'},
+    {score:4,text:'Largely consistent — I have been deliberate about communicating what I stand for.'},
+    {score:5,text:'Highly consistent — I have worked to ensure the people who matter most see me accurately and clearly, and I have verified this.'},
+   ]},
+  {id:'q18',domain:'clarity',number:18,
+   text:"When your organization's demands and your personal leadership values genuinely conflict, you typically:",
+   options:[
+    {score:1,text:'Default to what the organization demands — I have not fully reckoned with the accumulating personal cost of that pattern.'},
+    {score:2,text:'Comply while carrying increasing friction — I manage the tension but it wears on me in ways I recognize.'},
+    {score:3,text:'Raise the tension internally but rarely succeed in changing either the demand or my response to it.'},
+    {score:4,text:'Navigate it case by case — I can hold the tension productively most of the time without losing myself in it.'},
+    {score:5,text:'Treat the conflict as important information and work to resolve it at a systemic level — changing conditions rather than just managing symptoms.'},
+   ]},
+];
+
+
+const PP_DESCRIPTIONS = {
+  'Identity & Presence':     'The gap between who you are as a leader and how you show up in the moments that matter most. This is the pressure point underneath executive presence, authentic leadership, and the sense that the role is asking you to be someone you are not quite sure you are.',
+  'Decision Quality':        'The pressure point under the surface of every high-stakes call you are not fully settled on. This is where the quality of your judgment, the repeatability of your process, and your relationship with uncertainty are costing you clarity and sometimes costing the organization the right decision.',
+  'Relational Intelligence': 'The gap between the quality of relationships you need to produce results and the quality you are actually operating with. Influencing without authority, navigating conflict without losing trust, and holding the complexity of senior team dynamics are the work underneath this domain.',
+  'Team Vitality':           'The distance between your team\'s collective potential and its current output. When trust is low, accountability is inconsistent, or conversations that need to happen are being avoided, the gap shows up in results. This is the domain that determines whether your team multiplies your leadership or absorbs it.',
+  'Personal Sustainability':  'The pressure point underneath performance. At senior levels, the depletion pattern is often the last thing addressed and the first thing that explains why everything else has become harder. This domain asks what the role is actually costing you and what you are not replenishing.',
+  'Strategic Clarity':       'The gap between where your attention is and where it needs to be. At the top, the danger is not a lack of activity. It is activity that is misaligned with the two or three things that actually determine what the next 24 months look like for you and the organization.',
+};
+
+// ══════════════════════════════════════════════════════════════════
+// ASSESSMENT STATE
+// ══════════════════════════════════════════════════════════════════
+let answers   = {}; // keyed by question id, value is option score
+let currentQ  = 0;
+let results   = null;
+
+function initAssessment() {
+  answers  = {};
+  currentQ = 0;
+  results  = null;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q   = QUESTIONS[currentQ];
+  const dom = DOMAINS[q.domain];
+  const pip = Math.floor(currentQ / 3);
+
+  // Update domain pips
+  for(let i = 0; i < 6; i++) {
+    const el = document.getElementById('pip-' + i);
+    el.className = 'domain-pip' + (i < pip ? ' done' : i === pip ? ' active' : '');
+  }
+
+  const cur = answers[q.id] ?? null;
+
+  const wrap = document.getElementById('qWrap');
+  wrap.innerHTML = `
+    <div class="q-anim">
+      <div class="q-domain-label">${dom.name}</div>
+      <div class="q-num">Question ${currentQ + 1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="scale-wrap">
+        ${q.options.map(opt => `
+          <button class="opt-btn ${cur === opt.score ? 'selected' : ''}"
+                  onclick="selectAnswer(${opt.score})">
+            <div class="opt-radio ${cur === opt.score ? 'checked' : ''}">
+              ${cur === opt.score ? '<div class="opt-radio-dot"></div>' : ''}
+            </div>
+            <span class="opt-text">${opt.text}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-nav">
+        <button class="q-prev" onclick="prevQ()" ${currentQ === 0 ? 'style="visibility:hidden"' : ''}>&larr; Back</button>
+        <span class="q-progress">${currentQ + 1} / ${QUESTIONS.length}</span>
+        <button class="q-next ${cur !== null ? 'enabled' : ''}" id="nextBtn" onclick="nextQ()">
+          ${currentQ === QUESTIONS.length - 1 ? 'See results' : 'Next &rarr;'}
+        </button>
+      </div>
+    </div>`;
+}
+
+function selectAnswer(score) {
+  const q = QUESTIONS[currentQ];
+  answers[q.id] = score;
+  renderQuestion(); // re-render to show selection state
+}
+
+function prevQ() {
+  if(currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+function nextQ() {
+  const q = QUESTIONS[currentQ];
+  if(answers[q.id] === undefined || answers[q.id] === null) return;
+  if(currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    computeResults();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// RESULTS COMPUTATION
+// ══════════════════════════════════════════════════════════════════
+function getScoreLabel(score) {
+  if(score >= 80) return { label:'High functioning',      color:'#2E6B3E' };
+  if(score >= 60) return { label:'Adequate',              color:'#7A9C28' };
+  if(score >= 40) return { label:'Under strain',          color:'#B07820' };
+  if(score >= 20) return { label:'Significant pressure',  color:'#B04A20' };
+  return                  { label:'Critical gap',         color:'#8B1A1A' };
+}
+
+function computeResults() {
+  // Score each domain: average option scores (1-5), normalize to 0-100
+  // Lower score = more pressure = primary pressure point
+  const domainScores = Object.keys(DOMAINS).map(dk => {
+    const d  = DOMAINS[dk];
+    const qs = QUESTIONS.filter(q => q.domain === dk);
+    const total = qs.reduce((sum, q) => sum + (answers[q.id] || 3), 0);
+    const avg   = qs.length > 0 ? total / qs.length : 3;
+    const score = Math.round(((avg - 1) / 4) * 100);
+    return { ...d, score };
+  });
+
+  const sorted    = [...domainScores].sort((a, b) => a.score - b.score);
+  const primary   = sorted[0];
+  const secondary = sorted[1];
+
+  results = { domainScores, primary, secondary, timestamp: new Date().toISOString() };
+
+  // Render results
+  document.getElementById('results-headline').textContent =
+    `Your primary pressure point: ${primary.label}`;
+  const { label: primaryLabel } = getScoreLabel(primary.score);
+  document.getElementById('results-sub').textContent =
+    `Scoring ${primary.score}/100 (${primaryLabel}), this is the domain where the gap between where you are and where you need to be is costing you most right now.`;
+  document.getElementById('primaryTitle').textContent = primary.name;
+  document.getElementById('primaryDesc').textContent  = primary.lowScore || '';
+
+  // Scores grid
+  // Sort by score ascending (lowest = most pressure = primary)
+  const sortedScores = [...domainScores].sort((a, b) => a.score - b.score);
+  let gridHtml = '';
+  sortedScores.forEach((d, idx) => {
+    const isPrimary   = d.id === primary.id;
+    const isSecondary = d.id === secondary.id;
+    const { label: scoreLabel, color: labelColor } = getScoreLabel(d.score);
+    gridHtml += `<div class="score-card ${isPrimary ? 'primary' : isSecondary ? 'secondary' : ''}">
+      <div class="score-domain">${d.name}</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:${d.score}%;background:${d.color}"></div></div>
+      <div class="score-val" style="color:${labelColor}">${d.score} <span style="font-size:.65rem;font-weight:400">${scoreLabel}</span></div>
+      ${isPrimary ? '<div style="font-size:.65rem;color:var(--olive);margin-top:2px;font-family:var(--mono)">PRIMARY</div>' : ''}
+      ${isSecondary ? '<div style="font-size:.65rem;color:rgba(27,58,90,.6);margin-top:2px;font-family:var(--mono)">SECONDARY</div>' : ''}
+    </div>`;
+  });
+  document.getElementById('scoresGrid').innerHTML = gridHtml;
+
+  // Populate research + coaching panels
+  const dd = document.getElementById('domainDetail');
+  if(dd) dd.innerHTML = `
+    <div style="background:white;border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1rem;border-left:3px solid ${primary.color};border:1px solid rgba(0,0,0,.07)">
+      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:${primary.color};margin-bottom:.65rem">Research basis</div>
+      <p style="font-size:.875rem;line-height:1.8;color:rgba(61,61,61,.75);margin:0">${primary.researchBasis}</p>
+    </div>
+    <div style="background:var(--navy);border-radius:10px;padding:1.5rem 1.75rem;margin-bottom:1.5rem">
+      <div style="font-size:.65rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:.65rem">How coaching addresses this</div>
+      <p style="font-size:.875rem;line-height:1.8;color:rgba(255,255,255,.75);margin:0">${primary.coachingFocus}</p>
+    </div>`;
+
+  showScreen('screen-results');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// EMAIL CAPTURE + NOTION WRITE
+// ══════════════════════════════════════════════════════════════════
+async function submitEmail() {
+  const name  = document.getElementById('captureName').value.trim();
+  const email = document.getElementById('captureEmail').value.trim();
+  const status = document.getElementById('emailStatus');
+
+  if(!email || !email.includes('@')) {
+    status.textContent = 'Please enter a valid email address.';
+    status.className   = 'email-status err';
+    return;
+  }
+
+  status.textContent = 'Saving your results...';
+  status.className   = 'email-status loading';
+
+  const contactName = name || email.split('@')[0];
+  const today       = new Date().toISOString().slice(0, 10);
+  const { primary, secondary } = results;
+
+  // Score map (domain id -> 0-100 score)
+  const sc = {};
+  results.domainScores.forEach(d => sc[d.id] = d.score);
+
+  // Backup to localStorage
+  const lead = { contactName, email, today, primary: primary.label, secondary: secondary.label,
+    scores: sc, timestamp: results.timestamp };
+  try {
+    const backup = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
+    backup.unshift(lead);
+    localStorage.setItem(LEADS_KEY, JSON.stringify(backup.slice(0, 200)));
+  } catch(e) {}
+
+  // Write to Notion via Cloudflare Worker
+  if(CFG.workerUrl) {
+    try {
+      status.textContent = 'Writing to Notion CRM...';
+      const body = {
+        parent: { database_id: NOTION_DB_ID },
+        properties: {
+          Contact:           { title: [{ text: { content: contactName } }] },
+          Email:             { email: email },
+          Status:            { select: { name: 'New Lead' } },
+          Source:            { select: { name: 'Assessment' } },
+          'Primary Pressure Point':   { select: { name: primary.label } },
+          'Secondary Pressure Point': { select: { name: secondary.label } },
+          'Identity Score':      { number: sc.identity },
+          'Decision Score':      { number: sc.decision },
+          'Relational Score':    { number: sc.relational },
+          'Team Score':          { number: sc.team },
+          'Sustainability Score':{ number: sc.sustainability },
+          'Clarity Score':       { number: sc.clarity },
+          'Assessment Date':     { date: { start: today } },
+        }
+      };
+
+      const resp = await fetch(`${CFG.workerUrl}/v1/pages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if(!resp.ok) {
+        const err = await resp.text().catch(() => '');
+        throw new Error(`Notion ${resp.status}: ${err.slice(0,120)}`);
+      }
+
+      status.textContent = '✓ Saved to Notion CRM';
+      status.className   = 'email-status ok';
+    } catch(e) {
+      console.warn('Notion write failed:', e);
+      status.textContent = '✓ Saved locally (Notion sync will retry). ' + e.message;
+      status.className   = 'email-status err';
+    }
+  } else {
+    status.textContent = '✓ Saved locally (no Worker URL configured';
+    status.className   = 'email-status ok';
+  }
+
+  setTimeout(() => {
+    document.getElementById('emailCapture').style.display  = 'none';
+    document.getElementById('emailSuccess').style.display  = 'block';
+  }, 1200);
+}
+
+function skipEmail() {
+  document.getElementById('emailCapture').style.display = 'none';
+}
+
+// ══════════════════════════════════════════════════════════════════
+// ADMIN DASHBOARD
+// ══════════════════════════════════════════════════════════════════
+function showAdmin() {
+  showScreen('screen-admin');
+  document.getElementById('mainFooter').style.display = 'none';
+  document.getElementById('pinInput').value = '';
+  document.getElementById('pinErr').textContent = '';
+  document.getElementById('adminPinWrap').style.display = 'flex';
+  document.getElementById('adminDashboard').style.display = 'none';
+}
+
+function checkPin() {
+  const pin = document.getElementById('pinInput').value.trim();
+  if(pin === ADMIN_PIN) {
+    document.getElementById('adminPinWrap').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    loadContacts();
+  } else {
+    document.getElementById('pinErr').textContent = 'Incorrect PIN.';
+    document.getElementById('pinInput').value = '';
+  }
+}
+
+function lockAdmin() {
+  document.getElementById('adminPinWrap').style.display = 'flex';
+  document.getElementById('adminDashboard').style.display = 'none';
+  document.getElementById('mainFooter').style.display = 'block';
+  showScreen('screen-assessment');
+}
+
+async function loadContacts() {
+  const list    = document.getElementById('contactsList');
+  const errBanner = document.getElementById('adminErr');
+  errBanner.style.display = 'none';
+  list.innerHTML = '<div class="admin-loading">Loading contacts from Notion...</div>';
+
+  let contacts = [];
+  let source   = 'notion';
+
+  if(CFG.workerUrl) {
+    try {
+      const resp = await fetch(
+        `${CFG.workerUrl}/v1/databases/${NOTION_DB_ID}/query`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sorts: [{ property: 'Assessment Date', direction: 'descending' }],
+            page_size: 100,
+          }),
+        }
+      );
+      if(!resp.ok) throw new Error(`Notion ${resp.status}`);
+      const data = await resp.json();
+      contacts = (data.results || []).map(parseNotionPage);
+    } catch(e) {
+      errBanner.textContent = `Notion pull failed: ${e.message}. Showing localStorage backup.`;
+      errBanner.style.display = 'block';
+      source = 'local';
+      contacts = getLocalLeads();
+    }
+  } else {
+    errBanner.textContent = 'No Worker URL configured. Showing localStorage backup only.';
+    errBanner.style.display = 'block';
+    source = 'local';
+    contacts = getLocalLeads();
+  }
+
+  renderDashboard(contacts, source);
+}
+
+function parseNotionPage(page) {
+  const p = page.properties || {};
+  const getProp = (key, type) => {
+    const prop = p[key];
+    if(!prop) return null;
+    if(type === 'title')  return prop.title?.[0]?.plain_text || '';
+    if(type === 'email')  return prop.email || '';
+    if(type === 'select') return prop.select?.name || '';
+    if(type === 'number') return prop.number ?? null;
+    if(type === 'date')   return prop.date?.start || '';
+    if(type === 'check')  return prop.checkbox || false;
+    return null;
+  };
+  return {
+    id:        page.id,
+    name:      getProp('Contact','title'),
+    email:     getProp('Email','email'),
+    status:    getProp('Status','select'),
+    primary:   getProp('Primary Pressure Point','select'),
+    secondary: getProp('Secondary Pressure Point','select'),
+    date:      getProp('Assessment Date','date'),
+    calendly:  getProp('Calendly Booked','check'),
+    identity:      getProp('Identity Score','number'),
+    decision:      getProp('Decision Score','number'),
+    relational:    getProp('Relational Score','number'),
+    team:          getProp('Team Score','number'),
+    sustainability:getProp('Sustainability Score','number'),
+    clarity:       getProp('Clarity Score','number'),
+  };
+}
+
+function getLocalLeads() {
+  try {
+    return (JSON.parse(localStorage.getItem(LEADS_KEY) || '[]')).map(l => ({
+      id: null,
+      name: l.contactName, email: l.email, status: 'New Lead',
+      primary: l.primary, secondary: l.secondary, date: l.today,
+      identity: l.scores?.identity, decision: l.scores?.decision,
+      relational: l.scores?.relational, team: l.scores?.team,
+      sustainability: l.scores?.sustainability, clarity: l.scores?.clarity,
+    }));
+  } catch(e) { return []; }
+}
+
+function renderDashboard(contacts, source) {
+  const stats = document.getElementById('adminStats');
+  const STATUSES = ['New Lead','Email Sent','Discovery Call Booked','In Coaching','Not a Fit','Nurture'];
+  stats.innerHTML = STATUSES.map(s => {
+    const n = contacts.filter(c => c.status === s).length;
+    return `<div class="stat-pill"><strong>${n}</strong> ${s}</div>`;
+  }).join('') + `<div class="stat-pill"><strong>${contacts.length}</strong> Total</div>`;
+
+  const list = document.getElementById('contactsList');
+  if(!contacts.length) {
+    list.innerHTML = '<div class="empty-state">No contacts yet.<br>Complete an assessment with email capture to see leads here.</div>';
+    return;
+  }
+
+  list.innerHTML = contacts.map((c, i) => {
+    const scores = [
+      { l:'Identity',     v:c.identity },
+      { l:'Decision',     v:c.decision },
+      { l:'Relational',   v:c.relational },
+      { l:'Team',         v:c.team },
+      { l:'Sustain',      v:c.sustainability },
+      { l:'Clarity',      v:c.clarity },
+    ].filter(s => s.v !== null && s.v !== undefined);
+
+    return `<div class="contact-card" id="cc-${i}">
+      <div class="contact-top">
+        <div>
+          <div class="contact-name">${esc(c.name || 'Unknown')}</div>
+          <div class="contact-email">${esc(c.email || '')}</div>
+        </div>
+        <div class="contact-date">${c.date || ''}</div>
+      </div>
+      <div class="contact-scores">
+        ${c.primary   ? `<span class="cscore primary">&#9660; ${esc(c.primary)}</span>`   : ''}
+        ${c.secondary ? `<span class="cscore secondary">&#9660; ${esc(c.secondary)}</span>` : ''}
+        ${scores.map(s => `<span class="cscore">${s.l}: ${s.v?.toFixed(1) ?? '?'}</span>`).join('')}
+      </div>
+      <div class="contact-bottom">
+        <select class="status-select" onchange="updateStatus('${c.id}', this.value)">
+          ${['New Lead','Email Sent','Discovery Call Booked','In Coaching','Not a Fit','Nurture'].map(s =>
+            `<option${c.status === s ? ' selected' : ''}>${s}</option>`).join('')}
+        </select>
+        <button class="followup-btn" onclick="toggleFollowup(${i}, ${JSON.stringify(c).replace(/"/g,'&quot;')})">&#9993; Follow-up</button>
+        ${c.email ? `<a class="gmail-btn" href="${buildMailto(c)}" target="_blank">Open in Gmail</a>` : ''}
+      </div>
+      <div class="followup-panel" id="fp-${i}" style="display:none"></div>
+    </div>`;
+  }).join('');
+}
+
+function buildMailto(c) {
+  const subject = encodeURIComponent(`Following up on your Leadership Pressure Point: ${c.primary || ''}`);
+  const body    = encodeURIComponent(
+    `Hi ${c.name || 'there'},\n\nI wanted to personally follow up on your Leadership Pressure Point Assessment results.\n\nYour primary pressure point: ${c.primary || 'N/A'}\nYour secondary pressure point: ${c.secondary || 'N/A'}\n\nI'd love to connect and talk through what this is pointing toward for you.\n\nBest,\nJulian Johnson, ICF PCC\nUnified Solutions Inc.\n952.594.8611`
+  );
+  return `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(c.email)}&su=${subject}&body=${body}`;
+}
+
+async function updateStatus(pageId, status) {
+  if(!pageId || !CFG.workerUrl) return;
+  try {
+    await fetch(`${CFG.workerUrl}/v1/pages/${pageId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ properties: { Status: { select: { name: status } } } }),
+    });
+  } catch(e) { console.warn('Status update failed:', e); }
+}
+
+let openFollowup = null;
+function toggleFollowup(i, c) {
+  const panel = document.getElementById(`fp-${i}`);
+  if(panel.style.display === 'block') {
+    panel.style.display = 'none';
+    return;
+  }
+  if(openFollowup !== null) {
+    const prev = document.getElementById(`fp-${openFollowup}`);
+    if(prev) prev.style.display = 'none';
+  }
+  openFollowup = i;
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <div style="display:flex;gap:.5rem;margin-bottom:.65rem;flex-wrap:wrap">
+      <button class="gen-btn" onclick="generateEmail(${i}, ${JSON.stringify(c).replace(/"/g,'&quot;')})">&#9889; Generate AI email</button>
+      <button class="copy-btn" onclick="copyEmail(${i})">Copy</button>
+      <a class="gmail-btn" id="gml-${i}" href="${buildMailto(c)}" target="_blank">Open in Gmail &rarr;</a>
+    </div>
+    <input class="followup-subject" id="subj-${i}" placeholder="Subject line..." value="Re: Your Leadership Pressure Point — ${c.primary || ''}">
+    <textarea id="body-${i}" placeholder="Click 'Generate AI email' to create a personalized follow-up, or write your own...">${buildDefaultEmail(c)}</textarea>`;
+}
+
+function buildDefaultEmail(c) {
+  return `Hi ${c.name || 'there'},
+
+Thank you for taking the Leadership Pressure Point Assessment.
+
+Your results show that your primary pressure point right now is ${c.primary || 'N/A'}, with ${c.secondary || 'N/A'} as a close secondary.
+
+${PP_DESCRIPTIONS[c.primary] || ''}
+
+I'd love to connect for a brief discovery call to talk through what this is pointing toward for you specifically — what it looks like in practice and what addressing it would actually require.
+
+Would a 30-minute call work? You can book directly at unifiedsolutionsinc.com/book-a-call.
+
+Julian Johnson, ICF PCC
+Unified Solutions Inc.
+952.594.8611 | contact@unifiedsolutionsinc.com`;
+}
+
+async function generateEmail(i, c) {
+  const bodyEl  = document.getElementById(`body-${i}`);
+  const subjEl  = document.getElementById(`subj-${i}`);
+  if(!CFG.apiKey) {
+    bodyEl.value = '[No Anthropic API key configured. Go to Setup to add your API key, or write manually above.]';
+    return;
+  }
+  bodyEl.value = 'Generating personalized email...';
+
+  const prompt = `You are Julian Johnson, ICF PCC, founder of Unified Solutions Inc.
+Write a brief, warm, personalized follow-up email (200-250 words) to ${c.name || 'a leader'} who just completed the Leadership Pressure Point Assessment.
+
+Their primary pressure point: ${c.primary}
+Their secondary pressure point: ${c.secondary || 'N/A'}
+Domain scores (1-5, lower = more pressure): Identity ${c.identity}, Decision ${c.decision}, Relational ${c.relational}, Team ${c.team}, Sustainability ${c.sustainability}, Clarity ${c.clarity}
+
+Requirements:
+- Open with their name and acknowledge their results without being generic
+- One sentence that demonstrates you understand what this pressure point FEELS like from the inside — the internal experience, not the business definition
+- One sentence on the research basis or pattern you see in leaders with this primary pressure point
+- Brief, honest description of how coaching addresses this specifically
+- Low-pressure CTA to a 30-minute discovery call at unifiedsolutionsinc.com/book-a-call
+- Sign as Julian Johnson, ICF PCC, Unified Solutions Inc., 952.594.8611
+- No em dashes. Warm but direct. Real, not formulaic.
+- Subject line on the first line formatted as: Subject: [subject here]
+- Then a blank line, then the email body`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-version': '2023-06-01', 'x-api-key': CFG.apiKey },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 600,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+    });
+    if(!resp.ok) throw new Error(`API ${resp.status}`);
+    const data  = await resp.json();
+    const text  = data.content?.[0]?.text || '';
+    const lines = text.split('\n');
+    const subjLine = lines.find(l => l.toLowerCase().startsWith('subject:'));
+    if(subjLine) {
+      subjEl.value = subjLine.replace(/^subject:\s*/i, '').trim();
+      bodyEl.value = lines.slice(lines.indexOf(subjLine) + 2).join('\n').trim();
+    } else {
+      bodyEl.value = text;
+    }
+    // Update Gmail link with generated content
+    const newMailto = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(c.email)}&su=${encodeURIComponent(subjEl.value)}&body=${encodeURIComponent(bodyEl.value)}`;
+    const gml = document.getElementById(`gml-${i}`);
+    if(gml) gml.href = newMailto;
+  } catch(e) {
+    bodyEl.value = `Email generation failed: ${e.message}. Write manually above or check your API key in Setup.`;
+  }
+}
+
+function copyEmail(i) {
+  const subj = document.getElementById(`subj-${i}`)?.value || '';
+  const body = document.getElementById(`body-${i}`)?.value || '';
+  navigator.clipboard.writeText(`Subject: ${subj}\n\n${body}`)
+    .then(() => { const btn = event.target; btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 2000); })
+    .catch(() => {});
+}
+
+// ══════════════════════════════════════════════════════════════════
+// SCREEN ROUTING
+// ══════════════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el) el.classList.add('active');
+  document.getElementById('mainFooter').style.display = id === 'screen-admin' ? 'none' : 'block';
+  window.scrollTo(0, 0);
+}
+
+// ── UTILS ──
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ══════════════════════════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════════════════════════
+(function boot() {
+  loadConfig();
+  // Worker URL is always hardcoded
+  CFG.workerUrl = 'https://divine-glade-6d7e.cavarjj.workers.dev';
+  if (!CFG.apiKey) {
+    // No API key saved yet — show setup screen
+    showScreen('screen-setup');
+  } else {
+    // API key already saved — go straight to assessment
+    showScreen('screen-assessment');
+    initAssessment();
+  }
+})();
+</script>
+</body>
+</html>
