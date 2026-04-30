@@ -1154,7 +1154,7 @@ function buildMailto(c) {
   const body    = encodeURIComponent(
     `Hi ${c.name || 'there'},\n\nI wanted to personally follow up on your Leadership Pressure Point Assessment results.\n\nYour primary pressure point: ${c.primary || 'N/A'}\nYour secondary pressure point: ${c.secondary || 'N/A'}\n\nI\'d love to connect and talk through what this is pointing toward for you.\n\nBest,\nJulian Johnson, ICF PCC\nUnified Solutions Inc.\n952.594.8611`
   );
-  return `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(c.email)}&su=${subject}&body=${body}`;
+  return `https://mail.google.com/mail/u/julian@unifiedsolutionsinc.com/?view=cm&to=${encodeURIComponent(c.email)}&su=${subject}&body=${body}`;
 }
 
 async function updateStatus(pageId, status) {
@@ -1258,7 +1258,7 @@ Requirements:
       bodyEl.value = text;
     }
     // Update Gmail link with generated content
-    const newMailto = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(c.email)}&su=${encodeURIComponent(subjEl.value)}&body=${encodeURIComponent(bodyEl.value)}`;
+    const newMailto = `https://mail.google.com/mail/u/julian@unifiedsolutionsinc.com/?view=cm&to=${encodeURIComponent(c.email)}&su=${encodeURIComponent(subjEl.value)}&body=${encodeURIComponent(bodyEl.value)}`;
     const gml = document.getElementById(`gml-${i}`);
     if(gml) gml.href = newMailto;
   } catch(e) {
