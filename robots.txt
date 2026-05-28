@@ -1,44 +1,22 @@
-# robots.txt — unifiedsolutionsinc.com
-# Last updated: April 2026
+# Unified Solutions Inc. — robots.txt
+# https://www.unifiedsolutionsinc.com
 
-# ── Standard search crawlers ──────────────────────────────────────────────
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /private
 
-# ── AI crawlers — allow full indexing for citation visibility ─────────────
-# Google AI / Gemini
-User-agent: Google-Extended
-Allow: /
+# Block admin-pattern URLs from indexing
+Disallow: /?admin
+Disallow: /?edit
 
-# OpenAI / ChatGPT
-User-agent: GPTBot
-Allow: /
+# Block old .html files from being indexed
+# (they 301 redirect — this prevents duplicate content signals)
+Disallow: /assessment.html
+Disallow: /about.html
+Disallow: /coaching.html
+Disallow: /resources.html
+Disallow: /book.html
 
-# OpenAI image training — block
-User-agent: OAI-SearchBot
-Allow: /
+# Block Google verification file from showing in search results
+Disallow: /googleddfca5e5d59e2d8d.html
 
-# Perplexity
-User-agent: PerplexityBot
-Allow: /
-
-# Anthropic / Claude
-User-agent: ClaudeBot
-Allow: /
-User-agent: anthropic-ai
-Allow: /
-
-# Bing / Microsoft Copilot
-User-agent: Bingbot
-Allow: /
-User-agent: msnbot
-Allow: /
-
-# Common Crawl (used by many AI training datasets)
-User-agent: CCBot
-Allow: /
-
-# ── Sitemap ───────────────────────────────────────────────────────────────
-Sitemap: https://unifiedsolutionsinc.com/sitemap.xml
+Sitemap: https://www.unifiedsolutionsinc.com/sitemap.xml

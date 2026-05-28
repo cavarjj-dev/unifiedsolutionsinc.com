@@ -1,0 +1,100 @@
+# ═══════════════════════════════════════════════════════════
+# Unified Solutions Inc. — Netlify Configuration
+# ═══════════════════════════════════════════════════════════
+
+[build]
+  publish = "."
+
+# ── Clean URL routing (SPA pages) ───────────────────────────
+# status = 200 = silent rewrite — URL stays as /about etc. in browser
+# Netlify Analytics sees each as a distinct page hit
+
+[[redirects]]
+  from   = "/about"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/coaching"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/resources"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/assessment"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/book"
+  to     = "/index.html"
+  status = 200
+
+# ── Old .html file redirects (301 = permanent, passes SEO value) ──
+# Redirects old page URLs to new clean URLs.
+# Any Google-indexed links to these will pass authority to the new pages.
+
+[[redirects]]
+  from   = "/assessment.html"
+  to     = "/assessment"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/about.html"
+  to     = "/about"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/coaching.html"
+  to     = "/coaching"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/resources.html"
+  to     = "/resources"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/book.html"
+  to     = "/book"
+  status = 301
+  force  = true
+
+# ── Articles folder redirects to Resources ──────────────────
+# Keeps any Google-indexed article URLs alive and passes
+# authority to the new Resources page.
+# If specific articles have meaningful traffic, create individual
+# 301s pointing to the article anchor or a dedicated article page.
+
+[[redirects]]
+  from   = "/articles/*"
+  to     = "/resources"
+  status = 301
+
+# ── Security Headers ────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options         = "SAMEORIGIN"
+    X-Content-Type-Options  = "nosniff"
+    Referrer-Policy         = "strict-origin-when-cross-origin"
+    Permissions-Policy      = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://mcp.notion.com https://calendly.com; frame-src https://calendly.com https://www.youtube.com https://player.vimeo.com;"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
