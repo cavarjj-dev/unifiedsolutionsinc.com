@@ -857,7 +857,7 @@ function HeadshotAvatar() {
 // ABOUT PAGE
 // ═══════════════════════════════════════════════════════
 function AboutPage() {
-  const { setPage } = useSite();
+  const { setPage, content, updateContent } = useSite();
   return (
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
@@ -941,6 +941,7 @@ function AboutPage() {
 // COACHING PAGE
 // ═══════════════════════════════════════════════════════
 function CoachingPage() {
+  const { content, updateContent } = useSite();
   const [active, setActive] = useState(0);
   return (
     <div style={{ paddingTop:64 }}>
@@ -1015,7 +1016,7 @@ function CoachingPage() {
 // RESOURCES PAGE
 // ═══════════════════════════════════════════════════════
 function ResourcesPage() {
-  const { setPage } = useSite();
+  const { setPage, content, updateContent } = useSite();
   const [filter, setFilter] = useState("all");
   const [email, setEmail] = useState("");
   const [signed, setSigned] = useState(false);
@@ -1320,7 +1321,7 @@ Confirm when done.` }]
 // ASSESSMENT PAGE
 // ═══════════════════════════════════════════════════════
 function AssessmentPage() {
-  const { setPage } = useSite();
+  const { setPage, content, updateContent, isAdmin, setShowAdminModal } = useSite();
   const [answers, setAnswers] = useState({});
   const [step, setStep] = useState("intro"); // intro | quiz | results
   const [email, setEmail] = useState("");
@@ -1356,7 +1357,6 @@ function AssessmentPage() {
 
   const allAnswered = current === 18;
 
-  const { isAdmin, setShowAdminModal } = useSite();
   // Admin panel access now secured by global admin session
   if (showAdmin && isAdmin) return <AdminPanel onClose={() => setShowAdmin(false)} />;
   if (showAdmin && !isAdmin) { setShowAdmin(false); setShowAdminModal(true); }
@@ -1507,6 +1507,7 @@ function AssessmentPage() {
 // BOOK PAGE
 // ═══════════════════════════════════════════════════════
 function BookPage() {
+  const { content, updateContent } = useSite();
   return (
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
