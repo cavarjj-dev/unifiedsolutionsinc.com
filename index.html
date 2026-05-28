@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── SEO ───────────────────────────────────────────── -->
+  <title>ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson</title>
+  <meta name="description" content="Holistic leadership coaching for senior executives and teams navigating high-stakes decisions, transitions, and team dynamics. ICF PCC. ACTC. 1,200+ hours. ExecOnline and Emeritus faculty. Plymouth, MN." />
+  <link rel="canonical" href="https://unifiedsolutionsinc.com/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Julian Johnson, ICF PCC" />
+
+  <!-- ── Open Graph ────────────────────────────────────── -->
+  <meta property="og:title" content="ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson" />
+  <meta property="og:description" content="Holistic leadership coaching for senior executives and teams navigating high-stakes decisions, transitions, and team dynamics. ICF PCC. ACTC. 1,200+ hours." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://unifiedsolutionsinc.com/" />
+  <meta property="og:image" content="https://unifiedsolutionsinc.com/assets/og-home.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Unified Solutions Inc." />
+
+  <!-- ── Twitter Card ──────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@juliancjohnson" />
+  <meta name="twitter:site" content="@unifiedsolutions" />
+  <meta name="twitter:title" content="ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson" />
+  <meta name="twitter:description" content="Holistic leadership coaching for senior executives navigating high-stakes decisions, transitions, and team dynamics." />
+  <meta name="twitter:image" content="https://unifiedsolutionsinc.com/assets/og-home.jpg" />
+
+  <!-- ── Google Fonts preconnect ───────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <!-- ── React 18 + ReactDOM (CDN) ─────────────────────── -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- ── Babel Standalone (JSX in browser) ─────────────── -->
+  <!--
+    NOTE FOR PRODUCTION DEPLOYMENT:
+    Babel Standalone (~1MB) compiles JSX on the client.
+    This works perfectly for a personal business site.
+    If you want faster first-load, run:
+      npx @babel/core --presets @babel/preset-react < index.html > index.compiled.html
+    and switch the script type from "text/babel" to "text/javascript".
+  -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- ── Base Styles ───────────────────────────────────── -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #F7F3ED;
+    }
+    #root { min-height: 100vh; }
+    /* Prevent flash of unstyled content */
+    #root:empty::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100vh;
+      background: #0B1D30;
+    }
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #EDE7DD; }
+    ::-webkit-scrollbar-thumb { background: #C4903A; border-radius: 3px; }
+    /* Focus visible for accessibility */
+    :focus-visible { outline: 2px solid #C4903A; outline-offset: 2px; }
+    /* Prevent text selection on UI controls */
+    button { user-select: none; }
+    /* Table reset */
+    table { border-collapse: collapse; }
+    /* Responsive images */
+    img { max-width: 100%; height: auto; display: block; }
+    /* iOS tap highlight */
+    * { -webkit-tap-highlight-color: transparent; }
+    @media (max-width: 768px) {
+      /* Mobile nav adjustments handled inline via JS */
+    }
+  </style>
+
+  <!--
+  ═══════════════════════════════════════════════════════════════
+  VIDEO PLACEHOLDER — HOW TO ACTIVATE
+  ═══════════════════════════════════════════════════════════════
+  Find the div with id="intro-video" inside the AboutPage component
+  (search for "intro-video" in the script below).
+
+  To show the video:
+    Change  display:"none"  →  display:"block"
+
+  To use YouTube:
+    Set src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+    (e.g. for https://youtube.com/watch?v=dQw4w9WgXcQ → use dQw4w9WgXcQ)
+
+  To use Vimeo:
+    Set src="https://player.vimeo.com/video/YOUR_VIMEO_ID"
+
+  To use a self-hosted MP4 (uploaded to your GitHub repo):
+    Replace the entire <iframe ... /> with:
+    <video controls style={{width:"100%",borderRadius:4}}
+      src="./videos/julian-intro.mp4" />
+
+  File: upload your video as /videos/julian-intro.mp4 in the repo root.
+  ═══════════════════════════════════════════════════════════════
+  -->
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    /* ── React Hooks (global from CDN) ────────────────── */
+    const { useState, useEffect, useRef, createContext, useContext } = React;
+
+    /* ── localStorage Storage Shim ────────────────────────
+       Replaces window.storage (Claude artifact API) with
+       standard localStorage for GitHub Pages deployment.
+       Async interface preserved for drop-in compatibility.
+    ──────────────────────────────────────────────────── */
+    const storage = {
+      async get(key) {
+        try {
+          const v = localStorage.getItem(key);
+          return v !== null ? { value: v } : null;
+        } catch(e) { return null; }
+      },
+      async set(key, value) {
+        try {
+          localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
+          return { key, value };
+        } catch(e) { return null; }
+      },
+      async delete(key) {
+        try { localStorage.removeItem(key); return { deleted: true }; } catch(e) { return null; }
+      }
+    };
+
+
+// ═══════════════════════════════════════════════════════
+// DESIGN TOKENS
+// ═══════════════════════════════════════════════════════
+const C = {
+  navy: "#0B1D30", navyMid: "#152A42", navyLight: "#1D3A57",
+  cream: "#F7F3ED", creamDark: "#EDE7DD", creamDeep: "#E0D8CC",
+  gold: "#C4903A", goldLight: "#DAA84E", goldPale: "#FAF3E4",
+  slate: "#4A6E8C", slateLight: "#6B8FAD",
+  text: "#1A1A1A", muted: "#6B7280", mutedLight: "#9CA3AF",
+  white: "#FFFFFF", border: "#D9D0C4",
+  green: "#1B5E35", red: "#9B2226",
+};
+const PF = "'Playfair Display', Georgia, serif";
+const DM = "'DM Sans', system-ui, -apple-system, sans-serif";
+
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const DOMAINS = [
+  { id:"identity",      label:"Identity & Presence",      color:"#2563EB", icon:"◎", desc:"Who you are as a leader under real pressure" },
+  { id:"decision",      label:"Decision Quality",          color:"#7C3AED", icon:"◈", desc:"How you process decisions when complexity is high" },
+  { id:"relational",    label:"Relational Intelligence",   color:"#059669", icon:"◉", desc:"How you navigate relationships and friction" },
+  { id:"team",          label:"Team Vitality",             color:"#D97706", icon:"◍", desc:"The performance environment your leadership creates" },
+  { id:"sustainability",label:"Personal Sustainability",   color:"#DC2626", icon:"◐", desc:"Your capacity to lead sustainably over time" },
+  { id:"strategic",     label:"Strategic Clarity",         color:"#0891B2", icon:"◑", desc:"Alignment between your leadership and your direction" },
+];
+
+const QUESTIONS = [
+  { id:1,  domain:"identity",      text:"When I enter a high-stakes meeting, my sense of my own authority feels...", options:[
+    {text:"Solid and grounded regardless of who is in the room",score:4},
+    {text:"Situationally reliable — I know when to expect it",score:3},
+    {text:"Dependent on how others respond to me",score:2},
+    {text:"Often uncertain in ways that affect how I show up",score:1}]},
+  { id:2,  domain:"identity",      text:"The way I show up as a leader is consistent whether I'm being observed or not.", options:[
+    {text:"Consistently true — I lead the same way in and out of the room",score:4},
+    {text:"Usually true, with some situational variance",score:3},
+    {text:"I notice gaps between my public and private leadership",score:2},
+    {text:"There's a meaningful gap I haven't addressed",score:1}]},
+  { id:3,  domain:"identity",      text:"When my leadership is challenged, my first internal response is...", options:[
+    {text:"Curious — I want to understand what's being named",score:4},
+    {text:"Mildly rattled but stable — I get to curiosity quickly",score:3},
+    {text:"Defensive before curious — protect first, examine later",score:2},
+    {text:"Significantly destabilizing in ways I actively manage",score:1}]},
+  { id:4,  domain:"decision",      text:"Facing high-complexity decisions with incomplete information, I...", options:[
+    {text:"Move forward with structured thinking and clear criteria",score:4},
+    {text:"Pause to gather more data, then decide",score:3},
+    {text:"Oscillate and delay longer than I'd like",score:2},
+    {text:"Defer to whoever projects the most confidence",score:1}]},
+  { id:5,  domain:"decision",      text:"I can identify when I'm inside a cognitive bias in real time.", options:[
+    {text:"Reliably — I have a practice for catching it",score:4},
+    {text:"Often, though not always",score:3},
+    {text:"Sometimes, usually in hindsight",score:2},
+    {text:"Rarely — I see it after the fact",score:1}]},
+  { id:6,  domain:"decision",      text:"After making a significant decision under pressure, I typically...", options:[
+    {text:"Review and learn without second-guessing",score:4},
+    {text:"Review with mild residual doubt",score:3},
+    {text:"Revisit and reconsider, even when it's past",score:2},
+    {text:"Ruminate significantly — it follows me",score:1}]},
+  { id:7,  domain:"relational",    text:"In difficult relationships with peers or direct reports, my default is...", options:[
+    {text:"Address the dynamic directly when appropriate",score:4},
+    {text:"Address it eventually — I get there, not always quickly",score:3},
+    {text:"Avoid direct conversation and work around it",score:2},
+    {text:"Let it compound until something forces it",score:1}]},
+  { id:8,  domain:"relational",    text:"When someone disagrees with me visibly in a group setting, I...", options:[
+    {text:"Stay curious and genuinely engaged with their view",score:4},
+    {text:"Stay composed but notice some internal closing",score:3},
+    {text:"Feel defensive and have to work to stay open",score:2},
+    {text:"Get reactive in ways others can read",score:1}]},
+  { id:9,  domain:"relational",    text:"I can distinguish between feedback I should integrate vs. set aside.", options:[
+    {text:"Clearly and consistently — I have a framework for it",score:4},
+    {text:"Usually, though it sometimes takes time",score:3},
+    {text:"With some difficulty — I absorb more than I should",score:2},
+    {text:"Rarely — I either dismiss it all or take it all on",score:1}]},
+  { id:10, domain:"team",          text:"People I lead would describe accountability on my team as...", options:[
+    {text:"Clear, mutual, and consistently followed through",score:4},
+    {text:"Mostly clear, with some gaps",score:3},
+    {text:"Inconsistent — we say the right things but execution varies",score:2},
+    {text:"A persistent challenge we haven't resolved",score:1}]},
+  { id:11, domain:"team",          text:"My team's capacity to disagree productively without it becoming destructive is...", options:[
+    {text:"A genuine strength we've built deliberately",score:4},
+    {text:"Developing — better than it was",score:3},
+    {text:"Inconsistent — depends on who and what's at stake",score:2},
+    {text:"An area of real weakness that's costing us results",score:1}]},
+  { id:12, domain:"team",          text:"When my team underperforms, my first move is typically...", options:[
+    {text:"Examine the dynamics underneath — trust, clarity, alignment",score:4},
+    {text:"Adjust the process or structure first",score:3},
+    {text:"Apply more pressure and clearer expectations",score:2},
+    {text:"Wait and observe, hoping it resolves",score:1}]},
+  { id:13, domain:"sustainability", text:"My current pace and demands of leadership are...", options:[
+    {text:"Sustainable by design — I've built real capacity",score:4},
+    {text:"Manageable now but not long-term sustainable",score:3},
+    {text:"Already costing me in ways I haven't addressed",score:2},
+    {text:"Not sustainable and I'm not sure where to start",score:1}]},
+  { id:14, domain:"sustainability", text:"I know what fully restores my energy — and I protect time for it.", options:[
+    {text:"Yes, consistently — this is a real practice I maintain",score:4},
+    {text:"I know what it is; I protect time for it sometimes",score:3},
+    {text:"I know what it is but rarely prioritize it",score:2},
+    {text:"I don't have a clear answer to either part",score:1}]},
+  { id:15, domain:"sustainability", text:"The personal costs of my leadership role on relationships and health are...", options:[
+    {text:"Well-managed; I'm clear-eyed about the trade-offs",score:4},
+    {text:"Present but manageable",score:3},
+    {text:"Accumulating beyond what I've acknowledged",score:2},
+    {text:"Significant and I'm not sure where to start",score:1}]},
+  { id:16, domain:"strategic",     text:"I can articulate what I'm building in my leadership over the next 2–3 years.", options:[
+    {text:"Clearly and with confidence",score:4},
+    {text:"With reasonable clarity — some gaps unresolved",score:3},
+    {text:"With more vagueness than I'd like",score:2},
+    {text:"I can't articulate it clearly right now",score:1}]},
+  { id:17, domain:"strategic",     text:"The gap between my current leadership and who I need to be is...", options:[
+    {text:"Defined and being systematically addressed",score:4},
+    {text:"Visible but not systematically addressed",score:3},
+    {text:"Vague in ways that make it hard to act on",score:2},
+    {text:"Not something I've looked at directly",score:1}]},
+  { id:18, domain:"strategic",     text:"The work I'm doing right now is aligned with what matters most to me.", options:[
+    {text:"Yes — by design, and I can articulate the alignment",score:4},
+    {text:"Mostly — I've accepted some misalignment as necessary",score:3},
+    {text:"Partially — I've drifted more than I've decided",score:2},
+    {text:"Not really — this is something I avoid examining closely",score:1}]},
+];
+
+const SERVICES = [
+  { id:"executive", icon:"◎", label:"1:1 Executive", badge:null,
+    tagline:"Coaching for leaders who are ready to go deeper than their circumstances.",
+    bullets:["Holistic in scope, laser-focused in method","Assessment debrief woven throughout","Bi-weekly sessions, 3–6 month engagement, schedule built around you"],
+    price:"From $300/hr equivalent · 3-month minimum · invoiceable to org",
+    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" },
+  { id:"group", icon:"⬡", label:"Group Coaching", badge:null,
+    tagline:"Peer cohort work proven at scale across Cornell, Yale SOM, MIT Sloan & Wharton.",
+    bullets:["Business school group coaching methodology + positive psychology","6–12 week structured programs with clear development objectives","Individual debrief touchpoints included in every cohort"],
+    price:"Project-based or retainer · cohort pricing available",
+    cta:"Inquire about cohorts", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
+  { id:"peer", icon:"◉", label:"Peer Advisory Circles", badge:"NEW",
+    tagline:"ICF-credentialed facilitation for executive peer groups — what franchise models can't deliver.",
+    bullets:["Structured peer advisory facilitation grounded in coaching methodology","Monthly or bi-weekly format built for your circle's specific context","COO Forum directorship + UFacilitate experience as proof of delivery"],
+    price:"Retainer-based · contact for circle pricing",
+    cta:"Learn about peer circles", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
+  { id:"team", icon:"◍", label:"Team Coaching", badge:null,
+    tagline:"Addresses the patterns that live between people — not just within them.",
+    bullets:["ICF ACTC-level team coaching competency applied to your actual dynamics","Trust, alignment, accountability addressed at the level where they actually break down","60–90 day structured engagement + individual coaching touchpoints"],
+    price:"Project-based · scoped to team size and need",
+    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" },
+  { id:"enterprise", icon:"◈", label:"Organizations", badge:null,
+    tagline:"VP cohorts, custom workshops, and coaching culture built deliberately.",
+    bullets:["Proven at Navy Federal, Cognizant, and global Fortune 100/500 firms","Fluence partnership for programs requiring scale beyond one practitioner","Custom SOW, full confidentiality, organizational reporting limited to aggregate themes"],
+    price:"Enterprise pricing · contact for scope discussion",
+    cta:"Schedule a scoping call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-minute-meeting-clone" },
+];
+
+const TESTIMONIALS = [
+  { q:"Julian does an excellent job of distilling what I communicate into clear concepts, and challenges my thinking in ways that I genuinely appreciate.", who:"Senior Leader, Corporate Development & M&A", org:"Global technology company", via:"Torch" },
+  { q:"What I appreciate most is the way Julian communicates succinctly what participants have said. He has a gift for clarifying what is really being expressed — and that changes the quality of the conversation.", who:"Co-Executive Director", org:"Professional services firm", via:"Peer leadership cohort" },
+  { q:"His perspective was refreshing, and you could tell he was genuinely invested in listening to each person and creating something collaborative rather than just running a session.", who:"SVP, Regulatory Affairs", org:"Global technology company", via:"ExecOnline" },
+  { q:"Julian brings real insight to each person's contributions — in a way that keeps the conversation alive and everyone genuinely engaged. A rewarding experience I'd recommend without hesitation.", who:"SVP, Sales", org:"Global technology company", via:"ExecOnline" },
+  { q:"I have only been in two sessions but both have been genuinely helpful. Julian is a great facilitator — prepared, structured, and working from a clear framework.", who:"Executive Director", org:"Nonprofit sector", via:"Peer coaching cohort" },
+];
+
+const ARTICLES = [
+  { id:1, domain:"decision",  title:"Why Laser-Focused Coaching Gets Results Faster", mins:5, tag:"Methodology", summary:"Most coaching spends the first half of every session locating the real question. Laser-focused coaching begins there." },
+  { id:2, domain:"identity",  title:"Big Five vs HEXACO: Which Model Is Right for Leadership Development?", mins:6, tag:"Assessments", summary:"Both are empirically validated. The difference — and when each is the right tool — matters significantly." },
+  { id:3, domain:"team",      title:"Group Coaching vs Team Coaching: What Senior Leaders Need to Know", mins:4, tag:"Formats", summary:"The terms are used interchangeably. They should not be. The distinction determines who belongs in the room." },
+  { id:4, domain:"decision",  title:"What the Research Actually Says About Decision-Making Under Pressure", mins:7, tag:"Decision Making", summary:"The cognitive science has implications most leadership development programs haven't caught up with." },
+  { id:5, domain:"team",      title:"What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", mins:6, tag:"Team Performance", summary:"The most researched team performance variable of the past two decades. Also the most misunderstood." },
+  { id:6, domain:"identity",  title:"The Identity Problem at the Heart of Senior Leadership", mins:6, tag:"Identity", summary:"At a certain level, technical capability is no longer the constraint. What becomes the constraint is harder to name." },
+  { id:7, domain:"sustainability", title:"Personal Sustainability Is a Leadership Responsibility", mins:5, tag:"Sustainability", summary:"Treating your own sustainability as discretionary is not a position the research supports." },
+];
+
+// ═══════════════════════════════════════════════════════
+// CONTEXT
+// ═══════════════════════════════════════════════════════
+const Ctx = createContext({});
+const useSite = () => useContext(Ctx);
+
+// ═══════════════════════════════════════════════════════
+// UTILITY COMPONENTS
+// ═══════════════════════════════════════════════════════
+function Btn({ children, variant="gold", onClick, href, style={} }) {
+  const base = { fontFamily:DM, fontWeight:600, fontSize:13, letterSpacing:1, textTransform:"uppercase", padding:"12px 28px", borderRadius:2, cursor:"pointer", border:"none", transition:"all 0.2s", display:"inline-block", textDecoration:"none" };
+  const variants = {
+    gold:  { background:C.gold, color:C.white, ...base },
+    ghost: { background:"transparent", color:C.gold, border:`1px solid ${C.gold}`, ...base },
+    navy:  { background:C.navy, color:C.white, ...base },
+    white: { background:"transparent", color:C.white, border:`1px solid rgba(255,255,255,0.5)`, ...base },
+  };
+  const s = { ...variants[variant], ...style };
+  if (href) return <a href={href} target="_blank" rel="noopener noreferrer" style={s}>{children}</a>;
+  return <button style={s} onClick={onClick}>{children}</button>;
+}
+
+function Divider({ color = C.border }) {
+  return <div style={{ height:1, background:color, width:"100%", margin:"0" }} />;
+}
+
+function EditableBlock({ text, onSave, tag:Tag="p", style={} }) {
+  const { editMode } = useSite();
+  const ref = useRef(null);
+  if (!editMode) return <Tag style={style}>{text}</Tag>;
+  return (
+    <Tag
+      ref={ref}
+      contentEditable
+      suppressContentEditableWarning
+      style={{ ...style, outline:`2px dashed ${C.gold}`, outlineOffset:2, minHeight:"1em", cursor:"text" }}
+      onBlur={e => onSave(e.currentTarget.innerText)}
+    >
+      {text}
+    </Tag>
+  );
+}
+
+function ScoreBadge({ score }) {
+  const color = score >= 75 ? C.green : score >= 50 ? C.gold : C.red;
+  const label = score >= 75 ? "Strong" : score >= 50 ? "Developing" : "Priority Area";
+  return <span style={{ background:`${color}18`, color, border:`1px solid ${color}40`, fontSize:10, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1, fontFamily:DM }}>{label}</span>;
+}
+
+// ═══════════════════════════════════════════════════════
+// PROGRAM CONTEXT STRIP
+// ═══════════════════════════════════════════════════════
+const EXEC_SCHOOLS = [
+  "Berkeley Haas","Chicago Booth","Columbia","UVA Darden","IMD",
+  "MIT Sloan","Stanford GSB","Tuck at Dartmouth","Wharton","Yale SOM",
+  "Cornell","Michigan Ross","Duke Fuqua","NYU Stern","Kellogg",
+  "UCLA Anderson","Georgetown McDonough","Vanderbilt Owen","Rice Jones","Emeritus"
+];
+
+const PROGRAM_THEMES = [
+  { icon:"◎", theme:"Executive Presence", desc:"Showing up with authority and authenticity in high-visibility roles" },
+  { icon:"◈", theme:"Strategic Decision-Making", desc:"Navigating high-stakes choices with clarity under pressure and ambiguity" },
+  { icon:"◉", theme:"M&A & Transformation Leadership", desc:"Leading teams and culture through major organizational transitions" },
+  { icon:"◍", theme:"Succession & Role Transition", desc:"Preparing leaders for expanded scope and new identity demands" },
+  { icon:"◐", theme:"Team Trust & Accountability", desc:"Building the conditions where high performance becomes sustainable" },
+  { icon:"◑", theme:"Board & Stakeholder Communication", desc:"Influencing upward and across without positional authority" },
+  { icon:"◎", theme:"Sustainable High Performance", desc:"Maintaining capacity and clarity over the long arc of senior leadership" },
+  { icon:"◈", theme:"Values Tension & Identity", desc:"Navigating the friction between what you've been asked to do and who you are" },
+];
+
+function ProgramContextStrip() {
+  const [view, setView] = useState("schools"); // schools | themes
+  const [schoolPage, setSchoolPage] = useState(0);
+  const schoolsPerPage = 10;
+  const totalPages = Math.ceil(EXEC_SCHOOLS.length / schoolsPerPage);
+  const visibleSchools = EXEC_SCHOOLS.slice(schoolPage * schoolsPerPage, (schoolPage+1) * schoolsPerPage);
+
+  return (
+    <section style={{ background:C.cream, borderBottom:`1px solid ${C.border}`, padding:"24px 24px" }}>
+      <div style={{ maxWidth:1100, margin:"0 auto" }}>
+        {/* Tab toggle */}
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16, flexWrap:"wrap", gap:12 }}>
+          <div style={{ fontFamily:DM, fontSize:9, letterSpacing:3, textTransform:"uppercase", color:C.muted }}>
+            Leadership programs facilitated in partnership with ExecOnline & Emeritus
+          </div>
+          <div style={{ display:"flex", gap:2, background:C.creamDark, borderRadius:3, padding:2 }}>
+            {[["schools","Partner Schools"],["themes","Program Themes"]].map(([v,l]) => (
+              <button key={v} onClick={() => setView(v)} style={{ background:view===v?C.navy:"transparent", color:view===v?C.white:C.muted, border:"none", fontFamily:DM, fontSize:11, fontWeight:600, letterSpacing:0.5, padding:"5px 14px", borderRadius:2, cursor:"pointer", transition:"all 0.2s" }}>{l}</button>
+            ))}
+          </div>
+        </div>
+
+        {view === "schools" && (
+          <div>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:16, justifyContent:"flex-start", alignItems:"center", minHeight:32 }}>
+              {visibleSchools.map(u => (
+                <div key={u} style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navyMid, letterSpacing:0.3, opacity:0.75 }}>{u}</div>
+              ))}
+              {schoolPage === 0 && (
+                <div style={{ fontFamily:DM, fontSize:11, color:C.muted, fontStyle:"italic" }}>+ more</div>
+              )}
+            </div>
+            {totalPages > 1 && (
+              <div style={{ display:"flex", gap:6, marginTop:12, justifyContent:"flex-end" }}>
+                {Array.from({length:totalPages}).map((_,i) => (
+                  <button key={i} onClick={() => setSchoolPage(i)} style={{ width:8, height:8, borderRadius:"50%", background:schoolPage===i?C.gold:C.border, border:"none", cursor:"pointer", padding:0 }} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {view === "themes" && (
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
+            {PROGRAM_THEMES.map((t,i) => (
+              <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:3, padding:"12px 14px", display:"flex", gap:10, alignItems:"flex-start" }}>
+                <span style={{ color:C.gold, fontSize:14, flexShrink:0, marginTop:1 }}>{t.icon}</span>
+                <div>
+                  <div style={{ fontFamily:DM, fontSize:12, fontWeight:700, color:C.navy, marginBottom:3 }}>{t.theme}</div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted, lineHeight:1.4 }}>{t.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════
+function Nav() {
+  const { page, setPage, editMode, setEditMode, saveContent } = useSite();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+  const links = [
+    { id:"home", label:"Home" },{ id:"about", label:"About" },
+    { id:"coaching", label:"Coaching" },{ id:"resources", label:"Resources" },
+    { id:"assessment", label:"Assessment" },
+  ];
+  const isHome = page === "home";
+  const bg = (!isHome || scrolled) ? C.white : "transparent";
+  const textCol = (!isHome || scrolled) ? C.navy : C.white;
+  const shadow = scrolled || !isHome ? "0 1px 0 rgba(0,0,0,0.1)" : "none";
+  return (
+    <nav style={{ position:"fixed", top:editMode?40:0, left:0, right:0, zIndex:100, background:bg, boxShadow:shadow, transition:"all 0.3s", fontFamily:DM }}>
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
+        <div style={{ cursor:"pointer" }} onClick={() => setPage("home")}>
+          <div style={{ fontFamily:PF, fontSize:17, fontWeight:700, color:textCol, letterSpacing:-0.3 }}>Unified Solutions Inc.</div>
+          <div style={{ fontSize:9, letterSpacing:2, textTransform:"uppercase", color:(!isHome||scrolled)?C.gold:"rgba(255,255,255,0.7)", marginTop:-1 }}>ICF PCC · ACTC · ExecOnline Faculty</div>
+        </div>
+        <div style={{ display:"flex", alignItems:"center", gap:4 }}>
+          {links.map(l => (
+            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
+          ))}
+          <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Book a Call</Btn>
+          <button onClick={() => setEditMode(!editMode)} title="Toggle Edit Mode" style={{ background:editMode?C.gold:"none", border:`1px solid ${editMode?C.gold:C.border}`, borderRadius:4, cursor:"pointer", fontSize:12, padding:"5px 10px", marginLeft:8, color:editMode?C.white:C.muted, fontFamily:DM }}>
+            {editMode ? "✏️ Editing" : "✏️"}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// EDIT BAR
+// ═══════════════════════════════════════════════════════
+function EditBar() {
+  const { saveContent } = useSite();
+  return (
+    <div style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, background:C.gold, color:C.white, fontFamily:DM, fontSize:12, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 24px", height:40 }}>
+      <span>✏️ <strong>Edit Mode Active</strong> — Click any highlighted text to edit</span>
+      <div style={{ display:"flex", gap:8 }}>
+        <button onClick={saveContent} style={{ background:C.white, color:C.gold, border:"none", borderRadius:2, padding:"4px 16px", fontFamily:DM, fontWeight:700, fontSize:12, cursor:"pointer" }}>Save Changes</button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// HOME PAGE
+// ═══════════════════════════════════════════════════════
+function HomePage() {
+  const { setPage, content, updateContent } = useSite();
+  const [activeService, setActiveService] = useState(0);
+  const [activeTesti, setActiveTesti] = useState(0);
+  const statsRef = useRef(null);
+  const [counted, setCounted] = useState(false);
+  const [counts, setCounts] = useState({ hrs:0, clients:0, years:0, partners:0 });
+  useEffect(() => {
+    const ob = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !counted) { setCounted(true); animateStats(); }
+    }, { threshold:0.5 });
+    if (statsRef.current) ob.observe(statsRef.current);
+    return () => ob.disconnect();
+  }, [counted]);
+  function animateStats() {
+    const targets = { hrs:1200, clients:222, years:25, partners:9 };
+    const dur = 1600, steps = 50;
+    let step = 0;
+    const t = setInterval(() => {
+      step++;
+      const p = step/steps;
+      const e = 1 - Math.pow(1-p, 3);
+      setCounts({ hrs:Math.round(e*targets.hrs), clients:Math.round(e*targets.clients), years:Math.round(e*targets.years), partners:Math.round(e*targets.partners) });
+      if (step >= steps) clearInterval(t);
+    }, dur/steps);
+  }
+
+  const h = content.hero;
+  return (
+    <div>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section style={{ background:`linear-gradient(160deg, ${C.navy} 0%, ${C.navyMid} 60%, ${C.navyLight} 100%)`, minHeight:"100vh", display:"flex", alignItems:"center", paddingTop:100, paddingBottom:80, position:"relative", overflow:"hidden" }}>
+        {/* Decorative grain overlay */}
+        <div style={{ position:"absolute", inset:0, backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`, opacity:0.4, pointerEvents:"none" }} />
+        {/* Decorative gold line */}
+        <div style={{ position:"absolute", top:0, left:64, width:1, height:"100%", background:`linear-gradient(to bottom, transparent, ${C.gold}40, transparent)` }} />
+        <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", position:"relative", zIndex:1 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:80, alignItems:"center" }}>
+            <div>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:20 }}>
+                ICF PCC · ACTC (Advanced Certified Team Coach) · Army Veteran · Fortune 500 Consultant · ExecOnline & Emeritus Faculty
+              </div>
+              <EditableBlock
+                text={h.headline}
+                onSave={v => updateContent("hero.headline", v)}
+                tag="h1"
+                style={{ fontFamily:PF, fontSize:"clamp(36px, 5vw, 60px)", fontWeight:700, color:C.white, lineHeight:1.08, margin:"0 0 24px", letterSpacing:-1 }}
+              />
+              <EditableBlock
+                text={h.body}
+                onSave={v => updateContent("hero.body", v)}
+                tag="p"
+                style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
+              />
+              <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+                <Btn onClick={() => setPage("assessment")}>Find Your Pressure Point</Btn>
+                <Btn variant="white" onClick={() => setPage("coaching")}>See How It Works</Btn>
+              </div>
+            </div>
+            {/* Right: Arc panel */}
+            <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32 }}>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:24 }}>The Arc</div>
+              {[
+                { phase:"Phase 1 · 1999–2003", title:"U.S. Army", role:"Tactical team leader (31R)", note:"Kosovo · Iraq · Communication under fire" },
+                { phase:"Phase 2 · 2013–present", title:"Fortune 500 Consulting", role:"Optum · Wells Fargo · Securian · Shutterfly", note:"M&A · Agile · Regulatory Compliance · COO Forum Director" },
+                { phase:"Phase 3 · Present", title:"Holistic Coaching Practice", role:"ICF PCC · ACTC", note:"1,200+ hrs · 222+ clients · ExecOnline & Emeritus Faculty" },
+              ].map((p,i) => (
+                <div key={i} style={{ marginBottom: i<2?28:0, paddingBottom: i<2?28:0, borderBottom: i<2?`1px solid rgba(255,255,255,0.1)`:"none" }}>
+                  <div style={{ fontFamily:DM, fontSize:9, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:4 }}>{p.phase}</div>
+                  <div style={{ fontFamily:PF, fontSize:17, color:C.white, fontWeight:600, marginBottom:3 }}>{p.title}</div>
+                  <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)", marginBottom:3 }}>{p.role}</div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", letterSpacing:0.3 }}>{p.note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS ────────────────────────────────────────── */}
+      <section ref={statsRef} style={{ background:C.gold, padding:"40px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:24 }}>
+          {[
+            { val:counts.hrs, suffix:"+", label:"Coaching Hours" },
+            { val:counts.clients, suffix:"+", label:"Clients Coached" },
+            { val:counts.years, suffix:"+", label:"Years Leadership Exp." },
+            { val:counts.partners, suffix:"+", label:"Elite Univ. Partners" },
+          ].map((s,i) => (
+            <div key={i} style={{ textAlign:"center" }}>
+              <div style={{ fontFamily:PF, fontSize:44, fontWeight:700, color:C.white, lineHeight:1 }}>{s.val}<span style={{ fontSize:24 }}>{s.suffix}</span></div>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginTop:6 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PROGRAM CONTEXT STRIP ────────────────────────── */}
+      <ProgramContextStrip />
+
+      {/* ── SERVICES ─────────────────────────────────────── */}
+      <section style={{ background:C.cream, padding:"96px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:60 }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Coaching Services</div>
+            <h2 style={{ fontFamily:PF, fontSize:40, color:C.navy, margin:"0 0 16px", letterSpacing:-0.5 }}>Five ways to work together.</h2>
+            <p style={{ fontFamily:DM, fontSize:16, color:C.muted, maxWidth:500, margin:"0 auto" }}>The format shifts to fit what you need. The depth never does.</p>
+          </div>
+          {/* Service tab nav */}
+          <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:36, borderBottom:`1px solid ${C.border}`, paddingBottom:0 }}>
+            {SERVICES.map((s,i) => (
+              <button key={s.id} onClick={() => setActiveService(i)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:activeService===i?700:400, color:activeService===i?C.gold:C.muted, padding:"12px 18px", borderBottom:activeService===i?`3px solid ${C.gold}`:"3px solid transparent", transition:"all 0.2s", display:"flex", alignItems:"center", gap:6, position:"relative" }}>
+                <span>{s.icon}</span> {s.label}
+                {s.badge && <span style={{ background:C.navy, color:C.gold, fontSize:8, fontWeight:800, padding:"1px 6px", borderRadius:10, letterSpacing:1, marginLeft:2 }}>{s.badge}</span>}
+              </button>
+            ))}
+          </div>
+          {/* Active service card */}
+          {(() => {
+            const svc = SERVICES[activeService];
+            return (
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }}>
+                <div>
+                  <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:12 }}>What you get</div>
+                  <h3 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 16px" }}>{svc.label}</h3>
+                  <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.7, margin:"0 0 28px" }}>{svc.tagline}</p>
+                  <ul style={{ listStyle:"none", padding:0, margin:"0 0 32px" }}>
+                    {svc.bullets.map((b,i) => (
+                      <li key={i} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12, alignItems:"flex-start" }}>
+                        <span style={{ color:C.gold, marginTop:1, flexShrink:0 }}>→</span> {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ fontFamily:DM, fontSize:12, color:C.slate, marginBottom:24 }}>{svc.price}</div>
+                  <Btn href={svc.ctaUrl}>{svc.cta}</Btn>
+                </div>
+                {/* Testimonial for service */}
+                <div style={{ background:C.navyMid, borderRadius:4, padding:40 }}>
+                  <div style={{ fontFamily:PF, fontSize:28, color:C.gold, marginBottom:16, lineHeight:1 }}>❝</div>
+                  <blockquote style={{ fontFamily:PF, fontSize:17, color:C.white, lineHeight:1.75, margin:"0 0 28px", fontStyle:"italic" }}>
+                    {TESTIMONIALS[activeService % TESTIMONIALS.length].q}
+                  </blockquote>
+                  <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.55)" }}>
+                    {TESTIMONIALS[activeService % TESTIMONIALS.length].who} · {TESTIMONIALS[activeService % TESTIMONIALS.length].via}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+
+      {/* ── UNIFIED METHOD ───────────────────────────────── */}
+      <section style={{ background:C.navy, padding:"96px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:64 }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>The Unified Method</div>
+            <h2 style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 16px", letterSpacing:-0.5 }}>A coherent development system.</h2>
+            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.55)", maxWidth:500, margin:"0 auto" }}>Not a collection of techniques. Four integrated pillars — each purposeful, each reinforcing the others.</p>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:C.navyLight }}>
+            {[
+              { n:"01", tag:"Foundation", title:"Holistic Awareness", body:"Development that accounts for the whole person produces results that hold. Rooted in Goal Imagery Institute training — addresses what actually drives outcomes." },
+              { n:"02", tag:"Precision", title:"Laser-Focused Method", body:"Getting to what matters quickly isn't rushing — it's disciplined listening and precise questioning. Grounded in Marion Franklin's laser-focused methodology." },
+              { n:"03", tag:"Science", title:"Positive Psychology", body:"The evidence base for what shifts in human development is richer than most coaching reflects. This pillar brings the science — rigorously applied, not superficially referenced." },
+              { n:"04", tag:"Data", title:"Assessment-Informed Clarity", body:"Your development should be built on real data — how you think, relate, and lead. 12+ validated tools, certified debriefing, the right tool for the right goal." },
+            ].map((p,i) => (
+              <div key={i} style={{ background:C.navyMid, padding:36 }}>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{p.n} · {p.tag}</div>
+                <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:700, margin:"0 0 14px" }}>{p.title}</div>
+                <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.55)", lineHeight:1.7 }}>{p.body}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ASSESSMENT CTA ───────────────────────────────── */}
+      <section style={{ background:C.creamDark, padding:"80px 24px", borderTop:`4px solid ${C.gold}` }}>
+        <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free · No email required</div>
+          <h2 style={{ fontFamily:PF, fontSize:38, color:C.navy, margin:"0 0 20px" }}>Find your leadership pressure point.</h2>
+          <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.7, margin:"0 0 36px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. Under 8 minutes. A clear read on where your leadership — or your team's leadership — needs the most attention right now.</p>
+          <Btn onClick={() => setPage("assessment")} style={{ fontSize:14, padding:"16px 40px" }}>Take the Assessment</Btn>
+          <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginTop:16 }}>Grounded in Authentic Leadership theory, Kahneman dual-process research, Rock SCARF, and Kegan developmental theory.</div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ────────────────────────────────────── */}
+      <section style={{ background:C.navy, padding:"80px 24px", textAlign:"center" }}>
+        <div style={{ maxWidth:600, margin:"0 auto" }}>
+          <h2 style={{ fontFamily:PF, fontSize:36, color:C.white, margin:"0 0 20px", fontStyle:"italic" }}>30 minutes to find out if this is the right fit.</h2>
+          <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.6)", margin:"0 0 32px", lineHeight:1.7 }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ fontSize:14, padding:"16px 40px" }}>Book a Discovery Call</Btn>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// ABOUT PAGE
+// ═══════════════════════════════════════════════════════
+function AboutPage() {
+  const { setPage } = useSite();
+  return (
+    <div style={{ paddingTop:64 }}>
+      <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 380px", gap:64, alignItems:"center" }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>ICF PCC · ACTC · Founder, Unified Solutions Inc.</div>
+            <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 24px", letterSpacing:-0.5 }}>Before coaching was the profession, it was what the role demanded.</h1>
+            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.75 }}>U.S. Army tactical leader. Fortune 500 consultant. Certified holistic coach. The arc is not a pivot — it is one continuous story about what it costs to lead when it actually matters, and what develops in people who learn to do it well.</p>
+          </div>
+          <div style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32, textAlign:"center" }}>
+            <div style={{ width:120, height:120, borderRadius:"50%", background:`linear-gradient(135deg, ${C.navyLight}, ${C.gold}40)`, margin:"0 auto 20px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <span style={{ fontFamily:PF, fontSize:40, color:C.white }}>JJ</span>
+            </div>
+            <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:600 }}>Julian C. Johnson</div>
+            <div style={{ fontFamily:DM, fontSize:12, color:C.gold, marginTop:4 }}>ICF PCC · ACTC</div>
+            <div style={{ fontFamily:DM, fontSize:10, color:"rgba(255,255,255,0.4)", marginTop:2 }}>Advanced Certified Team Coach</div>
+            <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.5)", marginTop:4 }}>ExecOnline · Emeritus Faculty</div>
+            <div style={{ marginTop:20, display:"flex", flexDirection:"column", gap:6 }}>
+              {["ICF PCC","ACTC — Advanced Certified Team Coach","HPTI Certified","AgileBrain Certified"].map(c => (
+                <div key={c} style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.55)", background:"rgba(255,255,255,0.05)", borderRadius:2, padding:"5px 12px" }}>{c}</div>
+              ))}
+
+            {/* ── VIDEO PLACEHOLDER ─────────────────────────────────────
+                TO ACTIVATE: find the div below with display:"none" and change to display:"block"
+                YOUTUBE:  set src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                VIMEO:    set src="https://player.vimeo.com/video/YOUR_VIMEO_ID"
+                SELF-HOSTED: replace iframe with <video controls src="./videos/julian-intro.mp4" />
+            ─────────────────────────────────────────────────────────── */}
+            <div id="intro-video" style={{ display:"none", marginTop:28 }}>
+              <div style={{ position:"relative", paddingBottom:"56.25%", height:0, overflow:"hidden", borderRadius:4, background:"rgba(0,0,0,0.3)" }}>
+                <iframe
+                  src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                  title="Julian Johnson — Introduction"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", borderRadius:4 }}
+                />
+              </div>
+              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", marginTop:8, textAlign:"center" }}>
+                60–90 second introduction from Julian
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ background:C.cream, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:40 }}>Career Arc</div>
+          {[
+            { phase:"Phase 1 · U.S. Army · 1999–2003", headline:"Led under fire.", body:"Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did." },
+            { phase:"Phase 2 · Fortune 500 Consulting · 2013–Present", headline:"Built inside the pressure.", body:"Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services." },
+            { phase:"Phase 3 · Holistic Coaching Practice · Present", headline:"Applied at depth.", body:"Certified holistic coach. ICF PCC. ACTC candidate. ExecOnline and Emeritus faculty. 1,200+ hours. 222+ clients. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it." },
+          ].map((ph,i) => (
+            <div key={i} style={{ display:"grid", gridTemplateColumns:"240px 1fr", gap:48, marginBottom:56, paddingBottom:56, borderBottom: i<2 ? `1px solid ${C.border}` : "none" }}>
+              <div>
+                <div style={{ fontFamily:DM, fontSize:9, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{ph.phase}</div>
+                <div style={{ width:40, height:2, background:C.gold }} />
+              </div>
+              <div>
+                <h3 style={{ fontFamily:PF, fontSize:28, color:C.navy, margin:"0 0 14px" }}>{ph.headline}</h3>
+                <p style={{ fontFamily:DM, fontSize:15, color:C.muted, lineHeight:1.75 }}>{ph.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ background:C.creamDark, padding:"64px 24px", textAlign:"center" }}>
+        <div style={{ maxWidth:600, margin:"0 auto" }}>
+          <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }}>Ready to find out if this is the right fit?</h2>
+          <p style={{ fontFamily:DM, fontSize:15, color:C.muted, margin:"0 0 28px" }}>30 minutes. No obligation. A real conversation.</p>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Book a Discovery Call</Btn>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// COACHING PAGE
+// ═══════════════════════════════════════════════════════
+function CoachingPage() {
+  const [active, setActive] = useState(0);
+  return (
+    <div style={{ paddingTop:64 }}>
+      <section style={{ background:C.navy, padding:"80px 24px 0" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>The Unified Method</div>
+          <h1 style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 24px", maxWidth:700, letterSpacing:-0.5 }}>The format shifts to fit what you need. The depth never does.</h1>
+          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.6)", maxWidth:600, lineHeight:1.7, margin:"0 0 48px" }}>Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.</p>
+          <div style={{ display:"flex", gap:2, flexWrap:"wrap" }}>
+            {SERVICES.map((s,i) => (
+              <button key={s.id} onClick={() => setActive(i)} style={{ background: active===i ? C.gold : "rgba(255,255,255,0.08)", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:600, color: active===i ? C.white : "rgba(255,255,255,0.6)", padding:"14px 24px", transition:"all 0.2s", display:"flex", alignItems:"center", gap:8 }}>
+                {s.icon} {s.label}
+                {s.badge && <span style={{ background:C.navy, color:C.white, fontSize:8, padding:"1px 5px", borderRadius:8, letterSpacing:1 }}>{s.badge}</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ background:C.cream, padding:"64px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          {(() => {
+            const s = SERVICES[active];
+            return (
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:64 }}>
+                <div>
+                  <h2 style={{ fontFamily:PF, fontSize:36, color:C.navy, margin:"0 0 12px" }}>{s.label}</h2>
+                  <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:"0 0 32px" }}>{s.tagline}</p>
+                  <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>What it covers</div>
+                  <ul style={{ listStyle:"none", padding:0, margin:"0 0 40px" }}>
+                    {s.bullets.map((b,i) => (
+                      <li key={i} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"12px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12 }}>
+                        <span style={{ color:C.gold, flexShrink:0 }}>→</span>{b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ background:C.goldPale, border:`1px solid ${C.gold}30`, borderRadius:4, padding:"12px 16px", marginBottom:32 }}>
+                    <div style={{ fontFamily:DM, fontSize:11, color:C.gold, letterSpacing:1 }}>{s.price}</div>
+                  </div>
+                  <Btn href={s.ctaUrl}>{s.cta}</Btn>
+                </div>
+                <div>
+                  <div style={{ background:C.navyMid, borderRadius:4, padding:40, marginBottom:24 }}>
+                    <div style={{ fontFamily:PF, fontSize:32, color:C.gold, marginBottom:16 }}>❝</div>
+                    <blockquote style={{ fontFamily:PF, fontSize:17, color:C.white, lineHeight:1.75, margin:"0 0 24px", fontStyle:"italic" }}>
+                      {TESTIMONIALS[active % TESTIMONIALS.length].q}
+                    </blockquote>
+                    <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>
+                      {TESTIMONIALS[active % TESTIMONIALS.length].who}<br/>
+                      <span style={{ color:C.gold }}>{TESTIMONIALS[active % TESTIMONIALS.length].via}</span>
+                    </div>
+                  </div>
+                  <div style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:4, padding:28 }}>
+                    <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>How it works</div>
+                    {["30-min discovery call at no cost — to establish genuine fit","Engagement scoped to your situation and goals","Regular sessions with async support between","Assessment debrief woven in throughout"].map((step,i) => (
+                      <div key={i} style={{ display:"flex", gap:12, marginBottom:12, fontFamily:DM, fontSize:13, color:C.muted }}>
+                        <span style={{ width:20, height:20, borderRadius:"50%", background:C.navy, color:C.gold, display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:700, flexShrink:0 }}>{i+1}</span>
+                        {step}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// RESOURCES PAGE
+// ═══════════════════════════════════════════════════════
+function ResourcesPage() {
+  const { setPage } = useSite();
+  const [filter, setFilter] = useState("all");
+  const [email, setEmail] = useState("");
+  const [signed, setSigned] = useState(false);
+  const filtered = filter === "all" ? ARTICLES : ARTICLES.filter(a => a.domain === filter);
+  return (
+    <div style={{ paddingTop:64 }}>
+      <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Resources</div>
+          <h1 style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }}>Tools, frameworks, and thinking for leaders who do serious work.</h1>
+          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.6)", maxWidth:560, lineHeight:1.7 }}>Grounded in research and real operational experience. Not inspiration — application.</p>
+        </div>
+      </section>
+
+      {/* Assessment CTA */}
+      <section style={{ background:C.gold, padding:"40px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", gap:24, flexWrap:"wrap" }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:8 }}>Free Diagnostic</div>
+            <div style={{ fontFamily:PF, fontSize:24, color:C.white, fontWeight:600 }}>Leadership Pressure Point Assessment</div>
+            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.8)", marginTop:4 }}>18 questions · 6 domains · Under 8 minutes · Free, no email required</div>
+          </div>
+          <Btn variant="navy" onClick={() => setPage("assessment")} style={{ whiteSpace:"nowrap" }}>Take the Assessment</Btn>
+        </div>
+      </section>
+
+      {/* Articles */}
+      <section style={{ background:C.cream, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:36, flexWrap:"wrap", gap:16 }}>
+            <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:0 }}>From the practice</h2>
+            <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+              {[{id:"all",label:"All"}, ...DOMAINS.map(d => ({id:d.id, label:d.label.split(" ")[0]}))].map(f => (
+                <button key={f.id} onClick={() => setFilter(f.id)} style={{ background: filter===f.id ? C.navy : "transparent", color: filter===f.id ? C.white : C.muted, border:`1px solid ${filter===f.id ? C.navy : C.border}`, borderRadius:2, padding:"6px 14px", fontFamily:DM, fontSize:12, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}>{f.label}</button>
+              ))}
+            </div>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(300px, 1fr))", gap:24 }}>
+            {filtered.map(a => {
+              const d = DOMAINS.find(d => d.id === a.domain);
+              return (
+                <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden", transition:"box-shadow 0.2s", cursor:"pointer" }}
+                  onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.10)`}
+                  onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
+                  <div style={{ height:4, background:d.color }} />
+                  <div style={{ padding:28 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
+                      <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:600 }}>{a.tag}</span>
+                      <span style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{a.mins} min read</span>
+                    </div>
+                    <h3 style={{ fontFamily:PF, fontSize:20, color:C.navy, margin:"0 0 12px", lineHeight:1.35 }}>{a.title}</h3>
+                    <p style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
+                    <span style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.gold, letterSpacing:1 }}>Read article →</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Email Signup */}
+      <section style={{ background:C.creamDark, padding:"64px 24px", borderTop:`1px solid ${C.border}` }}>
+        <div style={{ maxWidth:540, margin:"0 auto", textAlign:"center" }}>
+          <h2 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 12px" }}>Leadership insights, when they're worth reading.</h2>
+          <p style={{ fontFamily:DM, fontSize:14, color:C.muted, margin:"0 0 28px", lineHeight:1.7 }}>Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.</p>
+          {signed ? (
+            <div style={{ fontFamily:DM, fontSize:15, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
+          ) : (
+            <div style={{ display:"flex", gap:8 }}>
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:14, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
+              <Btn onClick={() => email && setSigned(true)}>Join</Btn>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// ADMIN PANEL (PIN-protected CRM dashboard)
+// ═══════════════════════════════════════════════════════
+const ADMIN_PIN = "USC2026";
+
+function AdminPanel({ onClose }) {
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem("us-api-key") || "");
+  const [selected, setSelected] = useState(null);
+  const [notionStatus, setNotionStatus] = useState({});
+
+  useEffect(() => { loadRecords(); }, []);
+
+  async function loadRecords() {
+    setLoading(true);
+    try {
+      const r = await storage.get("assessment-results");
+      if (r) setRecords(JSON.parse(r.value));
+    } catch (e) {}
+    setLoading(false);
+  }
+
+  async function syncToNotion(record, idx) {
+    setNotionStatus(prev => ({...prev, [idx]: "syncing"}));
+    try {
+      const primary = Object.entries(record.scores).sort((a,b) => a[1]-b[1])[0];
+      const domain = DOMAINS.find(d => d.id === primary[0]);
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          mcp_servers: [{ type: "url", url: "https://mcp.notion.com/mcp", name: "notion" }],
+          messages: [{ role: "user", content: `Create a new page in the Notion database called "Coaching Contacts — Unified Solutions CRM" with these properties:
+- Name/Title: "${record.email || "Anonymous"}"
+- Email: "${record.email || ""}"
+- Assessment Date: "${record.timestamp}"
+- Primary Pressure Point: "${domain?.label || ""}"
+- Identity Score: ${record.scores.identity || 0}
+- Decision Score: ${record.scores.decision || 0}
+- Relational Score: ${record.scores.relational || 0}
+- Team Score: ${record.scores.team || 0}
+- Sustainability Score: ${record.scores.sustainability || 0}
+- Strategic Score: ${record.scores.strategic || 0}
+- Status: "New Lead"
+Confirm when done.` }]
+        })
+      });
+      const data = await response.json();
+      const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "";
+      setNotionStatus(prev => ({...prev, [idx]: text.toLowerCase().includes("error") ? "error" : "synced"}));
+    } catch (e) {
+      setNotionStatus(prev => ({...prev, [idx]: "error"}));
+    }
+  }
+
+  async function clearAll() {
+    if (window.confirm("Delete all locally stored assessment records? This cannot be undone.")) {
+      await storage.set("assessment-results", JSON.stringify([]));
+      setRecords([]);
+    }
+  }
+
+  const tableHead = { fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, padding:"10px 12px", borderBottom:`2px solid ${C.border}`, textAlign:"left" };
+  const tableCell = { fontFamily:DM, fontSize:13, padding:"12px", borderBottom:`1px solid ${C.border}` };
+
+  return (
+    <div style={{ position:"fixed", inset:0, zIndex:500, background:"rgba(0,0,0,0.7)", display:"flex", alignItems:"flex-start", justifyContent:"center", overflowY:"auto", paddingTop:20 }}>
+      <div style={{ background:C.cream, borderRadius:8, width:"95%", maxWidth:1000, maxHeight:"92vh", overflowY:"auto", boxShadow:"0 32px 80px rgba(0,0,0,0.5)" }}>
+        {/* Header */}
+        <div style={{ background:C.navy, padding:"24px 32px", display:"flex", justifyContent:"space-between", alignItems:"center", position:"sticky", top:0, zIndex:10 }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:4 }}>Secure Admin Dashboard</div>
+            <div style={{ fontFamily:PF, fontSize:22, color:C.white }}>Assessment CRM — Unified Solutions Inc.</div>
+          </div>
+          <div style={{ display:"flex", gap:10, alignItems:"center" }}>
+            <span style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>{records.length} record{records.length!==1?"s":""}</span>
+            <button onClick={loadRecords} style={{ background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", color:C.white, fontFamily:DM, fontSize:12, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>↻ Refresh</button>
+            <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.3)", border:"1px solid rgba(155,34,38,0.5)", color:"#ffaaaa", fontFamily:DM, fontSize:12, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>Clear All</button>
+            <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontSize:13, fontWeight:700, padding:"8px 18px", borderRadius:2, cursor:"pointer" }}>Close ×</button>
+          </div>
+        </div>
+
+        <div style={{ padding:"16px 32px", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
+          <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, padding:"10px 16px", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+            <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)" }}>Anthropic API Key</span>
+            <input
+              type="password" value={apiKey}
+              onChange={e => { setApiKey(e.target.value); localStorage.setItem("us-api-key", e.target.value); }}
+              placeholder="sk-ant-..."
+              style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:2, color:"white" }}
+            />
+            {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A" }}>✓ Key saved</span>}
+          </div>
+        </div>
+        <div style={{ padding:32 }}>
+          {/* Stats row */
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:32 }}>
+            {[
+              { label:"Total Submissions", val: records.length },
+              { label:"With Email (Leads)", val: records.filter(r => r.email).length },
+              { label:"Synced to Notion", val: Object.values(notionStatus).filter(s => s==="synced").length },
+              { label:"Avg. Lowest Domain", val: records.length ? (() => {
+                const counts = {}; DOMAINS.forEach(d => counts[d.id]=0);
+                records.forEach(r => { const low = Object.entries(r.scores).sort((a,b)=>a[1]-b[1])[0]; if (low) counts[low[0]]++; });
+                const topDomain = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+                return DOMAINS.find(d=>d.id===topDomain?.[0])?.label.split(" ")[0] || "—";
+              })() : "—" },
+            ].map((s,i) => (
+              <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"16px 20px" }}>
+                <div style={{ fontFamily:PF, fontSize:28, color:C.navy, fontWeight:700 }}>{s.val}</div>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {loading ? (
+            <div style={{ textAlign:"center", padding:40, fontFamily:DM, color:C.muted }}>Loading records...</div>
+          ) : records.length === 0 ? (
+            <div style={{ textAlign:"center", padding:60, background:C.white, border:`1px solid ${C.border}`, borderRadius:4 }}>
+              <div style={{ fontFamily:PF, fontSize:24, color:C.navy, marginBottom:8 }}>No submissions yet.</div>
+              <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>Assessment results will appear here when users submit their email or save results.</div>
+            </div>
+          ) : (
+            <>
+              <table style={{ width:"100%", borderCollapse:"collapse", background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden" }}>
+                <thead>
+                  <tr style={{ background:C.creamDark }}>
+                    <th style={tableHead}>Date</th>
+                    <th style={tableHead}>Email</th>
+                    <th style={tableHead}>Primary Pressure Point</th>
+                    <th style={tableHead}>Scores</th>
+                    <th style={tableHead}>Notion</th>
+                    <th style={tableHead}>Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...records].reverse().map((r, i) => {
+                    const idx = records.length - 1 - i;
+                    const sorted = Object.entries(r.scores).sort((a,b)=>a[1]-b[1]);
+                    const primary = DOMAINS.find(d=>d.id===sorted[0]?.[0]);
+                    const ns = notionStatus[idx];
+                    return (
+                      <tr key={i} style={{ background: selected===idx ? C.goldPale : "transparent" }}>
+                        <td style={tableCell}>{new Date(r.timestamp).toLocaleDateString()}</td>
+                        <td style={tableCell}>{r.email || <span style={{color:C.muted,fontStyle:"italic"}}>anonymous</span>}</td>
+                        <td style={tableCell}>
+                          <span style={{ display:"inline-flex", alignItems:"center", gap:6 }}>
+                            <span style={{ color:primary?.color }}>{primary?.icon}</span>
+                            <span style={{ fontWeight:600, color:C.navy }}>{primary?.label}</span>
+                          </span>
+                        </td>
+                        <td style={tableCell}>
+                          <div style={{ display:"flex", gap:4 }}>
+                            {DOMAINS.map(d => (
+                              <div key={d.id} title={`${d.label}: ${r.scores[d.id]}`} style={{ width:20, height:20, background:d.color, opacity: (r.scores[d.id]||0)/100 * 0.8 + 0.2, borderRadius:2, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                                <span style={{ fontSize:8, color:C.white, fontWeight:700 }}>{r.scores[d.id]}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </td>
+                        <td style={tableCell}>
+                          {ns === "synced" ? <span style={{ color:C.green, fontFamily:DM, fontSize:12 }}>✓ Synced</span>
+                          : ns === "syncing" ? <span style={{ color:C.gold, fontFamily:DM, fontSize:12 }}>Syncing...</span>
+                          : ns === "error" ? <span style={{ color:C.red, fontFamily:DM, fontSize:12 }}>Error</span>
+                          : <button onClick={() => syncToNotion(r, idx)} style={{ background:"none", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:DM, fontSize:11, padding:"3px 10px", borderRadius:2, cursor:"pointer" }}>Sync</button>}
+                        </td>
+                        <td style={tableCell}>
+                          <button onClick={() => setSelected(selected===idx?null:idx)} style={{ background:"none", border:`1px solid ${C.border}`, fontFamily:DM, fontSize:11, padding:"3px 10px", borderRadius:2, cursor:"pointer", color:C.navy }}>
+                            {selected===idx ? "Hide" : "View"}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              {/* Detail expand */}
+              {selected !== null && records[selected] && (
+                <div style={{ marginTop:16, background:C.white, border:`2px solid ${C.gold}`, borderRadius:4, padding:28 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
+                    <div style={{ fontFamily:PF, fontSize:18, color:C.navy }}>Detail View — {records[selected].email || "Anonymous"}</div>
+                    <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{new Date(records[selected].timestamp).toLocaleString()}</div>
+                  </div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12 }}>
+                    {DOMAINS.map(d => {
+                      const score = records[selected].scores[d.id] || 0;
+                      return (
+                        <div key={d.id} style={{ background:C.cream, borderRadius:4, padding:"14px 16px" }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8 }}>
+                            <span style={{ color:d.color }}>{d.icon}</span>
+                            <span style={{ fontFamily:DM, fontSize:11, fontWeight:600, color:C.navy }}>{d.label}</span>
+                          </div>
+                          <div style={{ background:C.border, borderRadius:2, height:6, marginBottom:4 }}>
+                            <div style={{ width:`${score}%`, height:"100%", background:d.color, borderRadius:2 }} />
+                          </div>
+                          <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{score}/100 · <ScoreBadge score={score} /></div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+          <div style={{ marginTop:24, background:C.navyMid, borderRadius:4, padding:"14px 20px", display:"flex", gap:12, alignItems:"center" }}>
+            <span style={{ fontSize:16 }}>💡</span>
+            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.65)", lineHeight:1.6 }}>
+              <strong style={{ color:C.gold }}>Notion Sync:</strong> Click "Sync" on any record to push it to your "Coaching Contacts — Unified Solutions CRM" database. Records with email opt-in also create a Gmail draft notification. Data is always backed up locally in persistent storage.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// ASSESSMENT PAGE
+// ═══════════════════════════════════════════════════════
+function AssessmentPage() {
+  const { setPage } = useSite();
+  const [answers, setAnswers] = useState({});
+  const [step, setStep] = useState("intro"); // intro | quiz | results
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [savedMsg, setSavedMsg] = useState(null);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminPin, setAdminPin] = useState("");
+  const [adminPinError, setAdminPinError] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const current = Object.keys(answers).length;
+  const progress = Math.round((current / 18) * 100);
+
+  function computeScores() {
+    const scores = {};
+    DOMAINS.forEach(d => {
+      const qs = QUESTIONS.filter(q => q.domain === d.id);
+      const total = qs.reduce((acc, q) => acc + (answers[q.id] ?? 0), 0);
+      scores[d.id] = Math.round(((total - qs.length) / (qs.length * 3)) * 100);
+    });
+    return scores;
+  }
+
+  async function saveResults(scores) {
+    try {
+      const record = { timestamp: new Date().toISOString(), email, scores, answers };
+      const existing = [];
+      try {
+        const r = await storage.get("assessment-results");
+        if (r) existing.push(...JSON.parse(r.value));
+      } catch (e) {}
+      existing.push(record);
+      await storage.set("assessment-results", JSON.stringify(existing));
+      setSavedMsg("Results saved ✓");
+    } catch (e) { setSavedMsg("Save failed — storage unavailable"); }
+  }
+
+  function handleAdminLogin() {
+    if (adminPin === ADMIN_PIN) {
+      setShowAdmin(true);
+      setShowAdminLogin(false);
+      setAdminPin("");
+      setAdminPinError(false);
+    } else {
+      setAdminPinError(true);
+      setAdminPin("");
+    }
+  }
+
+  const allAnswered = current === 18;
+
+  if (showAdmin) return <AdminPanel onClose={() => setShowAdmin(false)} />;
+
+  if (step === "intro") return (
+    <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
+      <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
+        <div style={{ maxWidth:720, margin:"0 auto", textAlign:"center" }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free Diagnostic</div>
+          <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }}>Where is the gap between where you are and where you need to be costing you most?</h1>
+          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.7, margin:"0 0 40px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result.</p>
+          <div style={{ display:"flex", gap:32, justifyContent:"center", marginBottom:40 }}>
+            {[["18","Questions"],["6","Domains"],["<8 min","To complete"],["Free","No signup"]].map(([v,l]) => (
+              <div key={l} style={{ textAlign:"center" }}>
+                <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700 }}>{v}</div>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
+              </div>
+            ))}
+          </div>
+          <Btn onClick={() => setStep("quiz")} style={{ fontSize:15, padding:"16px 48px" }}>Begin Assessment</Btn>
+          {/* Admin access */}
+          <div style={{ marginTop:40, borderTop:"1px solid rgba(255,255,255,0.1)", paddingTop:24 }}>
+            {!showAdminLogin ? (
+              <button onClick={() => setShowAdminLogin(true)} style={{ background:"none", border:"none", fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.25)", cursor:"pointer", letterSpacing:1 }}>Admin Access</button>
+            ) : (
+              <div style={{ display:"flex", gap:8, justifyContent:"center", alignItems:"center", flexWrap:"wrap" }}>
+                <input
+                  type="password" value={adminPin} onChange={e => { setAdminPin(e.target.value); setAdminPinError(false); }}
+                  onKeyDown={e => e.key==="Enter" && handleAdminLogin()}
+                  placeholder="Enter PIN"
+                  style={{ padding:"10px 14px", fontFamily:DM, fontSize:14, border:`1px solid ${adminPinError?C.red:C.border}`, borderRadius:2, width:140, background:C.cream, letterSpacing:4 }}
+                  autoFocus
+                />
+                <Btn onClick={handleAdminLogin} style={{ padding:"10px 20px" }}>Unlock</Btn>
+                <button onClick={() => { setShowAdminLogin(false); setAdminPinError(false); setAdminPin(""); }} style={{ background:"none", border:"none", fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.4)", cursor:"pointer" }}>Cancel</button>
+                {adminPinError && <div style={{ width:"100%", fontFamily:DM, fontSize:12, color:C.red, marginTop:4 }}>Incorrect PIN — try again.</div>}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      <section style={{ padding:"64px 24px" }}>
+        <div style={{ maxWidth:800, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24 }}>
+          {DOMAINS.map(d => (
+            <div key={d.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:24 }}>
+              <div style={{ fontFamily:DM, fontSize:24, marginBottom:12, color:d.color }}>{d.icon}</div>
+              <div style={{ fontFamily:PF, fontSize:16, color:C.navy, fontWeight:600, marginBottom:8 }}>{d.label}</div>
+              <div style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.6 }}>{d.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+
+  if (step === "quiz") {
+    const qIndex = QUESTIONS.findIndex(q => !answers[q.id]);
+    const q = qIndex >= 0 ? QUESTIONS[qIndex] : null;
+    const domain = q ? DOMAINS.find(d => d.id === q.domain) : null;
+    return (
+      <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
+        <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
+          <div style={{ maxWidth:720, margin:"0 auto", display:"flex", alignItems:"center", gap:16 }}>
+            <span style={{ fontFamily:DM, fontSize:12, color:C.muted, whiteSpace:"nowrap" }}>Question {current+1} of 18</span>
+            <div style={{ flex:1, background:C.creamDark, borderRadius:2, height:6 }}>
+              <div style={{ width:`${progress}%`, height:"100%", background:C.gold, borderRadius:2, transition:"width 0.3s" }} />
+            </div>
+            <span style={{ fontFamily:DM, fontSize:12, color:C.gold, fontWeight:600, whiteSpace:"nowrap" }}>{progress}%</span>
+          </div>
+        </div>
+        {!allAnswered && q ? (
+          <section style={{ padding:"64px 24px" }}>
+            <div style={{ maxWidth:640, margin:"0 auto" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:28 }}>
+                <span style={{ fontFamily:DM, fontSize:18, color:domain.color }}>{domain.icon}</span>
+                <span style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:domain.color, textTransform:"uppercase" }}>{domain.label}</span>
+              </div>
+              <h2 style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4 }}>{q.text}</h2>
+              <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+                {q.options.map((opt,i) => (
+                  <button key={i} onClick={() => { setAnswers(prev => ({...prev, [q.id]: opt.score})); }}
+                    style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"18px 24px", textAlign:"left", cursor:"pointer", fontFamily:DM, fontSize:14, color:C.text, lineHeight:1.55, transition:"all 0.15s" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = C.gold; e.currentTarget.style.background = C.goldPale; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.white; }}>
+                    <span style={{ color:C.gold, marginRight:10, fontWeight:700 }}>{["A","B","C","D"][i]}.</span> {opt.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section style={{ padding:"64px 24px", textAlign:"center" }}>
+            <div style={{ maxWidth:500, margin:"0 auto" }}>
+              <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 20px" }}>All 18 questions complete.</h2>
+              <Btn onClick={() => setStep("results")} style={{ fontSize:14, padding:"14px 40px" }}>See My Results</Btn>
+            </div>
+          </section>
+        )}
+      </div>
+    );
+  }
+
+  if (step === "results") {
+    const scores = computeScores();
+    const sorted = DOMAINS.map(d => ({...d, score:scores[d.id]})).sort((a,b) => a.score - b.score);
+    const primary = sorted[0];
+    const secondary = sorted[1];
+    return (
+      <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
+        <section style={{ background:C.navy, padding:"64px 24px 48px" }}>
+          <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Your Results</div>
+            <h1 style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 12px" }}>Leadership Pressure Point Assessment</h1>
+            <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.6)", marginBottom:4 }}>Primary pressure point: <strong style={{ color:C.gold }}>{primary.label}</strong></p>
+            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)" }}>Secondary: {secondary.label}</p>
+          </div>
+        </section>
+        <section style={{ padding:"56px 24px" }}>
+          <div style={{ maxWidth:800, margin:"0 auto" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:16, marginBottom:40 }}>
+              {sorted.map(d => (
+                <div key={d.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:24, borderLeft: d.id===primary.id ? `4px solid ${d.color}` : d.id===secondary.id ? `4px solid ${d.color}40` : `4px solid ${C.border}` }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+                    <span style={{ fontFamily:PF, fontSize:15, color:C.navy, fontWeight:600 }}>{d.icon} {d.label}</span>
+                    <ScoreBadge score={d.score} />
+                  </div>
+                  <div style={{ background:C.creamDark, borderRadius:2, height:8, marginBottom:6 }}>
+                    <div style={{ width:`${d.score}%`, height:"100%", background:d.color, borderRadius:2, transition:"width 1s ease" }} />
+                  </div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{d.score}/100</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ background:C.navyMid, borderRadius:4, padding:36, textAlign:"center" }}>
+              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 12px" }}>Get a personalized note from Julian.</h3>
+              <p style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }}>Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach.</p>
+              {submitted ? (
+                <div style={{ fontFamily:DM, fontSize:14, color:C.gold }}>✓ {savedMsg || "Results saved. Julian will be in touch."}</div>
+              ) : (
+                <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
+                  <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
+                    style={{ padding:"12px 16px", fontFamily:DM, fontSize:14, border:`1px solid ${C.border}`, borderRadius:2, minWidth:240, background:C.cream }} />
+                  <Btn onClick={async () => { setSubmitted(true); await saveResults(scores); }}>Send My Results</Btn>
+                </div>
+              )}
+              <button onClick={async () => { await saveResults(scores); setSavedMsg("Saved locally ✓"); setSubmitted(true); }}
+                style={{ background:"none", border:"none", fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.35)", cursor:"pointer", marginTop:12, textDecoration:"underline" }}>
+                Save results without sharing email
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// BOOK PAGE
+// ═══════════════════════════════════════════════════════
+function BookPage() {
+  return (
+    <div style={{ paddingTop:64 }}>
+      <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"start" }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Book a Call</div>
+            <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px" }}>30 minutes to find out if this is the right fit.</h1>
+            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.75, margin:"0 0 32px" }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+              {[
+                { icon:"📅", label:"Discovery Call", detail:"30 min · No cost · Genuine fit assessment" },
+                { icon:"📞", label:"Scoping Call (Organizations)", detail:"30 min · Enterprise programs · Custom SOW" },
+                { icon:"✉️", label:"Direct Email", detail:"contact@unifiedsolutionsinc.com" },
+                { icon:"📱", label:"Phone", detail:"952.594.8611" },
+              ].map((c,i) => (
+                <div key={i} style={{ display:"flex", gap:16, alignItems:"center", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:"14px 20px" }}>
+                  <span style={{ fontSize:20 }}>{c.icon}</span>
+                  <div>
+                    <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.white }}>{c.label}</div>
+                    <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>{c.detail}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
+            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)", marginBottom:20 }}>Calendly scheduling widget loads here</div>
+            <div style={{ background:"rgba(255,255,255,0.04)", border:`1px dashed ${C.gold}40`, borderRadius:4, padding:48, marginBottom:20 }}>
+              <div style={{ fontFamily:PF, fontSize:18, color:C.white, marginBottom:8 }}>Discovery Call</div>
+              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", marginBottom:24 }}>30 min · Zoom · Free</div>
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Schedule via Calendly</Btn>
+            </div>
+            <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)" }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
+          </div>
+        </div>
+      </section>
+      <section style={{ background:C.creamDark, padding:"64px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto" }}>
+          <h2 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 36px" }}>This coaching is not for everyone. That is intentional.</h2>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:24 }}>
+            {[
+              { label:"Not the right fit if...", items:["You want to be validated rather than challenged","You're looking for a consultant to arrive with answers","You're in acute crisis requiring clinical/therapeutic support","You're buying a program to check a box"] },
+              { label:"This is built for you if...", items:["You're ready to go deeper than your current circumstances","You operate in high-stakes environments with real complexity","You want development that compounds, not a one-time program","You're willing to be genuinely challenged"] },
+            ].map((col,i) => (
+              <div key={i} style={{ background: i===0?C.white:C.goldPale, border:`1px solid ${C.border}`, borderRadius:4, padding:28 }}>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color: i===0?C.red:C.green, fontWeight:600, marginBottom:16 }}>{col.label}</div>
+                {col.items.map((it,j) => (
+                  <div key={j} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:10 }}>
+                    <span style={{ color: i===0?C.red:C.green, fontWeight:700 }}>{i===0?"×":"→"}</span> {it}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// FOOTER
+// ═══════════════════════════════════════════════════════
+function Footer() {
+  const { setPage } = useSite();
+  return (
+    <footer style={{ background:C.navy, color:"rgba(255,255,255,0.5)", fontFamily:DM, fontSize:13 }}>
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"56px 24px 32px", display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:48 }}>
+        <div>
+          <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:700, marginBottom:6 }}>Unified Solutions Inc.</div>
+          <div style={{ fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>ICF PCC · ACTC</div>
+          <div style={{ lineHeight:1.75, marginBottom:16 }}>Plymouth, MN<br/>contact@unifiedsolutionsinc.com<br/>952.594.8611</div>
+          <div style={{ display:"flex", gap:12 }}>
+            {[["in","https://linkedin.com/in/juliancjohnson"],["ig","https://instagram.com/unifiedsolutionsinc"],["yt","https://youtube.com"]].map(([l,url]) => (
+              <a key={l} href={url} target="_blank" rel="noopener noreferrer" style={{ color:"rgba(255,255,255,0.4)", fontFamily:DM, fontSize:11, letterSpacing:1, textTransform:"uppercase", textDecoration:"none" }}>{l.toUpperCase()}</a>
+            ))}
+          </div>
+        </div>
+        {[
+          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Book a Call","book"]] },
+          { head:"Services", items:[["1:1 Executive","coaching"],["Group Coaching","coaching"],["Peer Advisory Circles","coaching"],["Team Coaching","coaching"],["Organizations","coaching"]] },
+          { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
+        ].map((col,i) => (
+          <div key={i}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
+            {col.items.map(([label, page]) => (
+              <div key={label} style={{ marginBottom:8 }}>
+                {page ? <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
+                      : <span>{label}</span>}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"24px 24px", borderTop:"1px solid rgba(255,255,255,0.08)", display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+        <span>© 2026 Unified Solutions Inc. · All rights reserved.</span>
+        <span style={{ color:C.gold }}>ICF PCC · ACTC · ExecOnline & Emeritus Faculty</span>
+      </div>
+    </footer>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// DEFAULT CONTENT
+// ═══════════════════════════════════════════════════════
+const DEFAULT_CONTENT = {
+  hero: {
+    headline: "Leadership that holds under real pressure.",
+    body: "Army tactical leader. Fortune 500 consultant. 1,200+ hours coaching senior executives. The arc is one continuous story about what it costs to lead when it actually matters — and what develops in people who learn to do it well.",
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+// MAIN APP
+// ═══════════════════════════════════════════════════════
+function UnifiedSolutions() {
+  // ── URL-aware routing (enables Netlify Analytics per-page tracking) ──
+  const [page, setPage] = useState(() => {
+    const map = {
+      '/':'home', '/about':'about', '/coaching':'coaching',
+      '/resources':'resources', '/assessment':'assessment', '/book':'book'
+    };
+    return map[window.location.pathname] || 'home';
+  });
+  const [editMode, setEditMode] = useState(false);
+  const [content, setContent] = useState(DEFAULT_CONTENT);
+
+  // Inject Google Fonts
+  useEffect(() => {
+    const s = document.createElement("style");
+    s.textContent = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');`;
+    document.head.appendChild(s);
+    return () => document.head.removeChild(s);
+  }, []);
+
+  // Load saved content
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await storage.get("cms-content");
+        if (r) setContent(JSON.parse(r.value));
+      } catch (e) {}
+    })();
+  }, []);
+
+  // ── Sync URL when page changes (pushState) ──────────────
+  useEffect(() => {
+    const urls = {
+      home:'/', about:'/about', coaching:'/coaching',
+      resources:'/resources', assessment:'/assessment', book:'/book'
+    };
+    const newUrl = urls[page] || '/';
+    if (window.location.pathname !== newUrl) {
+      window.history.pushState({ page }, document.title, newUrl);
+    }
+    window.scrollTo(0, 0);
+  }, [page]);
+
+  // ── Handle browser back / forward buttons ────────────
+  useEffect(() => {
+    const pageMap = {
+      '/':'home', '/about':'about', '/coaching':'coaching',
+      '/resources':'resources', '/assessment':'assessment', '/book':'book'
+    };
+    const onPop = () => setPage(pageMap[window.location.pathname] || 'home');
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  function updateContent(path, value) {
+    setContent(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const keys = path.split(".");
+      let obj = next;
+      for (let i = 0; i < keys.length - 1; i++) obj = obj[keys[i]];
+      obj[keys[keys.length-1]] = value;
+      return next;
+    });
+  }
+
+  async function saveContent() {
+    try {
+      await storage.set("cms-content", JSON.stringify(content));
+      setEditMode(false);
+    } catch (e) { alert("Storage unavailable — changes not saved."); }
+  }
+
+  const ctx = { page, setPage, editMode, setEditMode, content, updateContent, saveContent };
+
+  return (
+    <Ctx.Provider value={ctx}>
+      <div style={{ fontFamily: DM, background:C.cream, color:C.text, minHeight:"100vh" }}>
+        {editMode && <EditBar />}
+        <Nav />
+        <main style={{ paddingTop: editMode ? 0 : 0 }}>
+          {page === "home"       && <HomePage />}
+          {page === "about"      && <AboutPage />}
+          {page === "coaching"   && <CoachingPage />}
+          {page === "resources"  && <ResourcesPage />}
+          {page === "assessment" && <AssessmentPage />}
+          {page === "book"       && <BookPage />}
+        </main>
+        <Footer />
+      </div>
+    </Ctx.Provider>
+  );
+}
+
+const _rootEl = document.getElementById('root');
+const _root = ReactDOM.createRoot(_rootEl);
+_root.render(React.createElement(UnifiedSolutions));
+
+  </script>
+</body>
+</html>
