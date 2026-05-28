@@ -320,7 +320,7 @@ const useSite = () => useContext(Ctx);
 // UTILITY COMPONENTS
 // ═══════════════════════════════════════════════════════
 function Btn({ children, variant="gold", onClick, href, style={} }) {
-  const base = { fontFamily:DM, fontWeight:600, fontSize:13, letterSpacing:1, textTransform:"uppercase", padding:"12px 28px", borderRadius:2, cursor:"pointer", border:"none", transition:"all 0.2s", display:"inline-block", textDecoration:"none" };
+  const base = { fontFamily:DM, fontWeight:600, fontSize:16, letterSpacing:1, textTransform:"uppercase", padding:"12px 28px", borderRadius:2, cursor:"pointer", border:"none", transition:"all 0.2s", display:"inline-block", textDecoration:"none" };
   const variants = {
     gold:  { background:C.gold, color:C.white, ...base },
     ghost: { background:"transparent", color:C.gold, border:`1px solid ${C.gold}`, ...base },
@@ -369,7 +369,7 @@ function EditableBlock({ text, onSave, tag:Tag="p", style={}, fieldName="content
 function ScoreBadge({ score }) {
   const color = score >= 75 ? C.green : score >= 50 ? C.gold : C.red;
   const label = score >= 75 ? "Strong" : score >= 50 ? "Developing" : "Priority Area";
-  return <span style={{ background:`${color}18`, color, border:`1px solid ${color}40`, fontSize:10, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1, fontFamily:DM }}>{label}</span>;
+  return <span style={{ background:`${color}18`, color, border:`1px solid ${color}40`, fontSize:12, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1, fontFamily:DM }}>{label}</span>;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -405,12 +405,12 @@ function ProgramContextStrip() {
       <div style={{ maxWidth:1100, margin:"0 auto" }}>
         {/* Tab toggle */}
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16, flexWrap:"wrap", gap:12 }}>
-          <div style={{ fontFamily:DM, fontSize:9, letterSpacing:3, textTransform:"uppercase", color:C.muted }}>
+          <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, textTransform:"uppercase", color:C.muted }}>
             Leadership programs facilitated in partnership with ExecOnline & Emeritus
           </div>
           <div style={{ display:"flex", gap:2, background:C.creamDark, borderRadius:3, padding:2 }}>
             {[["schools","Partner Schools"],["themes","Program Themes"]].map(([v,l]) => (
-              <button key={v} onClick={() => setView(v)} style={{ background:view===v?C.navy:"transparent", color:view===v?C.white:C.muted, border:"none", fontFamily:DM, fontSize:11, fontWeight:600, letterSpacing:0.5, padding:"5px 14px", borderRadius:2, cursor:"pointer", transition:"all 0.2s" }}>{l}</button>
+              <button key={v} onClick={() => setView(v)} style={{ background:view===v?C.navy:"transparent", color:view===v?C.white:C.muted, border:"none", fontFamily:DM, fontSize:13, fontWeight:600, letterSpacing:0.5, padding:"5px 14px", borderRadius:2, cursor:"pointer", transition:"all 0.2s" }}>{l}</button>
             ))}
           </div>
         </div>
@@ -419,10 +419,10 @@ function ProgramContextStrip() {
           <div>
             <div style={{ display:"flex", flexWrap:"wrap", gap:16, justifyContent:"flex-start", alignItems:"center", minHeight:32 }}>
               {visibleSchools.map(u => (
-                <div key={u} style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navyMid, letterSpacing:0.3, opacity:0.75 }}>{u}</div>
+                <div key={u} style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.navyMid, letterSpacing:0.3, opacity:0.75 }}>{u}</div>
               ))}
               {schoolPage === 0 && (
-                <div style={{ fontFamily:DM, fontSize:11, color:C.muted, fontStyle:"italic" }}>+ more</div>
+                <div style={{ fontFamily:DM, fontSize:13, color:C.muted, fontStyle:"italic" }}>+ more</div>
               )}
             </div>
             {totalPages > 1 && (
@@ -439,10 +439,10 @@ function ProgramContextStrip() {
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
             {PROGRAM_THEMES.map((t,i) => (
               <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:3, padding:"12px 14px", display:"flex", gap:10, alignItems:"flex-start" }}>
-                <span style={{ color:C.gold, fontSize:14, flexShrink:0, marginTop:1 }}>{t.icon}</span>
+                <span style={{ color:C.gold, fontSize:16, flexShrink:0, marginTop:1 }}>{t.icon}</span>
                 <div>
-                  <div style={{ fontFamily:DM, fontSize:12, fontWeight:700, color:C.navy, marginBottom:3 }}>{t.theme}</div>
-                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted, lineHeight:1.4 }}>{t.desc}</div>
+                  <div style={{ fontFamily:DM, fontSize:14, fontWeight:700, color:C.navy, marginBottom:3 }}>{t.theme}</div>
+                  <div style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.4 }}>{t.desc}</div>
                 </div>
               </div>
             ))}
@@ -478,12 +478,12 @@ function Nav() {
     <nav style={{ position:"fixed", top:editMode?40:0, left:0, right:0, zIndex:100, background:bg, boxShadow:shadow, transition:"all 0.3s", fontFamily:DM }}>
       <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
         <div style={{ cursor:"pointer" }} onClick={() => setPage("home")}>
-          <div style={{ fontFamily:PF, fontSize:17, fontWeight:700, color:textCol, letterSpacing:-0.3 }}>Unified Solutions Inc.</div>
-          <div style={{ fontSize:9, letterSpacing:2, textTransform:"uppercase", color:(!isHome||scrolled)?C.gold:"rgba(255,255,255,0.7)", marginTop:-1 }}>ICF PCC · ACTC · ExecOnline Faculty</div>
+          <div style={{ fontFamily:PF, fontSize:19, fontWeight:700, color:textCol, letterSpacing:-0.3 }}>Unified Solutions Inc.</div>
+          <div style={{ fontSize:11, letterSpacing:2, textTransform:"uppercase", color:(!isHome||scrolled)?C.gold:"rgba(255,255,255,0.7)", marginTop:-1 }}>ICF PCC · ACTC · ExecOnline Faculty</div>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:4 }}>
           {links.map(l => (
-            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
+            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
           ))}
           <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Book a Call</Btn>
 
@@ -534,11 +534,11 @@ function AdminLoginModal() {
     <div style={{ position:"fixed", inset:0, zIndex:1000, background:"rgba(0,0,0,0.85)", display:"flex", alignItems:"center", justifyContent:"center" }}
       onClick={e => e.target === e.currentTarget && setShowAdminModal(false)}>
       <div style={{ background:C.navy, borderRadius:8, padding:40, width:340, boxShadow:"0 32px 80px rgba(0,0,0,0.6)", border:`1px solid ${C.navyLight}` }}>
-        <div style={{ fontFamily:DM, fontSize:9, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>Unified Solutions Inc.</div>
+        <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>Unified Solutions Inc.</div>
         <div style={{ fontFamily:PF, fontSize:22, color:C.white, marginBottom:8 }}>Admin Access</div>
-        <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.4)", marginBottom:28 }}>Session expires after 1 hour of inactivity.</div>
+        <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.4)", marginBottom:28 }}>Session expires after 1 hour of inactivity.</div>
         {isLocked ? (
-          <div style={{ fontFamily:DM, fontSize:13, color:"#E07070", background:"rgba(155,34,38,0.2)", borderRadius:4, padding:"12px 16px" }}>
+          <div style={{ fontFamily:DM, fontSize:16, color:"#E07070", background:"rgba(155,34,38,0.2)", borderRadius:4, padding:"12px 16px" }}>
             Access locked. Try again in {lockMins} minute{lockMins===1?'':'s'}.
           </div>
         ) : (
@@ -548,13 +548,13 @@ function AdminLoginModal() {
               onChange={e => { setPin(e.target.value); setError(''); }}
               onKeyDown={e => e.key==='Enter' && attempt()}
               placeholder="Enter admin PIN"
-              style={{ width:"100%", padding:"12px 14px", fontFamily:DM, fontSize:14, background:"rgba(255,255,255,0.08)", border:`1px solid ${error ? '#E07070' : 'rgba(255,255,255,0.15)'}`, borderRadius:4, color:C.white, letterSpacing:4, marginBottom:8, outline:"none" }}
+              style={{ width:"100%", padding:"12px 14px", fontFamily:DM, fontSize:16, background:"rgba(255,255,255,0.08)", border:`1px solid ${error ? '#E07070' : 'rgba(255,255,255,0.15)'}`, borderRadius:4, color:C.white, letterSpacing:4, marginBottom:8, outline:"none" }}
             />
-            {error && <div style={{ fontFamily:DM, fontSize:12, color:"#E07070", marginBottom:12 }}>{error}</div>}
-            <button onClick={attempt} disabled={loading || !pin} style={{ width:"100%", background:C.gold, color:C.white, border:"none", borderRadius:4, padding:"12px", fontFamily:DM, fontWeight:700, fontSize:13, cursor: loading||!pin?"not-allowed":"pointer", opacity: loading||!pin?0.6:1, marginTop:8 }}>
+            {error && <div style={{ fontFamily:DM, fontSize:14, color:"#E07070", marginBottom:12 }}>{error}</div>}
+            <button onClick={attempt} disabled={loading || !pin} style={{ width:"100%", background:C.gold, color:C.white, border:"none", borderRadius:4, padding:"12px", fontFamily:DM, fontWeight:700, fontSize:16, cursor: loading||!pin?"not-allowed":"pointer", opacity: loading||!pin?0.6:1, marginTop:8 }}>
               {loading ? "Verifying..." : "Unlock"}
             </button>
-            <button onClick={() => setShowAdminModal(false)} style={{ width:"100%", background:"none", border:"none", fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.3)", cursor:"pointer", marginTop:12, padding:4 }}>Cancel</button>
+            <button onClick={() => setShowAdminModal(false)} style={{ width:"100%", background:"none", border:"none", fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.3)", cursor:"pointer", marginTop:12, padding:4 }}>Cancel</button>
           </>
         )}
       </div>
@@ -582,44 +582,44 @@ function AdminToolbar() {
 
   return (
     <>
-      <div style={{ position:"fixed", top:0, left:0, right:0, zIndex:500, background:editMode?C.gold:C.navyMid, color:C.white, fontFamily:DM, fontSize:12, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 20px", height:40, borderBottom:`1px solid ${editMode?C.goldLight:"rgba(255,255,255,0.1)"}` }}>
+      <div style={{ position:"fixed", top:0, left:0, right:0, zIndex:500, background:editMode?C.gold:C.navyMid, color:C.white, fontFamily:DM, fontSize:14, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 20px", height:40, borderBottom:`1px solid ${editMode?C.goldLight:"rgba(255,255,255,0.1)"}` }}>
         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
           <span style={{ fontWeight:700, letterSpacing:1 }}>🔐 ADMIN</span>
           <span style={{ opacity:0.6 }}>Session expires in {timeLeft}m</span>
           {editMode && <span style={{ background:"rgba(255,255,255,0.2)", borderRadius:2, padding:"2px 8px" }}>✏️ Edit Mode Active — Click gold-outlined text to edit</span>}
         </div>
         <div style={{ display:"flex", gap:8, alignItems:"center" }}>
-          <button onClick={() => setEditMode(m => !m)} style={{ background:editMode?"rgba(255,255,255,0.2)":"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:11, fontWeight:700, color:C.white, cursor:"pointer" }}>
+          <button onClick={() => setEditMode(m => !m)} style={{ background:editMode?"rgba(255,255,255,0.2)":"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:13, fontWeight:700, color:C.white, cursor:"pointer" }}>
             {editMode ? "Stop Editing" : "✏️ Edit Content"}
           </button>
-          {editMode && <button onClick={saveContent} style={{ background:C.white, color:C.gold, border:"none", borderRadius:2, padding:"4px 14px", fontFamily:DM, fontWeight:700, fontSize:11, cursor:"pointer" }}>Save</button>}
-          <button onClick={() => setShowLog(l => !l)} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:11, color:C.white, cursor:"pointer" }}>
+          {editMode && <button onClick={saveContent} style={{ background:C.white, color:C.gold, border:"none", borderRadius:2, padding:"4px 14px", fontFamily:DM, fontWeight:700, fontSize:13, cursor:"pointer" }}>Save</button>}
+          <button onClick={() => setShowLog(l => !l)} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:13, color:C.white, cursor:"pointer" }}>
             📋 Log ({changeLog.length})
           </button>
-          <button onClick={handleAdminLogout} style={{ background:"rgba(155,34,38,0.4)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:11, color:"#ffaaaa", cursor:"pointer" }}>Logout</button>
+          <button onClick={handleAdminLogout} style={{ background:"rgba(155,34,38,0.4)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:13, color:"#ffaaaa", cursor:"pointer" }}>Logout</button>
         </div>
       </div>
       {showLog && (
         <div style={{ position:"fixed", top:40, right:0, zIndex:490, width:520, maxHeight:"70vh", background:C.navy, border:`1px solid ${C.navyLight}`, borderRadius:"0 0 0 8px", overflowY:"auto", boxShadow:"-8px 8px 32px rgba(0,0,0,0.4)" }}>
           <div style={{ padding:"14px 20px", borderBottom:`1px solid ${C.navyLight}`, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-            <span style={{ fontFamily:PF, fontSize:16, color:C.white }}>Content Change Log</span>
+            <span style={{ fontFamily:PF, fontSize:18, color:C.white }}>Content Change Log</span>
             <div style={{ display:"flex", gap:8 }}>
-              <button onClick={clearLog} style={{ background:"rgba(155,34,38,0.3)", border:"none", borderRadius:2, padding:"3px 10px", fontFamily:DM, fontSize:11, color:"#ffaaaa", cursor:"pointer" }}>Clear</button>
-              <button onClick={() => setShowLog(false)} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.5)", fontSize:16, cursor:"pointer" }}>×</button>
+              <button onClick={clearLog} style={{ background:"rgba(155,34,38,0.3)", border:"none", borderRadius:2, padding:"3px 10px", fontFamily:DM, fontSize:13, color:"#ffaaaa", cursor:"pointer" }}>Clear</button>
+              <button onClick={() => setShowLog(false)} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.5)", fontSize:18, cursor:"pointer" }}>×</button>
             </div>
           </div>
           {changeLog.length === 0 ? (
-            <div style={{ padding:24, fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", textAlign:"center" }}>No changes logged yet.</div>
+            <div style={{ padding:24, fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.4)", textAlign:"center" }}>No changes logged yet.</div>
           ) : [...changeLog].reverse().map((entry, i) => (
             <div key={i} style={{ padding:"12px 20px", borderBottom:`1px solid rgba(255,255,255,0.06)` }}>
               <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                <span style={{ fontFamily:DM, fontSize:10, letterSpacing:1, color:C.gold, textTransform:"uppercase" }}>{entry.field}</span>
-                <span style={{ fontFamily:DM, fontSize:10, color:"rgba(255,255,255,0.35)" }}>{new Date(entry.timestamp).toLocaleString()}</span>
+                <span style={{ fontFamily:DM, fontSize:12, letterSpacing:1, color:C.gold, textTransform:"uppercase" }}>{entry.field}</span>
+                <span style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.35)" }}>{new Date(entry.timestamp).toLocaleString()}</span>
               </div>
-              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", marginBottom:3 }}>
+              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginBottom:3 }}>
                 <span style={{ color:"#E07070" }}>−</span> {entry.oldValue?.substring(0,80)}{entry.oldValue?.length > 80 ? '...' : ''}
               </div>
-              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.7)" }}>
+              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.7)" }}>
                 <span style={{ color:"#5DE09A" }}>+</span> {entry.newValue?.substring(0,80)}{entry.newValue?.length > 80 ? '...' : ''}
               </div>
             </div>
@@ -672,7 +672,7 @@ function HomePage() {
         <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", position:"relative", zIndex:1 }}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:80, alignItems:"center" }}>
             <div>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:20 }}>
+              <div style={{ fontFamily:DM, fontSize:13, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:20 }}>
                 ICF PCC · ACTC (Advanced Certified Team Coach) · Army Veteran · Fortune 500 Consultant · ExecOnline & Emeritus Faculty
               </div>
               <EditableBlock
@@ -685,7 +685,7 @@ function HomePage() {
                 text={h.body}
                 onSave={v => updateContent("hero.body", v)}
                 tag="p"
-                style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
+                style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
               />
               <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
                 <Btn onClick={() => setPage("assessment")}>Find Your Pressure Point</Btn>
@@ -694,17 +694,17 @@ function HomePage() {
             </div>
             {/* Right: Arc panel */}
             <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32 }}>
-              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:24 }}>The Arc</div>
+              <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:24 }}>The Arc</div>
               {[
                 { phase:"Phase 1 · 1999–2003", title:"U.S. Army", role:"Tactical team leader (31R)", note:"Kosovo · Iraq · Communication under fire" },
                 { phase:"Phase 2 · 2013–present", title:"Fortune 500 Consulting", role:"Optum · Wells Fargo · Securian · Shutterfly", note:"M&A · Agile · Regulatory Compliance · COO Forum Director" },
                 { phase:"Phase 3 · Present", title:"Holistic Coaching Practice", role:"ICF PCC · ACTC", note:"1,200+ hrs · 222+ clients · ExecOnline & Emeritus Faculty" },
               ].map((p,i) => (
                 <div key={i} style={{ marginBottom: i<2?28:0, paddingBottom: i<2?28:0, borderBottom: i<2?`1px solid rgba(255,255,255,0.1)`:"none" }}>
-                  <div style={{ fontFamily:DM, fontSize:9, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:4 }}>{p.phase}</div>
-                  <div style={{ fontFamily:PF, fontSize:17, color:C.white, fontWeight:600, marginBottom:3 }}>{p.title}</div>
-                  <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)", marginBottom:3 }}>{p.role}</div>
-                  <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", letterSpacing:0.3 }}>{p.note}</div>
+                  <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:4 }}>{p.phase}</div>
+                  <div style={{ fontFamily:PF, fontSize:19, color:C.white, fontWeight:600, marginBottom:3 }}>{p.title}</div>
+                  <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.6)", marginBottom:3 }}>{p.role}</div>
+                  <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", letterSpacing:0.3 }}>{p.note}</div>
                 </div>
               ))}
             </div>
@@ -723,7 +723,7 @@ function HomePage() {
           ].map((s,i) => (
             <div key={i} style={{ textAlign:"center" }}>
               <div style={{ fontFamily:PF, fontSize:44, fontWeight:700, color:C.white, lineHeight:1 }}>{s.val}<span style={{ fontSize:24 }}>{s.suffix}</span></div>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginTop:6 }}>{s.label}</div>
+              <div style={{ fontFamily:DM, fontSize:13, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginTop:6 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -736,16 +736,16 @@ function HomePage() {
       <section style={{ background:C.cream, padding:"96px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:60 }}>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Coaching Services</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Coaching Services</div>
             <h2 style={{ fontFamily:PF, fontSize:40, color:C.navy, margin:"0 0 16px", letterSpacing:-0.5 }}>Five ways to work together.</h2>
-            <p style={{ fontFamily:DM, fontSize:16, color:C.muted, maxWidth:500, margin:"0 auto" }}>The format shifts to fit what you need. The depth never does.</p>
+            <p style={{ fontFamily:DM, fontSize:18, color:C.muted, maxWidth:500, margin:"0 auto" }}>The format shifts to fit what you need. The depth never does.</p>
           </div>
           {/* Service tab nav */}
           <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:36, borderBottom:`1px solid ${C.border}`, paddingBottom:0 }}>
             {SERVICES.map((s,i) => (
-              <button key={s.id} onClick={() => setActiveService(i)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:activeService===i?700:400, color:activeService===i?C.gold:C.muted, padding:"12px 18px", borderBottom:activeService===i?`3px solid ${C.gold}`:"3px solid transparent", transition:"all 0.2s", display:"flex", alignItems:"center", gap:6, position:"relative" }}>
+              <button key={s.id} onClick={() => setActiveService(i)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight:activeService===i?700:400, color:activeService===i?C.gold:C.muted, padding:"12px 18px", borderBottom:activeService===i?`3px solid ${C.gold}`:"3px solid transparent", transition:"all 0.2s", display:"flex", alignItems:"center", gap:6, position:"relative" }}>
                 <span>{s.icon}</span> {s.label}
-                {s.badge && <span style={{ background:C.navy, color:C.gold, fontSize:8, fontWeight:800, padding:"1px 6px", borderRadius:10, letterSpacing:1, marginLeft:2 }}>{s.badge}</span>}
+                {s.badge && <span style={{ background:C.navy, color:C.gold, fontSize:11, fontWeight:800, padding:"1px 6px", borderRadius:10, letterSpacing:1, marginLeft:2 }}>{s.badge}</span>}
               </button>
             ))}
           </div>
@@ -755,26 +755,26 @@ function HomePage() {
             return (
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:48, alignItems:"start" }}>
                 <div>
-                  <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:12 }}>What you get</div>
+                  <div style={{ fontFamily:DM, fontSize:13, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:12 }}>What you get</div>
                   <h3 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 16px" }}>{svc.label}</h3>
-                  <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.7, margin:"0 0 28px" }}>{svc.tagline}</p>
+                  <p style={{ fontFamily:DM, fontSize:18, color:C.text, lineHeight:1.7, margin:"0 0 28px" }}>{svc.tagline}</p>
                   <ul style={{ listStyle:"none", padding:0, margin:"0 0 32px" }}>
                     {svc.bullets.map((b,i) => (
-                      <li key={i} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12, alignItems:"flex-start" }}>
+                      <li key={i} style={{ fontFamily:DM, fontSize:16, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12, alignItems:"flex-start" }}>
                         <span style={{ color:C.gold, marginTop:1, flexShrink:0 }}>→</span> {b}
                       </li>
                     ))}
                   </ul>
-                  <div style={{ fontFamily:DM, fontSize:12, color:C.slate, marginBottom:24 }}>{svc.price}</div>
+                  <div style={{ fontFamily:DM, fontSize:14, color:C.slate, marginBottom:24 }}>{svc.price}</div>
                   <Btn href={svc.ctaUrl}>{svc.cta}</Btn>
                 </div>
                 {/* Testimonial for service */}
                 <div style={{ background:C.navyMid, borderRadius:4, padding:40 }}>
                   <div style={{ fontFamily:PF, fontSize:28, color:C.gold, marginBottom:16, lineHeight:1 }}>❝</div>
-                  <blockquote style={{ fontFamily:PF, fontSize:17, color:C.white, lineHeight:1.75, margin:"0 0 28px", fontStyle:"italic" }}>
+                  <blockquote style={{ fontFamily:PF, fontSize:19, color:C.white, lineHeight:1.75, margin:"0 0 28px", fontStyle:"italic" }}>
                     {TESTIMONIALS[activeService % TESTIMONIALS.length].q}
                   </blockquote>
-                  <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.55)" }}>
+                  <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.55)" }}>
                     {TESTIMONIALS[activeService % TESTIMONIALS.length].who} · {TESTIMONIALS[activeService % TESTIMONIALS.length].via}
                   </div>
                 </div>
@@ -788,9 +788,9 @@ function HomePage() {
       <section style={{ background:C.navy, padding:"96px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:64 }}>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>The Unified Method</div>
-            <h2 style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 16px", letterSpacing:-0.5 }}>A coherent development system.</h2>
-            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.55)", maxWidth:500, margin:"0 auto" }}>Not a collection of techniques. Four integrated pillars — each purposeful, each reinforcing the others.</p>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>The Unified Method</div>
+            <EditableBlock text={content.method?.headline||"A coherent development system."} onSave={v=>updateContent("method.headline",v)} fieldName="method.headline" tag="h2" style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 16px", letterSpacing:-0.5 }} />
+            <EditableBlock text={content.method?.subtitle||"Not a collection of techniques. Four integrated pillars — each purposeful, each reinforcing the others."} onSave={v=>updateContent("method.subtitle",v)} fieldName="method.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.55)", maxWidth:500, margin:"0 auto" }} />
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:C.navyLight }}>
             {[
@@ -800,9 +800,9 @@ function HomePage() {
               { n:"04", tag:"Data", title:"Assessment-Informed Clarity", body:"Your development should be built on real data — how you think, relate, and lead. 12+ validated tools, certified debriefing, the right tool for the right goal." },
             ].map((p,i) => (
               <div key={i} style={{ background:C.navyMid, padding:36 }}>
-                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{p.n} · {p.tag}</div>
-                <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:700, margin:"0 0 14px" }}>{p.title}</div>
-                <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.55)", lineHeight:1.7 }}>{p.body}</div>
+                <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{p.n} · {p.tag}</div>
+                <EditableBlock text={content.method?.[`p${i}title`]||p.title} onSave={v=>updateContent(`method.p${i}title`,v)} fieldName={`method.p${i}title`} tag="div" style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:700, margin:"0 0 14px" }} />
+                <EditableBlock text={content.method?.[`p${i}body`]||p.body} onSave={v=>updateContent(`method.p${i}body`,v)} fieldName={`method.p${i}body`} tag="div" style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.55)", lineHeight:1.7 }} />
               </div>
             ))}
           </div>
@@ -812,11 +812,11 @@ function HomePage() {
       {/* ── ASSESSMENT CTA ───────────────────────────────── */}
       <section style={{ background:C.creamDark, padding:"80px 24px", borderTop:`4px solid ${C.gold}` }}>
         <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free · No email required</div>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free · No email required</div>
           <h2 style={{ fontFamily:PF, fontSize:38, color:C.navy, margin:"0 0 20px" }}>Find your leadership pressure point.</h2>
-          <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.7, margin:"0 0 36px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. Under 8 minutes. A clear read on where your leadership — or your team's leadership — needs the most attention right now.</p>
-          <Btn onClick={() => setPage("assessment")} style={{ fontSize:14, padding:"16px 40px" }}>Take the Assessment</Btn>
-          <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginTop:16 }}>Grounded in Authentic Leadership theory, Kahneman dual-process research, Rock SCARF, and Kegan developmental theory.</div>
+          <p style={{ fontFamily:DM, fontSize:18, color:C.muted, lineHeight:1.7, margin:"0 0 36px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. Under 8 minutes. A clear read on where your leadership — or your team's leadership — needs the most attention right now.</p>
+          <Btn onClick={() => setPage("assessment")} style={{ fontSize:16, padding:"16px 40px" }}>Take the Assessment</Btn>
+          <div style={{ fontFamily:DM, fontSize:14, color:C.muted, marginTop:16 }}>Grounded in Authentic Leadership theory, Kahneman dual-process research, Rock SCARF, and Kegan developmental theory.</div>
         </div>
       </section>
 
@@ -824,10 +824,31 @@ function HomePage() {
       <section style={{ background:C.navy, padding:"80px 24px", textAlign:"center" }}>
         <div style={{ maxWidth:600, margin:"0 auto" }}>
           <h2 style={{ fontFamily:PF, fontSize:36, color:C.white, margin:"0 0 20px", fontStyle:"italic" }}>30 minutes to find out if this is the right fit.</h2>
-          <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.6)", margin:"0 0 32px", lineHeight:1.7 }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ fontSize:14, padding:"16px 40px" }}>Book a Discovery Call</Btn>
+          <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 32px", lineHeight:1.7 }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ fontSize:16, padding:"16px 40px" }}>Book a Discovery Call</Btn>
         </div>
       </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+// HEADSHOT AVATAR (About page — reads from ./assets/headshot.jpg)
+// ═══════════════════════════════════════════════════════
+function HeadshotAvatar() {
+  const [err, setErr] = useState(false);
+  return (
+    <div style={{ width:160, height:160, borderRadius:"50%", overflow:"hidden", margin:"0 auto 24px", border:`3px solid ${C.gold}40`, background:`linear-gradient(135deg, ${C.navyLight}, ${C.gold}40)`, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+      {err ? (
+        <span style={{ fontFamily:PF, fontSize:48, color:C.white, lineHeight:1 }}>JJ</span>
+      ) : (
+        <img
+          src="./assets/headshot.jpg"
+          alt="Julian C. Johnson — ICF PCC Executive Coach"
+          style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top", display:"block" }}
+          onError={() => setErr(true)}
+        />
+      )}
     </div>
   );
 }
@@ -842,21 +863,19 @@ function AboutPage() {
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 380px", gap:64, alignItems:"center" }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>ICF PCC · ACTC · Founder, Unified Solutions Inc.</div>
-            <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 24px", letterSpacing:-0.5 }}>Before coaching was the profession, it was what the role demanded.</h1>
-            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.75 }}>U.S. Army tactical leader. Fortune 500 consultant. Certified holistic coach. The arc is not a pivot — it is one continuous story about what it costs to lead when it actually matters, and what develops in people who learn to do it well.</p>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>ICF PCC · ACTC · Founder, Unified Solutions Inc.</div>
+            <EditableBlock text={content.about?.headline||"Before coaching was the profession, it was what the role demanded."} onSave={v=>updateContent("about.headline",v)} fieldName="about.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 24px", letterSpacing:-0.5 }} />
+            <EditableBlock text={content.about?.bio||"U.S. Army tactical leader. Fortune 500 consultant. Certified holistic coach. The arc is not a pivot — it is one continuous story about what it costs to lead when it actually matters, and what develops in people who learn to do it well."} onSave={v=>updateContent("about.bio",v)} fieldName="about.bio" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75 }} />
           </div>
           <div style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32, textAlign:"center" }}>
-            <div style={{ width:120, height:120, borderRadius:"50%", background:`linear-gradient(135deg, ${C.navyLight}, ${C.gold}40)`, margin:"0 auto 20px", display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <span style={{ fontFamily:PF, fontSize:40, color:C.white }}>JJ</span>
-            </div>
+            <HeadshotAvatar />
             <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:600 }}>Julian C. Johnson</div>
-            <div style={{ fontFamily:DM, fontSize:12, color:C.gold, marginTop:4 }}>ICF PCC · ACTC</div>
-            <div style={{ fontFamily:DM, fontSize:10, color:"rgba(255,255,255,0.4)", marginTop:2 }}>Advanced Certified Team Coach</div>
-            <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.5)", marginTop:4 }}>ExecOnline · Emeritus Faculty</div>
+            <div style={{ fontFamily:DM, fontSize:14, color:C.gold, marginTop:4 }}>ICF PCC · ACTC</div>
+            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.4)", marginTop:2 }}>Advanced Certified Team Coach</div>
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", marginTop:4 }}>ExecOnline · Emeritus Faculty</div>
             <div style={{ marginTop:20, display:"flex", flexDirection:"column", gap:6 }}>
               {["ICF PCC","ACTC — Advanced Certified Team Coach","HPTI Certified","AgileBrain Certified"].map(c => (
-                <div key={c} style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.55)", background:"rgba(255,255,255,0.05)", borderRadius:2, padding:"5px 12px" }}>{c}</div>
+                <div key={c} style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.55)", background:"rgba(255,255,255,0.05)", borderRadius:2, padding:"5px 12px" }}>{c}</div>
               ))}
 
             {/* ── VIDEO PLACEHOLDER ─────────────────────────────────────
@@ -876,7 +895,7 @@ function AboutPage() {
                   style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", borderRadius:4 }}
                 />
               </div>
-              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", marginTop:8, textAlign:"center" }}>
+              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:8, textAlign:"center" }}>
                 60–90 second introduction from Julian
               </div>
             </div>
@@ -887,7 +906,7 @@ function AboutPage() {
 
       <section style={{ background:C.cream, padding:"80px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:40 }}>Career Arc</div>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:40 }}>Career Arc</div>
           {[
             { phase:"Phase 1 · U.S. Army · 1999–2003", headline:"Led under fire.", body:"Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did." },
             { phase:"Phase 2 · Fortune 500 Consulting · 2013–Present", headline:"Built inside the pressure.", body:"Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services." },
@@ -895,12 +914,12 @@ function AboutPage() {
           ].map((ph,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:"240px 1fr", gap:48, marginBottom:56, paddingBottom:56, borderBottom: i<2 ? `1px solid ${C.border}` : "none" }}>
               <div>
-                <div style={{ fontFamily:DM, fontSize:9, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{ph.phase}</div>
+                <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{ph.phase}</div>
                 <div style={{ width:40, height:2, background:C.gold }} />
               </div>
               <div>
                 <h3 style={{ fontFamily:PF, fontSize:28, color:C.navy, margin:"0 0 14px" }}>{ph.headline}</h3>
-                <p style={{ fontFamily:DM, fontSize:15, color:C.muted, lineHeight:1.75 }}>{ph.body}</p>
+                <p style={{ fontFamily:DM, fontSize:17, color:C.muted, lineHeight:1.75 }}>{ph.body}</p>
               </div>
             </div>
           ))}
@@ -909,8 +928,8 @@ function AboutPage() {
 
       <section style={{ background:C.creamDark, padding:"64px 24px", textAlign:"center" }}>
         <div style={{ maxWidth:600, margin:"0 auto" }}>
-          <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }}>Ready to find out if this is the right fit?</h2>
-          <p style={{ fontFamily:DM, fontSize:15, color:C.muted, margin:"0 0 28px" }}>30 minutes. No obligation. A real conversation.</p>
+          <EditableBlock text={content.about?.ctaHeadline||"Ready to find out if this is the right fit?"} onSave={v=>updateContent("about.ctaHeadline",v)} fieldName="about.ctaHeadline" tag="h2" style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }} />
+          <EditableBlock text={content.about?.ctaBody||"30 minutes. No obligation. A real conversation."} onSave={v=>updateContent("about.ctaBody",v)} fieldName="about.ctaBody" tag="p" style={{ fontFamily:DM, fontSize:17, color:C.muted, margin:"0 0 28px" }} />
           <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Book a Discovery Call</Btn>
         </div>
       </section>
@@ -927,14 +946,14 @@ function CoachingPage() {
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 0" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>The Unified Method</div>
-          <h1 style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 24px", maxWidth:700, letterSpacing:-0.5 }}>The format shifts to fit what you need. The depth never does.</h1>
-          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.6)", maxWidth:600, lineHeight:1.7, margin:"0 0 48px" }}>Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.</p>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>The Unified Method</div>
+          <EditableBlock text={content.coaching?.headline||"The format shifts to fit what you need. The depth never does."} onSave={v=>updateContent("coaching.headline",v)} fieldName="coaching.headline" tag="h1" style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 24px", maxWidth:700, letterSpacing:-0.5 }} />
+          <p style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.6)", maxWidth:600, lineHeight:1.7, margin:"0 0 48px" }}>Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.</p>
           <div style={{ display:"flex", gap:2, flexWrap:"wrap" }}>
             {SERVICES.map((s,i) => (
-              <button key={s.id} onClick={() => setActive(i)} style={{ background: active===i ? C.gold : "rgba(255,255,255,0.08)", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:600, color: active===i ? C.white : "rgba(255,255,255,0.6)", padding:"14px 24px", transition:"all 0.2s", display:"flex", alignItems:"center", gap:8 }}>
+              <button key={s.id} onClick={() => setActive(i)} style={{ background: active===i ? C.gold : "rgba(255,255,255,0.08)", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight:600, color: active===i ? C.white : "rgba(255,255,255,0.6)", padding:"14px 24px", transition:"all 0.2s", display:"flex", alignItems:"center", gap:8 }}>
                 {s.icon} {s.label}
-                {s.badge && <span style={{ background:C.navy, color:C.white, fontSize:8, padding:"1px 5px", borderRadius:8, letterSpacing:1 }}>{s.badge}</span>}
+                {s.badge && <span style={{ background:C.navy, color:C.white, fontSize:11, padding:"1px 5px", borderRadius:8, letterSpacing:1 }}>{s.badge}</span>}
               </button>
             ))}
           </div>
@@ -948,36 +967,36 @@ function CoachingPage() {
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:64 }}>
                 <div>
                   <h2 style={{ fontFamily:PF, fontSize:36, color:C.navy, margin:"0 0 12px" }}>{s.label}</h2>
-                  <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:"0 0 32px" }}>{s.tagline}</p>
-                  <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>What it covers</div>
+                  <p style={{ fontFamily:DM, fontSize:18, color:C.text, lineHeight:1.75, margin:"0 0 32px" }}>{s.tagline}</p>
+                  <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>What it covers</div>
                   <ul style={{ listStyle:"none", padding:0, margin:"0 0 40px" }}>
                     {s.bullets.map((b,i) => (
-                      <li key={i} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"12px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12 }}>
+                      <li key={i} style={{ fontFamily:DM, fontSize:16, color:C.muted, padding:"12px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:12 }}>
                         <span style={{ color:C.gold, flexShrink:0 }}>→</span>{b}
                       </li>
                     ))}
                   </ul>
                   <div style={{ background:C.goldPale, border:`1px solid ${C.gold}30`, borderRadius:4, padding:"12px 16px", marginBottom:32 }}>
-                    <div style={{ fontFamily:DM, fontSize:11, color:C.gold, letterSpacing:1 }}>{s.price}</div>
+                    <div style={{ fontFamily:DM, fontSize:13, color:C.gold, letterSpacing:1 }}>{s.price}</div>
                   </div>
                   <Btn href={s.ctaUrl}>{s.cta}</Btn>
                 </div>
                 <div>
                   <div style={{ background:C.navyMid, borderRadius:4, padding:40, marginBottom:24 }}>
                     <div style={{ fontFamily:PF, fontSize:32, color:C.gold, marginBottom:16 }}>❝</div>
-                    <blockquote style={{ fontFamily:PF, fontSize:17, color:C.white, lineHeight:1.75, margin:"0 0 24px", fontStyle:"italic" }}>
+                    <blockquote style={{ fontFamily:PF, fontSize:19, color:C.white, lineHeight:1.75, margin:"0 0 24px", fontStyle:"italic" }}>
                       {TESTIMONIALS[active % TESTIMONIALS.length].q}
                     </blockquote>
-                    <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>
+                    <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)" }}>
                       {TESTIMONIALS[active % TESTIMONIALS.length].who}<br/>
                       <span style={{ color:C.gold }}>{TESTIMONIALS[active % TESTIMONIALS.length].via}</span>
                     </div>
                   </div>
                   <div style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:4, padding:28 }}>
-                    <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>How it works</div>
+                    <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>How it works</div>
                     {["30-min discovery call at no cost — to establish genuine fit","Engagement scoped to your situation and goals","Regular sessions with async support between","Assessment debrief woven in throughout"].map((step,i) => (
-                      <div key={i} style={{ display:"flex", gap:12, marginBottom:12, fontFamily:DM, fontSize:13, color:C.muted }}>
-                        <span style={{ width:20, height:20, borderRadius:"50%", background:C.navy, color:C.gold, display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:700, flexShrink:0 }}>{i+1}</span>
+                      <div key={i} style={{ display:"flex", gap:12, marginBottom:12, fontFamily:DM, fontSize:16, color:C.muted }}>
+                        <span style={{ width:20, height:20, borderRadius:"50%", background:C.navy, color:C.gold, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700, flexShrink:0 }}>{i+1}</span>
                         {step}
                       </div>
                     ))}
@@ -1005,9 +1024,9 @@ function ResourcesPage() {
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Resources</div>
-          <h1 style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }}>Tools, frameworks, and thinking for leaders who do serious work.</h1>
-          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.6)", maxWidth:560, lineHeight:1.7 }}>Grounded in research and real operational experience. Not inspiration — application.</p>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Resources</div>
+          <EditableBlock text={content.resources?.headline||"Tools, frameworks, and thinking for leaders who do serious work."} onSave={v=>updateContent("resources.headline",v)} fieldName="resources.headline" tag="h1" style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }} />
+          <EditableBlock text={content.resources?.subtitle||"Grounded in research and real operational experience. Not inspiration — application."} onSave={v=>updateContent("resources.subtitle",v)} fieldName="resources.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.6)", maxWidth:560, lineHeight:1.7 }} />
         </div>
       </section>
 
@@ -1015,9 +1034,9 @@ function ResourcesPage() {
       <section style={{ background:C.gold, padding:"40px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", gap:24, flexWrap:"wrap" }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:8 }}>Free Diagnostic</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:8 }}>Free Diagnostic</div>
             <div style={{ fontFamily:PF, fontSize:24, color:C.white, fontWeight:600 }}>Leadership Pressure Point Assessment</div>
-            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.8)", marginTop:4 }}>18 questions · 6 domains · Under 8 minutes · Free, no email required</div>
+            <div style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.8)", marginTop:4 }}>18 questions · 6 domains · Under 8 minutes · Free, no email required</div>
           </div>
           <Btn variant="navy" onClick={() => setPage("assessment")} style={{ whiteSpace:"nowrap" }}>Take the Assessment</Btn>
         </div>
@@ -1030,7 +1049,7 @@ function ResourcesPage() {
             <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:0 }}>From the practice</h2>
             <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
               {[{id:"all",label:"All"}, ...DOMAINS.map(d => ({id:d.id, label:d.label.split(" ")[0]}))].map(f => (
-                <button key={f.id} onClick={() => setFilter(f.id)} style={{ background: filter===f.id ? C.navy : "transparent", color: filter===f.id ? C.white : C.muted, border:`1px solid ${filter===f.id ? C.navy : C.border}`, borderRadius:2, padding:"6px 14px", fontFamily:DM, fontSize:12, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}>{f.label}</button>
+                <button key={f.id} onClick={() => setFilter(f.id)} style={{ background: filter===f.id ? C.navy : "transparent", color: filter===f.id ? C.white : C.muted, border:`1px solid ${filter===f.id ? C.navy : C.border}`, borderRadius:2, padding:"6px 14px", fontFamily:DM, fontSize:14, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}>{f.label}</button>
               ))}
             </div>
           </div>
@@ -1044,12 +1063,12 @@ function ResourcesPage() {
                   <div style={{ height:4, background:d.color }} />
                   <div style={{ padding:28 }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
-                      <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:600 }}>{a.tag}</span>
-                      <span style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{a.mins} min read</span>
+                      <span style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:600 }}>{a.tag}</span>
+                      <span style={{ fontFamily:DM, fontSize:13, color:C.muted }}>{a.mins} min read</span>
                     </div>
                     <h3 style={{ fontFamily:PF, fontSize:20, color:C.navy, margin:"0 0 12px", lineHeight:1.35 }}>{a.title}</h3>
-                    <p style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
-                    <span style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.gold, letterSpacing:1 }}>Read article →</span>
+                    <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
+                    <span style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.gold, letterSpacing:1 }}>Read article →</span>
                   </div>
                 </div>
               );
@@ -1062,12 +1081,12 @@ function ResourcesPage() {
       <section style={{ background:C.creamDark, padding:"64px 24px", borderTop:`1px solid ${C.border}` }}>
         <div style={{ maxWidth:540, margin:"0 auto", textAlign:"center" }}>
           <h2 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 12px" }}>Leadership insights, when they're worth reading.</h2>
-          <p style={{ fontFamily:DM, fontSize:14, color:C.muted, margin:"0 0 28px", lineHeight:1.7 }}>Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.</p>
+          <p style={{ fontFamily:DM, fontSize:16, color:C.muted, margin:"0 0 28px", lineHeight:1.7 }}>Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.</p>
           {signed ? (
-            <div style={{ fontFamily:DM, fontSize:15, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
+            <div style={{ fontFamily:DM, fontSize:17, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
           ) : (
             <div style={{ display:"flex", gap:8 }}>
-              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:14, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
               <Btn onClick={() => email && setSigned(true)}>Join</Btn>
             </div>
           )}
@@ -1142,8 +1161,8 @@ Confirm when done.` }]
     }
   }
 
-  const tableHead = { fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, padding:"10px 12px", borderBottom:`2px solid ${C.border}`, textAlign:"left" };
-  const tableCell = { fontFamily:DM, fontSize:13, padding:"12px", borderBottom:`1px solid ${C.border}` };
+  const tableHead = { fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:C.muted, padding:"10px 12px", borderBottom:`2px solid ${C.border}`, textAlign:"left" };
+  const tableCell = { fontFamily:DM, fontSize:16, padding:"12px", borderBottom:`1px solid ${C.border}` };
 
   return (
     <div style={{ position:"fixed", inset:0, zIndex:500, background:"rgba(0,0,0,0.7)", display:"flex", alignItems:"flex-start", justifyContent:"center", overflowY:"auto", paddingTop:20 }}>
@@ -1151,27 +1170,27 @@ Confirm when done.` }]
         {/* Header */}
         <div style={{ background:C.navy, padding:"24px 32px", display:"flex", justifyContent:"space-between", alignItems:"center", position:"sticky", top:0, zIndex:10 }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:4 }}>Secure Admin Dashboard</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:4 }}>Secure Admin Dashboard</div>
             <div style={{ fontFamily:PF, fontSize:22, color:C.white }}>Assessment CRM — Unified Solutions Inc.</div>
           </div>
           <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-            <span style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>{records.length} record{records.length!==1?"s":""}</span>
-            <button onClick={loadRecords} style={{ background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", color:C.white, fontFamily:DM, fontSize:12, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>↻ Refresh</button>
-            <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.3)", border:"1px solid rgba(155,34,38,0.5)", color:"#ffaaaa", fontFamily:DM, fontSize:12, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>Clear All</button>
-            <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontSize:13, fontWeight:700, padding:"8px 18px", borderRadius:2, cursor:"pointer" }}>Close ×</button>
+            <span style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)" }}>{records.length} record{records.length!==1?"s":""}</span>
+            <button onClick={loadRecords} style={{ background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", color:C.white, fontFamily:DM, fontSize:14, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>↻ Refresh</button>
+            <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.3)", border:"1px solid rgba(155,34,38,0.5)", color:"#ffaaaa", fontFamily:DM, fontSize:14, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>Clear All</button>
+            <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontSize:16, fontWeight:700, padding:"8px 18px", borderRadius:2, cursor:"pointer" }}>Close ×</button>
           </div>
         </div>
 
         <div style={{ padding:"16px 32px", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, padding:"10px 16px", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
-            <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)" }}>Anthropic API Key</span>
+            <span style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)" }}>Anthropic API Key</span>
             <input
               type="password" value={apiKey}
               onChange={e => { setApiKey(e.target.value); localStorage.setItem("us-api-key", e.target.value); }}
               placeholder="sk-ant-..."
-              style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:2, color:"white" }}
+              style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:14, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:2, color:"white" }}
             />
-            {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A" }}>✓ Key saved</span>}
+            {apiKey && <span style={{ fontFamily:DM, fontSize:13, color:"#5DE09A" }}>✓ Key saved</span>}
           </div>
         </div>
         <div style={{ padding:32 }}>
@@ -1190,7 +1209,7 @@ Confirm when done.` }]
             ].map((s,i) => (
               <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"16px 20px" }}>
                 <div style={{ fontFamily:PF, fontSize:28, color:C.navy, fontWeight:700 }}>{s.val}</div>
-                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{s.label}</div>
+                <div style={{ fontFamily:DM, fontSize:12, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -1200,7 +1219,7 @@ Confirm when done.` }]
           ) : records.length === 0 ? (
             <div style={{ textAlign:"center", padding:60, background:C.white, border:`1px solid ${C.border}`, borderRadius:4 }}>
               <div style={{ fontFamily:PF, fontSize:24, color:C.navy, marginBottom:8 }}>No submissions yet.</div>
-              <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>Assessment results will appear here when users submit their email or save results.</div>
+              <div style={{ fontFamily:DM, fontSize:16, color:C.muted }}>Assessment results will appear here when users submit their email or save results.</div>
             </div>
           ) : (
             <>
@@ -1235,19 +1254,19 @@ Confirm when done.` }]
                           <div style={{ display:"flex", gap:4 }}>
                             {DOMAINS.map(d => (
                               <div key={d.id} title={`${d.label}: ${r.scores[d.id]}`} style={{ width:20, height:20, background:d.color, opacity: (r.scores[d.id]||0)/100 * 0.8 + 0.2, borderRadius:2, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                                <span style={{ fontSize:8, color:C.white, fontWeight:700 }}>{r.scores[d.id]}</span>
+                                <span style={{ fontSize:11, color:C.white, fontWeight:700 }}>{r.scores[d.id]}</span>
                               </div>
                             ))}
                           </div>
                         </td>
                         <td style={tableCell}>
-                          {ns === "synced" ? <span style={{ color:C.green, fontFamily:DM, fontSize:12 }}>✓ Synced</span>
-                          : ns === "syncing" ? <span style={{ color:C.gold, fontFamily:DM, fontSize:12 }}>Syncing...</span>
-                          : ns === "error" ? <span style={{ color:C.red, fontFamily:DM, fontSize:12 }}>Error</span>
-                          : <button onClick={() => syncToNotion(r, idx)} style={{ background:"none", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:DM, fontSize:11, padding:"3px 10px", borderRadius:2, cursor:"pointer" }}>Sync</button>}
+                          {ns === "synced" ? <span style={{ color:C.green, fontFamily:DM, fontSize:14 }}>✓ Synced</span>
+                          : ns === "syncing" ? <span style={{ color:C.gold, fontFamily:DM, fontSize:14 }}>Syncing...</span>
+                          : ns === "error" ? <span style={{ color:C.red, fontFamily:DM, fontSize:14 }}>Error</span>
+                          : <button onClick={() => syncToNotion(r, idx)} style={{ background:"none", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:DM, fontSize:13, padding:"3px 10px", borderRadius:2, cursor:"pointer" }}>Sync</button>}
                         </td>
                         <td style={tableCell}>
-                          <button onClick={() => setSelected(selected===idx?null:idx)} style={{ background:"none", border:`1px solid ${C.border}`, fontFamily:DM, fontSize:11, padding:"3px 10px", borderRadius:2, cursor:"pointer", color:C.navy }}>
+                          <button onClick={() => setSelected(selected===idx?null:idx)} style={{ background:"none", border:`1px solid ${C.border}`, fontFamily:DM, fontSize:13, padding:"3px 10px", borderRadius:2, cursor:"pointer", color:C.navy }}>
                             {selected===idx ? "Hide" : "View"}
                           </button>
                         </td>
@@ -1261,8 +1280,8 @@ Confirm when done.` }]
               {selected !== null && records[selected] && (
                 <div style={{ marginTop:16, background:C.white, border:`2px solid ${C.gold}`, borderRadius:4, padding:28 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-                    <div style={{ fontFamily:PF, fontSize:18, color:C.navy }}>Detail View — {records[selected].email || "Anonymous"}</div>
-                    <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{new Date(records[selected].timestamp).toLocaleString()}</div>
+                    <div style={{ fontFamily:PF, fontSize:20, color:C.navy }}>Detail View — {records[selected].email || "Anonymous"}</div>
+                    <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>{new Date(records[selected].timestamp).toLocaleString()}</div>
                   </div>
                   <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12 }}>
                     {DOMAINS.map(d => {
@@ -1271,12 +1290,12 @@ Confirm when done.` }]
                         <div key={d.id} style={{ background:C.cream, borderRadius:4, padding:"14px 16px" }}>
                           <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8 }}>
                             <span style={{ color:d.color }}>{d.icon}</span>
-                            <span style={{ fontFamily:DM, fontSize:11, fontWeight:600, color:C.navy }}>{d.label}</span>
+                            <span style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy }}>{d.label}</span>
                           </div>
                           <div style={{ background:C.border, borderRadius:2, height:6, marginBottom:4 }}>
                             <div style={{ width:`${score}%`, height:"100%", background:d.color, borderRadius:2 }} />
                           </div>
-                          <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{score}/100 · <ScoreBadge score={score} /></div>
+                          <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>{score}/100 · <ScoreBadge score={score} /></div>
                         </div>
                       );
                     })}
@@ -1286,8 +1305,8 @@ Confirm when done.` }]
             </>
           )}
           <div style={{ marginTop:24, background:C.navyMid, borderRadius:4, padding:"14px 20px", display:"flex", gap:12, alignItems:"center" }}>
-            <span style={{ fontSize:16 }}>💡</span>
-            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.65)", lineHeight:1.6 }}>
+            <span style={{ fontSize:18 }}>💡</span>
+            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.65)", lineHeight:1.6 }}>
               <strong style={{ color:C.gold }}>Notion Sync:</strong> Click "Sync" on any record to push it to your "Coaching Contacts — Unified Solutions CRM" database. Records with email opt-in also create a Gmail draft notification. Data is always backed up locally in persistent storage.
             </div>
           </div>
@@ -1346,21 +1365,21 @@ function AssessmentPage() {
     <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:720, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free Diagnostic</div>
-          <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }}>Where is the gap between where you are and where you need to be costing you most?</h1>
-          <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.7, margin:"0 0 40px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result.</p>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free Diagnostic</div>
+          <EditableBlock text={content.assessment?.headline||"Where is the gap between where you are and where you need to be costing you most?"} onSave={v=>updateContent("assessment.headline",v)} fieldName="assessment.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }} />
+          <EditableBlock text={content.assessment?.subtitle||"18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result."} onSave={v=>updateContent("assessment.subtitle",v)} fieldName="assessment.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.7, margin:"0 0 40px" }} />
           <div style={{ display:"flex", gap:32, justifyContent:"center", marginBottom:40 }}>
             {[["18","Questions"],["6","Domains"],["<8 min","To complete"],["Free","No signup"]].map(([v,l]) => (
               <div key={l} style={{ textAlign:"center" }}>
                 <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700 }}>{v}</div>
-                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
+                <div style={{ fontFamily:DM, fontSize:12, letterSpacing:2, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
               </div>
             ))}
           </div>
-          <Btn onClick={() => setStep("quiz")} style={{ fontSize:15, padding:"16px 48px" }}>Begin Assessment</Btn>
+          <Btn onClick={() => setStep("quiz")} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
           {isAdmin && (
             <div style={{ marginTop:20 }}>
-              <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:11, color:C.gold, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
+              <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:13, color:C.gold, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
                 📊 View Assessment CRM
               </button>
             </div>
@@ -1373,8 +1392,8 @@ function AssessmentPage() {
           {DOMAINS.map(d => (
             <div key={d.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:24 }}>
               <div style={{ fontFamily:DM, fontSize:24, marginBottom:12, color:d.color }}>{d.icon}</div>
-              <div style={{ fontFamily:PF, fontSize:16, color:C.navy, fontWeight:600, marginBottom:8 }}>{d.label}</div>
-              <div style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.6 }}>{d.desc}</div>
+              <div style={{ fontFamily:PF, fontSize:18, color:C.navy, fontWeight:600, marginBottom:8 }}>{d.label}</div>
+              <div style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.6 }}>{d.desc}</div>
             </div>
           ))}
         </div>
@@ -1390,25 +1409,25 @@ function AssessmentPage() {
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
           <div style={{ maxWidth:720, margin:"0 auto", display:"flex", alignItems:"center", gap:16 }}>
-            <span style={{ fontFamily:DM, fontSize:12, color:C.muted, whiteSpace:"nowrap" }}>Question {current+1} of 18</span>
+            <span style={{ fontFamily:DM, fontSize:14, color:C.muted, whiteSpace:"nowrap" }}>Question {current+1} of 18</span>
             <div style={{ flex:1, background:C.creamDark, borderRadius:2, height:6 }}>
               <div style={{ width:`${progress}%`, height:"100%", background:C.gold, borderRadius:2, transition:"width 0.3s" }} />
             </div>
-            <span style={{ fontFamily:DM, fontSize:12, color:C.gold, fontWeight:600, whiteSpace:"nowrap" }}>{progress}%</span>
+            <span style={{ fontFamily:DM, fontSize:14, color:C.gold, fontWeight:600, whiteSpace:"nowrap" }}>{progress}%</span>
           </div>
         </div>
         {!allAnswered && q ? (
           <section style={{ padding:"64px 24px" }}>
             <div style={{ maxWidth:640, margin:"0 auto" }}>
               <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:28 }}>
-                <span style={{ fontFamily:DM, fontSize:18, color:domain.color }}>{domain.icon}</span>
-                <span style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:domain.color, textTransform:"uppercase" }}>{domain.label}</span>
+                <span style={{ fontFamily:DM, fontSize:20, color:domain.color }}>{domain.icon}</span>
+                <span style={{ fontFamily:DM, fontSize:13, letterSpacing:2, color:domain.color, textTransform:"uppercase" }}>{domain.label}</span>
               </div>
               <h2 style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4 }}>{q.text}</h2>
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
                 {q.options.map((opt,i) => (
                   <button key={i} onClick={() => { setAnswers(prev => ({...prev, [q.id]: opt.score})); }}
-                    style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"18px 24px", textAlign:"left", cursor:"pointer", fontFamily:DM, fontSize:14, color:C.text, lineHeight:1.55, transition:"all 0.15s" }}
+                    style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"18px 24px", textAlign:"left", cursor:"pointer", fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.55, transition:"all 0.15s" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = C.gold; e.currentTarget.style.background = C.goldPale; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.white; }}>
                     <span style={{ color:C.gold, marginRight:10, fontWeight:700 }}>{["A","B","C","D"][i]}.</span> {opt.text}
@@ -1421,7 +1440,7 @@ function AssessmentPage() {
           <section style={{ padding:"64px 24px", textAlign:"center" }}>
             <div style={{ maxWidth:500, margin:"0 auto" }}>
               <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 20px" }}>All 18 questions complete.</h2>
-              <Btn onClick={() => setStep("results")} style={{ fontSize:14, padding:"14px 40px" }}>See My Results</Btn>
+              <Btn onClick={() => setStep("results")} style={{ fontSize:16, padding:"14px 40px" }}>See My Results</Btn>
             </div>
           </section>
         )}
@@ -1438,10 +1457,10 @@ function AssessmentPage() {
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <section style={{ background:C.navy, padding:"64px 24px 48px" }}>
           <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Your Results</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Your Results</div>
             <h1 style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 12px" }}>Leadership Pressure Point Assessment</h1>
-            <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.6)", marginBottom:4 }}>Primary pressure point: <strong style={{ color:C.gold }}>{primary.label}</strong></p>
-            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)" }}>Secondary: {secondary.label}</p>
+            <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", marginBottom:4 }}>Primary pressure point: <strong style={{ color:C.gold }}>{primary.label}</strong></p>
+            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.4)" }}>Secondary: {secondary.label}</p>
           </div>
         </section>
         <section style={{ padding:"56px 24px" }}>
@@ -1450,30 +1469,30 @@ function AssessmentPage() {
               {sorted.map(d => (
                 <div key={d.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:24, borderLeft: d.id===primary.id ? `4px solid ${d.color}` : d.id===secondary.id ? `4px solid ${d.color}40` : `4px solid ${C.border}` }}>
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
-                    <span style={{ fontFamily:PF, fontSize:15, color:C.navy, fontWeight:600 }}>{d.icon} {d.label}</span>
+                    <span style={{ fontFamily:PF, fontSize:17, color:C.navy, fontWeight:600 }}>{d.icon} {d.label}</span>
                     <ScoreBadge score={d.score} />
                   </div>
                   <div style={{ background:C.creamDark, borderRadius:2, height:8, marginBottom:6 }}>
                     <div style={{ width:`${d.score}%`, height:"100%", background:d.color, borderRadius:2, transition:"width 1s ease" }} />
                   </div>
-                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{d.score}/100</div>
+                  <div style={{ fontFamily:DM, fontSize:13, color:C.muted }}>{d.score}/100</div>
                 </div>
               ))}
             </div>
             <div style={{ background:C.navyMid, borderRadius:4, padding:36, textAlign:"center" }}>
-              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 12px" }}>Get a personalized note from Julian.</h3>
-              <p style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }}>Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach.</p>
+              <EditableBlock text={content.assessment?.resultsCTA||"Get a personalized note from Julian."} onSave={v=>updateContent("assessment.resultsCTA",v)} fieldName="assessment.resultsCTA" tag="h3" style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 12px" }} />
+              <EditableBlock text={content.assessment?.resultsCTAbody||"Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach."} onSave={v=>updateContent("assessment.resultsCTAbody",v)} fieldName="assessment.resultsCTAbody" tag="p" style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }} />
               {submitted ? (
-                <div style={{ fontFamily:DM, fontSize:14, color:C.gold }}>✓ {savedMsg || "Results saved. Julian will be in touch."}</div>
+                <div style={{ fontFamily:DM, fontSize:16, color:C.gold }}>✓ {savedMsg || "Results saved. Julian will be in touch."}</div>
               ) : (
                 <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
                   <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
-                    style={{ padding:"12px 16px", fontFamily:DM, fontSize:14, border:`1px solid ${C.border}`, borderRadius:2, minWidth:240, background:C.cream }} />
+                    style={{ padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, minWidth:240, background:C.cream }} />
                   <Btn onClick={async () => { setSubmitted(true); await saveResults(scores); }}>Send My Results</Btn>
                 </div>
               )}
               <button onClick={async () => { await saveResults(scores); setSavedMsg("Saved locally ✓"); setSubmitted(true); }}
-                style={{ background:"none", border:"none", fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.35)", cursor:"pointer", marginTop:12, textDecoration:"underline" }}>
+                style={{ background:"none", border:"none", fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.35)", cursor:"pointer", marginTop:12, textDecoration:"underline" }}>
                 Save results without sharing email
               </button>
             </div>
@@ -1493,9 +1512,9 @@ function BookPage() {
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"start" }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Book a Call</div>
-            <h1 style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px" }}>30 minutes to find out if this is the right fit.</h1>
-            <p style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", lineHeight:1.75, margin:"0 0 32px" }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Book a Call</div>
+            <EditableBlock text={content.book?.headline||"30 minutes to find out if this is the right fit."} onSave={v=>updateContent("book.headline",v)} fieldName="book.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px" }} />
+            <EditableBlock text={content.book?.body||"No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating."} onSave={v=>updateContent("book.body",v)} fieldName="book.body" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75, margin:"0 0 32px" }} />
             <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
               {[
                 { icon:"📅", label:"Discovery Call", detail:"30 min · No cost · Genuine fit assessment" },
@@ -1506,21 +1525,21 @@ function BookPage() {
                 <div key={i} style={{ display:"flex", gap:16, alignItems:"center", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:"14px 20px" }}>
                   <span style={{ fontSize:20 }}>{c.icon}</span>
                   <div>
-                    <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.white }}>{c.label}</div>
-                    <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>{c.detail}</div>
+                    <div style={{ fontFamily:DM, fontSize:16, fontWeight:600, color:C.white }}>{c.label}</div>
+                    <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)" }}>{c.detail}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
-            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)", marginBottom:20 }}>Calendly scheduling widget loads here</div>
+            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)", marginBottom:20 }}>Calendly scheduling widget loads here</div>
             <div style={{ background:"rgba(255,255,255,0.04)", border:`1px dashed ${C.gold}40`, borderRadius:4, padding:48, marginBottom:20 }}>
-              <div style={{ fontFamily:PF, fontSize:18, color:C.white, marginBottom:8 }}>Discovery Call</div>
-              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", marginBottom:24 }}>30 min · Zoom · Free</div>
+              <div style={{ fontFamily:PF, fontSize:20, color:C.white, marginBottom:8 }}>Discovery Call</div>
+              <div style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", marginBottom:24 }}>30 min · Zoom · Free</div>
               <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Schedule via Calendly</Btn>
             </div>
-            <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)" }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)" }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
           </div>
         </div>
       </section>
@@ -1533,9 +1552,9 @@ function BookPage() {
               { label:"This is built for you if...", items:["You're ready to go deeper than your current circumstances","You operate in high-stakes environments with real complexity","You want development that compounds, not a one-time program","You're willing to be genuinely challenged"] },
             ].map((col,i) => (
               <div key={i} style={{ background: i===0?C.white:C.goldPale, border:`1px solid ${C.border}`, borderRadius:4, padding:28 }}>
-                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color: i===0?C.red:C.green, fontWeight:600, marginBottom:16 }}>{col.label}</div>
+                <div style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color: i===0?C.red:C.green, fontWeight:600, marginBottom:16 }}>{col.label}</div>
                 {col.items.map((it,j) => (
-                  <div key={j} style={{ fontFamily:DM, fontSize:14, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:10 }}>
+                  <div key={j} style={{ fontFamily:DM, fontSize:16, color:C.muted, padding:"8px 0", borderBottom:`1px solid ${C.border}`, display:"flex", gap:10 }}>
                     <span style={{ color: i===0?C.red:C.green, fontWeight:700 }}>{i===0?"×":"→"}</span> {it}
                   </div>
                 ))}
@@ -1554,15 +1573,15 @@ function BookPage() {
 function Footer() {
   const { setPage } = useSite();
   return (
-    <footer style={{ background:C.navy, color:"rgba(255,255,255,0.5)", fontFamily:DM, fontSize:13 }}>
+    <footer style={{ background:C.navy, color:"rgba(255,255,255,0.5)", fontFamily:DM, fontSize:16 }}>
       <div style={{ maxWidth:1100, margin:"0 auto", padding:"56px 24px 32px", display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:48 }}>
         <div>
           <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:700, marginBottom:6 }}>Unified Solutions Inc.</div>
-          <div style={{ fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>ICF PCC · ACTC</div>
+          <div style={{ fontSize:12, letterSpacing:2, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>ICF PCC · ACTC</div>
           <div style={{ lineHeight:1.75, marginBottom:16 }}>Plymouth, MN<br/>contact@unifiedsolutionsinc.com<br/>952.594.8611</div>
           <div style={{ display:"flex", gap:12 }}>
             {[["in","https://linkedin.com/in/juliancjohnson"],["ig","https://instagram.com/unifiedsolutionsinc"],["yt","https://youtube.com"]].map(([l,url]) => (
-              <a key={l} href={url} target="_blank" rel="noopener noreferrer" style={{ color:"rgba(255,255,255,0.4)", fontFamily:DM, fontSize:11, letterSpacing:1, textTransform:"uppercase", textDecoration:"none" }}>{l.toUpperCase()}</a>
+              <a key={l} href={url} target="_blank" rel="noopener noreferrer" style={{ color:"rgba(255,255,255,0.4)", fontFamily:DM, fontSize:13, letterSpacing:1, textTransform:"uppercase", textDecoration:"none" }}>{l.toUpperCase()}</a>
             ))}
           </div>
         </div>
@@ -1572,10 +1591,10 @@ function Footer() {
           { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
           <div key={i}>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
             {col.items.map(([label, page]) => (
               <div key={label} style={{ marginBottom:8 }}>
-                {page ? <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
+                {page ? <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
                       : <span>{label}</span>}
               </div>
             ))}
@@ -1597,6 +1616,61 @@ const DEFAULT_CONTENT = {
   hero: {
     headline: "Leadership that holds under real pressure.",
     body: "Army tactical leader. Fortune 500 consultant. 1,200+ hours coaching senior executives. The arc is one continuous story about what it costs to lead when it actually matters — and what develops in people who learn to do it well.",
+  },
+  about: {
+    eyebrow: "ICF PCC · ACTC · Founder, Unified Solutions Inc.",
+    headline: "Before coaching was the profession, it was what the role demanded.",
+    bio: "U.S. Army tactical leader. Fortune 500 consultant. Certified holistic coach. The arc is not a pivot — it is one continuous story about what it costs to lead when it actually matters, and what develops in people who learn to do it well.",
+    arc0headline: "Led under fire.",
+    arc0body: "Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did.",
+    arc1headline: "Built inside the pressure.",
+    arc1body: "Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services.",
+    arc2headline: "Applied at depth.",
+    arc2body: "Certified holistic coach. ICF PCC. ACTC. ExecOnline and Emeritus faculty. 1,200+ hours. 222+ clients. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it.",
+    ctaHeadline: "Ready to find out if this is the right fit?",
+    ctaBody: "30 minutes. No obligation. A real conversation.",
+  },
+  coaching: {
+    headline: "The format shifts to fit what you need. The depth never does.",
+    subtitle: "Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.",
+  },
+  resources: {
+    headline: "Tools, frameworks, and thinking for leaders who do serious work.",
+    subtitle: "Grounded in research and real operational experience. Not inspiration — application.",
+    assessmentHeadline: "Leadership Pressure Point Assessment",
+    assessmentSub: "18 questions · 6 domains · Under 8 minutes · Free, no email required",
+    emailHeadline: "Leadership insights, when they're worth reading.",
+    emailSub: "Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.",
+  },
+  method: {
+    headline: "A coherent development system.",
+    subtitle: "Not a collection of techniques. Four integrated pillars — each purposeful, each reinforcing the others.",
+    p0title: "Holistic Awareness", p0body: "Development that accounts for the whole person produces results that hold. Rooted in Goal Imagery Institute training — addresses what actually drives outcomes.",
+    p1title: "Laser-Focused Method", p1body: "Getting to what matters quickly isn't rushing — it's disciplined listening and precise questioning. Grounded in Marion Franklin's laser-focused methodology.",
+    p2title: "Positive Psychology", p2body: "The evidence base for what shifts in human development is richer than most coaching reflects. This pillar brings the science — rigorously applied, not superficially referenced.",
+    p3title: "Assessment-Informed Clarity", p3body: "Your development should be built on real data — how you think, relate, and lead. 12+ validated tools, certified debriefing, the right tool for the right goal.",
+  },
+  assessment: {
+    headline: "Where is the gap between where you are and where you need to be costing you most?",
+    subtitle: "18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result.",
+    resultsCTA: "Get a personalized note from Julian.",
+    resultsCTAbody: "Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach.",
+  },
+  book: {
+    headline: "30 minutes to find out if this is the right fit.",
+    body: "No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.",
+    notFit0: "You want to be validated rather than challenged",
+    notFit1: "You're looking for a consultant to arrive with answers",
+    notFit2: "You're in acute crisis requiring clinical/therapeutic support",
+    notFit3: "You're buying a program to check a box",
+    fit0: "You're ready to go deeper than your current circumstances",
+    fit1: "You operate in high-stakes environments with real complexity",
+    fit2: "You want development that compounds, not a one-time program",
+    fit3: "You're willing to be genuinely challenged",
+  },
+  finalCta: {
+    headline: "30 minutes to find out if this is the right fit.",
+    body: "No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.",
   },
 };
 
