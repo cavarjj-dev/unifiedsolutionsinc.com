@@ -34,6 +34,17 @@
   to     = "/index.html"
   status = 200
 
+[[redirects]]
+  from   = "/privacy"
+  to     = "/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/privacy-policy"
+  to     = "/privacy"
+  status = 301
+  force  = true
+
 # ── Old .html file redirects (301 = permanent, passes SEO value) ──
 # Redirects old page URLs to new clean URLs.
 # Any Google-indexed links to these will pass authority to the new pages.

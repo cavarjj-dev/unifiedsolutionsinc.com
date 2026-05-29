@@ -116,6 +116,13 @@
   -->
 </head>
 <body>
+  <!-- WCAG 2.1 SC 2.4.1 — Bypass Blocks: Skip Navigation Link -->
+  <a id="skip-to-main" href="#main-content"
+     onfocus="this.style.left='16px'"
+     onblur="this.style.left='-9999px'"
+     style="position:fixed;left:-9999px;top:8px;z-index:10000;background:#0B1D30;color:#C4903A;padding:10px 22px;border-radius:4px;font-family:'DM Sans',sans-serif;font-weight:600;text-decoration:none;font-size:14px;border:2px solid #C4903A;outline:none;">
+    Skip to main content
+  </a>
   <div id="root"></div>
 
   <script type="text/babel">
@@ -687,6 +694,7 @@ function Nav() {
     { id:"coaching", label:"Coaching" },{ id:"resources", label:"Resources" },
     { id:"assessment", label:"Assessment" },
   ];
+  // Note: privacy page accessible via footer and assessment links
   const isHome = page === "home";
   const bg = (!isHome || scrolled) ? C.white : "transparent";
   const textCol = (!isHome || scrolled) ? C.navy : C.white;
@@ -1511,7 +1519,7 @@ function ResourcesPage() {
             <div style={{ fontFamily:DM, fontSize:17, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
           ) : (
             <div style={{ display:"flex", gap:8 }}>
-              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" id="newsletter-email" aria-label="Email address for leadership insights" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
               <Btn onClick={() => email && setSigned(true)}>Join</Btn>
             </div>
           )}
@@ -1871,6 +1879,7 @@ function AssessmentPage() {
   const [submitted, setSubmitted] = useState(false);
   const [savedMsg, setSavedMsg] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(false);
   const current = Object.keys(answers).length;
   const totalQs = sessionQuestions.length || 18;
   const progress = Math.round((current / totalQs) * 100);
@@ -1921,7 +1930,16 @@ function AssessmentPage() {
               </div>
             ))}
           </div>
-          <Btn onClick={() => setStep("quiz")} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
+          
+          {/* AI Disclosure — EU AI Act Art.50, California SB 942, ICF Ethics */}
+          <div style={{ background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, padding:"14px 20px", margin:"0 auto 24px", maxWidth:560, textAlign:"left" }}>
+            <div style={{ fontFamily:DM, fontSize:12, fontWeight:700, color:C.gold, letterSpacing:1, marginBottom:6 }}>🤖 AI-Assisted Processing</div>
+            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.65)", lineHeight:1.65, margin:0 }}>
+              This assessment uses AI to help generate personalized coaching insights. If you share your email, your scores are processed by Anthropic's API and stored in our secure coaching CRM. No automated decisions are made about you — all coaching involves a human coach. See our{" "}
+              <button onClick={() => setPage("privacy")} style={{ background:"none", border:"none", color:C.gold, fontFamily:DM, fontSize:13, cursor:"pointer", textDecoration:"underline", padding:0 }}>Privacy Policy</button>.
+            </p>
+          </div>
+          <Btn onClick={() => { const s = generateAssessmentSession(); setSessionQuestions(s); setAnswers({}); setStep("quiz"); }} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
           {isAdmin && (
             <div style={{ marginTop:20 }}>
               <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:13, color:C.gold, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
@@ -2050,6 +2068,7 @@ function AssessmentPage() {
               ) : (
                 <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
                   <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
+                    id="result-email" aria-label="Your email address to receive a personalized coaching note"
                     style={{ padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, minWidth:240, background:C.cream }} />
                   <Btn onClick={async () => { setSubmitted(true); await saveResults(scores); }}>Send My Results</Btn>
                 </div>
@@ -2131,6 +2150,165 @@ function BookPage() {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════
+// PRIVACY POLICY PAGE
+// GDPR Art.13, CCPA §1798.100, Minnesota MCDPA
+// Last updated: May 2026
+// ═══════════════════════════════════════════════════════
+function PrivacyPolicyPage() {
+  const { setPage } = useSite();
+  const updated = "May 28, 2026";
+  const section = (title, children) => (
+    <div style={{ marginBottom:40 }}>
+      <h2 style={{ fontFamily:PF, fontSize:22, color:C.navy, margin:"0 0 14px", borderBottom:`2px solid ${C.gold}`, paddingBottom:10 }}>{title}</h2>
+      {children}
+    </div>
+  );
+  const p = (text, style={}) => <p style={{ fontFamily:DM, fontSize:16, color:"#3A3A3A", lineHeight:1.8, margin:"0 0 12px", ...style }}>{text}</p>;
+  const li = (text) => <li style={{ fontFamily:DM, fontSize:16, color:"#3A3A3A", lineHeight:1.8, marginBottom:6 }}>{text}</li>;
+
+  return (
+    <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
+      {/* Header */}
+      <section style={{ background:C.navy, padding:"60px 24px 48px" }}>
+        <div style={{ maxWidth:780, margin:"0 auto" }}>
+          <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Legal</div>
+          <h1 style={{ fontFamily:PF, fontSize:40, color:C.white, margin:"0 0 12px" }}>Privacy Policy</h1>
+          <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.6)", margin:0 }}>Last updated: {updated} · Unified Solutions Inc., Plymouth, MN</p>
+        </div>
+      </section>
+
+      {/* Body */}
+      <section style={{ padding:"56px 24px" }}>
+        <div style={{ maxWidth:780, margin:"0 auto" }}>
+
+          {section("Who We Are",
+            <>
+              {p("Unified Solutions Inc. is an executive coaching and leadership development firm operated by Julian C. Johnson, ICF PCC, based in Plymouth, Minnesota.")}
+              {p("Data Controller: Julian C. Johnson / Unified Solutions Inc.")}
+              <p style={{ fontFamily:DM, fontSize:16, color:"#3A3A3A", lineHeight:1.8, margin:"0 0 12px" }}>
+                Contact for privacy matters: <a href="mailto:contact@unifiedsolutionsinc.com" style={{ color:C.gold }}>contact@unifiedsolutionsinc.com</a> · 952.594.8611
+              </p>
+            </>
+          )}
+
+          {section("What Data We Collect",
+            <>
+              {p("We collect the following categories of personal data:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("Email address — collected voluntarily when you submit your Leadership Pressure Point Assessment results for a personalized coaching note.")}
+                {li("Assessment responses — your answers to 18 behavioral questions across 6 leadership domains. These are behavioral self-report data, not clinical or diagnostic data.")}
+                {li("Assessment scores — computed domain scores derived from your responses.")}
+                {li("Browser storage data — the site uses browser localStorage to store your results locally on your device. This data is not transmitted to us unless you submit your email.")}
+              </ul>
+              {p("We do not collect payment information, health data, government identification, or data from minors under 18.")}
+            </>
+          )}
+
+          {section("How and Why We Use Your Data",
+            <>
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("To send a personalized coaching note based on your assessment results — only if you explicitly provide your email and check the consent box.")}
+                {li("To store your contact information and assessment scores in our coaching CRM (Notion) for follow-up coaching conversations.")}
+                {li("To generate AI-assisted coaching insights using the Anthropic API (see AI Processing section below).")}
+              </ul>
+              {p("We do not use your data for advertising, profiling for unrelated purposes, or automated decision-making that affects your rights.")}
+            </>
+          )}
+
+          {section("Legal Basis for Processing (GDPR)",
+            <>
+              {p("For users in the European Economic Area (EEA) and United Kingdom, our legal basis for processing personal data is:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("Consent (Article 6(1)(a)): You provide explicit consent by checking the consent box before submitting your email. You may withdraw consent at any time by contacting us.")}
+                {li("Legitimate Interest (Article 6(1)(f)): We process anonymized assessment data to improve our coaching methodology. This does not involve identifiable personal data.")}
+              </ul>
+            </>
+          )}
+
+          {section("AI Processing Disclosure",
+            <>
+              {p("In accordance with the EU AI Act (Article 50) and applicable U.S. state transparency laws:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("This site uses AI (Anthropic's Claude API) to generate personalized coaching notes from your assessment scores.")}
+                {li("AI is used to assist, not replace, human coaching judgment. Julian C. Johnson reviews all AI-assisted outputs before sending them.")}
+                {li("No automated decisions with legal or similarly significant effects are made about you using this system.")}
+                {li("The Leadership Pressure Point Assessment is designed as a coaching conversation starter, not a validated psychometric instrument.")}
+              </ul>
+            </>
+          )}
+
+          {section("Third-Party Data Processors",
+            <>
+              {p("When you submit your email, your data is processed by:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("Anthropic PBC — AI processing to generate your personalized coaching note. Anthropic's privacy policy applies: anthropic.com/privacy. We have executed Anthropic's Data Processing Agreement.")}
+                {li("Notion Labs, Inc. — CRM storage for coaching contact records. Notion's privacy policy applies: notion.so/privacy. We have executed Notion's Data Processing Agreement.")}
+              </ul>
+              {p("We do not sell your personal information to third parties. We do not share your data with advertisers.")}
+            </>
+          )}
+
+          {section("Data Retention",
+            <>
+              {p("We retain your personal data for 24 months from the date of last contact. After this period, your data is deleted from our CRM. Data stored locally in your browser (localStorage) persists until you clear your browser storage.")}
+            </>
+          )}
+
+          {section("Your Rights",
+            <>
+              {p("Depending on your location, you may have the following rights:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("Right of access — you may request a copy of the personal data we hold about you.")}
+                {li("Right to rectification — you may request correction of inaccurate data.")}
+                {li("Right to erasure — you may request deletion of your personal data.")}
+                {li("Right to portability — you may request your data in a machine-readable format.")}
+                {li("Right to withdraw consent — you may withdraw your consent to processing at any time.")}
+                {li("Right to opt out of profiling — we do not conduct profiling for automated decisions; this right is satisfied by our design.")}
+                {li("California residents (CCPA/CPRA): You have the right to know, delete, and opt-out. We do not sell or share personal information.")}
+                {li("Minnesota residents (MCDPA, effective July 31, 2025): The above rights apply to Minnesota consumers.")}
+              </ul>
+              <p style={{ fontFamily:DM, fontSize:16, color:"#3A3A3A", lineHeight:1.8, margin:"0 0 12px" }}>
+                To exercise any of these rights, email <a href="mailto:contact@unifiedsolutionsinc.com" style={{ color:C.gold }}>contact@unifiedsolutionsinc.com</a> with the subject line "Privacy Request." We will respond within 30 days.
+              </p>
+            </>
+          )}
+
+          {section("Cookies and Local Storage",
+            <>
+              {p("This site does not use tracking cookies. We use browser localStorage for:")}
+              <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
+                {li("Strictly necessary: Admin session management (deleted when your browser tab closes).")}
+                {li("Functional: Saving your CMS content edits (admin only).")}
+                {li("Your assessment results (locally on your device — not transmitted unless you submit your email).")}
+              </ul>
+              {p("No third-party advertising trackers or analytics cookies are used on this site.")}
+            </>
+          )}
+
+          {section("Security",
+            <>
+              {p("We implement industry-standard security measures including HTTPS encryption, hashed authentication credentials, and access controls on our CRM. However, no method of transmission over the internet is 100% secure.")}
+            </>
+          )}
+
+          {section("Contact and Complaints",
+            <>
+              {p("For privacy questions or requests: contact@unifiedsolutionsinc.com · 952.594.8611")}
+              {p("EEA/UK residents: You have the right to lodge a complaint with your local supervisory authority. For EU residents, find your authority at edpb.europa.eu. For UK residents: ico.org.uk.")}
+            </>
+          )}
+
+          <div style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:4, padding:"16px 20px", marginTop:16 }}>
+            <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>This policy was last reviewed and updated on {updated}. We will notify users of material changes via a notice on the assessment page.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════
 // FOOTER
 // ═══════════════════════════════════════════════════════
@@ -2150,7 +2328,7 @@ function Footer() {
           </div>
         </div>
         {[
-          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Book a Call","book"]] },
+          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Book a Call","book"],["Privacy Policy","privacy"]] },
           { head:"Services", items:[["1:1 Executive","coaching"],["Group Coaching","coaching"],["Peer Advisory Circles","coaching"],["Team Coaching","coaching"],["Organizations","coaching"]] },
           { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
@@ -2246,7 +2424,8 @@ function UnifiedSolutions() {
   const [page, setPage] = useState(() => {
     const map = {
       '/':'home', '/about':'about', '/coaching':'coaching',
-      '/resources':'resources', '/assessment':'assessment', '/book':'book'
+      '/resources':'resources', '/assessment':'assessment', '/book':'book',
+      '/privacy':'privacy'
     };
     return map[window.location.pathname] || 'home';
   });
@@ -2325,7 +2504,7 @@ function UnifiedSolutions() {
   useEffect(() => {
     const urls = {
       home:'/', about:'/about', coaching:'/coaching',
-      resources:'/resources', assessment:'/assessment', book:'/book'
+      resources:'/resources', assessment:'/assessment', book:'/book', privacy:'/privacy'
     };
     const newUrl = urls[page] || '/';
     if (window.location.pathname !== newUrl) {
@@ -2338,7 +2517,7 @@ function UnifiedSolutions() {
   useEffect(() => {
     const pageMap = {
       '/':'home', '/about':'about', '/coaching':'coaching',
-      '/resources':'resources', '/assessment':'assessment', '/book':'book'
+      '/resources':'resources', '/assessment':'assessment', '/book':'book', '/privacy':'privacy'
     };
     const onPop = () => setPage(pageMap[window.location.pathname] || 'home');
     window.addEventListener('popstate', onPop);
@@ -2371,13 +2550,14 @@ function UnifiedSolutions() {
         {showAdminModal && <AdminLoginModal />}
         {isAdmin && <AdminToolbar />}
         <Nav />
-        <main style={{ paddingTop: editMode ? 0 : 0 }}>
+        <main id="main-content" style={{ paddingTop: editMode ? 0 : 0 }}>
           {page === "home"       && <HomePage />}
           {page === "about"      && <AboutPage />}
           {page === "coaching"   && <CoachingPage />}
           {page === "resources"  && <ResourcesPage />}
           {page === "assessment" && <AssessmentPage />}
           {page === "book"       && <BookPage />}
+          {page === "privacy"    && <PrivacyPolicyPage />}
         </main>
         <Footer />
       </div>
