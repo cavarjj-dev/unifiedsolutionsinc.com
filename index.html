@@ -264,6 +264,117 @@ const QUESTIONS = [
     {text:"Not really — this is something I avoid examining closely",score:1}]},
 ];
 
+
+// ─── ADDITIONAL QUESTION POOL (2 extra per domain = 5 total each)
+// Session randomly selects 3 of 5 per domain, shuffles options
+// Makes the instrument resistant to gaming and fresh each time
+const QUESTION_POOL_EXTRA = [
+  // Identity & Presence — 2 additional
+  { id:19, domain:"identity", text:"Think of the last time you received significant critical feedback from someone senior. Walking through your internal response — what happened first?", options:[
+    {text:"Genuine curiosity about what they were seeing — I wanted to understand before responding", score:4},
+    {text:"Brief defensiveness, then real openness once I'd had a moment to process", score:3},
+    {text:"Managed defensiveness — I appeared open externally before I actually was internally", score:2},
+    {text:"Defensiveness that likely affected the relationship or the conversation", score:1}]},
+  { id:20, domain:"identity", text:"When the organizational stakes are highest, my leadership tends to...", options:[
+    {text:"Expand — I'm clearer, more decisive, and more present under genuine pressure", score:4},
+    {text:"Stay consistent — I perform at about the same level regardless of external pressure", score:3},
+    {text:"Vary — I expand in some high-stakes contexts and contract in others", score:2},
+    {text:"Contract — high-stakes situations tend to narrow my range and elevate my self-monitoring", score:1}]},
+
+  // Decision Quality — 2 additional
+  { id:21, domain:"decision", text:"You make a significant call with limited data. Three weeks later, evidence suggests it was the wrong call. Your first internal move is...", options:[
+    {text:"Examine my decision process to understand what I would do differently — then move on", score:4},
+    {text:"Accept it and move forward, without extensive re-examination", score:3},
+    {text:"Concern about what this reflects about me, before I examine the decision itself", score:2},
+    {text:"Extended replay — I revisit the decision repeatedly looking for where it went wrong", score:1}]},
+  { id:22, domain:"decision", text:"How do you know, in the moment, whether you are in the right internal state to make a high-stakes decision?", options:[
+    {text:"I have specific, learned internal signals I trust — and I've built in ways to check them", score:4},
+    {text:"I have some awareness, though it's inconsistent and I don't always act on it", score:3},
+    {text:"I rely more on external factors — time, process, other people — than internal signals", score:2},
+    {text:"I don't have a reliable way to assess this and tend to decide regardless of internal state", score:1}]},
+
+  // Relational Intelligence — 2 additional
+  { id:23, domain:"relational", text:"A critical stakeholder has been consistently undermining your work in group settings for the past month. Your response so far has been...", options:[
+    {text:"A direct, private conversation at a moment I chose — addressing it clearly and specifically", score:4},
+    {text:"Waiting for the right opening, intending to address it when it becomes unavoidable", score:3},
+    {text:"Managing around them — limiting their influence rather than addressing the dynamic", score:2},
+    {text:"Absorbing it and hoping the behavior resolves on its own", score:1}]},
+  { id:24, domain:"relational", text:"The last time you delivered feedback that was genuinely difficult, what drove the timing?", options:[
+    {text:"A deliberate decision that this was the right moment and I had the right approach", score:4},
+    {text:"It surfaced naturally in a conversation and I took the opening", score:3},
+    {text:"A formal context — a review or structured process — made it unavoidable", score:2},
+    {text:"I have not yet delivered it", score:1}]},
+
+  // Team Vitality — 2 additional
+  { id:25, domain:"team", text:"A key team member has been visibly underperforming for two weeks. Your move so far has been...", options:[
+    {text:"A direct one-on-one to understand what is happening underneath the performance", score:4},
+    {text:"Monitoring to gather more information before initiating a conversation", score:3},
+    {text:"Hoping it resolves before requiring a direct conversation", score:2},
+    {text:"Avoiding it — the relationship is important enough that I don't want to risk it", score:1}]},
+  { id:26, domain:"team", text:"If you asked your team tomorrow to anonymously describe how decisions actually get made on your team, they would most likely say...", options:[
+    {text:"Clear, inclusive, and consistently followed through — we know how we decide", score:4},
+    {text:"Generally clear, with some gaps in how we close and execute on decisions", score:3},
+    {text:"Inconsistent — it depends on who is involved and what is at stake", score:2},
+    {text:"Top-down enough that real engagement is limited, even when it appears collaborative", score:1}]},
+
+  // Personal Sustainability — 2 additional
+  { id:27, domain:"sustainability", text:"Your most important personal recovery practice — the thing that actually restores your capacity — is currently...", options:[
+    {text:"Protected, consistent, and non-negotiable regardless of what the week brings", score:4},
+    {text:"In place, but the first thing that gets cut when the schedule compresses", score:3},
+    {text:"Something I know I need but have not built into a real, consistent practice", score:2},
+    {text:"Something I have not identified clearly enough to act on", score:1}]},
+  { id:28, domain:"sustainability", text:"The last significant decision you made that was driven more by depletion than clarity was...", options:[
+    {text:"Not recent — I have structures that prevent that from happening consistently", score:4},
+    {text:"A few months ago — I recognize it clearly as an aberration", score:3},
+    {text:"More recent than I would like to acknowledge", score:2},
+    {text:"Something I am not sure I could reliably distinguish from a decision made from clarity", score:1}]},
+
+  // Strategic Clarity — 2 additional
+  { id:29, domain:"strategic", text:"The specific leadership capability gap you are most actively working to close right now is...", options:[
+    {text:"Named, defined, and being addressed with a specific practice or source of support", score:4},
+    {text:"Clear in my mind but not being addressed in any structured or intentional way", score:3},
+    {text:"Vague — I know there is a gap but I have not defined it precisely enough to act on it", score:2},
+    {text:"Something I have not examined directly enough to answer with confidence", score:1}]},
+  { id:30, domain:"strategic", text:"When you look at how you are actually spending your time as a leader compared to what you say matters most, the gap is...", options:[
+    {text:"Small — my calendar reflects my priorities, with deliberate and acceptable exceptions", score:4},
+    {text:"Present but manageable — I am aware of the drift and actively working on it", score:3},
+    {text:"Significant — I have drifted meaningfully from what I know matters most", score:2},
+    {text:"Something I tend to avoid examining too closely", score:1}]},
+];
+
+// ─── SESSION GENERATOR ─────────────────────────────────────────────────────
+// Builds a fresh, randomized 18-question set each time the assessment starts:
+// • Randomly selects 3 of 5 questions per domain
+// • Randomizes domain order (so identity isn't always first)
+// • Shuffles answer options (so best answer isn't always position A)
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generateAssessmentSession() {
+  const allQuestions = [...QUESTIONS, ...QUESTION_POOL_EXTRA];
+  const domainOrder = shuffleArray([...DOMAINS.map(d => d.id)]);
+  const session = [];
+  let qNum = 1;
+  domainOrder.forEach(domainId => {
+    const pool = allQuestions.filter(q => q.domain === domainId);
+    const selected = shuffleArray(pool).slice(0, 3);
+    selected.forEach(q => {
+      session.push({
+        ...q,
+        sessionId: qNum++,
+        options: shuffleArray([...q.options]) // shuffle so A isn't always best
+      });
+    });
+  });
+  return session;
+}
+
 const SERVICES = [
   { id:"executive", icon:"◎", label:"1:1 Executive", badge:null,
     tagline:"Coaching for leaders who are ready to go deeper than their circumstances.",
@@ -301,13 +412,13 @@ const TESTIMONIALS = [
 ];
 
 const ARTICLES = [
-  { id:1, domain:"decision",  title:"Why Laser-Focused Coaching Gets Results Faster", mins:5, tag:"Methodology", summary:"Most coaching spends the first half of every session locating the real question. Laser-focused coaching begins there." },
-  { id:2, domain:"identity",  title:"Big Five vs HEXACO: Which Model Is Right for Leadership Development?", mins:6, tag:"Assessments", summary:"Both are empirically validated. The difference — and when each is the right tool — matters significantly." },
-  { id:3, domain:"team",      title:"Group Coaching vs Team Coaching: What Senior Leaders Need to Know", mins:4, tag:"Formats", summary:"The terms are used interchangeably. They should not be. The distinction determines who belongs in the room." },
-  { id:4, domain:"decision",  title:"What the Research Actually Says About Decision-Making Under Pressure", mins:7, tag:"Decision Making", summary:"The cognitive science has implications most leadership development programs haven't caught up with." },
-  { id:5, domain:"team",      title:"What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", mins:6, tag:"Team Performance", summary:"The most researched team performance variable of the past two decades. Also the most misunderstood." },
-  { id:6, domain:"identity",  title:"The Identity Problem at the Heart of Senior Leadership", mins:6, tag:"Identity", summary:"At a certain level, technical capability is no longer the constraint. What becomes the constraint is harder to name." },
-  { id:7, domain:"sustainability", title:"Personal Sustainability Is a Leadership Responsibility", mins:5, tag:"Sustainability", summary:"Treating your own sustainability as discretionary is not a position the research supports." },
+  { id:1, domain:"decision",      url:"/articles/laser-focused-coaching", title:"Why Laser-Focused Coaching Gets Results Faster", mins:5, tag:"Methodology", summary:"Most coaching spends the first half of every session locating the real question. Laser-focused coaching begins there." },
+  { id:2, domain:"identity",      url:"/articles/big-five-vs-hexaco", title:"Big Five vs HEXACO: Which Model Is Right for Leadership Development?", mins:6, tag:"Assessments", summary:"Both are empirically validated. The difference — and when each is the right tool — matters significantly." },
+  { id:3, domain:"team",          url:"/articles/group-vs-team-coaching", title:"Group Coaching vs Team Coaching: What Senior Leaders Need to Know", mins:4, tag:"Formats", summary:"The terms are used interchangeably. They should not be. The distinction determines who belongs in the room." },
+  { id:4, domain:"decision",      url:"/articles/decision-making-under-pressure", title:"What the Research Actually Says About Decision-Making Under Pressure", mins:7, tag:"Decision Making", summary:"The cognitive science has implications most leadership development programs haven't caught up with." },
+  { id:5, domain:"team",          url:"/articles/psychological-safety", title:"What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", mins:6, tag:"Team Performance", summary:"The most researched team performance variable of the past two decades. Also the most misunderstood." },
+  { id:6, domain:"identity",      url:"/articles/identity-senior-leadership", title:"The Identity Problem at the Heart of Senior Leadership", mins:6, tag:"Identity", summary:"At a certain level, technical capability is no longer the constraint. What becomes the constraint is harder to name." },
+  { id:7, domain:"sustainability", url:"/articles/personal-sustainability", title:"Personal Sustainability Is a Leadership Responsibility", mins:5, tag:"Sustainability", summary:"Treating your own sustainability as discretionary is not a position the research supports." },
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -1162,9 +1273,9 @@ function ResourcesPage() {
             {filtered.map(a => {
               const d = DOMAINS.find(d => d.id === a.domain);
               return (
-                <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden", transition:"box-shadow 0.2s", cursor:"pointer" }}
-                  onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.10)`}
-                  onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
+                <a key={a.id} href={a.url} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden", transition:"all 0.2s", cursor:"pointer", display:"block", textDecoration:"none" }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 8px 32px rgba(0,0,0,0.10)`; e.currentTarget.style.borderColor=d.color; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow="none"; e.currentTarget.style.borderColor=C.border; }}>
                   <div style={{ height:4, background:d.color }} />
                   <div style={{ padding:28 }}>
                     <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
@@ -1175,7 +1286,7 @@ function ResourcesPage() {
                     <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
                     <span style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.gold, letterSpacing:1 }}>Read article →</span>
                   </div>
-                </div>
+                </a>
               );
             })}
           </div>
@@ -1545,18 +1656,22 @@ function AssessmentPage() {
   const { setPage, content, updateContent, isAdmin, setShowAdminModal } = useSite();
   const [answers, setAnswers] = useState({});
   const [step, setStep] = useState("intro"); // intro | quiz | results
+  // Generated fresh each session — randomized domain order, question selection, option order
+  const [sessionQuestions, setSessionQuestions] = useState([]);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [savedMsg, setSavedMsg] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
   const current = Object.keys(answers).length;
-  const progress = Math.round((current / 18) * 100);
+  const totalQs = sessionQuestions.length || 18;
+  const progress = Math.round((current / totalQs) * 100);
 
   function computeScores() {
     const scores = {};
     DOMAINS.forEach(d => {
-      const qs = QUESTIONS.filter(q => q.domain === d.id);
-      const total = qs.reduce((acc, q) => acc + (answers[q.id] ?? 0), 0);
+      const qs = sessionQuestions.filter(q => q.domain === d.id);
+      if (qs.length === 0) { scores[d.id] = 50; return; }
+      const total = qs.reduce((acc, q) => acc + (answers[q.sessionId] ?? 0), 0);
       scores[d.id] = Math.round(((total - qs.length) / (qs.length * 3)) * 100);
     });
     return scores;
@@ -1576,7 +1691,7 @@ function AssessmentPage() {
     } catch (e) { setSavedMsg("Save failed — storage unavailable"); }
   }
 
-  const allAnswered = current === 18;
+  const allAnswered = sessionQuestions.length > 0 && current === sessionQuestions.length;
 
   // Admin panel access now secured by global admin session
   if (showAdmin && isAdmin) return <AdminPanel onClose={() => setShowAdmin(false)} />;
@@ -1623,14 +1738,14 @@ function AssessmentPage() {
   );
 
   if (step === "quiz") {
-    const qIndex = QUESTIONS.findIndex(q => !answers[q.id]);
-    const q = qIndex >= 0 ? QUESTIONS[qIndex] : null;
+    const qIndex = sessionQuestions.findIndex(q => !answers[q.sessionId]);
+    const q = qIndex >= 0 ? sessionQuestions[qIndex] : null;
     const domain = q ? DOMAINS.find(d => d.id === q.domain) : null;
     return (
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
           <div style={{ maxWidth:720, margin:"0 auto", display:"flex", alignItems:"center", gap:16 }}>
-            <span style={{ fontFamily:DM, fontSize:14, color:C.muted, whiteSpace:"nowrap" }}>Question {current+1} of 18</span>
+            <span style={{ fontFamily:DM, fontSize:14, color:C.muted, whiteSpace:"nowrap" }}>Question {current+1} of {totalQs}</span>
             <div style={{ flex:1, background:C.creamDark, borderRadius:2, height:6 }}>
               <div style={{ width:`${progress}%`, height:"100%", background:C.gold, borderRadius:2, transition:"width 0.3s" }} />
             </div>
@@ -1647,7 +1762,7 @@ function AssessmentPage() {
               <h2 style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4 }}>{q.text}</h2>
               <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
                 {q.options.map((opt,i) => (
-                  <button key={i} onClick={() => { setAnswers(prev => ({...prev, [q.id]: opt.score})); }}
+                  <button key={i} onClick={() => { setAnswers(prev => ({...prev, [q.sessionId]: opt.score})); }}
                     style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"18px 24px", textAlign:"left", cursor:"pointer", fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.55, transition:"all 0.15s" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = C.gold; e.currentTarget.style.background = C.goldPale; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.white; }}>
