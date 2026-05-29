@@ -1647,6 +1647,204 @@ function DomainInsightCard({ domain, score, isPrimary }) {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════
+// PIN CHANGER — admin panel security tab
+// No console, no file editing required
+// ═══════════════════════════════════════════════════════
+function PinChanger() {
+  const [current, setCurrent]   = useState('');
+  const [next, setNext]         = useState('');
+  const [confirm, setConfirm]   = useState('');
+  const [status, setStatus]     = useState(null); // null | 'success' | 'error' | 'loading'
+  const [message, setMessage]   = useState('');
+  const [savedHash, setSavedHash] = useState('');
+  const [usingCustom, setUsingCustom] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await storage.get('admin-pin-hash');
+        setUsingCustom(!!(r && r.value));
+      } catch(e) {}
+    })();
+  }, []);
+
+  const ADMIN_HASH_FALLBACK = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2';
+
+  async function computeHash(pin) {
+    const buf = await crypto.subtle.digest('SHA-256',
+      new TextEncoder().encode('unified_solutions_2026' + pin)
+    );
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // Real-time PIN strength
+  const checks = {
+    length:   next.length >= 12,
+    upper:    /[A-Z]/.test(next),
+    lower:    /[a-z]/.test(next),
+    number:   /[0-9]/.test(next),
+    symbol:   /[^A-Za-z0-9]/.test(next),
+    match:    next && next === confirm,
+  };
+  const strength = Object.values(checks).filter(Boolean).length;
+  const strengthLabel = ['', 'Very Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Strong'][strength];
+  const strengthColor = ['', C.red, C.red, C.orange, C.yellow, C.green, C.green][strength];
+  const canSubmit = Object.values(checks).every(Boolean) && current.length > 0;
+
+  async function handleChange() {
+    if (!canSubmit) return;
+    setStatus('loading');
+
+    // Verify current PIN
+    const currentHash = await computeHash(current);
+    let activeHash = ADMIN_HASH_FALLBACK;
+    try {
+      const stored = await storage.get('admin-pin-hash');
+      if (stored && stored.value) activeHash = stored.value;
+    } catch(e) {}
+
+    if (currentHash !== activeHash) {
+      setStatus('error');
+      setMessage('Current PIN is incorrect. Please try again.');
+      setCurrent('');
+      return;
+    }
+
+    // Hash and store the new PIN
+    const newHash = await computeHash(next);
+    try {
+      await storage.set('admin-pin-hash', newHash);
+      setSavedHash(newHash);
+      setStatus('success');
+      setUsingCustom(true);
+      setMessage('PIN updated successfully. Your new PIN is now active — no file editing required.');
+      setCurrent(''); setNext(''); setConfirm('');
+    } catch(e) {
+      setStatus('error');
+      setMessage('Storage error — could not save PIN. Try again or contact support.');
+    }
+  }
+
+  const inputStyle = {
+    width:"100%", padding:"10px 14px", fontFamily:DM, fontSize:14,
+    background:"#050A0F", border:`1px solid ${C.navyLight}`,
+    borderRadius:4, color:C.white, letterSpacing:3, outline:"none",
+    boxSizing:"border-box"
+  };
+  const labelStyle = {
+    fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase",
+    color:"rgba(255,255,255,0.5)", display:"block", marginBottom:6
+  };
+
+  return (
+    <div style={{ maxWidth:480 }}>
+      {/* Status strip */}
+      <div style={{ background:"rgba(255,255,255,0.04)", border:`1px solid ${C.navyLight}`, borderRadius:6, padding:"10px 16px", marginBottom:24, display:"flex", alignItems:"center", gap:10 }}>
+        <span style={{ fontSize:16 }}>{usingCustom ? "🔐" : "⚠️"}</span>
+        <div>
+          <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:usingCustom?C.green:C.orange }}>
+            {usingCustom ? "Custom PIN active" : "Using default PIN — change recommended"}
+          </div>
+          <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", marginTop:2 }}>
+            {usingCustom ? "Your PIN is stored securely in persistent storage." : "The default PIN (USC2026) is in your public git history. Set a new one now."}
+          </div>
+        </div>
+      </div>
+
+      {status === 'success' ? (
+        <div>
+          <div style={{ background:"#0D1F0D", border:`1px solid ${C.green}40`, borderRadius:6, padding:"20px 20px", marginBottom:16 }}>
+            <div style={{ fontFamily:DM, fontSize:13, fontWeight:700, color:C.green, marginBottom:6 }}>✓ {message}</div>
+            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)", lineHeight:1.6 }}>
+              Your new PIN is active immediately. The next admin login will use it.
+            </div>
+          </div>
+          {savedHash && (
+            <div style={{ background:"#050A0F", border:`1px solid ${C.navyLight}`, borderRadius:4, padding:"12px 14px" }}>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:6 }}>Backup hash (store securely offline)</div>
+              <div style={{ fontFamily:MONO, fontSize:10, color:"rgba(255,255,255,0.5)", wordBreak:"break-all", lineHeight:1.6 }}>{savedHash}</div>
+              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:6 }}>If browser storage is ever cleared, update ADMIN_HASH_FALLBACK in index.html with this value to restore access.</div>
+            </div>
+          )}
+          <button onClick={() => setStatus(null)} style={{ marginTop:16, background:"none", border:`1px solid ${C.border}`, borderRadius:4, padding:"8px 16px", fontFamily:DM, fontSize:12, color:C.muted, cursor:"pointer" }}>Change PIN again</button>
+        </div>
+      ) : (
+        <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
+          {/* Current PIN */}
+          <div>
+            <label style={labelStyle}>Current PIN</label>
+            <input type="password" value={current} onChange={e => { setCurrent(e.target.value); setStatus(null); setMessage(''); }}
+              placeholder="Your current admin PIN" style={inputStyle} autoComplete="current-password" />
+          </div>
+
+          {/* New PIN */}
+          <div>
+            <label style={labelStyle}>New PIN</label>
+            <input type="password" value={next} onChange={e => { setNext(e.target.value); setStatus(null); }}
+              placeholder="12+ characters" style={inputStyle} autoComplete="new-password" />
+            {next && (
+              <div style={{ marginTop:8 }}>
+                {/* Strength bar */}
+                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+                  <div style={{ flex:1, background:"rgba(255,255,255,0.08)", borderRadius:2, height:4 }}>
+                    <div style={{ width:`${(strength/6)*100}%`, height:"100%", background:strengthColor, borderRadius:2, transition:"all 0.2s" }} />
+                  </div>
+                  <span style={{ fontFamily:DM, fontSize:11, color:strengthColor, width:70, textAlign:"right" }}>{strengthLabel}</span>
+                </div>
+                {/* Requirement checklist */}
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:4 }}>
+                  {[
+                    [checks.length,  "12+ characters"],
+                    [checks.upper,   "Uppercase letter"],
+                    [checks.lower,   "Lowercase letter"],
+                    [checks.number,  "Number"],
+                    [checks.symbol,  "Symbol (!@#$...)"],
+                    [checks.match,   "Passwords match"],
+                  ].map(([ok, label], i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:6 }}>
+                      <span style={{ fontSize:11, color:ok?C.green:"rgba(255,255,255,0.2)" }}>{ok?"✓":"○"}</span>
+                      <span style={{ fontFamily:DM, fontSize:11, color:ok?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.3)" }}>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Confirm */}
+          <div>
+            <label style={labelStyle}>Confirm New PIN</label>
+            <input type="password" value={confirm} onChange={e => { setConfirm(e.target.value); setStatus(null); }}
+              placeholder="Repeat new PIN" style={{ ...inputStyle, borderColor: confirm && !checks.match ? C.red : C.navyLight }}
+              autoComplete="new-password" />
+          </div>
+
+          {/* Error message */}
+          {status === 'error' && (
+            <div style={{ background:"rgba(224,82,82,0.12)", border:`1px solid ${C.red}40`, borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:C.red }}>
+              {message}
+            </div>
+          )}
+
+          {/* Submit */}
+          <button
+            onClick={handleChange}
+            disabled={!canSubmit || status === 'loading'}
+            style={{ background:canSubmit?C.gold:"rgba(255,255,255,0.06)", color:canSubmit?C.white:"rgba(255,255,255,0.2)", border:"none", borderRadius:4, padding:"12px 24px", fontFamily:DM, fontWeight:700, fontSize:14, cursor:canSubmit?"pointer":"not-allowed", transition:"all 0.2s" }}>
+            {status === 'loading' ? "Updating PIN..." : "Update Admin PIN"}
+          </button>
+
+          <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.3)", lineHeight:1.6 }}>
+            Your PIN is hashed using SHA-256 before storage — the plain text is never saved anywhere. Changes take effect immediately with no redeployment needed.
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════
 // ADMIN PANEL (PIN-protected CRM dashboard)
 // ═══════════════════════════════════════════════════════
@@ -1658,6 +1856,7 @@ function AdminPanel({ onClose }) {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem("us-api-key") || "");
   const [selected, setSelected] = useState(null);
   const [notionStatus, setNotionStatus] = useState({});
+  const [adminTab, setAdminTab] = useState("crm"); // crm | security
 
   useEffect(() => { loadRecords(); }, []);
 
@@ -1732,6 +1931,12 @@ Confirm when done.` }]
           </div>
         </div>
 
+        {/* Admin tab bar */}
+        <div style={{ display:"flex", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
+          {[["crm","📊 Assessment CRM"],["security","🔐 Security"]].map(([id,label]) => (
+            <button key={id} onClick={() => setAdminTab(id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:adminTab===id?700:400, color:adminTab===id?C.gold:"rgba(255,255,255,0.5)", padding:"12px 24px", borderBottom:adminTab===id?`2px solid ${C.gold}`:"2px solid transparent", transition:"all 0.2s" }}>{label}</button>
+          ))}
+        </div>
         <div style={{ padding:"16px 32px", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, padding:"10px 16px", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
             <span style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)" }}>Anthropic API Key</span>
@@ -1744,6 +1949,15 @@ Confirm when done.` }]
             {apiKey && <span style={{ fontFamily:DM, fontSize:13, color:"#5DE09A" }}>✓ Key saved</span>}
           </div>
         </div>
+        {adminTab === "security" ? (
+          <div style={{ padding:32 }}>
+            <div style={{ fontFamily:PF, fontSize:20, color:C.white, marginBottom:8 }}>Security Settings</div>
+            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", lineHeight:1.65, marginBottom:24 }}>
+              Change your admin PIN without touching the source code or browser console. Your new PIN is hashed and stored securely — no redeployment needed.
+            </p>
+            <PinChanger />
+          </div>
+        ) : (
         <div style={{ padding:32 }}>
           {/* Stats row */}
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:32 }}>
@@ -1862,6 +2076,7 @@ Confirm when done.` }]
             </div>
           </div>
         </div>
+        )} {/* end adminTab === crm content */}
       </div>
     </div>
   );
@@ -2483,33 +2698,37 @@ function UnifiedSolutions() {
     return () => window.removeEventListener('keydown', onKey);
   }, [isAdmin]);
 
-  function handleAdminLogin(pin) {
-    return crypto.subtle.digest('SHA-256',
+  // ── PIN hash utility (shared by login + changer) ─────────────────────────
+  async function computePinHash(pin) {
+    const buf = await crypto.subtle.digest('SHA-256',
       new TextEncoder().encode('unified_solutions_2026' + pin)
-    ).then(buf => {
-      const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-      // ── TO CHANGE YOUR ADMIN PIN ───────────────────────────────────────────────
-    // 1. Choose a new PIN (12+ chars: uppercase, lowercase, number, symbol)
-    //    Example format: Unit3d@Secure#2026
-    // 2. Open browser console on any page and run:
-    //    crypto.subtle.digest('SHA-256', new TextEncoder().encode('unified_solutions_2026' + 'YOUR_NEW_PIN'))
-    //      .then(b => console.log(Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')))
-    // 3. Copy the output hash and replace the string below
-    // 4. Save index.html and commit to GitHub
-    // NOTE: The salt 'unified_solutions_2026' must stay the same when changing the PIN
-    // ────────────────────────────────────────────────────────────────────────────
-    const ADMIN_HASH = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2'; // ← Replace this hash after changing PIN
-      if (hash === ADMIN_HASH) {
-        const session = { loggedIn: true, expires: Date.now() + 3600000, loginTime: new Date().toISOString() };
-        sessionStorage.setItem('us-admin-session', JSON.stringify(session));
-        setAdminSession(session);
-        setShowAdminModal(false);
-        return true;
-      }
-      return false;
-    });
+    );
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
   }
 
+  // Hardcoded fallback — used until you set a new PIN via the admin panel Security tab
+  const ADMIN_HASH_FALLBACK = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2';
+
+  async function handleAdminLogin(pin) {
+    // Load user-defined hash from storage — falls back to ADMIN_HASH_FALLBACK
+    let activeHash = ADMIN_HASH_FALLBACK;
+    try {
+      const stored = await storage.get('admin-pin-hash');
+      if (stored && stored.value) activeHash = stored.value;
+    } catch(e) {}
+
+    const hash = await computePinHash(pin);
+    if (hash === activeHash) {
+      const session = { loggedIn: true, expires: Date.now() + 3600000, loginTime: new Date().toISOString() };
+      sessionStorage.setItem('us-admin-session', JSON.stringify(session));
+      setAdminSession(session);
+      setShowAdminModal(false);
+      return true;
+    }
+    return false;
+  }
+
+  
   function handleAdminLogout() {
     sessionStorage.removeItem('us-admin-session');
     setAdminSession(null);
