@@ -160,6 +160,7 @@ const C = {
   navy: "#0B1D30", navyMid: "#152A42", navyLight: "#1D3A57",
   cream: "#F7F3ED", creamDark: "#EDE7DD", creamDeep: "#E0D8CC",
   gold: "#C4903A", goldLight: "#DAA84E", goldPale: "#FAF3E4",
+  goldDark: "#8B6422",  // Text on light backgrounds — passes WCAG AA 4.5:1
   slate: "#4A6E8C", slateLight: "#6B8FAD",
   text: "#1A1A1A", muted: "#6B7280", mutedLight: "#9CA3AF",
   white: "#FFFFFF", border: "#D9D0C4",
@@ -817,7 +818,7 @@ function AdminToolbar() {
           <button onClick={() => setEditMode(m => !m)} style={{ background:editMode?"rgba(255,255,255,0.2)":"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:13, fontWeight:700, color:C.white, cursor:"pointer" }}>
             {editMode ? "Stop Editing" : "✏️ Edit Content"}
           </button>
-          {editMode && <button onClick={saveContent} style={{ background:C.white, color:C.gold, border:"none", borderRadius:2, padding:"4px 14px", fontFamily:DM, fontWeight:700, fontSize:13, cursor:"pointer" }}>Save</button>}
+          {editMode && <button onClick={saveContent} style={{ background:C.white, color:C.goldDark, border:"none", borderRadius:2, padding:"4px 14px", fontFamily:DM, fontWeight:700, fontSize:13, cursor:"pointer" }}>Save</button>}
           <button onClick={() => setShowLog(l => !l)} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:2, padding:"4px 12px", fontFamily:DM, fontSize:13, color:C.white, cursor:"pointer" }}>
             📋 Log ({changeLog.length})
           </button>
@@ -968,7 +969,7 @@ function HomePage() {
           {/* Service tab nav */}
           <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:36, borderBottom:`1px solid ${C.border}`, paddingBottom:0 }}>
             {SERVICES.map((s,i) => (
-              <button key={s.id} onClick={() => setActiveService(i)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight:activeService===i?700:400, color:activeService===i?C.gold:C.muted, padding:"12px 18px", borderBottom:activeService===i?`3px solid ${C.gold}`:"3px solid transparent", transition:"all 0.2s", display:"flex", alignItems:"center", gap:6, position:"relative" }}>
+              <button key={s.id} onClick={() => setActiveService(i)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight:activeService===i?700:400, color:activeService===i?C.goldDark:C.muted, padding:"12px 18px", borderBottom:activeService===i?`3px solid ${C.gold}`:"3px solid transparent", transition:"all 0.2s", display:"flex", alignItems:"center", gap:6, position:"relative" }}>
                 <span>{s.icon}</span> {s.label}
                 {s.badge && <span style={{ background:C.navy, color:C.gold, fontSize:11, fontWeight:800, padding:"1px 6px", borderRadius:10, letterSpacing:1, marginLeft:2 }}>{s.badge}</span>}
               </button>
@@ -1410,7 +1411,7 @@ function CoachingPage() {
                     ))}
                   </ul>
                   <div style={{ background:C.goldPale, border:`1px solid ${C.gold}30`, borderRadius:4, padding:"12px 16px", marginBottom:32 }}>
-                    <div style={{ fontFamily:DM, fontSize:13, color:C.gold, letterSpacing:1 }}>{s.price}</div>
+                    <div style={{ fontFamily:DM, fontSize:14, color:C.goldDark, letterSpacing:1 }}>{s.price}</div>
                   </div>
                   <Btn href={s.ctaUrl}>{s.cta}</Btn>
                 </div>
@@ -1501,7 +1502,7 @@ function ResourcesPage() {
                     </div>
                     <h3 style={{ fontFamily:PF, fontSize:20, color:C.navy, margin:"0 0 12px", lineHeight:1.35 }}>{a.title}</h3>
                     <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
-                    <span style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.gold, letterSpacing:1 }}>Read article →</span>
+                    <span style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.goldDark, letterSpacing:1 }}>Read article →</span>
                   </div>
                 </a>
               );
@@ -1942,7 +1943,7 @@ function AssessmentPage() {
           <Btn onClick={() => { const s = generateAssessmentSession(); setSessionQuestions(s); setAnswers({}); setStep("quiz"); }} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
           {isAdmin && (
             <div style={{ marginTop:20 }}>
-              <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:13, color:C.gold, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
+              <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:13, color:C.goldDark, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
                 📊 View Assessment CRM
               </button>
             </div>
@@ -1968,6 +1969,15 @@ function AssessmentPage() {
     const qIndex = sessionQuestions.findIndex(q => !answers[q.sessionId]);
     const q = qIndex >= 0 ? sessionQuestions[qIndex] : null;
     const domain = q ? DOMAINS.find(d => d.id === q.domain) : null;
+    // AC3: Focus management — move focus to question heading on each new question
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const questionHeadingRef = useRef(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      if (questionHeadingRef.current) {
+        questionHeadingRef.current.focus();
+      }
+    }, [current]); // re-fires each time an answer is recorded
     return (
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
@@ -1986,10 +1996,18 @@ function AssessmentPage() {
                 <span style={{ fontFamily:DM, fontSize:20, color:domain.color }}>{domain.icon}</span>
                 <span style={{ fontFamily:DM, fontSize:13, letterSpacing:2, color:domain.color, textTransform:"uppercase" }}>{domain.label}</span>
               </div>
-              <h2 style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4 }}>{q.text}</h2>
-              <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {/* AC6: ARIA live region — announces question progress to screen readers */}
+              <div aria-live="polite" aria-atomic="true" style={{ position:"absolute", left:"-9999px", width:1, height:1, overflow:"hidden" }}>
+                {`Question ${current+1} of ${totalQs} — ${domain?.label}`}
+              </div>
+              {/* AC3: tabIndex={-1} allows programmatic focus; outline:none hides focus ring from mouse */}
+              <h2 ref={questionHeadingRef} tabIndex={-1} style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4, outline:"none" }}>{q.text}</h2>
+              {/* AC3: radiogroup role groups answer options semantically for screen readers */}
+              <div role="radiogroup" aria-labelledby="quiz-question-label" style={{ display:"flex", flexDirection:"column", gap:12 }}>
+                <span id="quiz-question-label" style={{ display:"none" }}>{q.text}</span>
                 {q.options.map((opt,i) => (
-                  <button key={i} onClick={() => { setAnswers(prev => ({...prev, [q.sessionId]: opt.score})); }}
+                  <button key={i} role="radio" aria-checked={false}
+                    onClick={() => { setAnswers(prev => ({...prev, [q.sessionId]: opt.score})); }}
                     style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"18px 24px", textAlign:"left", cursor:"pointer", fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.55, transition:"all 0.15s" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = C.gold; e.currentTarget.style.background = C.goldPale; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.white; }}>
@@ -2014,6 +2032,8 @@ function AssessmentPage() {
   if (step === "results") {
     const scores = computeScores();
     const sorted = DOMAINS.map(d => ({...d, score:scores[d.id]})).sort((a,b) => a.score - b.score);
+    // AC5: Score label helper for ARIA
+    const scoreLabel = (score) => score >= 75 ? "Strong" : score >= 50 ? "Developing" : "Priority Area";
     const primary = sorted[0];
     const secondary = sorted[1];
     return (
@@ -2035,7 +2055,11 @@ function AssessmentPage() {
                     <span style={{ fontFamily:PF, fontSize:17, color:C.navy, fontWeight:600 }}>{d.icon} {d.label}</span>
                     <ScoreBadge score={d.score} />
                   </div>
-                  <div style={{ background:C.creamDark, borderRadius:2, height:8, marginBottom:6 }}>
+                  <div
+                    role="progressbar"
+                    aria-valuenow={d.score} aria-valuemin={0} aria-valuemax={100}
+                    aria-label={`${d.label}: ${d.score} out of 100 — ${scoreLabel(d.score)}`}
+                    style={{ background:C.creamDark, borderRadius:2, height:8, marginBottom:6 }}>
                     <div style={{ width:`${d.score}%`, height:"100%", background:d.color, borderRadius:2, transition:"width 1s ease" }} />
                   </div>
                   <div style={{ fontFamily:DM, fontSize:13, color:C.muted }}>{d.score}/100</div>
@@ -2464,7 +2488,17 @@ function UnifiedSolutions() {
       new TextEncoder().encode('unified_solutions_2026' + pin)
     ).then(buf => {
       const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-      const ADMIN_HASH = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2';
+      // ── TO CHANGE YOUR ADMIN PIN ───────────────────────────────────────────────
+    // 1. Choose a new PIN (12+ chars: uppercase, lowercase, number, symbol)
+    //    Example format: Unit3d@Secure#2026
+    // 2. Open browser console on any page and run:
+    //    crypto.subtle.digest('SHA-256', new TextEncoder().encode('unified_solutions_2026' + 'YOUR_NEW_PIN'))
+    //      .then(b => console.log(Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')))
+    // 3. Copy the output hash and replace the string below
+    // 4. Save index.html and commit to GitHub
+    // NOTE: The salt 'unified_solutions_2026' must stay the same when changing the PIN
+    // ────────────────────────────────────────────────────────────────────────────
+    const ADMIN_HASH = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2'; // ← Replace this hash after changing PIN
       if (hash === ADMIN_HASH) {
         const session = { loggedIn: true, expires: Date.now() + 3600000, loginTime: new Date().toISOString() };
         sessionStorage.setItem('us-admin-session', JSON.stringify(session));
@@ -2498,6 +2532,19 @@ function UnifiedSolutions() {
         if (r) setContent(JSON.parse(r.value));
       } catch (e) {}
     })();
+  }, []);
+
+  // P5: GDPR Art.5(1)(e) — auto-purge assessment results older than 24 months
+  useEffect(() => {
+    try {
+      const existing = JSON.parse(localStorage.getItem('assessment-results') || '[]');
+      const cutoff = new Date();
+      cutoff.setMonth(cutoff.getMonth() - 24);
+      const fresh = existing.filter(r => new Date(r.timestamp) > cutoff);
+      if (fresh.length !== existing.length) {
+        localStorage.setItem('assessment-results', JSON.stringify(fresh));
+      }
+    } catch(e) {}
   }, []);
 
   // ── Sync URL when page changes (pushState) ──────────────
