@@ -85,6 +85,31 @@
     @media (max-width: 768px) {
       /* Mobile nav adjustments handled inline via JS */
     }
+
+    /* ── PRINT / PDF STYLES ────────────────────────────────
+       Only #print-report is visible when printing.
+       Everything else is hidden. The browser's native
+       "Save as PDF" option produces a clean branded report.
+    ─────────────────────────────────────────────────────── */
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 18mm 16mm 18mm 16mm;
+      }
+      body * { visibility: hidden; }
+      #print-report,
+      #print-report * { visibility: visible; }
+      #print-report {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: white;
+        overflow: visible;
+      }
+      .print-no-break { break-inside: avoid; page-break-inside: avoid; }
+      .print-page-break { break-before: page; page-break-before: always; }
+      a { color: inherit; text-decoration: none; }
+    }
   </style>
 
   <!--
@@ -1047,6 +1072,203 @@ function HomePage() {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════
+// PRINTABLE REPORT — renders for window.print() / Save as PDF
+// Triggered from assessment results page
+// Only #print-report is visible when printing (see @media print CSS)
+// ═══════════════════════════════════════════════════════
+function PrintableReport({ scores, sorted, email, onClose }) {
+  const primary   = sorted[0];
+  const secondary = sorted[1];
+  const date      = new Date().toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
+
+  useEffect(() => {
+    // Small delay so the DOM fully renders before print dialog opens
+    const t = setTimeout(() => window.print(), 350);
+    return () => clearTimeout(t);
+  }, []);
+
+  const domainColor = (id) => DOMAINS.find(d => d.id === id)?.color || C.navy;
+
+  return (
+    <>
+      {/* Screen overlay — shows report preview before print dialog */}
+      <div style={{ position:"fixed", inset:0, zIndex:800, background:"rgba(0,0,0,0.7)", display:"flex", alignItems:"flex-start", justifyContent:"center", overflowY:"auto", padding:"24px 16px" }}>
+        <div style={{ background:C.white, borderRadius:8, width:"100%", maxWidth:780, boxShadow:"0 32px 80px rgba(0,0,0,0.5)" }}>
+          {/* Screen-only toolbar */}
+          <div style={{ background:C.navy, borderRadius:"8px 8px 0 0", padding:"14px 24px", display:"flex", justifyContent:"space-between", alignItems:"center" }} className="no-print">
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.8)" }}>
+              Preparing your report — print dialog will open automatically
+            </div>
+            <div style={{ display:"flex", gap:10 }}>
+              <button onClick={() => window.print()} style={{ background:C.gold, border:"none", borderRadius:4, padding:"7px 18px", fontFamily:DM, fontWeight:700, fontSize:13, color:C.white, cursor:"pointer" }}>
+                🖨 Print / Save PDF
+              </button>
+              <button onClick={onClose} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:4, padding:"7px 14px", fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.7)", cursor:"pointer" }}>
+                Close
+              </button>
+            </div>
+          </div>
+
+          {/* THE REPORT — this is what prints */}
+          <div id="print-report" style={{ background:C.white, padding:"40px 48px", fontFamily:DM }}>
+
+            {/* Report header */}
+            <div className="print-no-break" style={{ borderBottom:`3px solid ${C.navy}`, paddingBottom:24, marginBottom:28 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                <div>
+                  <div style={{ fontFamily:PF, fontSize:26, color:C.navy, fontWeight:700, letterSpacing:-0.3, marginBottom:4 }}>
+                    Leadership Pressure Point Assessment
+                  </div>
+                  <div style={{ fontFamily:DM, fontSize:13, color:C.muted, marginBottom:2 }}>
+                    Unified Solutions Inc. · Julian C. Johnson, ICF PCC · ACTC
+                  </div>
+                  <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>
+                    unifiedsolutionsinc.com · contact@unifiedsolutionsinc.com · 952.594.8611
+                  </div>
+                </div>
+                <div style={{ textAlign:"right" }}>
+                  <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:2 }}>Report date</div>
+                  <div style={{ fontFamily:DM, fontSize:13, color:C.navy, fontWeight:600 }}>{date}</div>
+                  {email && <>
+                    <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginTop:6, marginBottom:2 }}>Participant</div>
+                    <div style={{ fontFamily:DM, fontSize:13, color:C.navy, fontWeight:600 }}>{email}</div>
+                  </>}
+                </div>
+              </div>
+            </div>
+
+            {/* Intro note */}
+            <div className="print-no-break" style={{ background:"#F7F3ED", borderRadius:4, padding:"14px 18px", marginBottom:28, borderLeft:`4px solid ${C.gold}` }}>
+              <p style={{ fontFamily:DM, fontSize:13, color:C.text, lineHeight:1.7, margin:0 }}>
+                This report reflects your responses to the Leadership Pressure Point Assessment — 18 behaviorally-anchored questions across 6 validated leadership domains. Scores reflect patterns of awareness and response, not fixed traits. The domains where your scores are lowest represent the highest-leverage areas for development, not a verdict on your capability.
+              </p>
+            </div>
+
+            {/* All 6 domain scores */}
+            <div className="print-no-break" style={{ marginBottom:32 }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:16 }}>
+                Your Scores Across All Six Domains
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+                {sorted.map((d, i) => {
+                  const label = d.score >= 75 ? "Strong" : d.score >= 50 ? "Developing" : "Priority Area";
+                  const labelColor = d.score >= 75 ? "#1B5E35" : d.score >= 50 ? "#8B6914" : "#9B2226";
+                  return (
+                    <div key={d.id} style={{ border:`1px solid ${i < 2 ? d.color : "#E0D8CC"}`, borderRadius:4, padding:"12px 14px", borderLeft:`4px solid ${d.color}` }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                        <span style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy }}>{d.icon} {d.label}</span>
+                        <span style={{ fontFamily:DM, fontSize:11, fontWeight:700, color:labelColor, background:`${labelColor}18`, border:`1px solid ${labelColor}40`, padding:"2px 8px", borderRadius:10, letterSpacing:1 }}>{label}</span>
+                      </div>
+                      <div style={{ background:"#EDE8DF", borderRadius:2, height:7, marginBottom:5 }}>
+                        <div style={{ width:`${d.score}%`, height:"100%", background:d.color, borderRadius:2 }} />
+                      </div>
+                      <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>
+                        {d.score}/100{i === 0 ? " · Primary pressure point" : i === 1 ? " · Secondary area" : ""}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Primary domain deep-dive */}
+            {[primary, secondary].map((d, idx) => {
+              const insight = DOMAIN_INSIGHTS[d.id];
+              if (!insight) return null;
+              const scoreCtx = d.score < 50 ? insight.scoreContext.low : d.score < 75 ? insight.scoreContext.mid : insight.scoreContext.high;
+              const related = ARTICLES.filter(a => insight.articleDomains.includes(a.domain));
+              return (
+                <div key={d.id} className={idx === 1 ? "print-page-break" : ""} style={{ marginBottom:32 }}>
+                  {/* Section header */}
+                  <div style={{ background:d.color, borderRadius:"4px 4px 0 0", padding:"10px 18px", display:"flex", alignItems:"center", gap:10 }}>
+                    <span style={{ fontSize:18, color:C.white }}>{d.icon}</span>
+                    <div>
+                      <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)" }}>
+                        {idx === 0 ? "Primary Pressure Point" : "Secondary Area"}
+                      </div>
+                      <div style={{ fontFamily:PF, fontSize:17, color:C.white, fontWeight:600 }}>{d.label}</div>
+                    </div>
+                    <div style={{ marginLeft:"auto", fontFamily:PF, fontSize:22, color:C.white, fontWeight:700 }}>{d.score}/100</div>
+                  </div>
+
+                  <div style={{ border:`1px solid ${d.color}40`, borderTop:"none", borderRadius:"0 0 4px 4px", padding:"18px 18px 0" }}>
+                    {/* What this score reflects */}
+                    <div className="print-no-break" style={{ marginBottom:16 }}>
+                      <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:700, marginBottom:7 }}>What this score reflects</div>
+                      <p style={{ fontFamily:DM, fontSize:13, color:C.text, lineHeight:1.75, margin:0 }}>{scoreCtx}</p>
+                    </div>
+
+                    {/* Research note */}
+                    <div className="print-no-break" style={{ marginBottom:16, background:"#F7F3ED", borderRadius:4, padding:"12px 14px", borderLeft:`3px solid ${d.color}` }}>
+                      <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:700, marginBottom:7 }}>What the research says</div>
+                      <p style={{ fontFamily:DM, fontSize:13, color:C.text, lineHeight:1.75, margin:0 }}>{insight.researchNote}</p>
+                    </div>
+
+                    {/* Exploration questions */}
+                    <div className="print-no-break" style={{ marginBottom:16 }}>
+                      <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:10 }}>Questions worth sitting with</div>
+                      {insight.questions.map((q, qi) => (
+                        <div key={qi} style={{ display:"flex", gap:12, alignItems:"flex-start", padding:"10px 12px", background:"#F7F3ED", borderRadius:3, borderLeft:`3px solid ${d.color}`, marginBottom:8 }}>
+                          <span style={{ fontFamily:PF, fontSize:15, color:d.color, flexShrink:0, lineHeight:1, marginTop:1 }}>Q</span>
+                          <p style={{ fontFamily:DM, fontSize:13, color:C.text, lineHeight:1.65, margin:0, fontStyle:"italic" }}>{q}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Related articles + reading */}
+                    {related.length > 0 && (
+                      <div className="print-no-break" style={{ marginBottom:16 }}>
+                        <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:10 }}>Relevant reading from the practice</div>
+                        {related.map(a => (
+                          <div key={a.id} style={{ display:"flex", gap:10, alignItems:"baseline", marginBottom:6 }}>
+                            <span style={{ color:d.color, fontSize:12, flexShrink:0 }}>→</span>
+                            <div>
+                              <span style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy }}>{a.title}</span>
+                              <span style={{ fontFamily:DM, fontSize:12, color:C.muted }}> — {a.tag} · {a.mins} min read · {a.url ? `unifiedsolutionsinc.com${a.url}` : "unifiedsolutionsinc.com/resources"}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="print-no-break" style={{ marginBottom:18, borderTop:`1px solid ${d.color}20`, paddingTop:12 }}>
+                      <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, fontWeight:700, marginBottom:6 }}>📚 For deeper exploration</div>
+                      <p style={{ fontFamily:DM, fontSize:12, color:C.muted, margin:0, lineHeight:1.65 }}>{insight.readMore}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Report footer */}
+            <div className="print-no-break" style={{ borderTop:`2px solid ${C.navy}`, paddingTop:18, marginTop:8 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:16 }}>
+                <div>
+                  <div style={{ fontFamily:PF, fontSize:14, color:C.navy, fontWeight:700, marginBottom:4 }}>Next step: a 30-minute discovery conversation.</div>
+                  <div style={{ fontFamily:DM, fontSize:12, color:C.muted, lineHeight:1.6 }}>
+                    This assessment is a starting point, not a verdict. The patterns it surfaces are the right entry point for coaching — when explored with someone who can ask the right follow-on questions.
+                  </div>
+                </div>
+                <div style={{ textAlign:"right", flexShrink:0 }}>
+                  <div style={{ fontFamily:DM, fontSize:12, color:C.navy, fontWeight:600 }}>Julian C. Johnson, ICF PCC · ACTC</div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>contact@unifiedsolutionsinc.com</div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>unifiedsolutionsinc.com/book</div>
+                  <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>952.594.8611</div>
+                </div>
+              </div>
+              <div style={{ fontFamily:DM, fontSize:10, color:"#BBBBBB", marginTop:12, textAlign:"center" }}>
+                © {new Date().getFullYear()} Unified Solutions Inc. · Plymouth, MN · This report is for the personal use of the participant only.
+              </div>
+            </div>
+
+          </div>{/* end #print-report */}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ═══════════════════════════════════════════════════════
 // HEADSHOT AVATAR (About page — reads from ./assets/headshot.jpg)
 // ═══════════════════════════════════════════════════════
@@ -1662,6 +1884,7 @@ function AssessmentPage() {
   const [submitted, setSubmitted] = useState(false);
   const [savedMsg, setSavedMsg] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showPrint, setShowPrint] = useState(false);
   const current = Object.keys(answers).length;
   const totalQs = sessionQuestions.length || 18;
   const progress = Math.round((current / totalQs) * 100);
@@ -1815,6 +2038,26 @@ function AssessmentPage() {
                 </div>
               ))}
             </div>
+            {showPrint && (
+              <PrintableReport
+                scores={scores}
+                sorted={sorted}
+                email={email}
+                onClose={() => setShowPrint(false)}
+              />
+            )}
+
+            {/* Save / Print button */}
+            <div style={{ display:"flex", justifyContent:"flex-end", marginBottom:20 }}>
+              <button
+                onClick={() => setShowPrint(true)}
+                style={{ display:"flex", alignItems:"center", gap:8, background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"10px 20px", fontFamily:DM, fontSize:14, fontWeight:600, color:C.navy, cursor:"pointer", transition:"all 0.2s" }}
+                onMouseEnter={e => { e.currentTarget.style.background=C.navy; e.currentTarget.style.color=C.white; e.currentTarget.style.borderColor=C.navy; }}
+                onMouseLeave={e => { e.currentTarget.style.background=C.white; e.currentTarget.style.color=C.navy; e.currentTarget.style.borderColor=C.border; }}>
+                <span>⬇</span> Save as PDF / Print Report
+              </button>
+            </div>
+
             {/* Domain insight cards — primary then secondary */}
             <div style={{ marginBottom:40 }}>
               <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:16 }}>Your Results In Depth</div>
