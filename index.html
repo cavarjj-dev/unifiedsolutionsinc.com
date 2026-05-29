@@ -375,6 +375,110 @@ function ScoreBadge({ score }) {
 // ═══════════════════════════════════════════════════════
 // PROGRAM CONTEXT STRIP
 // ═══════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+// DOMAIN INSIGHTS — Assessment results enrichment
+// Research context, coaching questions, article links
+// ═══════════════════════════════════════════════════════
+const DOMAIN_INSIGHTS = {
+  identity: {
+    researchNote: "Research in authentic leadership (George) and adult developmental theory (Kegan) consistently shows that at senior levels, the primary constraint on leadership effectiveness is no longer capability — it is the clarity, stability, and coherence of the leader's sense of self under pressure. The question isn't whether you can lead. It's whether the person doing the leading is fully present and integrated.",
+    scoreContext: {
+      low: "A low score here often signals that your leadership has outgrown the identity that originally supported it. This is common at inflection points — promotions, role expansions, organizational change — and it creates a specific kind of internal friction that erodes confidence and decision quality.",
+      mid: "A mid-range score typically reflects situational confidence — you lead well in familiar contexts, but authority feels less stable when the environment or the audience shifts. Building toward a more grounded identity means understanding what triggers the instability, not just managing it.",
+      high: "Even a high score in Identity & Presence is worth examining. Leaders who score well here sometimes discover that their groundedness comes partly from avoiding the contexts that would test it.",
+    },
+    questions: [
+      "When you are leading at your best, what does that feel like from the inside — and how consistently does that version of you actually show up?",
+      "Where in your leadership do you perform authority rather than inhabit it — and who around you can see that gap?",
+      "What would you stop explaining, justifying, or compensating for if your sense of yourself as a leader were fully settled?",
+      "What does the distance between your public leadership and your private experience cost you — in energy, in trust, in decisions?",
+    ],
+    articleDomains: ["identity"],
+    readMore: "Robert Kegan & Lisa Lahey · Immunity to Change · Bill George · Authentic Leadership · Jennifer Garvey Berger · Changing on the Job",
+  },
+  decision: {
+    researchNote: "Kahneman's dual-process framework (System 1/System 2 thinking) and Gary Klein's naturalistic decision-making research both point to the same finding: under pressure, experienced leaders default to pattern recognition — which is efficient but selectively blind. The leaders who make the best decisions under complexity are not the ones who think harder; they are the ones who know their own cognitive biases in real time and have built structures to counteract them.",
+    scoreContext: {
+      low: "A low score here suggests that pressure is compressing your decision-making process in ways you may not fully see. The consequence is often decisions made from the wrong frame — not wrong information, but an unexamined lens. This is one of the highest-value areas coaching can address because the patterns are both specific and changeable.",
+      mid: "A mid-range score often reflects solid process on routine decisions with meaningful slippage under novel complexity or emotional weight. The work here is identifying the specific conditions under which your decision quality drops — and what that drop actually looks like from the inside.",
+      high: "Leaders who score well here have typically developed a meta-cognitive habit — the ability to watch themselves think. The next frontier is usually applying that same awareness to the decisions you make about people, not just problems.",
+    },
+    questions: [
+      "What's the difference between the decisions you make with confidence and the ones you're still second-guessing weeks later — and what does that pattern reveal?",
+      "Which cognitive bias do you most reliably fall into under pressure — and how do you currently catch it?",
+      "What does your internal environment need to look like for you to think clearly? How often do you actually create those conditions?",
+      "What would it mean to trust your decision-making process even when you cannot control the outcome?",
+    ],
+    articleDomains: ["decision"],
+    readMore: "Daniel Kahneman · Thinking, Fast and Slow · Gary Klein · Sources of Power · Annie Duke · Thinking in Bets",
+  },
+  relational: {
+    researchNote: "The research on relational intelligence in leadership points clearly to one pattern: the leaders who create the most productive working environments are not the ones who are best liked — they are the ones who can hold difficult conversations without damaging the relationship, and who distinguish between feedback that matters and feedback that does not. Both require a well-differentiated sense of self that is not destabilized by others' reactions.",
+    scoreContext: {
+      low: "A low score here is almost always accompanied by at least one relationship pattern that has persisted longer than it should — with a peer, a direct report, or a stakeholder. These patterns are usually not intractable; they are usually unaddressed. Coaching in this domain tends to produce rapid, visible results precisely because the lever is behavioral.",
+      mid: "A mid-range score typically reflects someone who manages relationships effectively in calm conditions but closes slightly — emotionally or strategically — when friction increases. The work is identifying what specifically triggers the closing and what it costs in terms of trust and influence.",
+      high: "High scores in Relational Intelligence sometimes mask a specific blind spot: leaders who are skilled with others can sometimes struggle to draw clear limits on what they absorb. Effectiveness and sustainability are related but not the same.",
+    },
+    questions: [
+      "Which relationships in your professional life currently require the most energy — and have you examined why, specifically?",
+      "What do you do in the moment when a conversation becomes difficult that you would rather do differently?",
+      "Where are you currently tolerating a relational dynamic that you have not directly addressed — and what has kept you from addressing it?",
+      "What feedback have you received more than once that you have not yet fully integrated — and what would it mean to take it seriously?",
+    ],
+    articleDomains: ["relational"],
+    readMore: "David Bradford & Carole Robin · Connect · Kim Scott · Radical Candor · Susan Scott · Fierce Conversations",
+  },
+  team: {
+    researchNote: "Google's Project Aristotle identified psychological safety — not talent, not process, not compensation — as the single strongest predictor of team performance. Amy Edmondson's subsequent research clarified what that actually requires from leaders: the willingness to be vulnerable about uncertainty, to explicitly invite challenge, and to respond to mistakes without punishment. These are not naturally occurring behaviors under pressure. They are built, deliberately, by the leader who sets the conditions.",
+    scoreContext: {
+      low: "A low score here often reflects a team that is executing but not thinking — one where people have learned to tell the leader what they want to hear rather than what is actually true. This is a significant organizational risk, and it is almost always invisible from the top. The work here is not fixing the team; it is examining what the leader's behavior has made safe and unsafe to say.",
+      mid: "A mid-range team score typically reflects real capability alongside real inconsistency — accountability that holds in some areas and slips in others, productive disagreement in some contexts and avoidance in others. The pattern is usually not random; it is usually explained by specific dynamics that can be surfaced and addressed.",
+      high: "Leaders with high team scores have usually built something deliberately worth examining: how did you build it, what conditions did it require, and can you replicate it in a different team or a more challenging context?",
+    },
+    questions: [
+      "What is the conversation your team most needs to have that it has not yet had — and what has prevented it?",
+      "What would your team members say about what it is actually like to be led by you right now, if they were completely honest?",
+      "Where on your team is accountability genuinely functioning — and where is it being managed around rather than held?",
+      "What has your team learned is safe to say to you, and what have they learned is not?",
+    ],
+    articleDomains: ["team"],
+    readMore: "Amy Edmondson · The Fearless Organization · Patrick Lencioni · The Five Dysfunctions of a Team · Google Project Aristotle (re:Work)",
+  },
+  sustainability: {
+    researchNote: "The research on leadership burnout (Maslach) and performance recovery (Loehr & Schwartz) converges on a counterintuitive finding: the leaders who sustain high performance over time are not the ones who push hardest — they are the ones who treat recovery as a professional discipline, not a reward. Energy management, not time management, is the actual constraint. And the leaders who treat their own sustainability as discretionary eventually make it non-negotiable through a health event, a relationship rupture, or a performance cliff.",
+    scoreContext: {
+      low: "A low score here requires honest examination — not because you should slow down, but because leaders who are running on deficit make specific, predictable errors: they lose nuance in difficult conversations, they make emotionally compressed decisions, and they progressively lose the perspective that good leadership requires. This is not a personal failing. It is a structural problem that requires a structural response.",
+      mid: "A mid-range score often reflects a leader who knows what sustainability requires but has not made the structural decisions to protect it. The gap between knowing and doing in this area is almost always explained by a belief — usually unexamined — that the cost of protection is too high. That belief is worth interrogating.",
+      high: "Leaders who score well here have typically learned something the hard way. The question worth asking is: what did it take to build these practices, and how robust are they under genuine organizational pressure?",
+    },
+    questions: [
+      "What are you currently tolerating that you know is costing you — and what story are you telling yourself about why you cannot address it?",
+      "What would genuinely sustainable leadership look like for you — not in theory, but reflected in your actual calendar next week?",
+      "When was the last time you felt fully restored? What conditions made that possible, and how deliberately are you creating them?",
+      "What would the people closest to you say about the personal cost of your current pace — and how accurate are they?",
+    ],
+    articleDomains: ["sustainability"],
+    readMore: "Jim Loehr & Tony Schwartz · The Power of Full Engagement · Christina Maslach · Burnout · Emily & Amelia Nagoski · Burnout: The Secret to Unlocking the Stress Cycle",
+  },
+  strategic: {
+    researchNote: "Peter Drucker's foundational question — 'What do I want to be remembered for?' — points to the research-backed finding that leaders who can articulate a clear developmental direction are significantly more effective at making trade-offs, sustaining motivation under adversity, and developing the people around them. The absence of strategic clarity about one's own leadership is not a planning problem; it is an identity problem. You cannot navigate toward a destination you have not chosen.",
+    scoreContext: {
+      low: "A low score in Strategic Clarity often feels like busyness rather than direction — high activity, unclear trajectory. The risk is compounding drift: each individual decision seems reasonable, but the cumulative effect is a leadership arc that reflects circumstance rather than intention. This is the highest-leverage area to address, because clarity here directly improves every other domain.",
+      mid: "A mid-range score typically reflects a leader who has a general sense of direction without the specificity that makes it operational. Vague clarity is not enough to make difficult trade-offs, resist organizational pressure, or develop others effectively. The work is moving from 'I know roughly where I'm heading' to 'I can articulate it clearly enough to make decisions from it.'",
+      high: "Leaders who score well in Strategic Clarity often find that the next edge is alignment — the gap between what they say they value and how their actual choices reflect it. Clarity of direction is necessary but not sufficient if the calendar, the relationships, and the decisions do not follow.",
+    },
+    questions: [
+      "What is the leadership you are actually building toward — and how did you arrive at that answer? Is it yours, or did you inherit it?",
+      "What would need to be true about your leadership three years from now for you to feel that you had done what this season of your career demanded?",
+      "Where are you currently drifting rather than deciding — and what would it mean to make a deliberate choice in that space?",
+      "What trade-offs are you currently avoiding that your clarity about direction would make obvious?",
+    ],
+    articleDomains: ["strategic"],
+    readMore: "Peter Drucker · Managing Oneself · Marshall Goldsmith · What Got You Here Won't Get You There · Robert Hargrove · Masterful Coaching",
+  },
+};
+
 const EXEC_SCHOOLS = [
   "Berkeley Haas","Chicago Booth","Columbia","UVA Darden","IMD",
   "MIT Sloan","Stanford GSB","Tuck at Dartmouth","Wharton","Yale SOM",
@@ -1097,6 +1201,123 @@ function ResourcesPage() {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════
+// DOMAIN INSIGHT CARD — shown on assessment results page
+// ═══════════════════════════════════════════════════════
+function DomainInsightCard({ domain, score, isPrimary }) {
+  const [open, setOpen] = useState(isPrimary);
+  const insight = DOMAIN_INSIGHTS[domain.id];
+  if (!insight) return null;
+
+  const scoreContext = score < 50 ? insight.scoreContext.low
+                     : score < 75 ? insight.scoreContext.mid
+                     : insight.scoreContext.high;
+
+  // Articles relevant to this domain
+  const relatedArticles = ARTICLES.filter(a => insight.articleDomains.includes(a.domain));
+
+  const borderColor = isPrimary ? domain.color : domain.color + "80";
+  const badgeLabel = isPrimary ? "Primary Pressure Point" : "Secondary Area";
+  const badgeBg = isPrimary ? domain.color : domain.color + "30";
+  const badgeText = isPrimary ? C.white : domain.color;
+
+  return (
+    <div style={{ border:`1px solid ${borderColor}`, borderRadius:6, overflow:"hidden", marginBottom:24, background:C.white }}>
+      {/* Header */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"20px 24px", display:"flex", justifyContent:"space-between", alignItems:"center", textAlign:"left" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+          <span style={{ fontSize:22, color:domain.color }}>{domain.icon}</span>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", color:domain.color, marginBottom:3 }}>{domain.label}</div>
+            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+              <span style={{ fontFamily:PF, fontSize:isPrimary?20:17, color:C.navy, fontWeight:600 }}>{isPrimary ? "Your primary pressure point" : "Secondary area to watch"}</span>
+              <span style={{ background:badgeBg, color:badgeText, fontSize:10, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1 }}>{badgeLabel}</span>
+            </div>
+          </div>
+        </div>
+        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+          <div style={{ textAlign:"right" }}>
+            <div style={{ fontFamily:PF, fontSize:22, color:domain.color, fontWeight:700 }}>{score}<span style={{ fontSize:13, color:C.muted }}>/100</span></div>
+          </div>
+          <span style={{ color:C.muted, fontSize:18, flexShrink:0 }}>{open ? "−" : "+"}</span>
+        </div>
+      </button>
+
+      {open && (
+        <div style={{ borderTop:`1px solid ${domain.color}30` }}>
+
+          {/* Score context */}
+          <div style={{ padding:"20px 24px 0", background:`${domain.color}06` }}>
+            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:10 }}>What this score reflects</div>
+            <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:0 }}>{scoreContext}</p>
+          </div>
+
+          {/* Research context */}
+          <div style={{ padding:"20px 24px", background:`${domain.color}06`, borderTop:`1px solid ${domain.color}15` }}>
+            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:10 }}>What the research says</div>
+            <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:0 }}>{insight.researchNote}</p>
+          </div>
+
+          {/* Exploration questions */}
+          <div style={{ padding:"24px", borderTop:`1px solid ${C.border}` }}>
+            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:16 }}>Questions worth sitting with</div>
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {insight.questions.map((q, i) => (
+                <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.cream, borderRadius:4, borderLeft:`3px solid ${domain.color}` }}>
+                  <span style={{ fontFamily:PF, fontSize:18, color:domain.color, flexShrink:0, lineHeight:1, marginTop:2 }}>Q</span>
+                  <p style={{ fontFamily:DM, fontSize:15, color:C.text, lineHeight:1.7, margin:0, fontStyle:"italic" }}>{q}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:"16px 0 0", lineHeight:1.6 }}>
+              These questions are designed to be explored rather than answered quickly. If one of them lands, that's usually a signal worth paying attention to.
+            </p>
+          </div>
+
+          {/* Related articles */}
+          {relatedArticles.length > 0 && (
+            <div style={{ padding:"20px 24px", borderTop:`1px solid ${C.border}`, background:C.creamDark }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:14 }}>From the practice — relevant reading</div>
+              <div style={{ display:"grid", gridTemplateColumns: relatedArticles.length > 1 ? "1fr 1fr" : "1fr", gap:12 }}>
+                {relatedArticles.map(a => (
+                  <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"14px 16px", borderTop:`3px solid ${domain.color}` }}>
+                    <div style={{ fontFamily:DM, fontSize:11, color:domain.color, fontWeight:700, letterSpacing:1, marginBottom:6 }}>{a.tag} · {a.mins} min read</div>
+                    <div style={{ fontFamily:PF, fontSize:15, color:C.navy, fontWeight:600, marginBottom:6, lineHeight:1.3 }}>{a.title}</div>
+                    <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:0, lineHeight:1.55 }}>{a.summary}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Further reading */}
+          <div style={{ padding:"16px 24px", borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"flex-start", gap:12 }}>
+            <span style={{ fontSize:16, flexShrink:0, marginTop:1 }}>📚</span>
+            <div>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, fontWeight:700, marginBottom:6 }}>For deeper exploration</div>
+              <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:0, lineHeight:1.65 }}>{insight.readMore}</p>
+            </div>
+          </div>
+
+          {/* Coaching CTA */}
+          {isPrimary && (
+            <div style={{ padding:"20px 24px", background:C.navy, display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, flexWrap:"wrap" }}>
+              <div>
+                <div style={{ fontFamily:PF, fontSize:17, color:C.white, marginBottom:4 }}>This is exactly what coaching is built for.</div>
+                <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.6)" }}>30 minutes to find out if this is the right conversation.</div>
+              </div>
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════
 // ADMIN PANEL (PIN-protected CRM dashboard)
 // ═══════════════════════════════════════════════════════
@@ -1479,6 +1700,13 @@ function AssessmentPage() {
                 </div>
               ))}
             </div>
+            {/* Domain insight cards — primary then secondary */}
+            <div style={{ marginBottom:40 }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:16 }}>Your Results In Depth</div>
+              <DomainInsightCard domain={primary} score={primary.score} isPrimary={true} />
+              <DomainInsightCard domain={secondary} score={secondary.score} isPrimary={false} />
+            </div>
+
             <div style={{ background:C.navyMid, borderRadius:4, padding:36, textAlign:"center" }}>
               <EditableBlock text={content.assessment?.resultsCTA||"Get a personalized note from Julian."} onSave={v=>updateContent("assessment.resultsCTA",v)} fieldName="assessment.resultsCTA" tag="h3" style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 12px" }} />
               <EditableBlock text={content.assessment?.resultsCTAbody||"Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach."} onSave={v=>updateContent("assessment.resultsCTAbody",v)} fieldName="assessment.resultsCTAbody" tag="p" style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }} />
