@@ -2303,17 +2303,17 @@ function ResourcesPage() {
           <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Resources</div>
           <EditableBlock text={content.resources?.headline||"Tools, frameworks, and thinking for leaders who do serious work."} onSave={v=>updateContent("resources.headline",v)} fieldName="resources.headline" tag="h1" style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }} />
           <EditableBlock text={content.resources?.subtitle||"Grounded in research and real operational experience. Not inspiration — application."} onSave={v=>updateContent("resources.subtitle",v)} fieldName="resources.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.6)", maxWidth:560, lineHeight:1.7 }} />
-          {/* Stats strip */}
-          <div style={{ display:"flex", gap:24, marginTop:28, flexWrap:"wrap" }}>
+          {/* Assessment stats — primary tool on this page */}
+          <div style={{ display:"flex", gap:32, marginTop:32, flexWrap:"wrap" }}>
             {[
-              [ARTICLES.filter(a=>a.status==="published").length, "Published"],
-              [ARTICLES.filter(a=>a.status==="planned").length, "In Development"],
-              [CONTENT_PILLARS.length, "Content Pillars"],
-              [CONTENT_AUDIENCES.length, "Audiences"],
+              ["18","Questions"],
+              ["6","Leadership Domains"],
+              ["< 8 min","To Complete"],
+              ["Free","No Sign-Up Required"],
             ].map(([n,l],i) => (
-              <div key={i} style={{ textAlign:"center" }}>
-                <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700 }}>{n}</div>
-                <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
+              <div key={i}>
+                <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700, lineHeight:1 }}>{n}</div>
+                <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, color:"rgba(255,255,255,0.5)", textTransform:"uppercase", marginTop:5 }}>{l}</div>
               </div>
             ))}
           </div>
@@ -2335,6 +2335,13 @@ function ResourcesPage() {
       {/* Filter + Article Grid */}
       <section style={{ background:C.cream, padding:"56px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
+
+          {/* Library count — contextual, above filter */}
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14, flexWrap:"wrap", gap:8 }}>
+            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted }}>
+              Content Library — {ARTICLES.filter(a=>a.status==="published").length} Published · {ARTICLES.filter(a=>a.status==="planned").length} In Development · {CONTENT_PILLARS.length} Pillars
+            </div>
+          </div>
 
           {/* Filter bar */}
           <div style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:8, padding:"20px 24px", marginBottom:32 }}>
