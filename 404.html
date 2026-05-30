@@ -4,10 +4,19 @@
   <meta charset="UTF-8" />
   <title>Unified Solutions Inc.</title>
   <script>
-    // GitHub Pages SPA routing: redirect all 404s back to index.html
-    // This preserves deep-link navigation for the single-page app
-    sessionStorage.setItem('redirect', location.href);
-    location.replace('/');
+    var path = window.location.pathname;
+
+    // Article paths (/articles/*) are real HTML files served by GitHub Pages.
+    // If one 404s here it means the file truly doesn't exist — send to /resources.
+    if (path.indexOf('/articles/') === 0) {
+      window.location.replace('/resources');
+
+    // SPA routes (/about, /coaching, etc.) — store the intended URL so index.html
+    // can restore navigation after the redirect to /.
+    } else {
+      sessionStorage.setItem('spa-redirect', window.location.href);
+      window.location.replace('/');
+    }
   </script>
 </head>
 <body></body>
