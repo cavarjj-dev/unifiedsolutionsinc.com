@@ -438,7 +438,7 @@ const C = {
   slate: "#4A6E8C", slateLight: "#6B8FAD",
   text: "#1A1A1A", muted: "#6B7280", mutedLight: "#9CA3AF",
   white: "#FFFFFF", border: "#D9D0C4",
-  green: "#1B5E35", red: "#9B2226",
+  green: "#1B5E35", red: "#9B2226", orange: "#E07A2A",
 };
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', system-ui, -apple-system, sans-serif";
@@ -2614,17 +2614,9 @@ function AssessmentPage() {
   const [savedMsg, setSavedMsg] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
-  // Derived values — must come BEFORE the useEffect that depends on them
   const current  = Object.keys(answers).length;
   const totalQs  = sessionQuestions.length || 18;
   const progress = Math.round((current / totalQs) * 100);
-  // AC3: Focus management — at top level, depends on `current` defined above
-  const questionHeadingRef = useRef(null);
-  useEffect(() => {
-    if (step === 'quiz' && questionHeadingRef.current) {
-      questionHeadingRef.current.focus();
-    }
-  }, [current, step]);
 
   function computeScores() {
     const scores = {};
@@ -2710,7 +2702,6 @@ function AssessmentPage() {
     const qIndex = sessionQuestions.findIndex(q => !answers[q.sessionId]);
     const q = qIndex >= 0 ? sessionQuestions[qIndex] : null;
     const domain = q ? DOMAINS.find(d => d.id === q.domain) : null;
-    // AC3: questionHeadingRef defined at top of component — see below
     return (
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
@@ -2734,7 +2725,7 @@ function AssessmentPage() {
                 {`Question ${current+1} of ${totalQs} — ${domain?.label}`}
               </div>
               {/* AC3: tabIndex={-1} allows programmatic focus; outline:none hides focus ring from mouse */}
-              <h2 ref={questionHeadingRef} tabIndex={-1} style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4, outline:"none" }}>{q.text}</h2>
+              <h2 style={{ fontFamily:PF, fontSize:26, color:C.navy, margin:"0 0 36px", lineHeight:1.4 }}>{q.text}</h2>
               {/* AC3: radiogroup role groups answer options semantically for screen readers */}
               <div role="radiogroup" aria-labelledby="quiz-question-label" style={{ display:"flex", flexDirection:"column", gap:12 }}>
                 <span id="quiz-question-label" style={{ display:"none" }}>{q.text}</span>
