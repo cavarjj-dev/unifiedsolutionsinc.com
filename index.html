@@ -695,15 +695,80 @@ const TESTIMONIALS = [
   { q:"I have only been in two sessions but both have been genuinely helpful. Julian is a great facilitator — prepared, structured, and working from a clear framework.", who:"Executive Director", org:"Nonprofit sector", via:"Peer coaching cohort" },
 ];
 
-const ARTICLES = [
-  { id:1, domain:"decision",      url:"/articles/laser-focused-coaching", title:"Why Laser-Focused Coaching Gets Results Faster", mins:5, tag:"Methodology", summary:"Most coaching spends the first half of every session locating the real question. Laser-focused coaching begins there." },
-  { id:2, domain:"identity",      url:"/articles/big-five-vs-hexaco", title:"Big Five vs HEXACO: Which Model Is Right for Leadership Development?", mins:6, tag:"Assessments", summary:"Both are empirically validated. The difference — and when each is the right tool — matters significantly." },
-  { id:3, domain:"team",          url:"/articles/group-vs-team-coaching", title:"Group Coaching vs Team Coaching: What Senior Leaders Need to Know", mins:4, tag:"Formats", summary:"The terms are used interchangeably. They should not be. The distinction determines who belongs in the room." },
-  { id:4, domain:"decision",      url:"/articles/decision-making-under-pressure", title:"What the Research Actually Says About Decision-Making Under Pressure", mins:7, tag:"Decision Making", summary:"The cognitive science has implications most leadership development programs haven't caught up with." },
-  { id:5, domain:"team",          url:"/articles/psychological-safety", title:"What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", mins:6, tag:"Team Performance", summary:"The most researched team performance variable of the past two decades. Also the most misunderstood." },
-  { id:6, domain:"identity",      url:"/articles/identity-senior-leadership", title:"The Identity Problem at the Heart of Senior Leadership", mins:6, tag:"Identity", summary:"At a certain level, technical capability is no longer the constraint. What becomes the constraint is harder to name." },
-  { id:7, domain:"sustainability", url:"/articles/personal-sustainability", title:"Personal Sustainability Is a Leadership Responsibility", mins:5, tag:"Sustainability", summary:"Treating your own sustainability as discretionary is not a position the research supports." },
+const CONTENT_PILLARS = [
+  { id:"identity",    label:"Identity & Presence",         color:"#2563EB", icon:"◎", desc:"Who you are as a leader under real pressure" },
+  { id:"decision",    label:"Decision Quality",             color:"#7C3AED", icon:"◈", desc:"How you process decisions when complexity is high" },
+  { id:"teams",       label:"Team Dynamics",                color:"#059669", icon:"◉", desc:"What lives between people — not just within them" },
+  { id:"peer",        label:"Peer Learning & Advisory",     color:"#D97706", icon:"◍", desc:"The science and practice of peer-based development" },
+  { id:"arc",         label:"The Arc",                      color:"#C0392B", icon:"◐", desc:"Operational experience informing development practice" },
+  { id:"assessment",  label:"Assessment & Self-Knowledge",  color:"#0891B2", icon:"◑", desc:"Tools, their uses, and their limits" },
+  { id:"methodology", label:"Coaching Methodology",         color:"#8B5CF6", icon:"⬡", desc:"The practice of coaching — how it works and why" },
+  { id:"programs",    label:"Program Design & Learning",    color:"#DC2626", icon:"◈", desc:"Architecture of behavior-changing leadership programs" },
+  { id:"sustain",     label:"Sustainability & Longevity",   color:"#16A34A", icon:"◎", desc:"Capacity management and leadership over the long arc" },
+  { id:"strategy",    label:"Strategic Clarity",            color:"#EA580C", icon:"◍", desc:"Alignment between leadership intent and actual choices" },
 ];
+
+const CONTENT_AUDIENCES = [
+  { id:"leaders",  label:"Senior Leaders" },
+  { id:"ld",       label:"L&D & HR" },
+  { id:"programs", label:"Program Teams" },
+  { id:"sales",    label:"Sales & BD" },
+  { id:"faculty",  label:"Faculty" },
+];
+
+const ARTICLES = [
+  { id:1,  status:"published", pillar:"decision",    audience:["leaders","ld"],      url:"/articles/laser-focused-coaching",          title:"Why Laser-Focused Coaching Gets Results Faster",                                                  mins:5, tag:"Methodology",        summary:"Most coaching spends the first half of every session locating the real question. Laser-focused coaching begins there — and the difference compounds." },
+  { id:2,  status:"published", pillar:"assessment",  audience:["leaders","ld"],      url:"/articles/big-five-vs-hexaco",              title:"Big Five vs HEXACO: Which Model Is Right for Leadership Development?",                            mins:6, tag:"Assessments",        summary:"Both are empirically validated. The difference — and when each is the right tool — matters significantly for what you actually learn." },
+  { id:3,  status:"published", pillar:"teams",       audience:["leaders","ld"],      url:"/articles/group-vs-team-coaching",          title:"Group Coaching vs Team Coaching: What Senior Leaders Need to Know",                              mins:4, tag:"Formats",            summary:"The terms are used interchangeably. They should not be. The distinction determines who belongs in the room and what's actually possible." },
+  { id:4,  status:"published", pillar:"decision",    audience:["leaders"],           url:"/articles/decision-making-under-pressure",  title:"What the Research Actually Says About Decision-Making Under Pressure",                           mins:7, tag:"Decision Making",    summary:"The cognitive science has implications most leadership development programs haven't caught up with — some run counter to conventional wisdom." },
+  { id:5,  status:"published", pillar:"teams",       audience:["leaders","ld"],      url:"/articles/psychological-safety",            title:"What Psychological Safety Actually Requires — and What Most Leaders Get Wrong",                   mins:6, tag:"Team Performance",   summary:"The most researched team performance variable of the past two decades. Also the most misunderstood — especially by leaders who think they've already built it." },
+  { id:6,  status:"published", pillar:"identity",    audience:["leaders"],           url:"/articles/identity-senior-leadership",      title:"The Identity Problem at the Heart of Senior Leadership",                                          mins:6, tag:"Identity",           summary:"At a certain level, technical capability is no longer the constraint. What becomes the constraint is harder to name — and almost never addressed directly." },
+  { id:7,  status:"published", pillar:"sustain",     audience:["leaders","ld"],      url:"/articles/personal-sustainability",         title:"Personal Sustainability Is a Leadership Responsibility",                                          mins:5, tag:"Sustainability",     summary:"Treating your own sustainability as discretionary is not a position the research supports — and the costs are specific and predictable." },
+  { id:8,  status:"planned",   pillar:"identity",    audience:["leaders"],           title:"The Cost of Performing Authority Rather Than Inhabiting It",                                          mins:6, tag:"Identity",           summary:"Most leaders know the gap between the authority they project and the authority they feel. What it costs — and what closing that gap requires." },
+  { id:9,  status:"planned",   pillar:"identity",    audience:["leaders"],           title:"When Your Values and Your Role Are in Conflict: A Coaching Framework",                              mins:7, tag:"Identity & Strategy", summary:"The tension between what your organization asks and who you are as a leader is one of the least-examined and most costly dynamics in senior leadership." },
+  { id:10, status:"planned",   pillar:"identity",    audience:["leaders","faculty"], title:"The Authentic Leadership Trap: Why 'Just Be Yourself' Is Often Bad Advice",                        mins:6, tag:"Identity",           summary:"Authentic leadership is real and well-researched. But its popular version can be an excuse to avoid the development work that actually produces authenticity." },
+  { id:11, status:"planned",   pillar:"decision",    audience:["leaders"],           title:"The Decision Audit: How to Examine Your Process, Not Just the Outcomes",                           mins:7, tag:"Decision Making",    summary:"Outcome bias is the tendency to judge decisions by what happened, not by what was known at the time. The antidote is a practice most leaders skip entirely." },
+  { id:12, status:"planned",   pillar:"decision",    audience:["leaders"],           title:"What Military Decision Doctrine Translates to Organizational Leadership",                          mins:6, tag:"Decision Making",    summary:"Military decision-making processes were built for speed, ambiguity, and incomplete information. The principles translate directly — and most leaders don't know them." },
+  { id:13, status:"planned",   pillar:"decision",    audience:["leaders"],           title:"When Not to Decide: The Strategic Value of Holding Complexity Longer",                            mins:5, tag:"Decision Making",    summary:"Premature closure is one of the most common decision-making errors senior leaders make. Sometimes the right move is not to move — and that requires discipline." },
+  { id:14, status:"planned",   pillar:"teams",       audience:["leaders","ld"],      title:"What Lives Between People: Why Team Coaching Is Different From Individual Coaching",              mins:6, tag:"Team Coaching",      summary:"The dysfunction on most senior teams doesn't live in any individual. It lives in the patterns between them — and individual coaching can't reach it." },
+  { id:15, status:"planned",   pillar:"teams",       audience:["leaders"],           title:"Accountability Without Punishment: The Hardest Thing to Build on a Senior Team",                 mins:7, tag:"Team Performance",   summary:"Most leadership teams say they have accountability. Very few actually do. The distinction is in what happens when a commitment is broken." },
+  { id:16, status:"planned",   pillar:"teams",       audience:["leaders","programs"],title:"What I Learned About Trust in the Army That Every Leadership Team Needs",                         mins:6, tag:"Trust & Teams",      summary:"Trust in a military unit is not a soft concept. It is an operational requirement — built deliberately, tested constantly, and rebuilt after every breach." },
+  { id:17, status:"planned",   pillar:"peer",        audience:["leaders","ld"],      title:"Why Peer Learning Is One of the Most Underrated Leadership Development Tools",                    mins:6, tag:"Peer Learning",      summary:"Decades of adult learning research supports peer-based development. Most organizations still treat it as an afterthought to formal training programs." },
+  { id:18, status:"planned",   pillar:"peer",        audience:["leaders","sales"],   title:"What Makes a Peer Advisory Circle Worth Having Every Time — Not Just Sometimes",                 mins:7, tag:"Peer Advisory",      summary:"The difference between peer groups that produce lasting value and ones that drift into comfortable conversation is specific, learnable, and almost never discussed." },
+  { id:19, status:"planned",   pillar:"peer",        audience:["programs","faculty"],title:"The Facilitator's Dilemma: Directive vs. Generative in Group Settings",                          mins:6, tag:"Facilitation",       summary:"The most important decision a facilitator makes is often invisible: when to intervene and when to hold back. The wrong call in either direction costs the group." },
+  { id:20, status:"planned",   pillar:"peer",        audience:["leaders"],           title:"COO Peer Groups: What I Learned Directing the Forum",                                             mins:6, tag:"Peer Advisory",      summary:"A directorship in a COO peer group is a master class in what senior leaders actually need from each other — and rarely get inside their own organizations." },
+  { id:21, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"What Tactical Team Leadership in a War Zone Taught Me About Executive Coaching",                  mins:7, tag:"The Arc",            summary:"The parallels between leading a communications team under fire in Iraq and coaching a VP through a high-stakes decision are structural — not metaphorical." },
+  { id:22, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What I Witnessed Inside Fortune 500 Organizations That Shapes Every Coaching Conversation",     mins:7, tag:"The Arc",            summary:"After years embedded at Optum, Wells Fargo, Securian, and Shutterfly, the patterns I saw in how organizations work — and fail their leaders — became the foundation of how I coach." },
+  { id:23, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"Why M&A Rarely Fails Because of the Deal: What I Saw in Integration",                           mins:6, tag:"The Arc",            summary:"The business case for most acquisitions is solid. The leadership dynamics during integration are where value goes to die — and almost no one is prepared for it." },
+  { id:24, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately",                  mins:5, tag:"The Arc",            summary:"Consulting arrives with answers. Coaching creates conditions for a leader to find their own. Knowing which mode you're in — and why — matters more than most realize." },
+  { id:25, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"Why I Left Consulting: What the Move to Coaching Taught Me About What Leaders Need",            mins:6, tag:"The Arc",            summary:"The moment I realized consulting was solving the wrong problem — and what that shift revealed about the gap between what organizations buy and what leaders need." },
+  { id:26, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"Why Most Leadership Assessments Don't Change Behavior (and the Ones That Do)",                  mins:7, tag:"Assessments",        summary:"The assessment-to-behavior change pipeline has a specific failure point most practitioners never address. It is not the data. It is what happens in the debrief." },
+  { id:27, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The 360 Debrief: What the Numbers Can't Tell You — and What a Coach Can",                      mins:6, tag:"Assessments",        summary:"A 360 creates data. What leaders do with it is a separate question — and the answer has more to do with identity than with information." },
+  { id:28, status:"planned",   pillar:"assessment",  audience:["leaders"],           title:"The Limits of Self-Report: Why I Use Multiple Assessments and Never One Alone",                  mins:5, tag:"Assessments",        summary:"Every self-report assessment is a snapshot of how you see yourself, not how you actually behave. That difference is why I never rely on any single instrument." },
+  { id:29, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The AgileBrain Framework: Mapping Emotional and Motivational Needs",                            mins:6, tag:"Assessments",        summary:"Most personality assessments describe how people behave. AgileBrain maps the needs that drive behavior — a subtle but consequential difference for development planning." },
+  { id:30, status:"planned",   pillar:"methodology", audience:["leaders","ld"],      title:"Holistic Coaching: What It Actually Means and What It Isn't",                                    mins:5, tag:"Methodology",        summary:"'Holistic' gets misused in coaching. What it actually means — addressing the whole person, not just the presenting problem — has specific implications for how coaching is designed." },
+  { id:31, status:"planned",   pillar:"methodology", audience:["leaders"],           title:"What Positive Psychology Is (It's Not What Most People Think)",                                  mins:6, tag:"Methodology",        summary:"Positive psychology is not positive thinking. It is a rigorous research program with specific findings about what produces flourishing — most of which are counterintuitive." },
+  { id:32, status:"planned",   pillar:"methodology", audience:["leaders","ld"],      title:"Coaching vs. Consulting vs. Therapy: A Practical Guide to What You Actually Need",             mins:5, tag:"Methodology",        summary:"Three distinct disciplines with significant vocabulary overlap and virtually no overlap in what they actually do. The confusion costs people time, money, and sometimes the wrong kind of help." },
+  { id:33, status:"planned",   pillar:"methodology", audience:["faculty","programs"],title:"What I Don't Know — and Why That's a Feature of the Coaching Relationship",                     mins:5, tag:"Methodology",        summary:"Not knowing your client's industry or political landscape is not a limitation of coaching. It is precisely what makes an outside perspective valuable." },
+  { id:34, status:"planned",   pillar:"programs",    audience:["programs","ld"],     title:"Why Most Corporate Leadership Programs Don't Stick: An Evidence-Based Diagnosis",               mins:7, tag:"Program Design",     summary:"The research on leadership program effectiveness is clear and largely ignored. The failure is almost always in transfer — the bridge between what is learned and what is practiced." },
+  { id:35, status:"planned",   pillar:"programs",    audience:["programs","faculty"],title:"Designing for Behavior Change, Not Knowledge Transfer: The Kolb Framework Applied",             mins:7, tag:"Program Design",     summary:"Kolb's experiential learning cycle is the most useful model for designing leadership programs that change what leaders actually do. Here's how I apply it in practice." },
+  { id:36, status:"planned",   pillar:"programs",    audience:["programs","ld"],     title:"The Cohort Effect: Why Peer-Based Learning Programs Outperform Individual Training",            mins:6, tag:"Program Design",     summary:"Social learning, accountability structures, and peer relationships are not byproducts of cohort programs — they are the mechanism of impact." },
+  { id:37, status:"planned",   pillar:"programs",    audience:["programs","sales"],  title:"Custom Learning Programs: What Organizations Get Wrong When They Build Their Own",              mins:6, tag:"Program Design",     summary:"Most custom leadership programs are built backwards — starting with content rather than behavior, and delivery rather than design. The consequences are avoidable." },
+  { id:38, status:"planned",   pillar:"programs",    audience:["faculty","programs"],title:"Teaching Leadership to Leaders: What Doesn't Work in a Room Full of Senior Executives",         mins:6, tag:"Program Design",     summary:"Senior executives are not typical learners. The pedagogical approaches that work for MBA students actively backfire with experienced leaders — and most faculty use them anyway." },
+  { id:39, status:"planned",   pillar:"programs",    audience:["faculty","ld"],      title:"What Coaching Methodology Adds to Business School Leadership Programs",                         mins:6, tag:"Program Design",     summary:"The gap between leadership theory and practice is widest in executive education. Coaching methodology closes it in ways that content delivery alone cannot." },
+  { id:40, status:"planned",   pillar:"sustain",     audience:["leaders"],           title:"The Depletion Problem: Why Smart Leaders Make Their Worst Decisions When Exhausted",            mins:6, tag:"Sustainability",     summary:"Decision fatigue and cognitive load are real and measurable. Leaders who understand this build their day around their physiology — not the other way around." },
+  { id:41, status:"planned",   pillar:"sustain",     audience:["leaders"],           title:"The Recovery Deficit: What Elite Athletes Know About Performance That Leaders Don't",           mins:5, tag:"Sustainability",     summary:"Elite athletes treat recovery as a training variable. Leaders treat it as a reward. The research on what produces sustained high performance says leaders are wrong." },
+  { id:42, status:"planned",   pillar:"sustain",     audience:["leaders","ld"],      title:"Sustainable High Performance: What 'Work-Life Balance' Gets Wrong",                             mins:6, tag:"Sustainability",     summary:"The framing of work-life balance locates the problem in time. The actual constraint is energy — and energy management produces different answers than time management ever will." },
+  { id:43, status:"planned",   pillar:"strategy",    audience:["leaders"],           title:"Managing Oneself: Why Drucker's 1999 Essay Is Still the Best Leadership Development Resource",  mins:6, tag:"Strategic Clarity",  summary:"Published in 1999, Drucker's 'Managing Oneself' contains more useful guidance for senior leaders than most leadership books published since." },
+  { id:44, status:"planned",   pillar:"strategy",    audience:["leaders"],           title:"The Leadership Gap: What You Think You're Building vs. What's Actually Happening",              mins:6, tag:"Strategic Clarity",  summary:"Most leaders have a general sense of their developmental direction. Very few have the specificity that makes direction operational — and the gap is costly." },
+  { id:45, status:"planned",   pillar:"strategy",    audience:["leaders"],           title:"When 'Busy' Is a Strategy: The Drift Problem in Senior Leadership",                             mins:5, tag:"Strategic Clarity",  summary:"Drift — moving by default rather than decision — is the most common strategic failure mode for senior leaders. It is not laziness. It is what happens when clarity is absent." },
+  { id:46, status:"planned",   pillar:"programs",    audience:["ld","sales"],        title:"What Senior Leaders Are Actually Buying When They Hire a Coach",                                 mins:5, tag:"For L&D & BD",       summary:"The purchase conversation for executive coaching is rarely about what the buyer says it's about. Understanding the real need shapes the entire engagement." },
+  { id:47, status:"planned",   pillar:"programs",    audience:["ld"],                title:"ROI of Leadership Coaching: How to Measure What Actually Matters",                               mins:7, tag:"For L&D",            summary:"Most ROI frameworks for coaching measure the wrong things. Here's how to measure what matters — and why the measurement conversation shapes program design." },
+  { id:48, status:"planned",   pillar:"methodology", audience:["ld"],                title:"Building a Coaching Culture: What It Really Takes Beyond a Coaching Policy",                    mins:6, tag:"For L&D",            summary:"A coaching culture is not a policy or a budget line. It is a shift in how leaders relate to each other's development — and building it is specific and harder than most expect." },
+  { id:49, status:"planned",   pillar:"identity",    audience:["leaders"],           title:"What Founders Know About Identity and Leadership That Corporate Leaders Often Lose",             mins:5, tag:"Identity & Strategy", summary:"Founders build organizations from their identity. Corporate leaders arrive into roles that pre-existed them. The difference in how identity relates to leadership is worth understanding." },
+  { id:50, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What the Agile Transformation Work Taught Me About Leading Change (and What It Didn't)",      mins:6, tag:"The Arc",            summary:"Agile transformations are leadership problems dressed as process problems. After several embedded engagements, the patterns that actually determine success or failure became clear." },
+];
+
 
 // ═══════════════════════════════════════════════════════
 // CONTEXT
@@ -1031,6 +1096,324 @@ function Nav() {
 // ═══════════════════════════════════════════════════════
 // ADMIN LOGIN MODAL (secret entry: Ctrl+Shift+A)
 // ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════
+// PIN CHANGER — used in AdminToolbar modal
+// ═══════════════════════════════════════════════════════════════════
+function PinChanger({ onDone }) {
+  const [current, setCurrent] = useState('');
+  const [next,    setNext]    = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [status,  setStatus]  = useState(null);
+  const [message, setMessage] = useState('');
+  const [savedHash, setSavedHash] = useState('');
+  const [usingCustom, setUsingCustom] = useState(false);
+  const FALLBACK = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2';
+
+  useEffect(() => {
+    (async () => {
+      try { const r = await storage.get('admin-pin-hash'); setUsingCustom(!!(r&&r.value)); } catch(e) {}
+    })();
+  }, []);
+
+  async function hash(pin) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('unified_solutions_2026'+pin));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  const checks = { length:next.length>=12, upper:/[A-Z]/.test(next), lower:/[a-z]/.test(next), number:/[0-9]/.test(next), symbol:/[^A-Za-z0-9]/.test(next), match:!!(next&&next===confirm) };
+  const strength = Object.values(checks).filter(Boolean).length;
+  const sColor = [T=>T,T=>C.red,T=>C.red,T=>C.orange,T=>C.yellow,T=>C.green,T=>C.green][strength]({});
+  const canSubmit = Object.values(checks).every(Boolean) && current.length > 0;
+
+  async function handleChange() {
+    if (!canSubmit) return;
+    setStatus('loading');
+    const curHash = await hash(current);
+    let active = FALLBACK;
+    try { const r = await storage.get('admin-pin-hash'); if (r&&r.value) active=r.value; } catch(e){}
+    if (curHash !== active) { setStatus('error'); setMessage('Current PIN is incorrect.'); setCurrent(''); return; }
+    const newHash = await hash(next);
+    try {
+      await storage.set('admin-pin-hash', newHash);
+      setSavedHash(newHash); setStatus('success'); setUsingCustom(true);
+      setMessage('PIN updated. Active immediately — no redeployment needed.');
+      setCurrent(''); setNext(''); setConfirm('');
+    } catch(e) { setStatus('error'); setMessage('Storage error. Try again.'); }
+  }
+
+  const inp = { width:"100%", padding:"10px 14px", fontFamily:DM, fontSize:14, background:"#050A0F", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, color:C.white, letterSpacing:3, outline:"none", boxSizing:"border-box" };
+  const lbl = { fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.5)", display:"block", marginBottom:6 };
+
+  return (
+    <div style={{ maxWidth:460 }}>
+      <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:6, padding:"10px 16px", marginBottom:20, display:"flex", gap:10, alignItems:"center" }}>
+        <span style={{ fontSize:16 }}>{usingCustom?"🔐":"⚠️"}</span>
+        <div style={{ fontFamily:DM, fontSize:12, color:usingCustom?C.green:C.orange }}>{usingCustom?"Custom PIN active — storage-based":"Default PIN in use — change recommended"}</div>
+      </div>
+      {status==="success" ? (
+        <div>
+          <div style={{ background:"#0D1F0D", border:`1px solid ${C.green}40`, borderRadius:6, padding:"16px 18px", marginBottom:12 }}>
+            <div style={{ fontFamily:DM, fontSize:13, fontWeight:700, color:C.green, marginBottom:6 }}>✓ {message}</div>
+          </div>
+          {savedHash && <div style={{ background:"#050A0F", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:"10px 14px", marginBottom:12 }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:4 }}>Backup hash (save offline)</div>
+            <div style={{ fontFamily:"monospace", fontSize:10, color:"rgba(255,255,255,0.5)", wordBreak:"break-all" }}>{savedHash}</div>
+          </div>}
+          <div style={{ display:"flex", gap:8 }}>
+            {onDone && <button onClick={onDone} style={{ background:C.gold, border:"none", borderRadius:4, padding:"8px 20px", fontFamily:DM, fontWeight:700, fontSize:13, color:C.white, cursor:"pointer" }}>Done</button>}
+            <button onClick={()=>setStatus(null)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:4, padding:"8px 14px", fontFamily:DM, fontSize:12, color:C.muted, cursor:"pointer" }}>Change again</button>
+          </div>
+        </div>
+      ) : (
+        <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+          <div><label style={lbl}>Current PIN</label><input type="password" value={current} onChange={e=>{setCurrent(e.target.value);setStatus(null);setMessage('');}} placeholder="Current PIN" style={inp} autoComplete="current-password"/></div>
+          <div>
+            <label style={lbl}>New PIN</label>
+            <input type="password" value={next} onChange={e=>{setNext(e.target.value);setStatus(null);}} placeholder="12+ characters" style={inp} autoComplete="new-password"/>
+            {next && <div style={{ marginTop:8 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                <div style={{ flex:1, background:"rgba(255,255,255,0.08)", borderRadius:2, height:4 }}><div style={{ width:`${(strength/6)*100}%`, height:"100%", background:sColor, borderRadius:2, transition:"width 0.2s" }}/></div>
+                <span style={{ fontFamily:DM, fontSize:11, color:sColor, minWidth:50 }}>{["","Weak","Weak","Fair","Good","Strong","Strong"][strength]}</span>
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:3 }}>
+                {[[checks.length,"12+ characters"],[checks.upper,"Uppercase"],[checks.lower,"Lowercase"],[checks.number,"Number"],[checks.symbol,"Symbol"],[checks.match,"Passwords match"]].map(([ok,l],i)=>(
+                  <div key={i} style={{ display:"flex", gap:5, alignItems:"center" }}>
+                    <span style={{ fontSize:11, color:ok?C.green:"rgba(255,255,255,0.2)" }}>{ok?"✓":"○"}</span>
+                    <span style={{ fontFamily:DM, fontSize:11, color:ok?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.3)" }}>{l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>}
+          </div>
+          <div><label style={lbl}>Confirm New PIN</label><input type="password" value={confirm} onChange={e=>{setConfirm(e.target.value);setStatus(null);}} placeholder="Repeat new PIN" style={{ ...inp, borderColor:confirm&&!checks.match?"#E07070":"rgba(255,255,255,0.15)" }} autoComplete="new-password"/></div>
+          {status==="error" && <div style={{ background:"rgba(224,82,82,0.12)", border:"1px solid rgba(224,82,82,0.3)", borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:"#E07070" }}>{message}</div>}
+          <button onClick={handleChange} disabled={!canSubmit||status==="loading"} style={{ background:canSubmit?C.gold:"rgba(255,255,255,0.06)", color:canSubmit?C.white:"rgba(255,255,255,0.2)", border:"none", borderRadius:4, padding:"12px 24px", fontFamily:DM, fontWeight:700, fontSize:14, cursor:canSubmit?"pointer":"not-allowed" }}>
+            {status==="loading"?"Updating...":"Update Admin PIN"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONTENT PIPELINE PANEL — topic library with Notion push
+// ═══════════════════════════════════════════════════════════════════
+function ContentPipelinePanel({ apiKey }) {
+  const [nStatus, setNStatus] = useState({});
+  const [pillar,  setPillar]  = useState("all");
+  const [status,  setStatus]  = useState("all");
+  const [pushing, setPushing] = useState(null);
+
+  const visible = ARTICLES.filter(a => (pillar==="all"||a.pillar===pillar) && (status==="all"||a.status===status));
+
+  async function pushOne(a) {
+    if (!apiKey) { alert("Add your Anthropic API key in the Security tab first."); return; }
+    setPushing(a.id); setNStatus(p=>({...p,[a.id]:"pushing"}));
+    try {
+      const p = CONTENT_PILLARS.find(x=>x.id===a.pillar);
+      const auds = (a.audience||[]).map(id=>CONTENT_AUDIENCES.find(x=>x.id===id)?.label).filter(Boolean).join(", ");
+      const res = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,mcp_servers:[{type:"url",url:"https://mcp.notion.com/mcp",name:"notion"}],messages:[{role:"user",content:`Create a page in a Notion database called "Content Library — Unified Solutions". Title: "${a.title}". Status: "${a.status==="published"?"Published":"Idea"}". Pillar: "${p?.label||a.pillar}". Audience: "${auds}". Tag: "${a.tag}". Read time: "${a.mins} min". Summary: "${a.summary}". URL: "${a.url||""}". If the database doesn't exist, create it with: Title(title), Status(select:Idea/Outline/Draft/Published), Pillar(select), Audience(multi-select), Tag(text), Read Time(text), Summary(text), URL(url). Confirm done.`}]})});
+      const d = await res.json();
+      const txt = (d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").toLowerCase();
+      setNStatus(p=>({...p,[a.id]:txt.includes("error")?"error":"done"}));
+    } catch(e) { setNStatus(p=>({...p,[a.id]:"error"})); }
+    setPushing(null);
+  }
+
+  async function pushAll() {
+    const todo = ARTICLES.filter(a=>!nStatus[a.id]);
+    for (const a of todo) { await pushOne(a); }
+  }
+
+  return (
+    <div>
+      <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap", alignItems:"center" }}>
+        <div style={{ display:"flex", gap:5, flexWrap:"wrap", flex:1 }}>
+          {[["all","All"],...CONTENT_PILLARS.map(p=>[p.id,p.label.split(" ")[0]])].map(([id,l])=>(
+            <button key={id} onClick={()=>setPillar(id)} style={{ background:pillar===id?"rgba(200,147,58,0.2)":"rgba(255,255,255,0.04)", border:`1px solid ${pillar===id?C.gold:"rgba(255,255,255,0.1)"}`, borderRadius:3, padding:"3px 9px", fontFamily:DM, fontSize:11, color:pillar===id?C.gold:"rgba(255,255,255,0.5)", cursor:"pointer" }}>{l}</button>
+          ))}
+        </div>
+        <div style={{ display:"flex", gap:5 }}>
+          {[["all","All"],["published","Published"],["planned","Planned"]].map(([v,l])=>(
+            <button key={v} onClick={()=>setStatus(v)} style={{ background:status===v?"rgba(255,255,255,0.1)":"rgba(255,255,255,0.03)", border:`1px solid rgba(255,255,255,${status===v?0.25:0.08})`, borderRadius:3, padding:"3px 9px", fontFamily:DM, fontSize:11, color:status===v?C.white:"rgba(255,255,255,0.4)", cursor:"pointer" }}>{l} ({ARTICLES.filter(a=>v==="all"||a.status===v).length})</button>
+          ))}
+          <button onClick={pushAll} style={{ background:"rgba(200,147,58,0.2)", border:`1px solid ${C.gold}40`, borderRadius:3, padding:"3px 11px", fontFamily:DM, fontSize:11, fontWeight:700, color:C.gold, cursor:"pointer", marginLeft:4 }}>⬆ All → Notion</button>
+        </div>
+      </div>
+      <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+        {visible.map(a => {
+          const p = CONTENT_PILLARS.find(x=>x.id===a.pillar);
+          const ns = nStatus[a.id];
+          return (
+            <div key={a.id} style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.07)", borderRadius:5, padding:"11px 15px", display:"flex", alignItems:"center", gap:12 }}>
+              <div style={{ width:3, height:36, background:p?.color||C.gold, borderRadius:2, flexShrink:0 }}/>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.white, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{a.title}</div>
+                <div style={{ fontFamily:DM, fontSize:10, color:"rgba(255,255,255,0.4)", marginTop:2 }}>{p?.label} · {a.tag} · {a.mins} min</div>
+              </div>
+              <span style={{ fontFamily:DM, fontSize:9, fontWeight:700, color:a.status==="published"?C.green:C.orange, background:a.status==="published"?"#1B5E3518":"#E07A2A14", border:`1px solid ${a.status==="published"?C.green+"40":C.orange+"40"}`, borderRadius:8, padding:"2px 8px", textTransform:"uppercase", flexShrink:0 }}>{a.status==="published"?"Live":"Planned"}</span>
+              {ns==="done" ? <span style={{ fontFamily:DM, fontSize:11, color:C.green, flexShrink:0 }}>✓ Notion</span>
+              : ns==="error" ? <span style={{ fontFamily:DM, fontSize:11, color:"#E07070", flexShrink:0 }}>Error</span>
+              : ns==="pushing" ? <span style={{ fontFamily:DM, fontSize:11, color:C.gold, flexShrink:0 }}>Pushing…</span>
+              : <button onClick={()=>pushOne(a)} disabled={pushing!==null} style={{ background:"none", border:`1px solid ${C.gold}40`, borderRadius:3, padding:"3px 9px", fontFamily:DM, fontSize:11, color:C.gold, cursor:pushing?"not-allowed":"pointer", opacity:pushing?0.5:1, flexShrink:0 }}>⬆ Notion</button>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ADMIN PANEL — full-screen CRM + Content + Security modal
+// ═══════════════════════════════════════════════════════════════════
+function AdminPanel({ onClose }) {
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [apiKey, setApiKey]   = useState(() => localStorage.getItem("us-api-key")||"");
+  const [selected, setSelected]     = useState(null);
+  const [notionStatus, setNotionStatus] = useState({});
+  const [adminTab, setAdminTab]     = useState("crm");
+
+  useEffect(() => { loadRecords(); }, []);
+
+  async function loadRecords() {
+    setLoading(true);
+    try { const r = await storage.get("assessment-results"); if (r) setRecords(JSON.parse(r.value)); } catch(e) {}
+    setLoading(false);
+  }
+
+  async function syncToNotion(record, idx) {
+    if (!apiKey) { alert("Add your Anthropic API key below first."); return; }
+    setNotionStatus(p=>({...p,[idx]:"syncing"}));
+    try {
+      const sorted = Object.entries(record.scores||{}).sort((a,b)=>a[1]-b[1]);
+      const primary = DOMAINS.find(d=>d.id===sorted[0]?.[0]);
+      const res = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,mcp_servers:[{type:"url",url:"https://mcp.notion.com/mcp",name:"notion"}],messages:[{role:"user",content:`Create a page in "Coaching Contacts — Unified Solutions CRM": Name: "${record.email||"Anonymous"}". Email: "${record.email||""}". Date: "${record.timestamp}". Primary Pressure Point: "${primary?.label||""}". Identity: ${record.scores?.identity||0}. Decision: ${record.scores?.decision||0}. Relational: ${record.scores?.relational||0}. Team: ${record.scores?.team||0}. Sustainability: ${record.scores?.sustainability||0}. Strategic: ${record.scores?.strategic||0}. Status: "New Lead". Confirm done.`}]})});
+      const d = await res.json();
+      const txt = (d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").toLowerCase();
+      setNotionStatus(p=>({...p,[idx]:txt.includes("error")?"error":"synced"}));
+    } catch(e) { setNotionStatus(p=>({...p,[idx]:"error"})); }
+  }
+
+  async function clearAll() {
+    if (window.confirm("Delete all locally stored assessment records?")) { await storage.set("assessment-results",JSON.stringify([])); setRecords([]); }
+  }
+
+  const TABS = [["crm","📊 CRM"],["content","📝 Content"],["security","🔐 Security"]];
+  const tc = { fontFamily:DM, fontSize:10, padding:"12px 18px", border:"none", background:"none", cursor:"pointer", transition:"all 0.2s" };
+  const th = { fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, padding:"10px 12px", borderBottom:`2px solid ${C.border}`, textAlign:"left" };
+  const td = { fontFamily:DM, fontSize:13, padding:"11px 12px", borderBottom:`1px solid ${C.border}` };
+
+  return (
+    <div style={{ position:"fixed", inset:0, zIndex:800, background:"rgba(0,0,0,0.75)", display:"flex", alignItems:"flex-start", justifyContent:"center", overflowY:"auto", paddingTop:20 }}>
+      <div style={{ background:C.cream, borderRadius:8, width:"95%", maxWidth:1000, maxHeight:"92vh", overflowY:"auto", boxShadow:"0 32px 80px rgba(0,0,0,0.5)" }}>
+        {/* Header */}
+        <div style={{ background:C.navy, padding:"18px 28px", display:"flex", justifyContent:"space-between", alignItems:"center", position:"sticky", top:0, zIndex:10, borderRadius:"8px 8px 0 0" }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:3 }}>Secure Admin · Unified Solutions Inc.</div>
+            <div style={{ fontFamily:PF, fontSize:20, color:C.white }}>Admin Dashboard</div>
+          </div>
+          <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+            <span style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)" }}>{records.length} assessment{records.length!==1?"s":""}</span>
+            <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontWeight:700, fontSize:12, padding:"7px 16px", borderRadius:4, cursor:"pointer" }}>Close ×</button>
+          </div>
+        </div>
+        {/* API key */}
+        <div style={{ background:C.navyMid, padding:"10px 28px", borderBottom:"1px solid rgba(255,255,255,0.1)", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+          <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", flexShrink:0 }}>Anthropic API Key</span>
+          <input type="password" value={apiKey} onChange={e=>{setApiKey(e.target.value);localStorage.setItem("us-api-key",e.target.value);}} placeholder="sk-ant-..." style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:3, color:"white" }}/>
+          {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A", flexShrink:0 }}>✓ Saved</span>}
+        </div>
+        {/* Tabs */}
+        <div style={{ display:"flex", borderBottom:`1px solid ${C.border}`, background:C.white }}>
+          {TABS.map(([id,label])=>(
+            <button key={id} onClick={()=>setAdminTab(id)} style={{ ...tc, fontWeight:adminTab===id?700:400, color:adminTab===id?C.gold:C.muted, borderBottom:adminTab===id?`2px solid ${C.gold}`:"2px solid transparent" }}>{label}</button>
+          ))}
+        </div>
+        <div style={{ padding:28 }}>
+          {/* ── CRM TAB ── */}
+          {adminTab==="crm" && (
+            <div>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14, marginBottom:24 }}>
+                {[[records.length,"Total Submissions"],[records.filter(r=>r.email).length,"With Email"],[Object.values(notionStatus).filter(s=>s==="synced").length,"Synced to Notion"]].map(([v,l],i)=>(
+                  <div key={i} style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6, padding:"14px 18px" }}>
+                    <div style={{ fontFamily:PF, fontSize:26, color:C.navy, fontWeight:700 }}>{v}</div>
+                    <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+                <button onClick={loadRecords} style={{ background:C.navyMid, color:C.white, border:"none", borderRadius:4, padding:"6px 14px", fontFamily:DM, fontSize:12, cursor:"pointer" }}>↻ Refresh</button>
+                <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.15)", color:"#E07070", border:"1px solid rgba(155,34,38,0.3)", borderRadius:4, padding:"6px 14px", fontFamily:DM, fontSize:12, cursor:"pointer" }}>Clear All</button>
+              </div>
+              {loading ? <div style={{ textAlign:"center", padding:32, fontFamily:DM, color:C.muted }}>Loading…</div>
+              : records.length===0 ? <div style={{ textAlign:"center", padding:48, background:C.creamDark, borderRadius:6, fontFamily:DM, fontSize:14, color:C.muted }}>No submissions yet. Complete the assessment and submit your email.</div>
+              : (
+                <table style={{ width:"100%", borderCollapse:"collapse", background:C.white, border:`1px solid ${C.border}`, borderRadius:6, overflow:"hidden" }}>
+                  <thead><tr style={{ background:C.creamDark }}>
+                    {["Date","Email","Primary Domain","Scores","Notion",""].map((h,i)=><th key={i} style={th}>{h}</th>)}
+                  </tr></thead>
+                  <tbody>
+                    {[...records].reverse().map((r,i) => {
+                      const idx = records.length-1-i;
+                      const sorted = Object.entries(r.scores||{}).sort((a,b)=>a[1]-b[1]);
+                      const primary = DOMAINS.find(d=>d.id===sorted[0]?.[0]);
+                      const ns = notionStatus[idx];
+                      return (
+                        <tr key={i} style={{ background:selected===idx?"#FAF3E4":"transparent" }}>
+                          <td style={td}>{new Date(r.timestamp).toLocaleDateString()}</td>
+                          <td style={td}>{r.email||<span style={{color:C.muted,fontStyle:"italic"}}>anonymous</span>}</td>
+                          <td style={td}><span style={{ color:primary?.color, fontWeight:600 }}>{primary?.icon} {primary?.label}</span></td>
+                          <td style={td}><div style={{ display:"flex", gap:3 }}>{DOMAINS.map(d=><div key={d.id} title={`${d.label}: ${(r.scores||{})[d.id]||0}`} style={{ width:22, height:22, background:d.color, opacity:((r.scores||{})[d.id]||0)/100*0.8+0.2, borderRadius:3, display:"flex", alignItems:"center", justifyContent:"center" }}><span style={{ fontSize:9, color:"white", fontWeight:700 }}>{(r.scores||{})[d.id]||0}</span></div>)}</div></td>
+                          <td style={td}>{ns==="synced"?<span style={{color:C.green,fontSize:12}}>✓ Synced</span>:ns==="syncing"?<span style={{color:C.gold,fontSize:12}}>Syncing…</span>:ns==="error"?<span style={{color:"#E07070",fontSize:12}}>Error</span>:<button onClick={()=>syncToNotion(r,idx)} style={{ background:"none", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:DM, fontSize:11, padding:"3px 9px", borderRadius:3, cursor:"pointer" }}>Sync</button>}</td>
+                          <td style={td}><button onClick={()=>setSelected(selected===idx?null:idx)} style={{ background:"none", border:`1px solid ${C.border}`, fontFamily:DM, fontSize:11, padding:"3px 9px", borderRadius:3, cursor:"pointer", color:C.navy }}>{selected===idx?"Hide":"View"}</button></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+              {selected!==null && records[selected] && (
+                <div style={{ marginTop:14, background:C.white, border:`2px solid ${C.gold}`, borderRadius:6, padding:22 }}>
+                  <div style={{ fontFamily:PF, fontSize:17, color:C.navy, marginBottom:16 }}>Detail — {records[selected].email||"Anonymous"} · {new Date(records[selected].timestamp).toLocaleString()}</div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10 }}>
+                    {DOMAINS.map(d => { const score=(records[selected].scores||{})[d.id]||0; return (
+                      <div key={d.id} style={{ background:C.cream, borderRadius:4, padding:"12px 14px" }}>
+                        <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:d.color, marginBottom:6 }}>{d.icon} {d.label}</div>
+                        <div style={{ background:C.border, borderRadius:2, height:6, marginBottom:4 }}><div style={{ width:`${score}%`, height:"100%", background:d.color, borderRadius:2 }}/></div>
+                        <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{score}/100</div>
+                      </div>
+                    );})}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          {/* ── CONTENT TAB ── */}
+          {adminTab==="content" && (
+            <div>
+              <div style={{ fontFamily:PF, fontSize:20, color:C.navy, marginBottom:6 }}>Content Pipeline</div>
+              <p style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.65, marginBottom:20 }}>{ARTICLES.length} topics across {CONTENT_PILLARS.length} pillars — {ARTICLES.filter(a=>a.status==="published").length} published · {ARTICLES.filter(a=>a.status==="planned").length} in development. Push any topic to Notion to begin development tracking.</p>
+              <ContentPipelinePanel apiKey={apiKey} />
+            </div>
+          )}
+          {/* ── SECURITY TAB ── */}
+          {adminTab==="security" && (
+            <div style={{ maxWidth:500 }}>
+              <div style={{ fontFamily:PF, fontSize:20, color:C.navy, marginBottom:6 }}>Security Settings</div>
+              <p style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.65, marginBottom:24 }}>Change your admin PIN without touching the source code or browser console. Hashed before storage — plain text never saved. Active immediately.</p>
+              <PinChanger onDone={()=>setAdminTab("crm")} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 function AdminLoginModal() {
   const { setShowAdminModal, handleAdminLogin } = useSite();
   const [pin, setPin] = useState('');
@@ -1212,25 +1595,7 @@ function AdminToolbar() {
       )}
 
       {/* ── Change PIN modal ─────────────────────────────────────────── */}
-      {showPinModal && (
-        <div style={{ position:"fixed", inset:0, zIndex:600,
-          background:"rgba(0,0,0,0.75)", display:"flex",
-          alignItems:"center", justifyContent:"center" }}
-          onClick={e => e.target === e.currentTarget && setShowPinModal(false)}>
-          <div style={{ background:C.navy, borderRadius:8, width:"100%", maxWidth:420,
-            padding:32, boxShadow:"0 32px 80px rgba(0,0,0,0.6)",
-            border:`1px solid ${C.navyLight}` }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:PF, fontSize:22, color:C.white }}>Change Admin PIN</div>
-              <button onClick={() => setShowPinModal(false)} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.4)", fontSize:20, cursor:"pointer", lineHeight:1 }}>×</button>
-            </div>
-            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", lineHeight:1.6, marginBottom:24 }}>
-              No console or file editing required. Your new PIN is hashed before storage — the plain text is never saved.
-            </p>
-            <PinChanger onDone={() => setShowPinModal(false)} />
-          </div>
-        </div>
-      )}
+      {showPinModal && <AdminPanel onClose={() => setShowPinModal(false)} />}
     </>
   );
 }
@@ -1912,77 +2277,175 @@ function CoachingPage() {
 // ═══════════════════════════════════════════════════════
 function ResourcesPage() {
   const { setPage, content, updateContent } = useSite();
-  const [filter, setFilter] = useState("all");
-  const [email, setEmail] = useState("");
+  const [pillarFilter, setPillarFilter]   = useState("all");
+  const [audienceFilter, setAudienceFilter] = useState("all");
+  const [statusFilter, setStatusFilter]   = useState("all"); // all | published | planned
+  const [email, setEmail]   = useState("");
   const [signed, setSigned] = useState(false);
-  const filtered = filter === "all" ? ARTICLES : ARTICLES.filter(a => a.domain === filter);
+
+  const filtered = ARTICLES.filter(a => {
+    const matchPillar   = pillarFilter === "all" || a.pillar === pillarFilter;
+    const matchAudience = audienceFilter === "all" || (a.audience && a.audience.includes(audienceFilter));
+    const matchStatus   = statusFilter === "all" || a.status === statusFilter;
+    return matchPillar && matchAudience && matchStatus;
+  });
+
+  const publishedCount = filtered.filter(a => a.status === "published").length;
+  const plannedCount   = filtered.filter(a => a.status === "planned").length;
+
+  const getPillarColor = (id) => CONTENT_PILLARS.find(p => p.id === id)?.color || C.gold;
+
   return (
     <div style={{ paddingTop:64 }}>
+      {/* Header */}
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Resources</div>
           <EditableBlock text={content.resources?.headline||"Tools, frameworks, and thinking for leaders who do serious work."} onSave={v=>updateContent("resources.headline",v)} fieldName="resources.headline" tag="h1" style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }} />
           <EditableBlock text={content.resources?.subtitle||"Grounded in research and real operational experience. Not inspiration — application."} onSave={v=>updateContent("resources.subtitle",v)} fieldName="resources.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.6)", maxWidth:560, lineHeight:1.7 }} />
+          {/* Stats strip */}
+          <div style={{ display:"flex", gap:24, marginTop:28, flexWrap:"wrap" }}>
+            {[
+              [ARTICLES.filter(a=>a.status==="published").length, "Published"],
+              [ARTICLES.filter(a=>a.status==="planned").length, "In Development"],
+              [CONTENT_PILLARS.length, "Content Pillars"],
+              [CONTENT_AUDIENCES.length, "Audiences"],
+            ].map(([n,l],i) => (
+              <div key={i} style={{ textAlign:"center" }}>
+                <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700 }}>{n}</div>
+                <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Assessment CTA */}
-      <section style={{ background:C.gold, padding:"40px 24px" }}>
+      {/* Assessment CTA strip */}
+      <section style={{ background:C.gold, padding:"32px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", gap:24, flexWrap:"wrap" }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:8 }}>Free Diagnostic</div>
-            <div style={{ fontFamily:PF, fontSize:24, color:C.white, fontWeight:600 }}>Leadership Pressure Point Assessment</div>
-            <div style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.8)", marginTop:4 }}>18 questions · 6 domains · Under 8 minutes · Free, no email required</div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:6 }}>Free Diagnostic</div>
+            <div style={{ fontFamily:PF, fontSize:22, color:C.white, fontWeight:600 }}>Leadership Pressure Point Assessment</div>
+            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.8)", marginTop:4 }}>18 questions · 6 domains · Under 8 minutes</div>
           </div>
           <Btn variant="navy" onClick={() => setPage("assessment")} style={{ whiteSpace:"nowrap" }}>Take the Assessment</Btn>
         </div>
       </section>
 
-      {/* Articles */}
-      <section style={{ background:C.cream, padding:"80px 24px" }}>
+      {/* Filter + Article Grid */}
+      <section style={{ background:C.cream, padding:"56px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:36, flexWrap:"wrap", gap:16 }}>
-            <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:0 }}>From the practice</h2>
-            <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
-              {[{id:"all",label:"All"}, ...DOMAINS.map(d => ({id:d.id, label:d.label.split(" ")[0]}))].map(f => (
-                <button key={f.id} onClick={() => setFilter(f.id)} style={{ background: filter===f.id ? C.navy : "transparent", color: filter===f.id ? C.white : C.muted, border:`1px solid ${filter===f.id ? C.navy : C.border}`, borderRadius:2, padding:"6px 14px", fontFamily:DM, fontSize:14, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}>{f.label}</button>
-              ))}
+
+          {/* Filter bar */}
+          <div style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:8, padding:"20px 24px", marginBottom:32 }}>
+            {/* Row 1: Pillar filter */}
+            <div style={{ marginBottom:16 }}>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:10 }}>Content Pillar</div>
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                <FilterBtn active={pillarFilter==="all"} color={C.navy} onClick={() => setPillarFilter("all")}>All Pillars</FilterBtn>
+                {CONTENT_PILLARS.map(p => (
+                  <FilterBtn key={p.id} active={pillarFilter===p.id} color={p.color} onClick={() => setPillarFilter(p.id)}>
+                    {p.icon} {p.label}
+                  </FilterBtn>
+                ))}
+              </div>
+            </div>
+            {/* Row 2: Audience + Status filters */}
+            <div style={{ display:"flex", gap:24, flexWrap:"wrap", paddingTop:16, borderTop:`1px solid ${C.border}` }}>
+              <div style={{ flex:1, minWidth:200 }}>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:10 }}>Audience</div>
+                <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                  <FilterBtn active={audienceFilter==="all"} color={C.navy} onClick={() => setAudienceFilter("all")}>All</FilterBtn>
+                  {CONTENT_AUDIENCES.map(a => (
+                    <FilterBtn key={a.id} active={audienceFilter===a.id} color={C.slate} onClick={() => setAudienceFilter(a.id)}>{a.label}</FilterBtn>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:10 }}>Status</div>
+                <div style={{ display:"flex", gap:6 }}>
+                  {[["all","All"],["published","Published"],["planned","Coming Soon"]].map(([v,l]) => (
+                    <FilterBtn key={v} active={statusFilter===v} color={v==="planned"?C.orange:C.navy} onClick={() => setStatusFilter(v)}>{l}</FilterBtn>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Result count */}
+            <div style={{ marginTop:14, paddingTop:14, borderTop:`1px solid ${C.border}`, fontFamily:DM, fontSize:13, color:C.muted }}>
+              Showing <strong style={{ color:C.navy }}>{filtered.length}</strong> topics —{" "}
+              <span style={{ color:C.green }}>{publishedCount} published</span>
+              {plannedCount > 0 && <span> · <span style={{ color:C.orange }}>{plannedCount} in development</span></span>}
             </div>
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(300px, 1fr))", gap:24 }}>
-            {filtered.map(a => {
-              const d = DOMAINS.find(d => d.id === a.domain);
-              return (
-                <a key={a.id} href={a.url} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden", transition:"all 0.2s", cursor:"pointer", display:"block", textDecoration:"none" }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 8px 32px rgba(0,0,0,0.10)`; e.currentTarget.style.borderColor=d.color; }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow="none"; e.currentTarget.style.borderColor=C.border; }}>
-                  <div style={{ height:4, background:d.color }} />
-                  <div style={{ padding:28 }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
-                      <span style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:d.color, fontWeight:600 }}>{a.tag}</span>
-                      <span style={{ fontFamily:DM, fontSize:13, color:C.muted }}>{a.mins} min read</span>
+
+          {/* Article grid */}
+          {filtered.length === 0 ? (
+            <div style={{ textAlign:"center", padding:"48px 24px", color:C.muted, fontFamily:DM, fontSize:15 }}>
+              No articles match those filters. Try adjusting the pillar or audience.
+            </div>
+          ) : (
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(320px,1fr))", gap:20 }}>
+              {filtered.map(a => {
+                const pillar = CONTENT_PILLARS.find(p => p.id === a.pillar) || CONTENT_PILLARS[0];
+                const isPlanned = a.status === "planned";
+                return (
+                  <div key={a.id}
+                    onClick={() => !isPlanned && a.url && (window.location.href = a.url)}
+                    style={{ background:C.white, border:`1px solid ${isPlanned ? C.border : pillar.color+"40"}`, borderRadius:6, overflow:"hidden", transition:"all 0.2s", cursor:isPlanned?"default":"pointer", opacity:isPlanned?0.85:1, position:"relative" }}
+                    onMouseEnter={e => { if (!isPlanned) { e.currentTarget.style.boxShadow="0 8px 28px rgba(0,0,0,0.10)"; e.currentTarget.style.borderColor=pillar.color; }}}
+                    onMouseLeave={e => { e.currentTarget.style.boxShadow="none"; e.currentTarget.style.borderColor=isPlanned?C.border:pillar.color+"40"; }}>
+                    {/* Pillar color bar */}
+                    <div style={{ height:4, background:isPlanned?C.border:pillar.color }} />
+                    <div style={{ padding:"22px 22px 18px" }}>
+                      {/* Meta row */}
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10 }}>
+                        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                          <span style={{ fontFamily:DM, fontSize:10, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:isPlanned?C.muted:pillar.color }}>{a.tag}</span>
+                        </div>
+                        <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                          {isPlanned && (
+                            <span style={{ fontFamily:DM, fontSize:9, fontWeight:700, letterSpacing:1, textTransform:"uppercase", color:C.orange, background:"#E07A2A14", border:"1px solid #E07A2A30", borderRadius:8, padding:"2px 7px" }}>Coming Soon</span>
+                          )}
+                          <span style={{ fontFamily:DM, fontSize:12, color:C.muted }}>{a.mins} min</span>
+                        </div>
+                      </div>
+                      {/* Title */}
+                      <h3 style={{ fontFamily:PF, fontSize:18, color:C.navy, margin:"0 0 10px", lineHeight:1.35, fontWeight:600 }}>{a.title}</h3>
+                      {/* Summary */}
+                      <p style={{ fontFamily:DM, fontSize:14, color:C.muted, lineHeight:1.65, margin:"0 0 16px" }}>{a.summary}</p>
+                      {/* Footer */}
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                        <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+                          {(a.audience||[]).map(id => {
+                            const aud = CONTENT_AUDIENCES.find(x => x.id === id);
+                            return aud ? (
+                              <span key={id} style={{ fontFamily:DM, fontSize:9, color:C.muted, background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:8, padding:"2px 6px", letterSpacing:0.5 }}>{aud.label}</span>
+                            ) : null;
+                          })}
+                        </div>
+                        {!isPlanned && <span style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:pillar.color }}>Read →</span>}
+                      </div>
                     </div>
-                    <h3 style={{ fontFamily:PF, fontSize:20, color:C.navy, margin:"0 0 12px", lineHeight:1.35 }}>{a.title}</h3>
-                    <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.65, margin:"0 0 20px" }}>{a.summary}</p>
-                    <span style={{ fontFamily:DM, fontSize:14, fontWeight:600, color:C.goldDark, letterSpacing:1 }}>Read article →</span>
                   </div>
-                </a>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Email Signup */}
-      <section style={{ background:C.creamDark, padding:"64px 24px", borderTop:`1px solid ${C.border}` }}>
-        <div style={{ maxWidth:540, margin:"0 auto", textAlign:"center" }}>
-          <h2 style={{ fontFamily:PF, fontSize:30, color:C.navy, margin:"0 0 12px" }}>Leadership insights, when they're worth reading.</h2>
-          <p style={{ fontFamily:DM, fontSize:16, color:C.muted, margin:"0 0 28px", lineHeight:1.7 }}>Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.</p>
+      {/* Email signup */}
+      <section style={{ background:C.creamDark, padding:"56px 24px", borderTop:`1px solid ${C.border}` }}>
+        <div style={{ maxWidth:520, margin:"0 auto", textAlign:"center" }}>
+          <h2 style={{ fontFamily:PF, fontSize:28, color:C.navy, margin:"0 0 12px" }}>New articles when they're worth reading.</h2>
+          <p style={{ fontFamily:DM, fontSize:15, color:C.muted, margin:"0 0 24px", lineHeight:1.7 }}>Frameworks, assessment perspectives, and development thinking from 1,200+ hours of coaching. No content calendar filler.</p>
           {signed ? (
-            <div style={{ fontFamily:DM, fontSize:17, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
+            <div style={{ fontFamily:DM, fontSize:15, color:C.green, fontWeight:600 }}>✓ You're on the list.</div>
           ) : (
             <div style={{ display:"flex", gap:8 }}>
-              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" id="newsletter-email" aria-label="Email address for leadership insights" style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
+                id="newsletter-email" aria-label="Email address for leadership insights newsletter"
+                style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
               <Btn onClick={() => email && setSigned(true)}>Join</Btn>
             </div>
           )}
@@ -1992,560 +2455,19 @@ function ResourcesPage() {
   );
 }
 
-
-// ═══════════════════════════════════════════════════════
-// DOMAIN INSIGHT CARD — shown on assessment results page
-// ═══════════════════════════════════════════════════════
-function DomainInsightCard({ domain, score, isPrimary }) {
-  const [open, setOpen] = useState(isPrimary);
-  const insight = DOMAIN_INSIGHTS[domain.id];
-  if (!insight) return null;
-
-  const scoreContext = score < 50 ? insight.scoreContext.low
-                     : score < 75 ? insight.scoreContext.mid
-                     : insight.scoreContext.high;
-
-  // Articles relevant to this domain
-  const relatedArticles = ARTICLES.filter(a => insight.articleDomains.includes(a.domain));
-
-  const borderColor = isPrimary ? domain.color : domain.color + "80";
-  const badgeLabel = isPrimary ? "Primary Pressure Point" : "Secondary Area";
-  const badgeBg = isPrimary ? domain.color : domain.color + "30";
-  const badgeText = isPrimary ? C.white : domain.color;
-
+// ── FilterBtn helper ─────────────────────────────────────────────────────
+function FilterBtn({ active, color, onClick, children }) {
   return (
-    <div style={{ border:`1px solid ${borderColor}`, borderRadius:6, overflow:"hidden", marginBottom:24, background:C.white }}>
-      {/* Header */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"20px 24px", display:"flex", justifyContent:"space-between", alignItems:"center", textAlign:"left" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <span style={{ fontSize:22, color:domain.color }}>{domain.icon}</span>
-          <div>
-            <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", color:domain.color, marginBottom:3 }}>{domain.label}</div>
-            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <span style={{ fontFamily:PF, fontSize:isPrimary?20:17, color:C.navy, fontWeight:600 }}>{isPrimary ? "Your primary pressure point" : "Secondary area to watch"}</span>
-              <span style={{ background:badgeBg, color:badgeText, fontSize:10, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1 }}>{badgeLabel}</span>
-            </div>
-          </div>
-        </div>
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <div style={{ textAlign:"right" }}>
-            <div style={{ fontFamily:PF, fontSize:22, color:domain.color, fontWeight:700 }}>{score}<span style={{ fontSize:13, color:C.muted }}>/100</span></div>
-          </div>
-          <span style={{ color:C.muted, fontSize:18, flexShrink:0 }}>{open ? "−" : "+"}</span>
-        </div>
-      </button>
-
-      {open && (
-        <div style={{ borderTop:`1px solid ${domain.color}30` }}>
-
-          {/* Score context */}
-          <div style={{ padding:"20px 24px 0", background:`${domain.color}06` }}>
-            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:10 }}>What this score reflects</div>
-            <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:0 }}>{scoreContext}</p>
-          </div>
-
-          {/* Research context */}
-          <div style={{ padding:"20px 24px", background:`${domain.color}06`, borderTop:`1px solid ${domain.color}15` }}>
-            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:10 }}>What the research says</div>
-            <p style={{ fontFamily:DM, fontSize:16, color:C.text, lineHeight:1.75, margin:0 }}>{insight.researchNote}</p>
-          </div>
-
-          {/* Exploration questions */}
-          <div style={{ padding:"24px", borderTop:`1px solid ${C.border}` }}>
-            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:16 }}>Questions worth sitting with</div>
-            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-              {insight.questions.map((q, i) => (
-                <div key={i} style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.cream, borderRadius:4, borderLeft:`3px solid ${domain.color}` }}>
-                  <span style={{ fontFamily:PF, fontSize:18, color:domain.color, flexShrink:0, lineHeight:1, marginTop:2 }}>Q</span>
-                  <p style={{ fontFamily:DM, fontSize:15, color:C.text, lineHeight:1.7, margin:0, fontStyle:"italic" }}>{q}</p>
-                </div>
-              ))}
-            </div>
-            <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:"16px 0 0", lineHeight:1.6 }}>
-              These questions are designed to be explored rather than answered quickly. If one of them lands, that's usually a signal worth paying attention to.
-            </p>
-          </div>
-
-          {/* Related articles */}
-          {relatedArticles.length > 0 && (
-            <div style={{ padding:"20px 24px", borderTop:`1px solid ${C.border}`, background:C.creamDark }}>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:14 }}>From the practice — relevant reading</div>
-              <div style={{ display:"grid", gridTemplateColumns: relatedArticles.length > 1 ? "1fr 1fr" : "1fr", gap:12 }}>
-                {relatedArticles.map(a => (
-                  <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"14px 16px", borderTop:`3px solid ${domain.color}` }}>
-                    <div style={{ fontFamily:DM, fontSize:11, color:domain.color, fontWeight:700, letterSpacing:1, marginBottom:6 }}>{a.tag} · {a.mins} min read</div>
-                    <div style={{ fontFamily:PF, fontSize:15, color:C.navy, fontWeight:600, marginBottom:6, lineHeight:1.3 }}>{a.title}</div>
-                    <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:0, lineHeight:1.55 }}>{a.summary}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Further reading */}
-          <div style={{ padding:"16px 24px", borderTop:`1px solid ${C.border}`, display:"flex", alignItems:"flex-start", gap:12 }}>
-            <span style={{ fontSize:16, flexShrink:0, marginTop:1 }}>📚</span>
-            <div>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, fontWeight:700, marginBottom:6 }}>For deeper exploration</div>
-              <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:0, lineHeight:1.65 }}>{insight.readMore}</p>
-            </div>
-          </div>
-
-          {/* Coaching CTA */}
-          {isPrimary && (
-            <div style={{ padding:"20px 24px", background:C.navy, display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, flexWrap:"wrap" }}>
-              <div>
-                <div style={{ fontFamily:PF, fontSize:17, color:C.white, marginBottom:4 }}>This is exactly what coaching is built for.</div>
-                <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.6)" }}>30 minutes to find out if this is the right conversation.</div>
-              </div>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+    <button onClick={onClick} style={{
+      background: active ? color : "transparent",
+      color: active ? C.white : C.muted,
+      border: `1px solid ${active ? color : C.border}`,
+      borderRadius: 4, padding:"5px 12px", fontFamily:DM, fontSize:12, fontWeight:600,
+      cursor:"pointer", transition:"all 0.15s", whiteSpace:"nowrap"
+    }}>{children}</button>
   );
 }
 
-
-// ═══════════════════════════════════════════════════════
-// PIN CHANGER — admin panel security tab
-// No console, no file editing required
-// ═══════════════════════════════════════════════════════
-function PinChanger({ onDone }) {
-  const [current, setCurrent]   = useState('');
-  const [next, setNext]         = useState('');
-  const [confirm, setConfirm]   = useState('');
-  const [status, setStatus]     = useState(null); // null | 'success' | 'error' | 'loading'
-  const [message, setMessage]   = useState('');
-  const [savedHash, setSavedHash] = useState('');
-  const [usingCustom, setUsingCustom] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const r = await storage.get('admin-pin-hash');
-        setUsingCustom(!!(r && r.value));
-      } catch(e) {}
-    })();
-  }, []);
-
-  const ADMIN_HASH_FALLBACK = '2fbfec39f6fd0c978b6dc9b0a1beeadc5b2c1da49d20f514e7ab8cf1004ac3d2';
-
-  async function computeHash(pin) {
-    const buf = await crypto.subtle.digest('SHA-256',
-      new TextEncoder().encode('unified_solutions_2026' + pin)
-    );
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  // Real-time PIN strength
-  const checks = {
-    length:   next.length >= 12,
-    upper:    /[A-Z]/.test(next),
-    lower:    /[a-z]/.test(next),
-    number:   /[0-9]/.test(next),
-    symbol:   /[^A-Za-z0-9]/.test(next),
-    match:    next && next === confirm,
-  };
-  const strength = Object.values(checks).filter(Boolean).length;
-  const strengthLabel = ['', 'Very Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Strong'][strength];
-  const strengthColor = ['', C.red, C.red, C.orange, C.yellow, C.green, C.green][strength];
-  const canSubmit = Object.values(checks).every(Boolean) && current.length > 0;
-
-  async function handleChange() {
-    if (!canSubmit) return;
-    setStatus('loading');
-
-    // Verify current PIN
-    const currentHash = await computeHash(current);
-    let activeHash = ADMIN_HASH_FALLBACK;
-    try {
-      const stored = await storage.get('admin-pin-hash');
-      if (stored && stored.value) activeHash = stored.value;
-    } catch(e) {}
-
-    if (currentHash !== activeHash) {
-      setStatus('error');
-      setMessage('Current PIN is incorrect. Please try again.');
-      setCurrent('');
-      return;
-    }
-
-    // Hash and store the new PIN
-    const newHash = await computeHash(next);
-    try {
-      await storage.set('admin-pin-hash', newHash);
-      setSavedHash(newHash);
-      setStatus('success');
-      setUsingCustom(true);
-      setMessage('PIN updated successfully. Your new PIN is now active — no file editing required.');
-      setCurrent(''); setNext(''); setConfirm('');
-    } catch(e) {
-      setStatus('error');
-      setMessage('Storage error — could not save PIN. Try again or contact support.');
-    }
-  }
-
-  const inputStyle = {
-    width:"100%", padding:"10px 14px", fontFamily:DM, fontSize:14,
-    background:"#050A0F", border:`1px solid ${C.navyLight}`,
-    borderRadius:4, color:C.white, letterSpacing:3, outline:"none",
-    boxSizing:"border-box"
-  };
-  const labelStyle = {
-    fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase",
-    color:"rgba(255,255,255,0.5)", display:"block", marginBottom:6
-  };
-
-  return (
-    <div style={{ maxWidth:480 }}>
-      {/* Status strip */}
-      <div style={{ background:"rgba(255,255,255,0.04)", border:`1px solid ${C.navyLight}`, borderRadius:6, padding:"10px 16px", marginBottom:24, display:"flex", alignItems:"center", gap:10 }}>
-        <span style={{ fontSize:16 }}>{usingCustom ? "🔐" : "⚠️"}</span>
-        <div>
-          <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:usingCustom?C.green:C.orange }}>
-            {usingCustom ? "Custom PIN active" : "Using default PIN — change recommended"}
-          </div>
-          <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.4)", marginTop:2 }}>
-            {usingCustom ? "Your PIN is stored securely in persistent storage." : "The default PIN (USC2026) is in your public git history. Set a new one now."}
-          </div>
-        </div>
-      </div>
-
-      {status === 'success' ? (
-        <div>
-          <div style={{ background:"#0D1F0D", border:`1px solid ${C.green}40`, borderRadius:6, padding:"20px 20px", marginBottom:16 }}>
-            <div style={{ fontFamily:DM, fontSize:13, fontWeight:700, color:C.green, marginBottom:6 }}>✓ {message}</div>
-            <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.5)", lineHeight:1.6 }}>
-              Your new PIN is active immediately. The next admin login will use it.
-            </div>
-          </div>
-          {savedHash && (
-            <div style={{ background:"#050A0F", border:`1px solid ${C.navyLight}`, borderRadius:4, padding:"12px 14px" }}>
-              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:6 }}>Backup hash (store securely offline)</div>
-              <div style={{ fontFamily:MONO, fontSize:10, color:"rgba(255,255,255,0.5)", wordBreak:"break-all", lineHeight:1.6 }}>{savedHash}</div>
-              <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.3)", marginTop:6 }}>If browser storage is ever cleared, update ADMIN_HASH_FALLBACK in index.html with this value to restore access.</div>
-            </div>
-          )}
-          <div style={{ display:"flex", gap:8, marginTop:16 }}>
-            {onDone && <button onClick={onDone} style={{ background:C.gold, border:"none", borderRadius:4, padding:"8px 20px", fontFamily:DM, fontWeight:700, fontSize:13, color:C.white, cursor:"pointer" }}>Done</button>}
-            <button onClick={() => setStatus(null)} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:4, padding:"8px 16px", fontFamily:DM, fontSize:12, color:C.muted, cursor:"pointer" }}>Change again</button>
-          </div>
-        </div>
-      ) : (
-        <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
-          {/* Current PIN */}
-          <div>
-            <label style={labelStyle}>Current PIN</label>
-            <input type="password" value={current} onChange={e => { setCurrent(e.target.value); setStatus(null); setMessage(''); }}
-              placeholder="Your current admin PIN" style={inputStyle} autoComplete="current-password" />
-          </div>
-
-          {/* New PIN */}
-          <div>
-            <label style={labelStyle}>New PIN</label>
-            <input type="password" value={next} onChange={e => { setNext(e.target.value); setStatus(null); }}
-              placeholder="12+ characters" style={inputStyle} autoComplete="new-password" />
-            {next && (
-              <div style={{ marginTop:8 }}>
-                {/* Strength bar */}
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
-                  <div style={{ flex:1, background:"rgba(255,255,255,0.08)", borderRadius:2, height:4 }}>
-                    <div style={{ width:`${(strength/6)*100}%`, height:"100%", background:strengthColor, borderRadius:2, transition:"all 0.2s" }} />
-                  </div>
-                  <span style={{ fontFamily:DM, fontSize:11, color:strengthColor, width:70, textAlign:"right" }}>{strengthLabel}</span>
-                </div>
-                {/* Requirement checklist */}
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:4 }}>
-                  {[
-                    [checks.length,  "12+ characters"],
-                    [checks.upper,   "Uppercase letter"],
-                    [checks.lower,   "Lowercase letter"],
-                    [checks.number,  "Number"],
-                    [checks.symbol,  "Symbol (!@#$...)"],
-                    [checks.match,   "Passwords match"],
-                  ].map(([ok, label], i) => (
-                    <div key={i} style={{ display:"flex", alignItems:"center", gap:6 }}>
-                      <span style={{ fontSize:11, color:ok?C.green:"rgba(255,255,255,0.2)" }}>{ok?"✓":"○"}</span>
-                      <span style={{ fontFamily:DM, fontSize:11, color:ok?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.3)" }}>{label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Confirm */}
-          <div>
-            <label style={labelStyle}>Confirm New PIN</label>
-            <input type="password" value={confirm} onChange={e => { setConfirm(e.target.value); setStatus(null); }}
-              placeholder="Repeat new PIN" style={{ ...inputStyle, borderColor: confirm && !checks.match ? C.red : C.navyLight }}
-              autoComplete="new-password" />
-          </div>
-
-          {/* Error message */}
-          {status === 'error' && (
-            <div style={{ background:"rgba(224,82,82,0.12)", border:`1px solid ${C.red}40`, borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:C.red }}>
-              {message}
-            </div>
-          )}
-
-          {/* Submit */}
-          <button
-            onClick={handleChange}
-            disabled={!canSubmit || status === 'loading'}
-            style={{ background:canSubmit?C.gold:"rgba(255,255,255,0.06)", color:canSubmit?C.white:"rgba(255,255,255,0.2)", border:"none", borderRadius:4, padding:"12px 24px", fontFamily:DM, fontWeight:700, fontSize:14, cursor:canSubmit?"pointer":"not-allowed", transition:"all 0.2s" }}>
-            {status === 'loading' ? "Updating PIN..." : "Update Admin PIN"}
-          </button>
-
-          <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.3)", lineHeight:1.6 }}>
-            Your PIN is hashed using SHA-256 before storage — the plain text is never saved anywhere. Changes take effect immediately with no redeployment needed.
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════
-// ADMIN PANEL (PIN-protected CRM dashboard)
-// ═══════════════════════════════════════════════════════
-// Admin PIN removed — authentication now handled by secure admin session (Ctrl+Shift+A)
-
-function AdminPanel({ onClose }) {
-  const [records, setRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem("us-api-key") || "");
-  const [selected, setSelected] = useState(null);
-  const [notionStatus, setNotionStatus] = useState({});
-  const [adminTab, setAdminTab] = useState("crm"); // crm | security
-
-  useEffect(() => { loadRecords(); }, []);
-
-  async function loadRecords() {
-    setLoading(true);
-    try {
-      const r = await storage.get("assessment-results");
-      if (r) setRecords(JSON.parse(r.value));
-    } catch (e) {}
-    setLoading(false);
-  }
-
-  async function syncToNotion(record, idx) {
-    setNotionStatus(prev => ({...prev, [idx]: "syncing"}));
-    try {
-      const primary = Object.entries(record.scores).sort((a,b) => a[1]-b[1])[0];
-      const domain = DOMAINS.find(d => d.id === primary[0]);
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          mcp_servers: [{ type: "url", url: "https://mcp.notion.com/mcp", name: "notion" }],
-          messages: [{ role: "user", content: `Create a new page in the Notion database called "Coaching Contacts — Unified Solutions CRM" with these properties:
-- Name/Title: "${record.email || "Anonymous"}"
-- Email: "${record.email || ""}"
-- Assessment Date: "${record.timestamp}"
-- Primary Pressure Point: "${domain?.label || ""}"
-- Identity Score: ${record.scores.identity || 0}
-- Decision Score: ${record.scores.decision || 0}
-- Relational Score: ${record.scores.relational || 0}
-- Team Score: ${record.scores.team || 0}
-- Sustainability Score: ${record.scores.sustainability || 0}
-- Strategic Score: ${record.scores.strategic || 0}
-- Status: "New Lead"
-Confirm when done.` }]
-        })
-      });
-      const data = await response.json();
-      const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "";
-      setNotionStatus(prev => ({...prev, [idx]: text.toLowerCase().includes("error") ? "error" : "synced"}));
-    } catch (e) {
-      setNotionStatus(prev => ({...prev, [idx]: "error"}));
-    }
-  }
-
-  async function clearAll() {
-    if (window.confirm("Delete all locally stored assessment records? This cannot be undone.")) {
-      await storage.set("assessment-results", JSON.stringify([]));
-      setRecords([]);
-    }
-  }
-
-  const tableHead = { fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:C.muted, padding:"10px 12px", borderBottom:`2px solid ${C.border}`, textAlign:"left" };
-  const tableCell = { fontFamily:DM, fontSize:16, padding:"12px", borderBottom:`1px solid ${C.border}` };
-
-  return (
-    <div style={{ position:"fixed", inset:0, zIndex:500, background:"rgba(0,0,0,0.7)", display:"flex", alignItems:"flex-start", justifyContent:"center", overflowY:"auto", paddingTop:20 }}>
-      <div style={{ background:C.cream, borderRadius:8, width:"95%", maxWidth:1000, maxHeight:"92vh", overflowY:"auto", boxShadow:"0 32px 80px rgba(0,0,0,0.5)" }}>
-        {/* Header */}
-        <div style={{ background:C.navy, padding:"24px 32px", display:"flex", justifyContent:"space-between", alignItems:"center", position:"sticky", top:0, zIndex:10 }}>
-          <div>
-            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:4 }}>Secure Admin Dashboard</div>
-            <div style={{ fontFamily:PF, fontSize:22, color:C.white }}>Assessment CRM — Unified Solutions Inc.</div>
-          </div>
-          <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-            <span style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)" }}>{records.length} record{records.length!==1?"s":""}</span>
-            <button onClick={loadRecords} style={{ background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", color:C.white, fontFamily:DM, fontSize:14, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>↻ Refresh</button>
-            <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.3)", border:"1px solid rgba(155,34,38,0.5)", color:"#ffaaaa", fontFamily:DM, fontSize:14, padding:"6px 14px", borderRadius:2, cursor:"pointer" }}>Clear All</button>
-            <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontSize:16, fontWeight:700, padding:"8px 18px", borderRadius:2, cursor:"pointer" }}>Close ×</button>
-          </div>
-        </div>
-
-        {/* Admin tab bar */}
-        <div style={{ display:"flex", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
-          {[["crm","📊 Assessment CRM"],["security","🔐 Security"]].map(([id,label]) => (
-            <button key={id} onClick={() => setAdminTab(id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:13, fontWeight:adminTab===id?700:400, color:adminTab===id?C.gold:"rgba(255,255,255,0.5)", padding:"12px 24px", borderBottom:adminTab===id?`2px solid ${C.gold}`:"2px solid transparent", transition:"all 0.2s" }}>{label}</button>
-          ))}
-        </div>
-        <div style={{ padding:"16px 32px", borderBottom:"1px solid rgba(255,255,255,0.1)" }}>
-          <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, padding:"10px 16px", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
-            <span style={{ fontFamily:DM, fontSize:12, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)" }}>Anthropic API Key</span>
-            <input
-              type="password" value={apiKey}
-              onChange={e => { setApiKey(e.target.value); localStorage.setItem("us-api-key", e.target.value); }}
-              placeholder="sk-ant-..."
-              style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:14, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:2, color:"white" }}
-            />
-            {apiKey && <span style={{ fontFamily:DM, fontSize:13, color:"#5DE09A" }}>✓ Key saved</span>}
-          </div>
-        </div>
-        {adminTab === "security" ? (
-          <div style={{ padding:32 }}>
-            <div style={{ fontFamily:PF, fontSize:20, color:C.white, marginBottom:8 }}>Security Settings</div>
-            <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", lineHeight:1.65, marginBottom:24 }}>
-              Change your admin PIN without touching the source code or browser console. Your new PIN is hashed and stored securely — no redeployment needed.
-            </p>
-            <PinChanger />
-          </div>
-        ) : (
-        <div style={{ padding:32 }}>
-          {/* Stats row */}
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:32 }}>
-            {[
-              { label:"Total Submissions", val: records.length },
-              { label:"With Email (Leads)", val: records.filter(r => r.email).length },
-              { label:"Synced to Notion", val: Object.values(notionStatus).filter(s => s==="synced").length },
-              { label:"Avg. Lowest Domain", val: records.length ? (() => {
-                const counts = {}; DOMAINS.forEach(d => counts[d.id]=0);
-                records.forEach(r => { const low = Object.entries(r.scores).sort((a,b)=>a[1]-b[1])[0]; if (low) counts[low[0]]++; });
-                const topDomain = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
-                return DOMAINS.find(d=>d.id===topDomain?.[0])?.label.split(" ")[0] || "—";
-              })() : "—" },
-            ].map((s,i) => (
-              <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"16px 20px" }}>
-                <div style={{ fontFamily:PF, fontSize:28, color:C.navy, fontWeight:700 }}>{s.val}</div>
-                <div style={{ fontFamily:DM, fontSize:12, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {loading ? (
-            <div style={{ textAlign:"center", padding:40, fontFamily:DM, color:C.muted }}>Loading records...</div>
-          ) : records.length === 0 ? (
-            <div style={{ textAlign:"center", padding:60, background:C.white, border:`1px solid ${C.border}`, borderRadius:4 }}>
-              <div style={{ fontFamily:PF, fontSize:24, color:C.navy, marginBottom:8 }}>No submissions yet.</div>
-              <div style={{ fontFamily:DM, fontSize:16, color:C.muted }}>Assessment results will appear here when users submit their email or save results.</div>
-            </div>
-          ) : (
-            <>
-              <table style={{ width:"100%", borderCollapse:"collapse", background:C.white, border:`1px solid ${C.border}`, borderRadius:4, overflow:"hidden" }}>
-                <thead>
-                  <tr style={{ background:C.creamDark }}>
-                    <th style={tableHead}>Date</th>
-                    <th style={tableHead}>Email</th>
-                    <th style={tableHead}>Primary Pressure Point</th>
-                    <th style={tableHead}>Scores</th>
-                    <th style={tableHead}>Notion</th>
-                    <th style={tableHead}>Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...records].reverse().map((r, i) => {
-                    const idx = records.length - 1 - i;
-                    const sorted = Object.entries(r.scores).sort((a,b)=>a[1]-b[1]);
-                    const primary = DOMAINS.find(d=>d.id===sorted[0]?.[0]);
-                    const ns = notionStatus[idx];
-                    return (
-                      <tr key={i} style={{ background: selected===idx ? C.goldPale : "transparent" }}>
-                        <td style={tableCell}>{new Date(r.timestamp).toLocaleDateString()}</td>
-                        <td style={tableCell}>{r.email || <span style={{color:C.muted,fontStyle:"italic"}}>anonymous</span>}</td>
-                        <td style={tableCell}>
-                          <span style={{ display:"inline-flex", alignItems:"center", gap:6 }}>
-                            <span style={{ color:primary?.color }}>{primary?.icon}</span>
-                            <span style={{ fontWeight:600, color:C.navy }}>{primary?.label}</span>
-                          </span>
-                        </td>
-                        <td style={tableCell}>
-                          <div style={{ display:"flex", gap:4 }}>
-                            {DOMAINS.map(d => (
-                              <div key={d.id} title={`${d.label}: ${r.scores[d.id]}`} style={{ width:20, height:20, background:d.color, opacity: (r.scores[d.id]||0)/100 * 0.8 + 0.2, borderRadius:2, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                                <span style={{ fontSize:11, color:C.white, fontWeight:700 }}>{r.scores[d.id]}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </td>
-                        <td style={tableCell}>
-                          {ns === "synced" ? <span style={{ color:C.green, fontFamily:DM, fontSize:14 }}>✓ Synced</span>
-                          : ns === "syncing" ? <span style={{ color:C.gold, fontFamily:DM, fontSize:14 }}>Syncing...</span>
-                          : ns === "error" ? <span style={{ color:C.red, fontFamily:DM, fontSize:14 }}>Error</span>
-                          : <button onClick={() => syncToNotion(r, idx)} style={{ background:"none", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:DM, fontSize:13, padding:"3px 10px", borderRadius:2, cursor:"pointer" }}>Sync</button>}
-                        </td>
-                        <td style={tableCell}>
-                          <button onClick={() => setSelected(selected===idx?null:idx)} style={{ background:"none", border:`1px solid ${C.border}`, fontFamily:DM, fontSize:13, padding:"3px 10px", borderRadius:2, cursor:"pointer", color:C.navy }}>
-                            {selected===idx ? "Hide" : "View"}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-
-              {/* Detail expand */}
-              {selected !== null && records[selected] && (
-                <div style={{ marginTop:16, background:C.white, border:`2px solid ${C.gold}`, borderRadius:4, padding:28 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-                    <div style={{ fontFamily:PF, fontSize:20, color:C.navy }}>Detail View — {records[selected].email || "Anonymous"}</div>
-                    <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>{new Date(records[selected].timestamp).toLocaleString()}</div>
-                  </div>
-                  <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12 }}>
-                    {DOMAINS.map(d => {
-                      const score = records[selected].scores[d.id] || 0;
-                      return (
-                        <div key={d.id} style={{ background:C.cream, borderRadius:4, padding:"14px 16px" }}>
-                          <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8 }}>
-                            <span style={{ color:d.color }}>{d.icon}</span>
-                            <span style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy }}>{d.label}</span>
-                          </div>
-                          <div style={{ background:C.border, borderRadius:2, height:6, marginBottom:4 }}>
-                            <div style={{ width:`${score}%`, height:"100%", background:d.color, borderRadius:2 }} />
-                          </div>
-                          <div style={{ fontFamily:DM, fontSize:14, color:C.muted }}>{score}/100 · <ScoreBadge score={score} /></div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-          <div style={{ marginTop:24, background:C.navyMid, borderRadius:4, padding:"14px 20px", display:"flex", gap:12, alignItems:"center" }}>
-            <span style={{ fontSize:18 }}>💡</span>
-            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.65)", lineHeight:1.6 }}>
-              <strong style={{ color:C.gold }}>Notion Sync:</strong> Click "Sync" on any record to push it to your "Coaching Contacts — Unified Solutions CRM" database. Records with email opt-in also create a Gmail draft notification. Data is always backed up locally in persistent storage.
-            </div>
-          </div>
-        </div>
-        )} {/* end adminTab === crm content */}
-      </div>
-    </div>
-  );
-}
 
 // ═══════════════════════════════════════════════════════
 // ASSESSMENT PAGE

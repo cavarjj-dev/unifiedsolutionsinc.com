@@ -85,10 +85,8 @@
 # If specific articles have meaningful traffic, create individual
 # 301s pointing to the article anchor or a dedicated article page.
 
-[[redirects]]
-  from   = "/articles/*"
-  to     = "/resources"
-  status = 301
+# /articles/* — NO redirect. Article HTML files are served directly.
+# Adding a redirect here would override the actual files.
 
 # ── Security Headers ────────────────────────────────────────
 [[headers]]
