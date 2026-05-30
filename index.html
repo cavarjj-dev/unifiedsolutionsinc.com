@@ -1268,13 +1268,13 @@ function ContentPipelinePanel({ apiKey }) {
 // ═══════════════════════════════════════════════════════════════════
 // ADMIN PANEL — full-screen CRM + Content + Security modal
 // ═══════════════════════════════════════════════════════════════════
-function AdminPanel({ onClose }) {
+function AdminPanel({ onClose, initialTab="crm" }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [apiKey, setApiKey]   = useState(() => localStorage.getItem("us-api-key")||"");
   const [selected, setSelected]     = useState(null);
   const [notionStatus, setNotionStatus] = useState({});
-  const [adminTab, setAdminTab]     = useState("crm");
+  const [adminTab, setAdminTab]     = useState(initialTab);
 
   useEffect(() => { loadRecords(); }, []);
 
@@ -1485,8 +1485,10 @@ function AdminLoginModal() {
 // ═══════════════════════════════════════════════════════
 function AdminToolbar() {
   const { editMode, setEditMode, saveContent, handleAdminLogout, adminSession } = useSite();
-  const [showLog, setShowLog]         = useState(false);
-  const [showPinModal, setShowPinModal] = useState(false);
+  const [showLog, setShowLog]           = useState(false);
+  const [showPinModal, setShowPinModal]   = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [dashboardTab, setDashboardTab]   = useState('crm');
   const [changeLog, setChangeLog]     = useState(() => {
     try { return JSON.parse(localStorage.getItem('cms-change-log') || '[]'); } catch(e) { return []; }
   });
@@ -1550,9 +1552,17 @@ function AdminToolbar() {
           <button onClick={() => setShowLog(l => !l)} style={btnStyle(showLog)}>
             📋 Log ({changeLog.length})
           </button>
-          <button onClick={() => setShowPinModal(true)}
-            style={{ ...btnStyle(false), background:"rgba(200,147,58,0.25)", border:"1px solid rgba(200,147,58,0.4)" }}>
-            🔑 Change PIN
+          <button onClick={() => { setDashboardTab('crm'); setShowDashboard(true); }}
+            style={{ ...btnStyle(false), background:"rgba(200,147,58,0.15)", border:"1px solid rgba(200,147,58,0.4)" }}>
+            📊 Dashboard
+          </button>
+          <button onClick={() => { setDashboardTab('content'); setShowDashboard(true); }}
+            style={{ ...btnStyle(false), background:"rgba(200,147,58,0.15)", border:"1px solid rgba(200,147,58,0.4)" }}>
+            📝 Content
+          </button>
+          <button onClick={() => { setDashboardTab('security'); setShowDashboard(true); }}
+            style={{ ...btnStyle(false), background:"rgba(200,147,58,0.15)", border:"1px solid rgba(200,147,58,0.4)" }}>
+            🔑 PIN
           </button>
           <button onClick={handleAdminLogout} style={{ ...btnStyle(false), background:"rgba(224,82,82,0.25)", color:"#ffaaaa" }}>
             Logout
@@ -1595,7 +1605,7 @@ function AdminToolbar() {
       )}
 
       {/* ── Change PIN modal ─────────────────────────────────────────── */}
-      {showPinModal && <AdminPanel onClose={() => setShowPinModal(false)} />}
+      {(showPinModal || showDashboard) && <AdminPanel initialTab={dashboardTab} onClose={() => { setShowPinModal(false); setShowDashboard(false); }} />}
     </>
   );
 }
@@ -2522,7 +2532,7 @@ function AssessmentPage() {
   const allAnswered = sessionQuestions.length > 0 && current === sessionQuestions.length;
 
   // Admin panel access now secured by global admin session
-  if (showAdmin && isAdmin) return <AdminPanel onClose={() => setShowAdmin(false)} />;
+  if (showAdmin && isAdmin) return <AdminPanel initialTab="crm" onClose={() => setShowAdmin(false)} />;
   if (showAdmin && !isAdmin) { setShowAdmin(false); setShowAdminModal(true); }
 
   if (step === "intro") return (
