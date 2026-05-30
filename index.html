@@ -3323,12 +3323,28 @@ const DEFAULT_CONTENT = {
 function UnifiedSolutions() {
   // ── URL-aware routing ────────────────────────────────────────────
   const [page, setPage] = useState(() => {
-    const map = {
+    const ROUTE_MAP = {
       '/':'home', '/about':'about', '/coaching':'coaching',
       '/resources':'resources', '/assessment':'assessment', '/book':'book',
       '/privacy':'privacy'
     };
-    return map[window.location.pathname] || 'home';
+    // ── GitHub Pages SPA redirect recovery ────────────────────────────
+    // 404.html stores the intended URL in sessionStorage before redirecting
+    // to /. We read it here, restore the browser URL, and route correctly.
+    const stored = sessionStorage.getItem('spa-redirect');
+    if (stored) {
+      sessionStorage.removeItem('spa-redirect');
+      try {
+        const intendedPath = new URL(stored).pathname;
+        // If it's a real SPA route, restore the URL and route to it
+        if (ROUTE_MAP[intendedPath]) {
+          window.history.replaceState(null, null, intendedPath);
+          return ROUTE_MAP[intendedPath];
+        }
+        // Unknown path (e.g. /articles/* that 404'd) — stay home
+      } catch(e) {}
+    }
+    return ROUTE_MAP[window.location.pathname] || 'home';
   });
   const [content, setContent] = useState(DEFAULT_CONTENT);
 
