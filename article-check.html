@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Article URL Checker — USI</title>
+<style>
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: #F7F3ED; margin: 0; padding: 32px 24px; }
+  h1 { font-family: Georgia, serif; color: #0B1D30; font-size: 24px; margin: 0 0 8px; }
+  p { color: #6B7280; font-size: 14px; margin: 0 0 28px; }
+  .card { background: white; border: 1px solid #D9D0C4; border-radius: 6px; padding: 20px 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 16px; }
+  .status { font-size: 20px; min-width: 28px; }
+  .info { flex: 1; }
+  .title { font-size: 15px; font-weight: 600; color: #0B1D30; margin-bottom: 4px; }
+  .url { font-size: 12px; color: #6B7280; font-family: monospace; }
+  .badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .ok { background: #1B5E3520; color: #1B5E35; border: 1px solid #1B5E3540; }
+  .fail { background: #9B222620; color: #9B2226; border: 1px solid #9B222640; }
+  .pending { background: #C4903A20; color: #8B6422; border: 1px solid #C4903A40; }
+  #btn { background: #0B1D30; color: white; border: none; border-radius: 4px; padding: 12px 28px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 28px; }
+  #summary { background: white; border: 2px solid #0B1D30; border-radius: 6px; padding: 18px 24px; margin-bottom: 24px; display: none; }
+  #summary h2 { margin: 0 0 10px; font-size: 17px; color: #0B1D30; }
+  .fix { font-size: 13px; color: #9B2226; background: #FFF5F5; border: 1px solid #9B222640; border-radius: 4px; padding: 12px 16px; margin-top: 12px; font-family: monospace; word-break: break-all; }
+</style>
+</head>
+<body>
+<h1>Article URL Checker</h1>
+<p>Checks whether each of the 7 published article files actually exists on unifiedsolutionsinc.com. Run this from any browser while logged into the site or standalone.</p>
+<button id="btn" onclick="runCheck()">▶ Run Check</button>
+<div id="summary"></div>
+<div id="results"></div>
+
+<script>
+const ARTICLES = [
+  { id: 1, title: "Why Laser-Focused Coaching Gets Results Faster",             url: "/articles/laser-focused-coaching" },
+  { id: 2, title: "Big Five vs HEXACO: Which Model Is Right for Leadership Development?", url: "/articles/big-five-vs-hexaco" },
+  { id: 3, title: "Group Coaching vs Team Coaching: What Senior Leaders Need to Know", url: "/articles/group-vs-team-coaching" },
+  { id: 4, title: "What the Research Actually Says About Decision-Making Under Pressure", url: "/articles/decision-making-under-pressure" },
+  { id: 5, title: "What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", url: "/articles/psychological-safety" },
+  { id: 6, title: "The Identity Problem at the Heart of Senior Leadership",     url: "/articles/identity-senior-leadership" },
+  { id: 7, title: "Personal Sustainability Is a Leadership Responsibility",      url: "/articles/personal-sustainability" },
+];
+
+// Common naming variants to auto-suggest
+const VARIANTS = {
+  "/articles/group-vs-team-coaching": [
+    "/articles/group-coaching-vs-team-coaching",
+    "/articles/group-and-team-coaching",
+    "/articles/group-coaching-vs-team",
+  ],
+  "/articles/decision-making-under-pressure": [
+    "/articles/decision-making-pressure",
+    "/articles/decision-making",
+    "/articles/leadership-decision-making",
+  ],
+  "/articles/identity-senior-leadership": [
+    "/articles/identity-and-senior-leadership",
+    "/articles/senior-leadership-identity",
+    "/articles/leadership-identity",
+  ],
+  "/articles/big-five-vs-hexaco": [
+    "/articles/big-five-hexaco",
+    "/articles/hexaco-vs-big-five",
+    "/articles/personality-models",
+  ],
+  "/articles/psychological-safety": [
+    "/articles/psychological-safety-leadership",
+    "/articles/team-psychological-safety",
+  ],
+  "/articles/personal-sustainability": [
+    "/articles/sustainability",
+    "/articles/leadership-sustainability",
+  ],
+};
+
+async function checkUrl(url) {
+  try {
+    const base = window.location.hostname === 'localhost' || window.location.hostname === ''
+      ? 'https://www.unifiedsolutionsinc.com'
+      : '';
+    const res = await fetch(base + url + '.html', { method: 'HEAD', cache: 'no-store' });
+    if (res.ok) return { found: true, checkedUrl: url + '.html' };
+    // try without .html (GitHub Pages pretty URLs)
+    const res2 = await fetch(base + url, { method: 'HEAD', cache: 'no-store' });
+    return { found: res2.ok, checkedUrl: url };
+  } catch(e) {
+    return { found: false, checkedUrl: url, error: e.message };
+  }
+}
+
+async function runCheck() {
+  const btn = document.getElementById('btn');
+  btn.disabled = true; btn.textContent = 'Checking…';
+  const resultsEl = document.getElementById('results');
+  const summaryEl = document.getElementById('summary');
+  resultsEl.innerHTML = '';
+
+  const cards = ARTICLES.map(a => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<span class="status">⏳</span>
+      <div class="info">
+        <div class="title">${a.title}</div>
+        <div class="url">${a.url}</div>
+      </div>
+      <span class="badge pending">Checking…</span>`;
+    resultsEl.appendChild(div);
+    return { a, div };
+  });
+
+  let failed = 0;
+  const fixes = [];
+
+  for (const { a, div } of cards) {
+    const result = await checkUrl(a.url);
+    const status = div.querySelector('.status');
+    const badge = div.querySelector('.badge');
+    if (result.found) {
+      status.textContent = '✅';
+      badge.textContent = '200 OK';
+      badge.className = 'badge ok';
+    } else {
+      status.textContent = '❌';
+      badge.textContent = '404 Not Found';
+      badge.className = 'badge fail';
+      failed++;
+      // Check variants
+      const variants = VARIANTS[a.url] || [];
+      let foundVariant = null;
+      for (const v of variants) {
+        const vr = await checkUrl(v);
+        if (vr.found) { foundVariant = v; break; }
+      }
+      const urlDiv = div.querySelector('.url');
+      if (foundVariant) {
+        urlDiv.innerHTML = `<span style="color:#9B2226;text-decoration:line-through">${a.url}</span>
+          <br><span style="color:#1B5E35">✓ Found at: ${foundVariant}</span>`;
+        fixes.push({ id: a.id, from: a.url, to: foundVariant, title: a.title });
+      } else {
+        urlDiv.innerHTML = `<span style="color:#9B2226">${a.url} — not found. Check your articles/ folder.</span>`;
+      }
+    }
+  }
+
+  // Summary
+  summaryEl.style.display = 'block';
+  if (failed === 0) {
+    summaryEl.innerHTML = '<h2>✅ All 7 articles verified — URLs match files in repo.</h2>';
+  } else {
+    let html = `<h2>❌ ${failed} article${failed>1?'s':''} not found at expected URL${failed>1?'s':''}.</h2>`;
+    if (fixes.length > 0) {
+      html += `<p style="color:#1B5E35;font-size:13px;margin:8px 0 4px">✓ Correct URLs auto-detected for ${fixes.length} article${fixes.length>1?'s':''}:</p>`;
+      fixes.forEach(f => {
+        html += `<div class="fix">Article ${f.id}: change url from "${f.from}" to "${f.to}"</div>`;
+      });
+    }
+    const unfixed = failed - fixes.length;
+    if (unfixed > 0) {
+      html += `<p style="color:#9B2226;font-size:13px;margin:12px 0 4px">⚠ ${unfixed} article${unfixed>1?'s':''} could not be auto-detected. Go to github.com/cavarjj-dev/unifiedsolutionsinc.com/tree/main/articles and share the exact filenames.</p>`;
+    }
+    summaryEl.innerHTML = html;
+  }
+
+  btn.disabled = false; btn.textContent = '↻ Re-run Check';
+}
+</script>
+</body>
+</html>
