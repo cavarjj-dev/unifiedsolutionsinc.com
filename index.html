@@ -874,6 +874,41 @@ const DOMAIN_INSIGHTS = {
   },
 };
 
+
+// ── Per-page SEO meta tags (title + description) ─────────────────────────
+// Defined at module level so all components can access it.
+// Google executes JS — these update search index per route.
+const PAGE_META = {
+  home: {
+    title: "ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson",
+    description: "Holistic leadership coaching for senior executives, teams & peer advisory circles. ICF PCC · ACTC · 1,200+ hrs · Army veteran · Fortune 500 consultant · ExecOnline & Emeritus faculty."
+  },
+  about: {
+    title: "About Julian Johnson | ICF PCC Executive Coach | Army Veteran & Fortune 500 Consultant",
+    description: "Julian Johnson — U.S. Army tactical leader, Fortune 500 consultant at Optum, Wells Fargo & Securian, ICF PCC coach with 1,200+ hours. Learn the arc behind the methodology."
+  },
+  coaching: {
+    title: "Executive Coaching Services | 1:1 · Team · Peer Advisory | ICF PCC ACTC Certified",
+    description: "ICF-certified coaching for senior leaders: private 1:1 coaching, peer advisory circles, team coaching, group cohorts & organizational programs. Proven across Fortune 500 and top business schools."
+  },
+  resources: {
+    title: "Leadership Resources & Articles | Executive Coach Julian Johnson",
+    description: "Frameworks, research & tools from 1,200+ hours of executive coaching. Decision-making under pressure, team vitality, identity & presence, strategic clarity, personal sustainability."
+  },
+  assessment: {
+    title: "Free Leadership Pressure Point Assessment | 18 Questions | 6 Domains | ICF PCC",
+    description: "Free 18-question behavioral leadership assessment. Find your primary pressure point in under 8 minutes. Used by VPs, SVPs and senior leaders to identify the highest-leverage development area."
+  },
+  book: {
+    title: "Book a Discovery Call | Executive Coaching | Julian Johnson ICF PCC ACTC",
+    description: "30-minute discovery call to find out if executive coaching is the right fit. No pitch, no commitment. Schedule directly with Julian C. Johnson, ICF PCC."
+  },
+  privacy: {
+    title: "Privacy Policy | Unified Solutions Inc.",
+    description: "Privacy policy for Unified Solutions Inc. covering data collection, GDPR, CCPA, Minnesota MCDPA, and AI processing disclosure."
+  }
+};
+
 const EXEC_SCHOOLS = [
   "Berkeley Haas","Chicago Booth","Columbia","UVA Darden","IMD",
   "MIT Sloan","Stanford GSB","Tuck at Dartmouth","Wharton","Yale SOM",
