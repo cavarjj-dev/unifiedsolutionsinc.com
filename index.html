@@ -3325,8 +3325,9 @@ function UnifiedSolutions() {
   const [page, setPage] = useState(() => {
     const ROUTE_MAP = {
       '/':'home', '/about':'about', '/coaching':'coaching',
-      '/resources':'resources', '/assessment':'assessment', '/book':'book',
-      '/privacy':'privacy'
+      '/resources':'resources', '/assessment':'assessment',
+      '/book':'book', '/book-a-call':'book',   // Squarespace legacy alias
+      '/privacy':'privacy', '/privacy-policy':'privacy'
     };
     // ── GitHub Pages SPA redirect recovery ────────────────────────────
     // 404.html stores the intended URL in sessionStorage before redirecting
