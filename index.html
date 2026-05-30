@@ -2487,6 +2487,120 @@ function FilterBtn({ active, color, onClick, children }) {
 
 
 // ═══════════════════════════════════════════════════════
+// DOMAIN INSIGHT CARD — assessment results deep-dive
+// Shows research context, coaching questions, article links
+// ═══════════════════════════════════════════════════════
+function DomainInsightCard({ domain, score, isPrimary }) {
+  const [open, setOpen] = useState(isPrimary);
+  const insight = DOMAIN_INSIGHTS[domain.id];
+  if (!insight) return null;
+
+  const scoreContext = score < 50 ? insight.scoreContext.low
+                     : score < 75 ? insight.scoreContext.mid
+                     : insight.scoreContext.high;
+
+  const relatedArticles = ARTICLES.filter(a => insight.articleDomains.includes(a.pillar || a.domain));
+  const borderColor = isPrimary ? domain.color : domain.color + "80";
+
+  return (
+    <div style={{ border:`1px solid ${open ? domain.color+"60" : C.border}`, borderRadius:6, marginBottom:16, background:C.white, transition:"all 0.2s" }}>
+      {/* Header toggle */}
+      <button onClick={() => setOpen(o => !o)}
+        style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"16px 20px", display:"flex", alignItems:"center", gap:12, textAlign:"left" }}>
+        <span style={{ fontSize:20, color:domain.color }}>{domain.icon}</span>
+        <div style={{ flex:1 }}>
+          <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, letterSpacing:2, textTransform:"uppercase", color:domain.color, marginBottom:3 }}>{domain.label}</div>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <span style={{ fontFamily:PF, fontSize:isPrimary?18:15, color:C.navy, fontWeight:600 }}>
+              {isPrimary ? "Your primary pressure point" : "Secondary area to watch"}
+            </span>
+            <span style={{ background:isPrimary?domain.color:domain.color+"25", color:isPrimary?C.white:domain.color, fontSize:9, fontWeight:700, padding:"2px 8px", borderRadius:10, letterSpacing:1 }}>
+              {isPrimary ? "Primary" : "Secondary"}
+            </span>
+          </div>
+        </div>
+        <div style={{ textAlign:"right", flexShrink:0 }}>
+          <div style={{ fontFamily:PF, fontSize:20, color:domain.color, fontWeight:700 }}>{score}<span style={{ fontSize:12, color:C.muted }}>/100</span></div>
+        </div>
+        <span style={{ color:C.muted, fontSize:18, flexShrink:0, marginLeft:8 }}>{open ? "−" : "+"}</span>
+      </button>
+
+      {open && (
+        <div style={{ borderTop:`1px solid ${domain.color}25` }}>
+          {/* Score context */}
+          <div style={{ padding:"16px 20px", background:`${domain.color}06`, borderBottom:`1px solid ${domain.color}15` }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:8 }}>What this score reflects</div>
+            <p style={{ fontFamily:DM, fontSize:15, color:C.text||C.navy, lineHeight:1.75, margin:0 }}>{scoreContext}</p>
+          </div>
+
+          {/* Research context */}
+          <div style={{ padding:"16px 20px", background:`${domain.color}06`, borderBottom:`1px solid ${C.border}` }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:domain.color, fontWeight:700, marginBottom:8 }}>What the research says</div>
+            <p style={{ fontFamily:DM, fontSize:15, color:C.text||C.navy, lineHeight:1.75, margin:0 }}>{insight.researchNote}</p>
+          </div>
+
+          {/* Exploration questions */}
+          <div style={{ padding:"20px", borderBottom:`1px solid ${C.border}` }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:14 }}>Questions worth sitting with</div>
+            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+              {insight.questions.map((q, i) => (
+                <div key={i} style={{ display:"flex", gap:12, alignItems:"flex-start", padding:"12px 14px", background:C.cream||"#F7F3ED", borderRadius:4, borderLeft:`3px solid ${domain.color}` }}>
+                  <span style={{ fontFamily:PF, fontSize:16, color:domain.color, flexShrink:0, lineHeight:1, marginTop:2 }}>Q</span>
+                  <p style={{ fontFamily:DM, fontSize:14, color:C.navy, lineHeight:1.7, margin:0, fontStyle:"italic" }}>{q}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontFamily:DM, fontSize:12, color:C.muted, margin:"12px 0 0", lineHeight:1.6 }}>
+              These questions are designed to be explored rather than answered quickly.
+            </p>
+          </div>
+
+          {/* Related articles */}
+          {relatedArticles.length > 0 && (
+            <div style={{ padding:"16px 20px", background:C.creamDark||"#EDE8DF", borderBottom:`1px solid ${C.border}` }}>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.navy, fontWeight:700, marginBottom:12 }}>From the practice — relevant reading</div>
+              <div style={{ display:"grid", gridTemplateColumns:relatedArticles.length>1?"1fr 1fr":"1fr", gap:10 }}>
+                {relatedArticles.map(a => (
+                  <a key={a.id} href={a.url||"/resources"} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:4, padding:"12px 14px", display:"block", textDecoration:"none", transition:"all 0.2s", borderTop:`3px solid ${domain.color}` }}
+                    onMouseEnter={e => { e.currentTarget.style.background=C.cream||"#F7F3ED"; e.currentTarget.style.borderColor=domain.color; }}
+                    onMouseLeave={e => { e.currentTarget.style.background=C.white; e.currentTarget.style.borderColor=C.border; }}>
+                    <div style={{ fontFamily:DM, fontSize:11, color:domain.color, fontWeight:700, letterSpacing:1, marginBottom:5 }}>{a.tag} · {a.mins} min</div>
+                    <div style={{ fontFamily:PF, fontSize:14, color:C.navy, fontWeight:600, marginBottom:5, lineHeight:1.3 }}>{a.title}</div>
+                    <p style={{ fontFamily:DM, fontSize:13, color:C.muted, margin:"0 0 6px", lineHeight:1.5 }}>{a.summary}</p>
+                    <span style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.goldDark||"#8B6422" }}>Read article →</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Further reading */}
+          <div style={{ padding:"14px 20px", borderBottom:`1px solid ${C.border}`, display:"flex", gap:10, alignItems:"flex-start" }}>
+            <span style={{ fontSize:14, flexShrink:0, marginTop:1 }}>📚</span>
+            <div>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, fontWeight:700, marginBottom:5 }}>For deeper exploration</div>
+              <p style={{ fontFamily:DM, fontSize:12, color:C.muted, margin:0, lineHeight:1.65 }}>{insight.readMore}</p>
+            </div>
+          </div>
+
+          {/* Coaching CTA — primary only */}
+          {isPrimary && (
+            <div style={{ padding:"18px 20px", background:C.navy, display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, flexWrap:"wrap", borderRadius:"0 0 6px 6px" }}>
+              <div>
+                <div style={{ fontFamily:PF, fontSize:16, color:C.white, marginBottom:3 }}>This is exactly what coaching is built for.</div>
+                <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)" }}>30 minutes to find out if this is the right conversation.</div>
+              </div>
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// ═══════════════════════════════════════════════════════
 // ASSESSMENT PAGE
 // ═══════════════════════════════════════════════════════
 function AssessmentPage() {
@@ -2500,9 +2614,17 @@ function AssessmentPage() {
   const [savedMsg, setSavedMsg] = useState(null);
   const [showAdmin, setShowAdmin] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
-  const current = Object.keys(answers).length;
-  const totalQs = sessionQuestions.length || 18;
+  // Derived values — must come BEFORE the useEffect that depends on them
+  const current  = Object.keys(answers).length;
+  const totalQs  = sessionQuestions.length || 18;
   const progress = Math.round((current / totalQs) * 100);
+  // AC3: Focus management — at top level, depends on `current` defined above
+  const questionHeadingRef = useRef(null);
+  useEffect(() => {
+    if (step === 'quiz' && questionHeadingRef.current) {
+      questionHeadingRef.current.focus();
+    }
+  }, [current, step]);
 
   function computeScores() {
     const scores = {};
@@ -2588,15 +2710,7 @@ function AssessmentPage() {
     const qIndex = sessionQuestions.findIndex(q => !answers[q.sessionId]);
     const q = qIndex >= 0 ? sessionQuestions[qIndex] : null;
     const domain = q ? DOMAINS.find(d => d.id === q.domain) : null;
-    // AC3: Focus management — move focus to question heading on each new question
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const questionHeadingRef = useRef(null);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      if (questionHeadingRef.current) {
-        questionHeadingRef.current.focus();
-      }
-    }, [current]); // re-fires each time an answer is recorded
+    // AC3: questionHeadingRef defined at top of component — see below
     return (
       <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
         <div style={{ background:C.white, borderBottom:`1px solid ${C.border}`, padding:"16px 24px" }}>
