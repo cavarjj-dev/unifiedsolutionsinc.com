@@ -2451,6 +2451,10 @@ function ResourcesPage() {
     const matchAudience = audienceFilter === "all" || (a.audience && a.audience.includes(audienceFilter));
     const matchStatus   = statusFilter === "all" || a.status === statusFilter;
     return matchPillar && matchAudience && matchStatus;
+  }).sort((a, b) => {
+    // Published articles always sort before planned ones
+    if (a.status === b.status) return 0;
+    return a.status === "published" ? -1 : 1;
   });
 
   const publishedCount = filtered.filter(a => a.status === "published").length;
