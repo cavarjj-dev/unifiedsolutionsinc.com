@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JES4VXETRS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JES4VXETRS');
+</script>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -388,25 +397,6 @@
   }
   </script>
 
-  <!--
-    GOOGLE ANALYTICS 4 — add your GA4 snippet here when ready.
-    Replace the two blocks below with your actual GA4 Measurement ID (G-XXXXXXXXXX).
-    Until then, window.track is a safe no-op so the site loads normally.
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){window.dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'YOUR-ID', { send_page_view: false });
-    </script>
-  -->
-  <script>
-    // Safe no-op until GA4 is wired up. Replace with real gtag when ready.
-    window.track = function(n, p) {
-      if (typeof gtag === 'function') { gtag('event', n, p); }
-    };
-  </script>
 </head>
 <body>
   <!-- WCAG 2.1 SC 2.4.1 — Bypass Blocks: Skip Navigation Link -->
@@ -752,11 +742,11 @@ const ARTICLES = [
   { id:14, status:"planned",   pillar:"teams",       audience:["leaders","ld"],      title:"What Lives Between People: Why Team Coaching Is Different From Individual Coaching",              mins:6, tag:"Team Coaching",      summary:"The dysfunction on most senior teams doesn't live in any individual. It lives in the patterns between them — and individual coaching can't reach it." },
   { id:15, status:"planned",   pillar:"teams",       audience:["leaders"],           title:"Accountability Without Punishment: The Hardest Thing to Build on a Senior Team",                 mins:7, tag:"Team Performance",   summary:"Most leadership teams say they have accountability. Very few actually do. The distinction is in what happens when a commitment is broken." },
   { id:16, status:"planned",   pillar:"teams",       audience:["leaders","programs"],title:"What I Learned About Trust in the Army That Every Leadership Team Needs",                         mins:6, tag:"Trust & Teams",      summary:"Trust in a military unit is not a soft concept. It is an operational requirement — built deliberately, tested constantly, and rebuilt after every breach." },
-  { id:17, status:"planned",   pillar:"peer",        audience:["leaders","ld"],      title:"Why Peer Learning Is One of the Most Underrated Leadership Development Tools",                    mins:6, tag:"Peer Learning",      summary:"Decades of adult learning research supports peer-based development. Most organizations still treat it as an afterthought to formal training programs." },
+  { id:17, status:"published",   pillar:"peer",        audience:["leaders","ld"],    url:"/articles/why-peer-learning-leadership-development-tools",  title:"Why Peer Learning Is One of the Most Underrated Leadership Development Tools",                    mins:6, tag:"Peer Learning",      summary:"Decades of adult learning research supports peer-based development. Most organizations still treat it as an afterthought to formal training programs." },
   { id:18, status:"planned",   pillar:"peer",        audience:["leaders","sales"],   title:"What Makes a Peer Advisory Circle Worth Having Every Time — Not Just Sometimes",                 mins:7, tag:"Peer Advisory",      summary:"The difference between peer groups that produce lasting value and ones that drift into comfortable conversation is specific, learnable, and almost never discussed." },
   { id:19, status:"planned",   pillar:"peer",        audience:["programs","faculty"],title:"The Facilitator's Dilemma: Directive vs. Generative in Group Settings",                          mins:6, tag:"Facilitation",       summary:"The most important decision a facilitator makes is often invisible: when to intervene and when to hold back. The wrong call in either direction costs the group." },
   { id:20, status:"planned",   pillar:"peer",        audience:["leaders"],           title:"COO Peer Groups: What I Learned Directing the Forum",                                             mins:6, tag:"Peer Advisory",      summary:"A directorship in a COO peer group is a master class in what senior leaders actually need from each other — and rarely get inside their own organizations." },
-  { id:21, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"What Tactical Team Leadership in a War Zone Taught Me About Executive Coaching",                  mins:7, tag:"The Arc",            summary:"The parallels between leading a communications team under fire in Iraq and coaching a VP through a high-stakes decision are structural — not metaphorical." },
+  { id:21, status:"published", pillar:"arc",         audience:["leaders"],           url:"/articles/tactical-leadership-war-zone-executive-coaching", title:"What Tactical Team Leadership in a War Zone Taught Me About Executive Coaching",                  mins:7, tag:"The Arc",            summary:"The parallels between leading a communications team under fire in Kosovo and coaching a VP through a high-stakes decision are structural — not metaphorical." },
   { id:22, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What I Witnessed Inside Fortune 500 Organizations That Shapes Every Coaching Conversation",     mins:7, tag:"The Arc",            summary:"After years embedded at Optum, Wells Fargo, Securian, and Shutterfly, the patterns I saw in how organizations work — and fail their leaders — became the foundation of how I coach." },
   { id:23, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"Why M&A Rarely Fails Because of the Deal: What I Saw in Integration",                           mins:6, tag:"The Arc",            summary:"The business case for most acquisitions is solid. The leadership dynamics during integration are where value goes to die — and almost no one is prepared for it." },
   { id:24, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately",                  mins:5, tag:"The Arc",            summary:"Consulting arrives with answers. Coaching creates conditions for a leader to find their own. Knowing which mode you're in — and why — matters more than most realize." },
@@ -765,7 +755,7 @@ const ARTICLES = [
   { id:27, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The 360 Debrief: What the Numbers Can't Tell You — and What a Coach Can",                      mins:6, tag:"Assessments",        summary:"A 360 creates data. What leaders do with it is a separate question — and the answer has more to do with identity than with information." },
   { id:28, status:"planned",   pillar:"assessment",  audience:["leaders"],           title:"The Limits of Self-Report: Why I Use Multiple Assessments and Never One Alone",                  mins:5, tag:"Assessments",        summary:"Every self-report assessment is a snapshot of how you see yourself, not how you actually behave. That difference is why I never rely on any single instrument." },
   { id:29, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The AgileBrain Framework: Mapping Emotional and Motivational Needs",                            mins:6, tag:"Assessments",        summary:"Most personality assessments describe how people behave. AgileBrain maps the needs that drive behavior — a subtle but consequential difference for development planning." },
-  { id:30, status:"planned",   pillar:"methodology", audience:["leaders","ld"],      title:"Holistic Coaching: What It Actually Means and What It Isn't",                                    mins:5, tag:"Methodology",        summary:"'Holistic' gets misused in coaching. What it actually means — addressing the whole person, not just the presenting problem — has specific implications for how coaching is designed." },
+  { id:30, status:"published",   pillar:"methodology", audience:["leaders","ld"],    url:"/articles/holistic-coaching-what-it-actually-means",  title:"Holistic Coaching: What It Actually Means and What It Isn't",                                    mins:5, tag:"Methodology",        summary:"'Holistic' gets misused in coaching. What it actually means — addressing the whole person, not just the presenting problem — has specific implications for how coaching is designed." },
   { id:31, status:"planned",   pillar:"methodology", audience:["leaders"],           title:"What Positive Psychology Is (It's Not What Most People Think)",                                  mins:6, tag:"Methodology",        summary:"Positive psychology is not positive thinking. It is a rigorous research program with specific findings about what produces flourishing — most of which are counterintuitive." },
   { id:32, status:"planned",   pillar:"methodology", audience:["leaders","ld"],      title:"Coaching vs. Consulting vs. Therapy: A Practical Guide to What You Actually Need",             mins:5, tag:"Methodology",        summary:"Three distinct disciplines with significant vocabulary overlap and virtually no overlap in what they actually do. The confusion costs people time, money, and sometimes the wrong kind of help." },
   { id:33, status:"planned",   pillar:"methodology", audience:["faculty","programs"],title:"What I Don't Know — and Why That's a Feature of the Coaching Relationship",                     mins:5, tag:"Methodology",        summary:"Not knowing your client's industry or political landscape is not a limitation of coaching. It is precisely what makes an outside perspective valuable." },
@@ -786,6 +776,7 @@ const ARTICLES = [
   { id:48, status:"planned",   pillar:"methodology", audience:["ld"],                title:"Building a Coaching Culture: What It Really Takes Beyond a Coaching Policy",                    mins:6, tag:"For L&D",            summary:"A coaching culture is not a policy or a budget line. It is a shift in how leaders relate to each other's development — and building it is specific and harder than most expect." },
   { id:49, status:"planned",   pillar:"identity",    audience:["leaders"],           title:"What Founders Know About Identity and Leadership That Corporate Leaders Often Lose",             mins:5, tag:"Identity & Strategy", summary:"Founders build organizations from their identity. Corporate leaders arrive into roles that pre-existed them. The difference in how identity relates to leadership is worth understanding." },
   { id:50, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What the Agile Transformation Work Taught Me About Leading Change (and What It Didn't)",      mins:6, tag:"The Arc",            summary:"Agile transformations are leadership problems dressed as process problems. After several embedded engagements, the patterns that actually determine success or failure became clear." },
+  { id:51, status:"published", pillar:"methodology", audience:["leaders","ld","sales"], url:"/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences", title:"Executive Coaching, Business Coaching, Sports Coaching, and Consulting Are Not the Same Thing — Here's Why It Matters", mins:7, tag:"Methodology", summary:"Each modality has genuine value. But conflating them leaves leaders with the right tool for the wrong problem. Here is how to tell the difference — and why it matters for how you grow."},
 ];
 
 
@@ -1104,7 +1095,7 @@ function Nav() {
           {links.map(l => (
             <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
           ))}
-          <Btn onClick={() => { window.track("click_book_cta", {event_category:"conversion", event_label: window.location.pathname}); setPage("book"); }} style={{ marginLeft:8 }}>Book a Call</Btn>
+          <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Book a Call</Btn>
 
         </div>
       </div>
@@ -1440,133 +1431,6 @@ If there is an error, respond with:
 }
 
 
-// ═══════════════════════════════════════════════════════════════════
-// ARTICLE ANALYTICS PANEL
-// Shows per-article click counts from localStorage + GA4 guidance
-// ═══════════════════════════════════════════════════════════════════
-function ArticleAnalyticsPanel() {
-  const [counts, setCounts] = useState({});
-  const [sortBy, setSortBy] = useState("clicks"); // clicks | id
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("usi-article-clicks");
-      if (raw) setCounts(JSON.parse(raw));
-    } catch(e) {}
-    // Refresh every 30 seconds in case user clicks from another tab
-    const interval = setInterval(() => {
-      try {
-        const raw = localStorage.getItem("usi-article-clicks");
-        if (raw) setCounts(JSON.parse(raw));
-      } catch(e) {}
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const totalClicks = Object.values(counts).reduce((a, b) => a + b, 0);
-  const maxClicks   = Math.max(...Object.values(counts), 1);
-
-  // Merge ARTICLES data with click counts
-  const withCounts = ARTICLES.filter(a => a.status === "published").map(a => ({
-    ...a,
-    clicks: counts[a.id] || 0,
-  }));
-
-  const sorted = [...withCounts].sort((a, b) =>
-    sortBy === "clicks" ? b.clicks - a.clicks : a.id - b.id
-  );
-
-  const topArticle = sorted[0];
-
-  return (
-    <div>
-      {/* Summary strip */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10, marginBottom:18 }}>
-        {[
-          [totalClicks, "Total Clicks", C.gold],
-          [withCounts.filter(a=>a.clicks>0).length, "Articles Clicked", C.navy],
-          [topArticle?.clicks || 0, "Top Article Clicks", C.green],
-          [withCounts.filter(a=>a.clicks===0).length, "Not Yet Clicked", C.muted],
-        ].map(([v,l,c],i) => (
-          <div key={i} style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px" }}>
-            <div style={{ fontFamily:PF, fontSize:22, color:c, fontWeight:700 }}>{v}</div>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:3 }}>{l}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Top article callout */}
-      {topArticle && topArticle.clicks > 0 && (
-        <div style={{ background:`${C.gold}10`, border:`1px solid ${C.gold}40`, borderRadius:6, padding:"12px 16px", marginBottom:16, display:"flex", gap:12, alignItems:"center" }}>
-          <span style={{ fontSize:20 }}>🏆</span>
-          <div>
-            <div style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:2 }}>Most Read Article</div>
-            <div style={{ fontFamily:PF, fontSize:15, color:C.navy, fontWeight:600 }}>{topArticle.title}</div>
-          </div>
-          <div style={{ marginLeft:"auto", textAlign:"center", flexShrink:0 }}>
-            <div style={{ fontFamily:PF, fontSize:24, color:C.gold, fontWeight:700 }}>{topArticle.clicks}</div>
-            <div style={{ fontFamily:DM, fontSize:10, color:C.muted }}>clicks</div>
-          </div>
-        </div>
-      )}
-
-      {/* Sort control */}
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
-        <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy }}>All Published Articles</div>
-        <div style={{ display:"flex", gap:4 }}>
-          {[["clicks","By Clicks"],["id","By Order"]].map(([v,l]) => (
-            <button key={v} onClick={() => setSortBy(v)} style={{ background:sortBy===v?C.navy:"transparent", color:sortBy===v?C.white:C.muted, border:`1px solid ${sortBy===v?C.navy:C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>{l}</button>
-          ))}
-        </div>
-      </div>
-
-      {/* Article list with bars */}
-      <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-        {sorted.map(a => {
-          const pct = maxClicks > 0 ? (a.clicks / maxClicks) * 100 : 0;
-          const pillarColor = C.gold;
-          return (
-            <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"10px 14px" }}>
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:10, marginBottom:6 }}>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy, lineHeight:1.3 }}>{a.title}</div>
-                  <div style={{ fontFamily:DM, fontSize:10, color:C.muted, marginTop:2 }}>{a.tag} · {a.mins} min</div>
-                </div>
-                <div style={{ textAlign:"right", flexShrink:0 }}>
-                  <span style={{ fontFamily:PF, fontSize:20, color:a.clicks>0?C.navy:C.muted, fontWeight:700 }}>{a.clicks}</span>
-                  <span style={{ fontFamily:DM, fontSize:10, color:C.muted, display:"block" }}>{a.clicks===1?"click":"clicks"}</span>
-                </div>
-              </div>
-              {/* Bar */}
-              <div style={{ background:C.creamDark, borderRadius:3, height:5 }}>
-                <div style={{ width:`${pct}%`, height:"100%", background:a.clicks>0?C.gold:C.border, borderRadius:3, transition:"width 0.5s ease" }} />
-              </div>
-              {a.url && (
-                <a href={a.url} target="_blank" rel="noopener noreferrer"
-                  style={{ fontFamily:DM, fontSize:10, color:C.goldDark, display:"inline-block", marginTop:4 }}>
-                  View article →
-                </a>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* GA4 guidance note */}
-      <div style={{ marginTop:16, background:C.navyMid, borderRadius:6, padding:"12px 16px" }}>
-        <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, color:C.gold, marginBottom:4 }}>
-          📊 For cross-visitor totals, use Google Analytics
-        </div>
-        <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.6)", lineHeight:1.6 }}>
-          These counts are from this browser only. Once GA4 is deployed:<br/>
-          Reports → Engagement → Events → filter by "article_click" → see breakdown by article_label
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 function AdminPanel({ onClose, initialTab="crm" }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -1688,19 +1552,6 @@ function AdminPanel({ onClose, initialTab="crm" }) {
                   </div>
                 </div>
               )}
-            </div>
-          )}
-          {/* ── ARTICLE ANALYTICS — injected into CRM tab ── */}
-          {adminTab==="crm" && (
-            <div style={{ padding:"0 28px 28px" }}>
-              <div style={{ height:1, background:C.border, margin:"0 0 24px" }}/>
-              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:14, flexWrap:"wrap", gap:8 }}>
-                <div>
-                  <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:2 }}>Article Click Analytics</div>
-                  <div style={{ fontFamily:DM, fontSize:12, color:C.muted }}>Tracked from this browser · Add GA4 for cross-visitor totals</div>
-                </div>
-              </div>
-              <ArticleAnalyticsPanel />
             </div>
           )}
           {/* ── CONTENT TAB ── */}
@@ -2119,7 +1970,7 @@ function HomePage() {
         <div style={{ maxWidth:600, margin:"0 auto" }}>
           <h2 style={{ fontFamily:PF, fontSize:36, color:C.white, margin:"0 0 20px", fontStyle:"italic" }}>30 minutes to find out if this is the right fit.</h2>
           <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 32px", lineHeight:1.7 }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" onClick={() => window.track("book_call_click",{event_category:"conversion",event_label:"calendly"})} style={{ fontSize:16, padding:"16px 40px" }}>Book a Discovery Call</Btn>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ fontSize:16, padding:"16px 40px" }}>Book a Discovery Call</Btn>
         </div>
       </section>
     </div>
@@ -2411,7 +2262,7 @@ function AboutPage() {
           {[
             { phase:"Phase 1 · U.S. Army · 1999–2003", headline:"Led under fire.", body:"Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did." },
             { phase:"Phase 2 · Fortune 500 Consulting · 2013–Present", headline:"Built inside the pressure.", body:"Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services." },
-            { phase:"Phase 3 · Holistic Coaching Practice · Present", headline:"Applied at depth.", body:"Certified holistic coach. ICF PCC. ACTC candidate. ExecOnline and Emeritus faculty. 1,200+ hours. 222+ clients. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it." },
+            { phase:"Phase 3 · Holistic Coaching Practice · Present", headline:"Applied at depth.", body:"Certified holistic coach. ICF PCC. ACTC. ExecOnline and Emeritus faculty. 1,200+ hours. 222+ clients. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it." },
           ].map((ph,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:"240px 1fr", gap:48, marginBottom:56, paddingBottom:56, borderBottom: i<2 ? `1px solid ${C.border}` : "none" }}>
               <div>
@@ -2610,6 +2461,10 @@ function ResourcesPage() {
     const matchAudience = audienceFilter === "all" || (a.audience && a.audience.includes(audienceFilter));
     const matchStatus   = statusFilter === "all" || a.status === statusFilter;
     return matchPillar && matchAudience && matchStatus;
+  }).sort((a, b) => {
+    // Published articles always sort before planned ones
+    if (a.status === b.status) return 0;
+    return a.status === "published" ? -1 : 1;
   });
 
   const publishedCount = filtered.filter(a => a.status === "published").length;
@@ -2719,18 +2574,7 @@ function ResourcesPage() {
                 const isPlanned = a.status === "planned";
                 return (
                   <div key={a.id}
-                    onClick={() => {
-                    if (!isPlanned && a.url) {
-                      try {
-                        const raw = localStorage.getItem('usi-article-clicks') || '{}';
-                        const c = JSON.parse(raw);
-                        c[a.id] = (c[a.id] || 0) + 1;
-                        localStorage.setItem('usi-article-clicks', JSON.stringify(c));
-                      } catch(e) {}
-                      window.track('article_click', { event_label: a.title });
-                      window.location.href = a.url;
-                    }
-                  }}
+                    onClick={() => !isPlanned && a.url && (window.location.href = a.url)}
                     style={{ background:C.white, border:`1px solid ${isPlanned ? C.border : pillar.color+"40"}`, borderRadius:6, overflow:"hidden", transition:"all 0.2s", cursor:isPlanned?"default":"pointer", opacity:isPlanned?0.85:1, position:"relative" }}
                     onMouseEnter={e => { if (!isPlanned) { e.currentTarget.style.boxShadow="0 8px 28px rgba(0,0,0,0.10)"; e.currentTarget.style.borderColor=pillar.color; }}}
                     onMouseLeave={e => { e.currentTarget.style.boxShadow="none"; e.currentTarget.style.borderColor=isPlanned?C.border:pillar.color+"40"; }}>
@@ -2786,7 +2630,7 @@ function ResourcesPage() {
               <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
                 id="newsletter-email" aria-label="Email address for leadership insights newsletter"
                 style={{ flex:1, padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, outline:"none", background:C.white }} />
-              <Btn onClick={() => { if(email){window.track("newsletter_signup",{event_category:"lead"});setSigned(true);}}}>Join</Btn>
+              <Btn onClick={() => email && setSigned(true)}>Join</Btn>
             </div>
           )}
         </div>
@@ -2954,7 +2798,7 @@ function AssessmentPage() {
 
   async function saveResults(scores) {
     try {
-      const record = { timestamp: new Date().toISOString(), email, scores, answers }; window.track("assessment_complete",{event_category:"engagement",event_label:email?"with_email":"anonymous"});
+      const record = { timestamp: new Date().toISOString(), email, scores, answers };
       const existing = [];
       try {
         const r = await storage.get("assessment-results");
@@ -2996,7 +2840,7 @@ function AssessmentPage() {
               <button onClick={() => setPage("privacy")} style={{ background:"none", border:"none", color:C.gold, fontFamily:DM, fontSize:13, cursor:"pointer", textDecoration:"underline", padding:0 }}>Privacy Policy</button>.
             </p>
           </div>
-          <Btn onClick={() => { const s = generateAssessmentSession(); setSessionQuestions(s); setAnswers({}); setStep("quiz"); window.track("begin_assessment",{event_category:"engagement"}); }} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
+          <Btn onClick={() => { const s = generateAssessmentSession(); setSessionQuestions(s); setAnswers({}); setStep("quiz"); }} style={{ fontSize:17, padding:"16px 48px" }}>Begin Assessment</Btn>
           {isAdmin && (
             <div style={{ marginTop:20 }}>
               <button onClick={() => setShowAdmin(true)} style={{ background:"rgba(200,147,58,0.15)", border:`1px solid ${C.gold}40`, borderRadius:2, fontFamily:DM, fontSize:13, color:C.goldDark, padding:"6px 16px", cursor:"pointer", letterSpacing:1 }}>
@@ -3509,7 +3353,7 @@ function UnifiedSolutions() {
         const intendedPath = new URL(stored).pathname;
         // If it's a real SPA route, restore the URL and route to it
         if (ROUTE_MAP[intendedPath]) {
-          if (window.location.protocol !== 'file:') { window.history.replaceState(null, null, intendedPath); }
+          window.history.replaceState(null, null, intendedPath);
           return ROUTE_MAP[intendedPath];
         }
         // Unknown path (e.g. /articles/* that 404'd) — stay home
