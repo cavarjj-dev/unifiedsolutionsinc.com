@@ -1725,11 +1725,29 @@ function AdminPanel({ onClose, initialTab="crm" }) {
             <button onClick={onClose} style={{ background:C.gold, border:"none", color:C.white, fontFamily:DM, fontWeight:700, fontSize:12, padding:"7px 16px", borderRadius:4, cursor:"pointer" }}>Close ×</button>
           </div>
         </div>
-        {/* API key */}
-        <div style={{ background:C.navyMid, padding:"10px 28px", borderBottom:"1px solid rgba(255,255,255,0.1)", display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
-          <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", flexShrink:0 }}>Anthropic API Key</span>
-          <input type="password" value={apiKey} onChange={e=>{setApiKey(e.target.value);localStorage.setItem("us-api-key",e.target.value);}} placeholder="sk-ant-..." style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:3, color:"white" }}/>
-          {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A", flexShrink:0 }}>✓ Saved</span>}
+        {/* API keys bar — two rows */}
+        <div style={{ background:C.navyMid, borderBottom:"1px solid rgba(255,255,255,0.1)", padding:"12px 28px", display:"flex", flexDirection:"column", gap:8 }}>
+          {/* Row 1: Anthropic */}
+          <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+            <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", flexShrink:0, minWidth:140 }}>Anthropic API Key</span>
+            <input type="password" value={apiKey} onChange={e=>{setApiKey(e.target.value);localStorage.setItem("us-api-key",e.target.value);}} placeholder="sk-ant-api03-..." style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:3, color:"white" }}/>
+            {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A", flexShrink:0 }}>✓ Saved</span>}
+          </div>
+          {/* Row 2: Notion — required for Content Pipeline pushes */}
+          <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+            <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.gold, flexShrink:0, minWidth:140 }}>Notion Token</span>
+            <input type="password" value={notionToken} onChange={e=>{setNotionToken(e.target.value);localStorage.setItem("us-notion-token",e.target.value);}} placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxx" style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:`1px solid ${notionToken ? "rgba(200,147,58,0.5)" : "rgba(255,255,255,0.15)"}`, borderRadius:3, color:"white" }}/>
+            {notionToken
+              ? <span style={{ fontFamily:DM, fontSize:11, color:C.gold, flexShrink:0 }}>✓ Saved</span>
+              : <span style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.35)", flexShrink:0 }}>Required for Content → Notion pushes</span>
+            }
+          </div>
+          {/* Notion setup hint — only shown when token is missing */}
+          {!notionToken && (
+            <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.35)", paddingLeft:150, lineHeight:1.5 }}>
+              Get yours: <strong style={{ color:"rgba(255,255,255,0.55)" }}>notion.so/profile/integrations</strong> → New integration → copy the secret_ token → share a Notion page with the integration
+            </div>
+          )}
         </div>
         {/* Tabs */}
         <div style={{ display:"flex", borderBottom:`1px solid ${C.border}`, background:C.white }}>
