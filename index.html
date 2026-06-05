@@ -1457,8 +1457,7 @@ ${JSON.stringify(b.input, null, 2).slice(0, 300)}
 
 `;
         } else if (b.type === "tool_result") {
-          const content = (b.content || []).map(c => c.text || "").join("
-");
+          const content = (b.content || []).map(c => c.text || "").join("\n");
           log += `[TOOL RESULT]
 ${content.slice(0, 500)}
 
@@ -1469,8 +1468,7 @@ ${JSON.stringify(b.input || {}, null, 2).slice(0, 300)}
 
 `;
         } else if (b.type === "mcp_tool_result") {
-          const content = (b.content || []).map(c => c.text || "").join("
-");
+          const content = (b.content || []).map(c => c.text || "").join("\n");
           log += `[MCP RESULT]
 ${content.slice(0, 500)}
 
