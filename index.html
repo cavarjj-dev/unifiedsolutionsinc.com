@@ -1697,8 +1697,8 @@ function ArticleAnalyticsPanel() {
 function AdminPanel({ onClose, initialTab="crm" }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [apiKey, setApiKey]       = useState(() => localStorage.getItem("us-api-key")||"");
-  const [notionToken, setNotionToken] = useState(() => localStorage.getItem("us-notion-token")||"");
+  const [apiKey, setApiKey]       = useState(() => (localStorage.getItem("us-api-key")||"").trim());
+  const [notionToken, setNotionToken] = useState(() => (localStorage.getItem("us-notion-token")||"").trim());
   const [selected, setSelected]     = useState(null);
   const [notionStatus, setNotionStatus] = useState({});
   const [adminTab, setAdminTab]     = useState(initialTab);
@@ -1752,13 +1752,13 @@ function AdminPanel({ onClose, initialTab="crm" }) {
           {/* Row 1: Anthropic */}
           <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
             <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", flexShrink:0, minWidth:140 }}>Anthropic API Key</span>
-            <input type="password" value={apiKey} onChange={e=>{setApiKey(e.target.value);localStorage.setItem("us-api-key",e.target.value);}} placeholder="sk-ant-api03-..." style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:3, color:"white" }}/>
+            <input type="password" value={apiKey} onChange={e=>{const v=e.target.value.trim();setApiKey(v);localStorage.setItem("us-api-key",v);}} placeholder="sk-ant-api03-..." style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:3, color:"white" }}/>
             {apiKey && <span style={{ fontFamily:DM, fontSize:11, color:"#5DE09A", flexShrink:0 }}>✓ Saved</span>}
           </div>
           {/* Row 2: Notion — required for Content Pipeline pushes */}
           <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
             <span style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.gold, flexShrink:0, minWidth:140 }}>Notion Token</span>
-            <input type="password" value={notionToken} onChange={e=>{setNotionToken(e.target.value);localStorage.setItem("us-notion-token",e.target.value);}} placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxx" style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:`1px solid ${notionToken ? "rgba(200,147,58,0.5)" : "rgba(255,255,255,0.15)"}`, borderRadius:3, color:"white" }}/>
+            <input type="password" value={notionToken} onChange={e=>{const v=e.target.value.trim();setNotionToken(v);localStorage.setItem("us-notion-token",v);}} placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxx" style={{ flex:1, minWidth:200, padding:"5px 10px", fontFamily:DM, fontSize:12, background:"rgba(255,255,255,0.08)", border:`1px solid ${notionToken ? "rgba(200,147,58,0.5)" : "rgba(255,255,255,0.15)"}`, borderRadius:3, color:"white" }}/>
             {notionToken
               ? <span style={{ fontFamily:DM, fontSize:11, color:C.gold, flexShrink:0 }}>✓ Saved</span>
               : <span style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.35)", flexShrink:0 }}>Required for Content → Notion pushes</span>
