@@ -1221,100 +1221,212 @@ function PinChanger({ onDone }) {
 // ═══════════════════════════════════════════════════════════════════
 // CONTENT PIPELINE PANEL — topic library with Notion push
 // ═══════════════════════════════════════════════════════════════════
-function ContentPipelinePanel({ apiKey }) {
-  const [nStatus, setNStatus] = useState({});  // "idle"|"pushing"|"done:URL"|"error"
+function ContentPipelinePanel({ apiKey, notionToken }) {
+  const [nStatus, setNStatus] = useState({});
   const [pillar,  setPillar]  = useState("all");
   const [status,  setStatus]  = useState("all");
   const [pushing, setPushing] = useState(null);
+  const [diagLog, setDiagLog] = useState("");
+  const [showDiag, setShowDiag] = useState(false);
 
   const visible = ARTICLES.filter(a =>
     (pillar === "all" || a.pillar === pillar) &&
     (status === "all" || a.status === status)
   );
 
+  // ── Extract any Notion URL from text ────────────────────────────
+  function extractNotionUrl(text) {
+    // Match notion.so URLs with or without www, with any path
+    const m = text.match(/https?:\/\/(?:www\.)?notion\.so\/[^\s"'\]<>]+/);
+    return m ? m[0].replace(/[.,;)]+$/, "") : "";
+  }
+
+  // ── Parse ALL blocks including tool results ──────────────────────
+  function parseBlocks(blocks) {
+    let text = "";
+    let url  = "";
+    for (const b of (blocks || [])) {
+      let chunk = "";
+      if (b.type === "text") {
+        chunk = b.text || "";
+      } else if (b.type === "mcp_tool_result") {
+        chunk = (b.content || []).map(c => c.text || "").join("\n");
+      } else if (b.type === "mcp_tool_use") {
+        // Tool call input — useful for debugging
+        try { chunk = "TOOL CALL: " + b.name + " " + JSON.stringify(b.input).slice(0, 200); } catch(e) {}
+      }
+      text += chunk + "\n";
+      if (!url) url = extractNotionUrl(chunk);
+    }
+    return { text: text.trim(), url };
+  }
+
   async function pushOne(a) {
-    if (!apiKey) { alert("Add your Anthropic API key in the bar above."); return; }
+    if (!apiKey) { alert("Add your Anthropic API key in the Security tab."); return; }
+    if (!notionToken) {
+      alert("Add your Notion token above.\n\nHow to get one:\n1. Go to notion.so/profile/integrations\n2. Create a new integration → copy the secret_ token\n3. In Notion, open any top-level page → '...' menu → Connections → connect your integration\n4. Paste the token in the field above");
+      return;
+    }
     setPushing(a.id);
     setNStatus(p => ({...p, [a.id]: "pushing"}));
+    setDiagLog("");
+
     try {
-      const p    = CONTENT_PILLARS.find(x => x.id === a.pillar);
+      const pillarObj = CONTENT_PILLARS.find(x => x.id === a.pillar);
       const auds = (a.audience || [])
         .map(id => CONTENT_AUDIENCES.find(x => x.id === id)?.label)
         .filter(Boolean).join(", ");
 
-      const prompt = `You are helping manage a content library in Notion for Unified Solutions Inc.
+      // ── Structured prompt — tells Claude exactly what to do and how to report back ──
+      const prompt =
+`You are helping manage a Notion content library for Unified Solutions Inc.
 
-Step 1: Search for a database named "Content Library — Unified Solutions" in the workspace.
-Step 2: If found, add a new page to it with the properties below.
-Step 3: If NOT found, create a new FULL-PAGE database in the workspace root (not inside any other page) named exactly "Content Library — Unified Solutions" with these properties:
-  - Title (title type)
-  - Status (select: Idea / Outline / Draft / Review / Published)
-  - Pillar (select)
-  - Audience (multi-select)
-  - Tag (rich_text)
-  - Read Time (rich_text)
-  - Summary (rich_text)
-  - URL (url)
-  Then add the page below to it.
+Follow these steps in order:
 
-Page to add:
-  Title: ${a.title}
-  Status: ${a.status === "published" ? "Published" : "Idea"}
-  Pillar: ${p?.label || a.pillar}
-  Audience: ${auds}
-  Tag: ${a.tag}
-  Read Time: ${a.mins} min
-  Summary: ${a.summary}
-  URL: ${a.url || ""}
+STEP 1 — SEARCH: Use the Notion search tool to look for a database named "Content Library — Unified Solutions". Search for it now.
 
-After adding the page, respond with ONLY this JSON (no other text):
-{"success": true, "pageUrl": "<notion page URL>", "dbUrl": "<notion database URL>"}
+STEP 2 — IF FOUND: Note the database ID and skip to STEP 4.
 
-If there is an error, respond with:
-{"success": false, "error": "<brief description>"}`;
+STEP 3 — IF NOT FOUND: Create a new full-page database at the top level of the workspace. Name it exactly: Content Library — Unified Solutions
+Give it these properties:
+- Title (type: title)
+- Status (type: select, options: Idea, Outline, Draft, Published)
+- Pillar (type: select)
+- Audience (type: multi_select)
+- Tag (type: rich_text)
+- Read Time (type: rich_text)
+- Summary (type: rich_text)
+- URL (type: url)
+
+STEP 4 — ADD PAGE: Create a new page in the database with these exact values:
+Title: ${a.title}
+Status: ${a.status === "published" ? "Published" : "Idea"}
+Pillar: ${pillarObj?.label || a.pillar}
+Audience: ${auds}
+Tag: ${a.tag || ""}
+Read Time: ${a.mins} min
+Summary: ${a.summary}
+URL: ${a.url || ""}
+
+STEP 5 — REPORT: After completing the above, output these two lines exactly:
+DATABASE_URL: <full notion.so URL of the database>
+PAGE_URL: <full notion.so URL of the new page>
+
+Do not add any other text after the URL lines.`;
 
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
+          "Content-Type":                              "application/json",
+          "x-api-key":                                 apiKey,
+          "anthropic-version":                         "2023-06-01",
           "anthropic-dangerous-direct-browser-access": "true"
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          mcp_servers: [{ type: "url", url: "https://mcp.notion.com/mcp", name: "notion" }],
+          model:      "claude-sonnet-4-20250514",
+          max_tokens: 1500,
+          mcp_servers: [{
+            type:                "url",
+            url:                 "https://mcp.notion.com/mcp",
+            name:                "notion",
+            authorization_token: notionToken
+          }],
           messages: [{ role: "user", content: prompt }]
         })
       });
 
       const data = await res.json();
-      const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("");
 
-      // Parse JSON — indexOf avoids regex brace issues
-      const i1 = text.indexOf("{");
-      const i2 = text.lastIndexOf("}");
-      if (i1 >= 0 && i2 > i1) {
-        try {
-          const result = JSON.parse(text.slice(i1, i2 + 1));
-          setNStatus(p => ({...p, [a.id]: result.success ? "done:" + (result.pageUrl || "") : "error"}));
-        } catch(e) {
-          setNStatus(p => ({...p, [a.id]: text.toLowerCase().includes("error") ? "error" : "done:"}));
-        }
-      } else {
-        setNStatus(p => ({...p, [a.id]: text.toLowerCase().includes("error") ? "error" : "done:"}));
+      if (data.error) {
+        const msg = data.error.message || "API error";
+        setNStatus(p => ({...p, [a.id]: "error:" + msg}));
+        setDiagLog("API ERROR: " + msg);
+        setPushing(null);
+        return;
       }
+
+      const { text: fullText, url: extractedUrl } = parseBlocks(data.content);
+      setDiagLog(fullText);
+
+      // ── Look for structured URL lines first ──────────────────────
+      let dbUrl   = "";
+      let pageUrl = extractedUrl;
+
+      const dbLine   = fullText.match(/DATABASE_URL:\s*(https?:\/\/[^\s\n]+)/);
+      const pageLine = fullText.match(/PAGE_URL:\s*(https?:\/\/[^\s\n]+)/);
+      if (dbLine)   dbUrl   = dbLine[1].replace(/[.,;)]+$/, "");
+      if (pageLine) pageUrl = pageLine[1].replace(/[.,;)]+$/, "");
+
+      // ── Fallback: any notion URL in the response ─────────────────
+      if (!pageUrl) pageUrl = extractedUrl;
+      if (!dbUrl)   dbUrl   = extractedUrl;
+
+      const lower = fullText.toLowerCase();
+      const isError = (lower.includes("unauthorized") || lower.includes("invalid_token") ||
+                       lower.includes("api_token_invalid") || lower.includes("forbidden")) &&
+                       !pageUrl && !dbUrl;
+
+      if (isError) {
+        const errLine = fullText.split("\n").find(l =>
+          l.toLowerCase().match(/error|unauthorized|invalid|forbidden/)
+        ) || fullText.slice(0, 150);
+        setNStatus(p => ({...p, [a.id]: "error:" + errLine.trim()}));
+      } else {
+        // Success — store both database and page URLs
+        setNStatus(p => ({...p, [a.id]: "done:" + (pageUrl || dbUrl || "created")}));
+      }
+
     } catch(e) {
-      console.error("Push failed:", e);
-      setNStatus(p => ({...p, [a.id]: "error"}));
+      setNStatus(p => ({...p, [a.id]: "error:" + e.message}));
+      setDiagLog("Exception: " + e.message);
     }
     setPushing(null);
   }
 
   async function pushAll() {
-    const todo = visible.filter(a => !nStatus[a.id] || nStatus[a.id] === "error");
+    const todo = visible.filter(a => {
+      const s = nStatus[a.id] || "idle";
+      return s === "idle" || s.startsWith("error");
+    });
     for (const a of todo) { await pushOne(a); }
+  }
+
+  // ── Find the database — diagnostic call ─────────────────────────
+  async function findDatabase() {
+    if (!apiKey || !notionToken) { alert("Add your API key and Notion token first."); return; }
+    setShowDiag(true);
+    setDiagLog("Searching Notion for 'Content Library — Unified Solutions'...");
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type":                              "application/json",
+          "x-api-key":                                 apiKey,
+          "anthropic-version":                         "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model:      "claude-sonnet-4-20250514",
+          max_tokens: 600,
+          mcp_servers: [{
+            type:                "url",
+            url:                 "https://mcp.notion.com/mcp",
+            name:                "notion",
+            authorization_token: notionToken
+          }],
+          messages: [{ role: "user", content:
+            `Search Notion for any database or page named "Content Library" or "Content Library — Unified Solutions". 
+List everything you find with its title and URL.
+If nothing is found, list the top 5 pages and databases you DO have access to (with their titles and URLs), so the user knows what the integration can see.
+Be concise — just titles and URLs.` }]
+        })
+      });
+      const data = await res.json();
+      const { text } = parseBlocks(data.content);
+      setDiagLog(text || "No response received.");
+    } catch(e) {
+      setDiagLog("Error: " + e.message);
+    }
   }
 
   const pillBtnStyle = (active, color) => ({
@@ -1328,9 +1440,8 @@ If there is an error, respond with:
 
   return (
     <div>
-      {/* Filter bar */}
+      {/* Filter + actions */}
       <div style={{ marginBottom: 16 }}>
-        {/* Pillar filters */}
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
           <button onClick={() => setPillar("all")} style={pillBtnStyle(pillar === "all", C.navy)}>All Pillars</button>
           {CONTENT_PILLARS.map(p => (
@@ -1339,9 +1450,8 @@ If there is an error, respond with:
             </button>
           ))}
         </div>
-        {/* Status + push-all */}
         <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-          {[["all","All"], ["published","Published"], ["planned","Planned"]].map(([v,l]) => (
+          {[["all","All"],["published","Published"],["planned","Planned"]].map(([v,l]) => (
             <button key={v} onClick={() => setStatus(v)} style={pillBtnStyle(status === v, C.navy)}>
               {l} ({ARTICLES.filter(a => v === "all" || a.status === v).length})
             </button>
@@ -1354,13 +1464,39 @@ If there is an error, respond with:
           }}>
             {pushing ? "Pushing…" : "⬆ Push All → Notion"}
           </button>
+          <button onClick={findDatabase} style={{
+            background: "none", color: C.navy, border: `1px solid ${C.border}`,
+            borderRadius: 4, padding: "5px 10px", fontFamily: DM, fontSize: 11, cursor: "pointer"
+          }}>
+            🔍 Find database
+          </button>
+          <button onClick={() => setNStatus({})} disabled={pushing !== null} style={{
+            background: "none", color: C.muted, border: `1px solid ${C.border}`,
+            borderRadius: 4, padding: "5px 10px", fontFamily: DM, fontSize: 11, cursor: "pointer"
+          }}>
+            Reset
+          </button>
         </div>
       </div>
 
-      {/* Note about database location */}
-      <div style={{ background: "#FFF8E7", border: "1px solid #E5C84A50", borderRadius: 4, padding: "8px 14px", marginBottom: 14, fontFamily: DM, fontSize: 12, color: C.navy }}>
-        📋 Pushed topics appear in a Notion database named <strong>"Content Library — Unified Solutions"</strong>. It will be created automatically in your Notion workspace root on the first push. Check your Notion sidebar after pushing.
+      {/* Setup instructions */}
+      <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", borderRadius: 6, padding: "12px 16px", marginBottom: 14, fontFamily: DM, fontSize: 12, color: C.navy, lineHeight: 1.7 }}>
+        <strong>Notion setup (one-time):</strong><br/>
+        1. Go to <strong>notion.so/profile/integrations</strong> → Create integration → copy the <code>secret_...</code> token → paste it in the field above.<br/>
+        2. In Notion, open a top-level page in your sidebar → click <strong>"..." menu → Connections → add your integration</strong>.<br/>
+        3. Click <strong>🔍 Find database</strong> above to confirm the integration can see your workspace, then push.
       </div>
+
+      {/* Diagnostic log */}
+      {showDiag && diagLog && (
+        <div style={{ background: C.navyMid, border: `1px solid ${C.navyLight}`, borderRadius: 6, padding: "12px 16px", marginBottom: 14 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+            <div style={{ fontFamily: DM, fontSize: 11, fontWeight: 700, color: C.gold }}>Notion Response</div>
+            <button onClick={() => setShowDiag(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 14 }}>×</button>
+          </div>
+          <pre style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.8)", whiteSpace: "pre-wrap", margin: 0, lineHeight: 1.5, maxHeight: 200, overflowY: "auto" }}>{diagLog}</pre>
+        </div>
+      )}
 
       {/* Topic list */}
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -1368,70 +1504,57 @@ If there is an error, respond with:
           const p   = CONTENT_PILLARS.find(x => x.id === a.pillar);
           const ns  = nStatus[a.id] || "idle";
           const isDone  = ns.startsWith("done");
-          const pageUrl = ns.startsWith("done:") ? ns.slice(5) : "";
+          const isErr   = ns.startsWith("error");
+          const pageUrl = isDone ? ns.slice(5) : "";
+          const errMsg  = isErr  ? ns.slice(6) : "";
 
           return (
             <div key={a.id} style={{
               background: isDone ? "#F0FBF4" : C.cream,
-              border: `1px solid ${isDone ? C.green + "50" : C.border}`,
+              border: `1px solid ${isDone ? C.green + "50" : isErr ? C.red + "40" : C.border}`,
               borderRadius: 6, padding: "12px 16px",
               display: "flex", alignItems: "center", gap: 12
             }}>
-              {/* Pillar color bar */}
               <div style={{ width: 4, height: 40, background: p?.color || C.gold, borderRadius: 2, flexShrink: 0 }} />
-
-              {/* Title + meta */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  fontFamily: DM, fontSize: 14, fontWeight: 600,
-                  color: C.navy, marginBottom: 3,
-                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
-                }}>{a.title}</div>
+                <div style={{ fontFamily: DM, fontSize: 14, fontWeight: 600, color: C.navy, marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.title}</div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   <span style={{ fontFamily: DM, fontSize: 11, color: p?.color || C.gold, fontWeight: 600 }}>{p?.label}</span>
-                  <span style={{ fontFamily: DM, fontSize: 11, color: C.muted }}>·</span>
-                  <span style={{ fontFamily: DM, fontSize: 11, color: C.muted }}>{a.tag}</span>
-                  <span style={{ fontFamily: DM, fontSize: 11, color: C.muted }}>·</span>
-                  <span style={{ fontFamily: DM, fontSize: 11, color: C.muted }}>{a.mins} min</span>
+                  <span style={{ fontFamily: DM, fontSize: 11, color: C.muted }}>· {a.tag} · {a.mins} min</span>
                 </div>
+                {isErr && errMsg && (
+                  <div style={{ fontFamily: DM, fontSize: 10, color: C.red, marginTop: 3, lineHeight: 1.5 }}>{errMsg.slice(0, 120)}</div>
+                )}
               </div>
-
-              {/* Status badge */}
-              <span style={{
-                fontFamily: DM, fontSize: 10, fontWeight: 700,
-                letterSpacing: 0.8, textTransform: "uppercase",
-                color: a.status === "published" ? C.green : C.orange,
-                background: a.status === "published" ? C.green + "14" : C.orange + "14",
-                border: `1px solid ${a.status === "published" ? C.green + "40" : C.orange + "40"}`,
-                borderRadius: 8, padding: "2px 8px", flexShrink: 0
-              }}>
+              <span style={{ fontFamily: DM, fontSize: 10, fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", color: a.status === "published" ? C.green : C.orange, background: a.status === "published" ? C.green + "14" : C.orange + "14", border: `1px solid ${a.status === "published" ? C.green + "40" : C.orange + "40"}`, borderRadius: 8, padding: "2px 8px", flexShrink: 0 }}>
                 {a.status === "published" ? "Live" : "Planned"}
               </span>
-
-              {/* Notion sync status */}
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                 {ns === "pushing" ? (
                   <span style={{ fontFamily: DM, fontSize: 12, color: C.gold }}>Pushing…</span>
-                ) : ns === "error" ? (
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                    <span style={{ fontFamily: DM, fontSize: 11, color: C.red }}>Failed</span>
-                    <button onClick={() => pushOne(a)} disabled={pushing !== null} style={{ background: "none", border: `1px solid ${C.red}`, borderRadius: 3, padding: "2px 8px", fontFamily: DM, fontSize: 11, color: C.red, cursor: "pointer" }}>Retry</button>
-                  </div>
                 ) : isDone ? (
                   <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
                     <span style={{ fontFamily: DM, fontSize: 12, color: C.green, fontWeight: 600 }}>✓ In Notion</span>
-                    {pageUrl && (
-                      <a href={pageUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily: DM, fontSize: 11, color: C.gold, textDecoration: "none", border: `1px solid ${C.gold}40`, borderRadius: 3, padding: "2px 7px" }}>Open →</a>
+                    {pageUrl && pageUrl !== "created" && (
+                      <a href={pageUrl} target="_blank" rel="noopener noreferrer"
+                        style={{ fontFamily: DM, fontSize: 11, color: C.gold, textDecoration: "none", border: `1px solid ${C.gold}40`, borderRadius: 3, padding: "2px 7px" }}>
+                        Open →
+                      </a>
                     )}
                   </div>
+                ) : isErr ? (
+                  <button onClick={() => pushOne(a)} disabled={pushing !== null}
+                    style={{ background: "none", border: `1px solid ${C.red}`, borderRadius: 3, padding: "3px 9px", fontFamily: DM, fontSize: 11, color: C.red, cursor: "pointer" }}>
+                    Retry
+                  </button>
                 ) : (
                   <button onClick={() => pushOne(a)} disabled={pushing !== null} style={{
-                    background: "none", border: `1px solid ${C.gold}80`,
-                    borderRadius: 4, padding: "4px 12px",
-                    fontFamily: DM, fontSize: 12, fontWeight: 600, color: C.gold,
-                    cursor: pushing ? "not-allowed" : "pointer",
-                    opacity: pushing ? 0.5 : 1
-                  }}>⬆ Notion</button>
+                    background: "none", border: `1px solid ${C.gold}80`, borderRadius: 4,
+                    padding: "4px 12px", fontFamily: DM, fontSize: 12, fontWeight: 600, color: C.gold,
+                    cursor: pushing ? "not-allowed" : "pointer", opacity: pushing ? 0.5 : 1
+                  }}>
+                    ⬆ Notion
+                  </button>
                 )}
               </div>
             </div>
@@ -1552,7 +1675,8 @@ function ArticleAnalyticsPanel() {
 function AdminPanel({ onClose, initialTab="crm" }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [apiKey, setApiKey]   = useState(() => localStorage.getItem("us-api-key")||"");
+  const [apiKey, setApiKey]       = useState(() => localStorage.getItem("us-api-key")||"");
+  const [notionToken, setNotionToken] = useState(() => localStorage.getItem("us-notion-token")||"");
   const [selected, setSelected]     = useState(null);
   const [notionStatus, setNotionStatus] = useState({});
   const [adminTab, setAdminTab]     = useState(initialTab);
@@ -1687,7 +1811,7 @@ function AdminPanel({ onClose, initialTab="crm" }) {
             <div>
               <div style={{ fontFamily:PF, fontSize:20, color:C.navy, marginBottom:6 }}>Content Pipeline</div>
               <p style={{ fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.65, marginBottom:20 }}>{ARTICLES.length} topics across {CONTENT_PILLARS.length} pillars — {ARTICLES.filter(a=>a.status==="published").length} published · {ARTICLES.filter(a=>a.status==="planned").length} in development. Push any topic to Notion to begin development tracking.</p>
-              <ContentPipelinePanel apiKey={apiKey} />
+              <ContentPipelinePanel apiKey={apiKey} notionToken={notionToken} />
             </div>
           )}
           {/* ── SECURITY TAB ── */}
