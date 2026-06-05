@@ -397,6 +397,18 @@
   }
   </script>
 
+  <script>
+    /* Article click tracking helper — safe no-op until GA4 is configured.
+       To add GA4: uncomment and fill in YOUR-MEASUREMENT-ID below, then
+       also add the GA4 loader: <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-ID"><\/script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){window.dataLayer.push(arguments);}
+       gtag('js', new Date()); gtag('config', 'YOUR-MEASUREMENT-ID', {send_page_view:false});
+    */
+    window.track = function(eventName, params) {
+      if (typeof gtag === 'function') { gtag('event', eventName, params); }
+    };
+  </script>
 </head>
 <body>
   <!-- WCAG 2.1 SC 2.4.1 — Bypass Blocks: Skip Navigation Link -->
@@ -1431,6 +1443,112 @@ If there is an error, respond with:
 }
 
 
+// ═══════════════════════════════════════════════════════════════
+// ARTICLE ANALYTICS PANEL
+// Shows per-article click counts stored in localStorage
+// Visible in Admin → Dashboard → scroll down
+// ═══════════════════════════════════════════════════════════════
+function ArticleAnalyticsPanel() {
+  const [counts, setCounts] = useState({});
+  const [sortBy, setSortBy] = useState("clicks");
+
+  useEffect(() => {
+    function load() {
+      try {
+        const raw = localStorage.getItem("usi-article-clicks");
+        if (raw) setCounts(JSON.parse(raw));
+      } catch(e) {}
+    }
+    load();
+    const t = setInterval(load, 15000);
+    return () => clearInterval(t);
+  }, []);
+
+  const published = ARTICLES.filter(a => a.status === "published");
+  const withCounts = published.map(a => ({ ...a, clicks: counts[a.id] || 0 }));
+  const sorted = [...withCounts].sort((a,b) => sortBy === "clicks" ? b.clicks - a.clicks : a.id - b.id);
+  const total = Object.values(counts).reduce((s,n) => s+n, 0);
+  const max = Math.max(...sorted.map(a => a.clicks), 1);
+  const top = sorted[0];
+
+  return (
+    <div>
+      {/* Summary row */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10, marginBottom:18 }}>
+        {[
+          [total, "Total Clicks", C.gold],
+          [sorted.filter(a=>a.clicks>0).length, "Articles Clicked", C.navy],
+          [top?.clicks||0, "Top Article", C.green],
+          [sorted.filter(a=>a.clicks===0).length, "Not Yet Clicked", C.muted],
+        ].map(([v,l,c],i) => (
+          <div key={i} style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px" }}>
+            <div style={{ fontFamily:PF, fontSize:22, color:c, fontWeight:700 }}>{v}</div>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:3 }}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Top article highlight */}
+      {top && top.clicks > 0 && (
+        <div style={{ background:`${C.gold}12`, border:`1px solid ${C.gold}40`, borderRadius:6, padding:"12px 16px", marginBottom:14, display:"flex", gap:12, alignItems:"center" }}>
+          <span style={{ fontSize:18 }}>★</span>
+          <div style={{ flex:1 }}>
+            <div style={{ fontFamily:DM, fontSize:10, color:C.gold, fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:2 }}>Most Clicked</div>
+            <div style={{ fontFamily:PF, fontSize:14, color:C.navy, fontWeight:600 }}>{top.title}</div>
+          </div>
+          <div style={{ textAlign:"right", flexShrink:0 }}>
+            <div style={{ fontFamily:PF, fontSize:22, color:C.gold, fontWeight:700 }}>{top.clicks}</div>
+            <div style={{ fontFamily:DM, fontSize:10, color:C.muted }}>clicks</div>
+          </div>
+        </div>
+      )}
+
+      {/* Sort controls */}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+        <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy }}>
+          All Published Articles ({sorted.length})
+        </div>
+        <div style={{ display:"flex", gap:4 }}>
+          {[["clicks","By Clicks"],["id","By Number"]].map(([v,l]) => (
+            <button key={v} onClick={() => setSortBy(v)} style={{ background:sortBy===v?C.navy:"transparent", color:sortBy===v?C.white:C.muted, border:`1px solid ${sortBy===v?C.navy:C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>{l}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Article bars */}
+      <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+        {sorted.map(a => (
+          <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"10px 14px" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:10, marginBottom:5 }}>
+              <div style={{ flex:1 }}>
+                <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy, lineHeight:1.3 }}>{a.title}</div>
+                {a.tag && <div style={{ fontFamily:DM, fontSize:10, color:C.muted, marginTop:2 }}>{a.tag} · {a.mins} min</div>}
+              </div>
+              <div style={{ textAlign:"right", flexShrink:0 }}>
+                <span style={{ fontFamily:PF, fontSize:20, color:a.clicks>0?C.navy:C.muted, fontWeight:700 }}>{a.clicks}</span>
+                <span style={{ fontFamily:DM, fontSize:10, color:C.muted, display:"block" }}>{a.clicks===1?"click":"clicks"}</span>
+              </div>
+            </div>
+            <div style={{ background:C.creamDark, borderRadius:3, height:5 }}>
+              <div style={{ width:`${(a.clicks/max)*100}%`, height:"100%", background:a.clicks>0?C.gold:C.border, borderRadius:3, transition:"width 0.4s" }}/>
+            </div>
+            {a.url && <a href={a.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily:DM, fontSize:10, color:C.goldDark, display:"inline-block", marginTop:4 }}>View article →</a>}
+          </div>
+        ))}
+      </div>
+
+      {/* Note */}
+      <div style={{ marginTop:14, background:C.navyMid, borderRadius:6, padding:"10px 14px" }}>
+        <div style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, marginBottom:3 }}>About these counts</div>
+        <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.55)", lineHeight:1.6 }}>
+          Counts are stored in this browser only. For cross-visitor totals, add Google Analytics 4 — the tracking calls are already wired in. Contact your developer or follow the GA4 setup guide in the code comments.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 function AdminPanel({ onClose, initialTab="crm" }) {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -1552,6 +1670,16 @@ function AdminPanel({ onClose, initialTab="crm" }) {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* ── ARTICLE ANALYTICS ── */}
+          {adminTab === "crm" && (
+            <div style={{ padding:"0 28px 28px" }}>
+              <div style={{ height:1, background:C.border, margin:"0 0 22px" }}/>
+              <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:4 }}>Article Click Analytics</div>
+              <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:16 }}>Clicks tracked from this browser · See code comments to add GA4 for cross-visitor totals</div>
+              <ArticleAnalyticsPanel />
             </div>
           )}
           {/* ── CONTENT TAB ── */}
@@ -2574,7 +2702,17 @@ function ResourcesPage() {
                 const isPlanned = a.status === "planned";
                 return (
                   <div key={a.id}
-                    onClick={() => !isPlanned && a.url && (window.location.href = a.url)}
+                    onClick={() => {
+                    if (!isPlanned && a.url) {
+                      try {
+                        const c = JSON.parse(localStorage.getItem('usi-article-clicks') || '{}');
+                        c[a.id] = (c[a.id] || 0) + 1;
+                        localStorage.setItem('usi-article-clicks', JSON.stringify(c));
+                      } catch(e) {}
+                      window.track('article_click', { event_label: a.title, article_id: a.id });
+                      window.location.href = a.url;
+                    }
+                  }}
                     style={{ background:C.white, border:`1px solid ${isPlanned ? C.border : pillar.color+"40"}`, borderRadius:6, overflow:"hidden", transition:"all 0.2s", cursor:isPlanned?"default":"pointer", opacity:isPlanned?0.85:1, position:"relative" }}
                     onMouseEnter={e => { if (!isPlanned) { e.currentTarget.style.boxShadow="0 8px 28px rgba(0,0,0,0.10)"; e.currentTarget.style.borderColor=pillar.color; }}}
                     onMouseLeave={e => { e.currentTarget.style.boxShadow="none"; e.currentTarget.style.borderColor=isPlanned?C.border:pillar.color+"40"; }}>
@@ -3353,7 +3491,7 @@ function UnifiedSolutions() {
         const intendedPath = new URL(stored).pathname;
         // If it's a real SPA route, restore the URL and route to it
         if (ROUTE_MAP[intendedPath]) {
-          window.history.replaceState(null, null, intendedPath);
+          if (window.location.protocol !== "file:") { window.history.replaceState(null, null, intendedPath); }
           return ROUTE_MAP[intendedPath];
         }
         // Unknown path (e.g. /articles/* that 404'd) — stay home
