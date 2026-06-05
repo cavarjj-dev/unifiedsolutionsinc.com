@@ -1391,7 +1391,7 @@ Do not add any other text after the URL lines.`;
     for (const a of todo) { await pushOne(a); }
   }
 
-  // ── Find the database — diagnostic call with full error surfacing ──
+  // ── Find database — diagnostic, full error surfacing ────────────
   async function findDatabase() {
     if (!apiKey || !notionToken) { alert("Add your API key and Notion token first."); return; }
     setShowDiag(true);
@@ -1406,98 +1406,48 @@ Do not add any other text after the URL lines.`;
           "anthropic-dangerous-direct-browser-access": "true"
         },
         body: JSON.stringify({
-          model:      "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
-          mcp_servers: [{
-            type:                "url",
-            url:                 "https://mcp.notion.com/mcp",
-            name:                "notion",
-            authorization_token: notionToken
-          }],
-          messages: [{ role: "user", content:
-            "Using your Notion tools, list the first 10 pages and databases you have access to. For each one, show its title and URL. If you cannot access Notion, explain exactly why (authentication error, no pages shared, etc). Be specific." }]
+          mcp_servers: [{ type:"url", url:"https://mcp.notion.com/mcp", name:"notion", authorization_token: notionToken }],
+          messages: [{ role:"user", content:"Using your Notion tools, list the first 10 pages and databases you have access to. For each one show its title and URL. If you cannot access Notion, explain exactly why." }]
         })
       });
-
-      // Show HTTP status
-      let log = `HTTP ${res.status} ${res.statusText}
-
-`;
-
       const data = await res.json();
-
-      // Surface API-level errors immediately
+      const lines = [`HTTP ${res.status} ${res.statusText}`];
       if (data.error) {
-        log += `API ERROR [${data.error.type}]: ${data.error.message}
-
-`;
-        if (data.error.type === "authentication_error") {
-          log += "Your Anthropic API key is invalid or expired.";
+        lines.push(`API ERROR [${data.error.type}]: ${data.error.message}`);
+        if (data.error.type === "authentication_error") lines.push("Your Anthropic API key is invalid or expired.");
+      } else {
+        lines.push(`Stop reason: ${data.stop_reason || "unknown"}`);
+        lines.push(`Blocks: ${(data.content || []).length}`);
+        lines.push("");
+        for (const b of (data.content || [])) {
+          if (b.type === "text") {
+            lines.push(`[TEXT]`); lines.push(b.text);
+          } else if (b.type === "tool_use") {
+            lines.push(`[TOOL CALL] ${b.name}`); lines.push(JSON.stringify(b.input, null, 2).slice(0, 300));
+          } else if (b.type === "tool_result") {
+            const c = (b.content || []).map(x => x.text || "").join(" | ");
+            lines.push(`[TOOL RESULT]`); lines.push(c.slice(0, 500));
+          } else if (b.type === "mcp_tool_use") {
+            lines.push(`[MCP CALL] ${b.name}`); lines.push(JSON.stringify(b.input || {}, null, 2).slice(0, 300));
+          } else if (b.type === "mcp_tool_result") {
+            const c = (b.content || []).map(x => x.text || "").join(" | ");
+            lines.push(`[MCP RESULT]`); lines.push(c.slice(0, 500));
+          } else {
+            lines.push(`[${b.type}] (unhandled)`);
+          }
+          lines.push("");
         }
-        setDiagLog(log);
-        return;
-      }
-
-      log += `Stop reason: ${data.stop_reason || "unknown"}
-`;
-      log += `Blocks received: ${(data.content || []).length}
-
-`;
-
-      // Show each block with its type
-      for (const b of (data.content || [])) {
-        if (b.type === "text") {
-          log += `[TEXT]
-${b.text}
-
-`;
-        } else if (b.type === "tool_use") {
-          log += `[TOOL CALL] ${b.name}
-${JSON.stringify(b.input, null, 2).slice(0, 300)}
-
-`;
-        } else if (b.type === "tool_result") {
-          const content = (b.content || []).map(c => c.text || "").join("\n");
-          log += `[TOOL RESULT]
-${content.slice(0, 500)}
-
-`;
-        } else if (b.type === "mcp_tool_use") {
-          log += `[MCP TOOL CALL] ${b.name}
-${JSON.stringify(b.input || {}, null, 2).slice(0, 300)}
-
-`;
-        } else if (b.type === "mcp_tool_result") {
-          const content = (b.content || []).map(c => c.text || "").join("\n");
-          log += `[MCP RESULT]
-${content.slice(0, 500)}
-
-`;
-        } else {
-          log += `[${b.type}] (unhandled block type)
-
-`;
+        if ((data.content || []).length === 0) {
+          lines.push("No content blocks returned.");
+          lines.push("Likely cause: Notion MCP server rejected the token.");
+          lines.push("Fix: In Notion, share a top-level page with your integration via the '...' menu → Connections.");
         }
       }
-
-      if ((data.content || []).length === 0) {
-        log += "No content blocks returned. Possible causes:
-";
-        log += "• Notion MCP server rejected the authorization_token
-";
-        log += "• The Notion integration secret needs an OAuth token instead
-";
-        log += "• Network issue reaching mcp.notion.com
-
-";
-        log += "Try: In Notion, go to the page you shared → click '...' → Connections → confirm your integration is listed and connected.";
-      }
-
-      setDiagLog(log.trim());
+      setDiagLog(lines.join("\n").trim());
     } catch(e) {
-      setDiagLog("Exception: " + e.message + "
-
-This usually means a network error reaching the Anthropic API.");
+      setDiagLog(`Exception: ${e.message}`);
     }
   }
 
