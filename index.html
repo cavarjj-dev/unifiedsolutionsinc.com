@@ -1391,11 +1391,11 @@ Do not add any other text after the URL lines.`;
     for (const a of todo) { await pushOne(a); }
   }
 
-  // ── Find the database — diagnostic call ─────────────────────────
+  // ── Find the database — diagnostic call with full error surfacing ──
   async function findDatabase() {
     if (!apiKey || !notionToken) { alert("Add your API key and Notion token first."); return; }
     setShowDiag(true);
-    setDiagLog("Searching Notion for 'Content Library — Unified Solutions'...");
+    setDiagLog("Connecting to Notion...");
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -1407,7 +1407,7 @@ Do not add any other text after the URL lines.`;
         },
         body: JSON.stringify({
           model:      "claude-sonnet-4-20250514",
-          max_tokens: 600,
+          max_tokens: 1000,
           mcp_servers: [{
             type:                "url",
             url:                 "https://mcp.notion.com/mcp",
@@ -1415,17 +1415,91 @@ Do not add any other text after the URL lines.`;
             authorization_token: notionToken
           }],
           messages: [{ role: "user", content:
-            `Search Notion for any database or page named "Content Library" or "Content Library — Unified Solutions". 
-List everything you find with its title and URL.
-If nothing is found, list the top 5 pages and databases you DO have access to (with their titles and URLs), so the user knows what the integration can see.
-Be concise — just titles and URLs.` }]
+            "Using your Notion tools, list the first 10 pages and databases you have access to. For each one, show its title and URL. If you cannot access Notion, explain exactly why (authentication error, no pages shared, etc). Be specific." }]
         })
       });
+
+      // Show HTTP status
+      let log = `HTTP ${res.status} ${res.statusText}
+
+`;
+
       const data = await res.json();
-      const { text } = parseBlocks(data.content);
-      setDiagLog(text || "No response received.");
+
+      // Surface API-level errors immediately
+      if (data.error) {
+        log += `API ERROR [${data.error.type}]: ${data.error.message}
+
+`;
+        if (data.error.type === "authentication_error") {
+          log += "Your Anthropic API key is invalid or expired.";
+        }
+        setDiagLog(log);
+        return;
+      }
+
+      log += `Stop reason: ${data.stop_reason || "unknown"}
+`;
+      log += `Blocks received: ${(data.content || []).length}
+
+`;
+
+      // Show each block with its type
+      for (const b of (data.content || [])) {
+        if (b.type === "text") {
+          log += `[TEXT]
+${b.text}
+
+`;
+        } else if (b.type === "tool_use") {
+          log += `[TOOL CALL] ${b.name}
+${JSON.stringify(b.input, null, 2).slice(0, 300)}
+
+`;
+        } else if (b.type === "tool_result") {
+          const content = (b.content || []).map(c => c.text || "").join("
+");
+          log += `[TOOL RESULT]
+${content.slice(0, 500)}
+
+`;
+        } else if (b.type === "mcp_tool_use") {
+          log += `[MCP TOOL CALL] ${b.name}
+${JSON.stringify(b.input || {}, null, 2).slice(0, 300)}
+
+`;
+        } else if (b.type === "mcp_tool_result") {
+          const content = (b.content || []).map(c => c.text || "").join("
+");
+          log += `[MCP RESULT]
+${content.slice(0, 500)}
+
+`;
+        } else {
+          log += `[${b.type}] (unhandled block type)
+
+`;
+        }
+      }
+
+      if ((data.content || []).length === 0) {
+        log += "No content blocks returned. Possible causes:
+";
+        log += "• Notion MCP server rejected the authorization_token
+";
+        log += "• The Notion integration secret needs an OAuth token instead
+";
+        log += "• Network issue reaching mcp.notion.com
+
+";
+        log += "Try: In Notion, go to the page you shared → click '...' → Connections → confirm your integration is listed and connected.";
+      }
+
+      setDiagLog(log.trim());
     } catch(e) {
-      setDiagLog("Error: " + e.message);
+      setDiagLog("Exception: " + e.message + "
+
+This usually means a network error reaching the Anthropic API.");
     }
   }
 
