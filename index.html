@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JES4VXETRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JES4VXETRS');
-</script>
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JES4VXETRS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JES4VXETRS', { send_page_view: false });
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -57,7 +56,7 @@
       npx @babel/core --presets @babel/preset-react < index.html > index.compiled.html
     and switch the script type from "text/babel" to "text/javascript".
   -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
   <!-- ── Base Styles ───────────────────────────────────── -->
   <style>
@@ -3768,12 +3767,14 @@ function UnifiedSolutions() {
     setEditMode(false);
   }
 
-  // Inject Google Fonts
+  // Load Google Fonts via <link> (faster than @import, avoids FOUC)
   useEffect(() => {
-    const s = document.createElement("style");
-    s.textContent = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');`;
-    document.head.appendChild(s);
-    return () => document.head.removeChild(s);
+    if (document.getElementById("usi-google-fonts")) return;
+    const link = document.createElement("link");
+    link.id  = "usi-google-fonts";
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap";
+    document.head.appendChild(link);
   }, []);
 
   // Load saved content
