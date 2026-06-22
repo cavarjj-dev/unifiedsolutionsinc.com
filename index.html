@@ -454,17 +454,24 @@
        after deploying google-apps-script-webhook.gs — see that file
        for setup instructions. Safe no-op until configured.
     ───────────────────────────────────────────────────────────────── */
-    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbybEN-gQeuBB1lTuCJI1VfMSnr0bWE7iXV9tS9VWhmLSXec-Zx3wxLxlBw2C3l4Q4yu/exec"; // paste your Apps Script Web App URL here
+    const LOGGING_ENDPOINT = ""; // paste your Apps Script Web App URL here
     function logToSheet(payload) {
-      if (!LOGGING_ENDPOINT) return; // not configured yet — silent no-op
-      try {
-        fetch(LOGGING_ENDPOINT, {
-          method: "POST",
-          mode: "no-cors", // Apps Script doesn't return CORS headers; fire-and-forget
-          headers: { "Content-Type": "text/plain" }, // avoids CORS preflight
-          body: JSON.stringify(payload),
-        }).catch(() => {}); // never block the UI on logging failures
-      } catch(e) {}
+      if (!LOGGING_ENDPOINT) return;
+      // Use regular fetch with redirect:follow so the Apps Script /exec redirect
+      // is handled correctly. Apps Script web apps set Access-Control-Allow-Origin:*
+      // automatically when deployed with "Anyone" access, so CORS works fine.
+      // Content-Type: text/plain keeps it a simple CORS request (no preflight).
+      // Errors are logged to console so you can diagnose them in DevTools.
+      fetch(LOGGING_ENDPOINT, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      }).then(function(r) {
+        if (!r.ok) console.warn("[USI log] Server returned " + r.status + " for event: " + payload.type);
+      }).catch(function(err) {
+        console.warn("[USI log] Request failed for event '" + payload.type + "':", err.message);
+      });
     }
 
 
@@ -774,14 +781,14 @@ const ARTICLES = [
   { id:14, status:"planned",   pillar:"teams",       audience:["leaders","ld"],      title:"What Lives Between People: Why Team Coaching Is Different From Individual Coaching",              mins:6, tag:"Team Coaching",      summary:"The dysfunction on most senior teams doesn't live in any individual. It lives in the patterns between them — and individual coaching can't reach it." },
   { id:15, status:"planned",   pillar:"teams",       audience:["leaders"],           title:"Accountability Without Punishment: The Hardest Thing to Build on a Senior Team",                 mins:7, tag:"Team Performance",   summary:"Most leadership teams say they have accountability. Very few actually do. The distinction is in what happens when a commitment is broken." },
   { id:16, status:"planned",   pillar:"teams",       audience:["leaders","programs"],title:"What I Learned About Trust in the Army That Every Leadership Team Needs",                         mins:6, tag:"Trust & Teams",      summary:"Trust in a military unit is not a soft concept. It is an operational requirement — built deliberately, tested constantly, and rebuilt after every breach." },
-  { id:17, status:"published", pillar:"peer",        audience:["leaders","ld"],    url:"/articles/why-peer-learning-leadership-development-tools",  title:"Why Peer Learning Is One of the Most Underrated Leadership Development Tools",                    mins:6, tag:"Peer Learning",      summary:"Decades of adult learning research supports peer-based development. Most organizations still treat it as an afterthought to formal training programs." },
+  { id:17, status:"published",   pillar:"peer",        audience:["leaders","ld"],    url:"/articles/why-peer-learning-leadership-development-tools",  title:"Why Peer Learning Is One of the Most Underrated Leadership Development Tools",                    mins:6, tag:"Peer Learning",      summary:"Decades of adult learning research supports peer-based development. Most organizations still treat it as an afterthought to formal training programs." },
   { id:18, status:"planned",   pillar:"peer",        audience:["leaders","sales"],   title:"What Makes a Peer Advisory Circle Worth Having Every Time — Not Just Sometimes",                 mins:7, tag:"Peer Advisory",      summary:"The difference between peer groups that produce lasting value and ones that drift into comfortable conversation is specific, learnable, and almost never discussed." },
   { id:19, status:"planned",   pillar:"peer",        audience:["programs","faculty"],title:"The Facilitator's Dilemma: Directive vs. Generative in Group Settings",                          mins:6, tag:"Facilitation",       summary:"The most important decision a facilitator makes is often invisible: when to intervene and when to hold back. The wrong call in either direction costs the group." },
   { id:20, status:"planned",   pillar:"peer",        audience:["leaders"],           title:"COO Peer Groups: What I Learned Directing the Forum",                                             mins:6, tag:"Peer Advisory",      summary:"A directorship in a COO peer group is a master class in what senior leaders actually need from each other — and rarely get inside their own organizations." },
   { id:21, status:"published", pillar:"arc",         audience:["leaders"],           url:"/articles/tactical-leadership-war-zone-executive-coaching", title:"What Tactical Team Leadership in a War Zone Taught Me About Executive Coaching",                  mins:7, tag:"The Arc",            summary:"The parallels between leading a communications team under fire in Kosovo and coaching a VP through a high-stakes decision are structural — not metaphorical." },
   { id:22, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What I Witnessed Inside Fortune 500 Organizations That Shapes Every Coaching Conversation",     mins:7, tag:"The Arc",            summary:"After years embedded at Optum, Wells Fargo, Securian, and Shutterfly, the patterns I saw in how organizations work — and fail their leaders — became the foundation of how I coach." },
   { id:23, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"Why M&A Rarely Fails Because of the Deal: What I Saw in Integration",                           mins:6, tag:"The Arc",            summary:"The business case for most acquisitions is solid. The leadership dynamics during integration are where value goes to die — and almost no one is prepared for it." },
-  { id:24, status:"published", pillar:"arc",         audience:["leaders","ld"],      url:"/articles/consulting-mindset-vs-coaching-mindset", title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately", mins:6, tag:"The Arc", summary:"Consulting arrives with answers. Coaching listens for what is underneath. Knowing which one the moment is calling for, and being willing to switch mid-conversation, is a skill most consultants never develop." },
+  { id:24, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately",                  mins:5, tag:"The Arc",            summary:"Consulting arrives with answers. Coaching creates conditions for a leader to find their own. Knowing which mode you're in — and why — matters more than most realize." },
   { id:25, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"Why I Left Consulting: What the Move to Coaching Taught Me About What Leaders Need",            mins:6, tag:"The Arc",            summary:"The moment I realized consulting was solving the wrong problem — and what that shift revealed about the gap between what organizations buy and what leaders need." },
   { id:26, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"Why Most Leadership Assessments Don't Change Behavior (and the Ones That Do)",                  mins:7, tag:"Assessments",        summary:"The assessment-to-behavior change pipeline has a specific failure point most practitioners never address. It is not the data. It is what happens in the debrief." },
   { id:27, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The 360 Debrief: What the Numbers Can't Tell You — and What a Coach Can",                      mins:6, tag:"Assessments",        summary:"A 360 creates data. What leaders do with it is a separate question — and the answer has more to do with identity than with information." },
