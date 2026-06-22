@@ -454,7 +454,7 @@
        after deploying google-apps-script-webhook.gs — see that file
        for setup instructions. Safe no-op until configured.
     ───────────────────────────────────────────────────────────────── */
-    const LOGGING_ENDPOINT = ""; // paste your Apps Script Web App URL here
+    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbybEN-gQeuBB1lTuCJI1VfMSnr0bWE7iXV9tS9VWhmLSXec-Zx3wxLxlBw2C3l4Q4yu/exec"; // paste your Apps Script Web App URL here
     function logToSheet(payload) {
       if (!LOGGING_ENDPOINT) return; // not configured yet — silent no-op
       try {
