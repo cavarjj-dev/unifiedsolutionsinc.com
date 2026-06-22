@@ -446,6 +446,27 @@
       }
     };
 
+    /* ── Centralized cross-device logging ──────────────────────────────
+       localStorage only persists within one browser/device. This sends
+       a fire-and-forget POST to a Google Sheets webhook so you (the
+       admin) can see real activity from ALL visitors, on any device,
+       independent of GA4's aggregate metrics. Replace the URL below
+       after deploying google-apps-script-webhook.gs — see that file
+       for setup instructions. Safe no-op until configured.
+    ───────────────────────────────────────────────────────────────── */
+    const LOGGING_ENDPOINT = ""; // paste your Apps Script Web App URL here
+    function logToSheet(payload) {
+      if (!LOGGING_ENDPOINT) return; // not configured yet — silent no-op
+      try {
+        fetch(LOGGING_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors", // Apps Script doesn't return CORS headers; fire-and-forget
+          headers: { "Content-Type": "text/plain" }, // avoids CORS preflight
+          body: JSON.stringify(payload),
+        }).catch(() => {}); // never block the UI on logging failures
+      } catch(e) {}
+    }
+
 
 // ═══════════════════════════════════════════════════════
 // DESIGN TOKENS
@@ -1143,42 +1164,77 @@ function PinChanger({ onDone }) {
 
   const checks = { length:next.length>=12, upper:/[A-Z]/.test(next), lower:/[a-z]/.test(next), number:/[0-9]/.test(next), symbol:/[^A-Za-z0-9]/.test(next), match:!!(next&&next===confirm) };
   const strength = Object.values(checks).filter(Boolean).length;
-  const sColor = [T=>T,T=>C.red,T=>C.red,T=>C.orange,T=>C.yellow,T=>C.green,T=>C.green][strength]({});
+  const sColor = [C.muted,C.red,C.red,C.orange,C.gold,C.green,C.green][strength];
   const canSubmit = Object.values(checks).every(Boolean) && current.length > 0;
 
   async function handleChange() {
     if (!canSubmit) return;
     setStatus('loading');
-    const curHash = await hash(current);
-    let active = FALLBACK;
-    try { const r = await storage.get('admin-pin-hash'); if (r&&r.value) active=r.value; } catch(e){}
-    if (curHash !== active) { setStatus('error'); setMessage('Current PIN is incorrect.'); setCurrent(''); return; }
-    const newHash = await hash(next);
+    setMessage('');
     try {
-      await storage.set('admin-pin-hash', newHash);
-      setSavedHash(newHash); setStatus('success'); setUsingCustom(true);
-      setMessage('PIN updated. Active immediately — no redeployment needed.');
+      // Step 1: verify current PIN
+      if (typeof crypto === 'undefined' || !crypto.subtle) {
+        setStatus('error');
+        setMessage('Secure crypto is unavailable. This page must be loaded over HTTPS (not file://) for PIN changes to work.');
+        return;
+      }
+      const curHash = await hash(current);
+      let active = FALLBACK;
+      try { const r = await storage.get('admin-pin-hash'); if (r && r.value) active = r.value; } catch(e) {}
+      if (curHash !== active) {
+        setStatus('error');
+        setMessage('Current PIN is incorrect.');
+        setCurrent('');
+        return;
+      }
+
+      // Step 2: write new PIN
+      const newHash = await hash(next);
+      const writeResult = await storage.set('admin-pin-hash', newHash);
+      if (!writeResult) {
+        setStatus('error');
+        setMessage('Storage write failed. Your browser may be blocking local storage (private/incognito mode, or storage permissions disabled). Try a normal browser window.');
+        return;
+      }
+
+      // Step 3: verify the write actually persisted (catches silent failures)
+      const verify = await storage.get('admin-pin-hash');
+      if (!verify || verify.value !== newHash) {
+        setStatus('error');
+        setMessage('PIN was not saved correctly. Please try again, or check your browser storage settings.');
+        return;
+      }
+
+      // Confirmed saved
+      setSavedHash(newHash);
+      setStatus('success');
+      setUsingCustom(true);
+      setMessage('PIN updated and verified. Active immediately — no redeployment needed.');
       setCurrent(''); setNext(''); setConfirm('');
-    } catch(e) { setStatus('error'); setMessage('Storage error. Try again.'); }
+    } catch(e) {
+      setStatus('error');
+      setMessage('Unexpected error: ' + (e.message || 'unknown') + '. Please try again.');
+    }
   }
 
-  const inp = { width:"100%", padding:"10px 14px", fontFamily:DM, fontSize:14, background:"#050A0F", border:"1px solid rgba(255,255,255,0.15)", borderRadius:4, color:C.white, letterSpacing:3, outline:"none", boxSizing:"border-box" };
-  const lbl = { fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.5)", display:"block", marginBottom:6 };
+  // Light-theme styling — matches the AdminPanel Security tab's actual cream/white background
+  const inp = { width:"100%", padding:"10px 14px", fontFamily:DM, fontSize:14, background:C.white, border:`1px solid ${C.border}`, borderRadius:4, color:C.navy, letterSpacing:3, outline:"none", boxSizing:"border-box" };
+  const lbl = { fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.muted, display:"block", marginBottom:6 };
 
   return (
     <div style={{ maxWidth:460 }}>
-      <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:6, padding:"10px 16px", marginBottom:20, display:"flex", gap:10, alignItems:"center" }}>
+      <div style={{ background:usingCustom?"#F0FBF4":"#FFF8E7", border:`1px solid ${usingCustom?C.green:C.gold}40`, borderRadius:6, padding:"10px 16px", marginBottom:20, display:"flex", gap:10, alignItems:"center" }}>
         <span style={{ fontSize:16 }}>{usingCustom?"🔐":"⚠️"}</span>
-        <div style={{ fontFamily:DM, fontSize:12, color:usingCustom?C.green:C.orange }}>{usingCustom?"Custom PIN active — storage-based":"Default PIN in use — change recommended"}</div>
+        <div style={{ fontFamily:DM, fontSize:12, color:usingCustom?C.green:C.goldDark }}>{usingCustom?"Custom PIN active — storage-based":"Default PIN in use — change recommended"}</div>
       </div>
       {status==="success" ? (
         <div>
-          <div style={{ background:"#0D1F0D", border:`1px solid ${C.green}40`, borderRadius:6, padding:"16px 18px", marginBottom:12 }}>
+          <div style={{ background:"#F0FBF4", border:`1px solid ${C.green}40`, borderRadius:6, padding:"16px 18px", marginBottom:12 }}>
             <div style={{ fontFamily:DM, fontSize:13, fontWeight:700, color:C.green, marginBottom:6 }}>✓ {message}</div>
           </div>
-          {savedHash && <div style={{ background:"#050A0F", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:"10px 14px", marginBottom:12 }}>
-            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:4 }}>Backup hash (save offline)</div>
-            <div style={{ fontFamily:"monospace", fontSize:10, color:"rgba(255,255,255,0.5)", wordBreak:"break-all" }}>{savedHash}</div>
+          {savedHash && <div style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:4, padding:"10px 14px", marginBottom:12 }}>
+            <div style={{ fontFamily:DM, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:C.muted, marginBottom:4 }}>Backup hash (save offline)</div>
+            <div style={{ fontFamily:"monospace", fontSize:10, color:C.navy, wordBreak:"break-all" }}>{savedHash}</div>
           </div>}
           <div style={{ display:"flex", gap:8 }}>
             {onDone && <button onClick={onDone} style={{ background:C.gold, border:"none", borderRadius:4, padding:"8px 20px", fontFamily:DM, fontWeight:700, fontSize:13, color:C.white, cursor:"pointer" }}>Done</button>}
@@ -1193,22 +1249,22 @@ function PinChanger({ onDone }) {
             <input type="password" value={next} onChange={e=>{setNext(e.target.value);setStatus(null);}} placeholder="12+ characters" style={inp} autoComplete="new-password"/>
             {next && <div style={{ marginTop:8 }}>
               <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
-                <div style={{ flex:1, background:"rgba(255,255,255,0.08)", borderRadius:2, height:4 }}><div style={{ width:`${(strength/6)*100}%`, height:"100%", background:sColor, borderRadius:2, transition:"width 0.2s" }}/></div>
+                <div style={{ flex:1, background:C.creamDark, borderRadius:2, height:4 }}><div style={{ width:`${(strength/6)*100}%`, height:"100%", background:sColor, borderRadius:2, transition:"width 0.2s" }}/></div>
                 <span style={{ fontFamily:DM, fontSize:11, color:sColor, minWidth:50 }}>{["","Weak","Weak","Fair","Good","Strong","Strong"][strength]}</span>
               </div>
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:3 }}>
                 {[[checks.length,"12+ characters"],[checks.upper,"Uppercase"],[checks.lower,"Lowercase"],[checks.number,"Number"],[checks.symbol,"Symbol"],[checks.match,"Passwords match"]].map(([ok,l],i)=>(
                   <div key={i} style={{ display:"flex", gap:5, alignItems:"center" }}>
-                    <span style={{ fontSize:11, color:ok?C.green:"rgba(255,255,255,0.2)" }}>{ok?"✓":"○"}</span>
-                    <span style={{ fontFamily:DM, fontSize:11, color:ok?"rgba(255,255,255,0.7)":"rgba(255,255,255,0.3)" }}>{l}</span>
+                    <span style={{ fontSize:11, color:ok?C.green:C.border }}>{ok?"✓":"○"}</span>
+                    <span style={{ fontFamily:DM, fontSize:11, color:ok?C.navy:C.muted }}>{l}</span>
                   </div>
                 ))}
               </div>
             </div>}
           </div>
-          <div><label style={lbl}>Confirm New PIN</label><input type="password" value={confirm} onChange={e=>{setConfirm(e.target.value);setStatus(null);}} placeholder="Repeat new PIN" style={{ ...inp, borderColor:confirm&&!checks.match?"#E07070":"rgba(255,255,255,0.15)" }} autoComplete="new-password"/></div>
-          {status==="error" && <div style={{ background:"rgba(224,82,82,0.12)", border:"1px solid rgba(224,82,82,0.3)", borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:"#E07070" }}>{message}</div>}
-          <button onClick={handleChange} disabled={!canSubmit||status==="loading"} style={{ background:canSubmit?C.gold:"rgba(255,255,255,0.06)", color:canSubmit?C.white:"rgba(255,255,255,0.2)", border:"none", borderRadius:4, padding:"12px 24px", fontFamily:DM, fontWeight:700, fontSize:14, cursor:canSubmit?"pointer":"not-allowed" }}>
+          <div><label style={lbl}>Confirm New PIN</label><input type="password" value={confirm} onChange={e=>{setConfirm(e.target.value);setStatus(null);}} placeholder="Repeat new PIN" style={{ ...inp, borderColor:confirm&&!checks.match?C.red:C.border }} autoComplete="new-password"/></div>
+          {status==="error" && <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}40`, borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:C.red, lineHeight:1.5 }}>{message}</div>}
+          <button onClick={handleChange} disabled={!canSubmit||status==="loading"} style={{ background:canSubmit?C.gold:C.creamDark, color:canSubmit?C.white:C.muted, border:"none", borderRadius:4, padding:"12px 24px", fontFamily:DM, fontWeight:700, fontSize:14, cursor:canSubmit?"pointer":"not-allowed" }}>
             {status==="loading"?"Updating...":"Update Admin PIN"}
           </button>
         </div>
@@ -1217,9 +1273,7 @@ function PinChanger({ onDone }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// CONTENT PIPELINE PANEL — topic library with Notion push
-// ═══════════════════════════════════════════════════════════════════
+
 function ContentPipelinePanel({ apiKey, notionToken }) {
   const [nStatus, setNStatus] = useState({});
   const [pillar,  setPillar]  = useState("all");
@@ -2911,6 +2965,7 @@ function ResourcesPage() {
                         localStorage.setItem('usi-article-clicks', JSON.stringify(c));
                       } catch(e) {}
                       window.track('article_click', { event_label: a.title, article_id: a.id });
+                      logToSheet({ type: 'article_click', articleId: a.id, title: a.title, pillar: a.pillar, referrer: document.referrer || '(direct)' });
                       window.location.href = a.url;
                     }
                   }}
@@ -3146,6 +3201,18 @@ function AssessmentPage() {
       existing.push(record);
       await storage.set("assessment-results", JSON.stringify(existing));
       setSavedMsg("Results saved ✓");
+
+      // Centralized cross-device log — independent of this browser's localStorage
+      const sortedDomains = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+      const primaryDomainId = sortedDomains[0]?.[0];
+      const primaryDomain   = DOMAINS.find(d => d.id === primaryDomainId)?.label || primaryDomainId || "";
+      logToSheet({
+        type: "assessment_complete",
+        email: email || "",
+        primaryDomain,
+        scores,
+        consentGiven,
+      });
     } catch (e) { setSavedMsg("Save failed — storage unavailable"); }
   }
 
