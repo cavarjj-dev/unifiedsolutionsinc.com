@@ -2249,21 +2249,101 @@ function HomePage() {
                 30 minutes · No pitch · A real conversation about what you are navigating
               </p>
             </div>
-            {/* Right: Arc panel */}
-            <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32 }}>
-              <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:24 }}>The Arc</div>
-              {[
-                { phase:"Phase 1 · 1999–2003", title:"U.S. Army", role:"Tactical team leader (31R)", note:"Kosovo · Iraq · Communication under fire" },
-                { phase:"Phase 2 · 2013–present", title:"Fortune 500 Consulting", role:"Optum · Wells Fargo · Securian · Shutterfly", note:"M&A · Agile · Regulatory Compliance · COO Forum Director" },
-                { phase:"Phase 3 · Present", title:"Executive Coaching Practice", role:"ICF PCC · ACTC", note:"1,200+ hrs · 222+ clients · ExecOnline & Emeritus Faculty" },
-              ].map((p,i) => (
-                <div key={i} style={{ marginBottom: i<2?28:0, paddingBottom: i<2?28:0, borderBottom: i<2?`1px solid rgba(255,255,255,0.1)`:"none" }}>
-                  <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:4 }}>{p.phase}</div>
-                  <div style={{ fontFamily:PF, fontSize:19, color:C.white, fontWeight:600, marginBottom:3 }}>{p.title}</div>
-                  <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.6)", marginBottom:3 }}>{p.role}</div>
-                  <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", letterSpacing:0.3 }}>{p.note}</div>
-                </div>
-              ))}
+            {/* Right: Arc — vertical timeline */}
+            <div style={{ padding:"4px 0 4px 4px" }}>
+
+              {/* Section header with extending rule */}
+              <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:36 }}>
+                <div style={{ fontFamily:DM, fontSize:9, letterSpacing:4, textTransform:"uppercase", color:C.gold, flexShrink:0 }}>The Arc</div>
+                <div style={{ flex:1, height:"0.5px", background:`linear-gradient(to right, ${C.gold}70, transparent)` }}/>
+              </div>
+
+              {/* Timeline */}
+              <div style={{ position:"relative", paddingLeft:22 }}>
+
+                {/* Continuous vertical thread — brightens toward the present */}
+                <div style={{ position:"absolute", left:3, top:6, bottom:6, width:"0.5px",
+                  background:`linear-gradient(to bottom,
+                    rgba(196,144,58,0.25) 0%,
+                    rgba(196,144,58,0.55) 35%,
+                    rgba(196,144,58,0.85) 65%,
+                    ${C.gold} 100%)` }}/>
+
+                {[
+                  {
+                    years:"1999 – 2003", num:"I",
+                    title:"U.S. Army",
+                    role:"Tactical team leader · 31R",
+                    note:"Kosovo · Iraq · Communication under fire",
+                    dotOpacity:0.45, labelOpacity:0.55, current:false
+                  },
+                  {
+                    years:"2013 – 2020", num:"II",
+                    title:"Fortune 500 Consulting",
+                    role:"Optum · Wells Fargo · Securian · Shutterfly",
+                    note:"M&A · Agile · Regulatory · COO Forum Director",
+                    dotOpacity:0.7, labelOpacity:0.75, current:false
+                  },
+                  {
+                    years:"Present", num:"III",
+                    title:"Executive Coaching Practice",
+                    role:"ICF PCC · ACTC · 1,200+ hrs",
+                    note:"222+ clients · ExecOnline & Emeritus Faculty",
+                    dotOpacity:1, labelOpacity:1, current:true
+                  },
+                ].map((p,i) => (
+                  <div key={i} style={{ position:"relative", marginBottom: i<2 ? 30 : 0 }}>
+
+                    {/* Timeline marker */}
+                    <div style={{ position:"absolute", left:-22, top:7 }}>
+                      {/* Outer ring — faint glow on current phase */}
+                      {p.current && <div style={{ position:"absolute", width:14, height:14, borderRadius:"50%",
+                        background:`radial-gradient(circle, ${C.gold}30 0%, transparent 70%)`,
+                        top:-3, left:-3 }}/>}
+                      {/* Dot */}
+                      <div style={{ width:8, height:8, borderRadius:"50%",
+                        background:C.gold, opacity:p.dotOpacity,
+                        boxShadow: p.current ? `0 0 6px ${C.gold}60` : "none" }}/>
+                    </div>
+
+                    {/* Phase label + year */}
+                    <div style={{ display:"flex", alignItems:"baseline", gap:8, marginBottom:5 }}>
+                      <div style={{ fontFamily:DM, fontSize:9, letterSpacing:2.5, textTransform:"uppercase",
+                        color:C.gold, opacity:p.labelOpacity }}>
+                        Phase {p.num}
+                      </div>
+                      <div style={{ fontFamily:DM, fontSize:10, color:`rgba(196,144,58,${p.labelOpacity * 0.55})`,
+                        letterSpacing:0.5 }}>
+                        {p.years}
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <div style={{ fontFamily:PF,
+                      fontSize: p.current ? 20 : 17,
+                      color: p.current ? C.white : "rgba(255,255,255,0.78)",
+                      fontWeight:600, lineHeight:1.2, marginBottom:4,
+                      letterSpacing: p.current ? "-0.3px" : 0 }}>
+                      {p.title}
+                    </div>
+
+                    {/* Role */}
+                    <div style={{ fontFamily:DM, fontSize:13,
+                      color: p.current ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.42)",
+                      marginBottom:3, letterSpacing:0.2 }}>
+                      {p.role}
+                    </div>
+
+                    {/* Note — italic on past, gold-tinted on present */}
+                    <div style={{ fontFamily:DM, fontSize:11, letterSpacing:0.4,
+                      fontStyle: p.current ? "normal" : "italic",
+                      color: p.current ? `rgba(196,144,58,0.65)` : "rgba(255,255,255,0.28)" }}>
+                      {p.note}
+                    </div>
+
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -2811,7 +2891,7 @@ function CoachingPage() {
       <section style={{ background:C.navy, padding:"80px 24px 0" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>The Unified Method</div>
-          <EditableBlock text={content.coaching?.headline||"The format shifts to fit what you need. The depth never does."} onSave={v=>updateContent("coaching.headline",v)} fieldName="coaching.headline" tag="h1" style={{ fontFamily:PF, fontSize:48, color:C.white, margin:"0 0 24px", maxWidth:700, letterSpacing:-0.5 }} />
+          <EditableBlock text={content.coaching?.headline||"A coach doesn't tell you what to do with your organization. A coach helps you become the leader who can figure that out and do it well."} onSave={v=>updateContent("coaching.headline",v)} fieldName="coaching.headline" tag="h1" style={{ fontFamily:PF, fontSize:"clamp(24px,3vw,38px)", color:C.white, margin:"0 0 24px", maxWidth:780, lineHeight:1.2, letterSpacing:"-0.3px" }} />
           <p style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.6)", maxWidth:600, lineHeight:1.7, margin:"0 0 48px" }}>Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.</p>
           <div style={{ display:"flex", gap:2, flexWrap:"wrap" }}>
             {SERVICES.map((s,i) => (
@@ -3818,8 +3898,8 @@ function Footer() {
 // ═══════════════════════════════════════════════════════
 const DEFAULT_CONTENT = {
   hero: {
-    headline: "Leadership that holds under real pressure.",
-    body: "Army tactical leader. Fortune 500 consultant. 1,200+ hours coaching senior executives. The arc is one continuous story about what it costs to lead when it actually matters — and what develops in people who learn to do it well.",
+    headline: "Most senior leaders are performing a version of the role they haven't yet fully inhabited.",
+    body: "The gap between the title you've earned and the leader it asks you to be — that's not a failure. That's the actual work. And it's precisely what coaching is built to address when it's done at the level this role demands.",
   },
   about: {
     eyebrow: "ICF PCC · ACTC · Founder, Unified Solutions Inc.",
@@ -3835,8 +3915,8 @@ const DEFAULT_CONTENT = {
     ctaBody: "30 minutes. No obligation. A real conversation.",
   },
   coaching: {
-    headline: "The format shifts to fit what you need. The depth never does.",
-    subtitle: "Four structured ways to engage — for individual leaders, leadership teams, peer cohorts, and organizations. Each begins with a conversation designed to establish genuine fit before any commitment is made.",
+    headline: "A coach doesn't tell you what to do with your organization. A coach helps you become the leader who can figure that out and do it well.",
+    subtitle: "That distinction matters — and not every coaching practice holds it. This one does. ICF PCC, ACTC, 1,200+ hours. Four ways to engage — each designed for genuine fit before any commitment is made.",
   },
   resources: {
     headline: "Tools, frameworks, and thinking for leaders who do serious work.",
