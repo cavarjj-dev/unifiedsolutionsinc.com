@@ -454,7 +454,7 @@
        after deploying google-apps-script-webhook.gs — see that file
        for setup instructions. Safe no-op until configured.
     ───────────────────────────────────────────────────────────────── */
-    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbykE-AtWVyKjJqcIYk5u8sMFuEtAIGKTyyD-3pm8ECA-GAuPtbrXQjnWipPEsUX73gx/exec"; // paste your Apps Script Web App URL here
+    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbykE-AtWVyKjJqcIYk5u8sMFuEtAIGKTyyD-3pm8ECA-GAuPtbrXQjnWipPEsUX73gx/exec"; // Apps Script Web App URL
     function logToSheet(payload) {
       if (!LOGGING_ENDPOINT) return;
       // Use regular fetch with redirect:follow so the Apps Script /exec redirect
@@ -788,7 +788,7 @@ const ARTICLES = [
   { id:21, status:"published", pillar:"arc",         audience:["leaders"],           url:"/articles/tactical-leadership-war-zone-executive-coaching", title:"What Tactical Team Leadership in a War Zone Taught Me About Executive Coaching",                  mins:7, tag:"The Arc",            summary:"The parallels between leading a communications team under fire in Kosovo and coaching a VP through a high-stakes decision are structural — not metaphorical." },
   { id:22, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"What I Witnessed Inside Fortune 500 Organizations That Shapes Every Coaching Conversation",     mins:7, tag:"The Arc",            summary:"After years embedded at Optum, Wells Fargo, Securian, and Shutterfly, the patterns I saw in how organizations work — and fail their leaders — became the foundation of how I coach." },
   { id:23, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"Why M&A Rarely Fails Because of the Deal: What I Saw in Integration",                           mins:6, tag:"The Arc",            summary:"The business case for most acquisitions is solid. The leadership dynamics during integration are where value goes to die — and almost no one is prepared for it." },
-  { id:24, status:"published", pillar:"arc", audience:["leaders","ld"], url:"/articles/consulting-mindset-vs-coaching-mindset", title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately", mins:6, tag:"The Arc", summary:"Consulting arrives with answers. Coaching listens for what is underneath. Knowing which one the moment is calling for, and being willing to switch mid-conversation, is a skill most consultants never develop." },
+  { id:24, status:"planned",   pillar:"arc",         audience:["leaders"],           title:"The Consulting Mindset vs. The Coaching Mindset: How I Use Both Deliberately",                  mins:5, tag:"The Arc",            summary:"Consulting arrives with answers. Coaching creates conditions for a leader to find their own. Knowing which mode you're in — and why — matters more than most realize." },
   { id:25, status:"planned",   pillar:"arc",         audience:["leaders","ld"],      title:"Why I Left Consulting: What the Move to Coaching Taught Me About What Leaders Need",            mins:6, tag:"The Arc",            summary:"The moment I realized consulting was solving the wrong problem — and what that shift revealed about the gap between what organizations buy and what leaders need." },
   { id:26, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"Why Most Leadership Assessments Don't Change Behavior (and the Ones That Do)",                  mins:7, tag:"Assessments",        summary:"The assessment-to-behavior change pipeline has a specific failure point most practitioners never address. It is not the data. It is what happens in the debrief." },
   { id:27, status:"planned",   pillar:"assessment",  audience:["leaders","ld"],      title:"The 360 Debrief: What the Numbers Can't Tell You — and What a Coach Can",                      mins:6, tag:"Assessments",        summary:"A 360 creates data. What leaders do with it is a separate question — and the answer has more to do with identity than with information." },
@@ -2223,9 +2223,17 @@ function HomePage() {
                 style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
               />
               <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-                <Btn onClick={() => setPage("assessment")}>Find Your Pressure Point</Btn>
-                <Btn variant="white" onClick={() => setPage("coaching")}>See How It Works</Btn>
+                <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+                  onClick={() => window.track("book_call_click",{location:"hero"})}>
+                  Book a Discovery Call
+                </Btn>
+                <Btn variant="white" onClick={() => setPage("assessment")}>
+                  Find Your Pressure Point →
+                </Btn>
               </div>
+              <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", margin:"16px 0 0", letterSpacing:0.3 }}>
+                30 minutes · No pitch · A real conversation about what you are navigating
+              </p>
             </div>
             {/* Right: Arc panel */}
             <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32 }}>
@@ -2266,6 +2274,42 @@ function HomePage() {
 
       {/* ── PROGRAM CONTEXT STRIP ────────────────────────── */}
       <ProgramContextStrip />
+
+      {/* ── DISCOVERY CALL EXPLAINER ─────────────────────── */}
+      <section style={{ background:C.white, padding:"72px 24px", borderTop:`1px solid ${C.border}` }}>
+        <div style={{ maxWidth:960, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:52 }}>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>The First Step</div>
+            <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.navy, margin:"0 0 16px", fontWeight:600 }}>30 minutes. No pitch. A real conversation.</h2>
+            <p style={{ fontFamily:DM, fontSize:17, color:C.muted, maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>
+              Most discovery calls are thinly veiled sales conversations. This one isn't. You'll walk away with clarity on where the real pressure is — whether we work together or not.
+            </p>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:2, marginBottom:48 }}>
+            {[
+              { num:"01", heading:"You bring the situation.", body:"The decision you're circling, the team dynamic that isn't working, the role that's stretched past what anyone prepared you for. No pre-work required." },
+              { num:"02", heading:"I bring the frame.", body:"25 years across military leadership, Fortune 500 transformation, and 1,200+ coaching hours. Pattern recognition is the product." },
+              { num:"03", heading:"We find the real question.", body:"Most leaders arrive with a presenting problem. The work — in that call and in any engagement that follows — is finding what's actually underneath it." },
+            ].map((s,i) => (
+              <div key={i} style={{ background:C.cream, padding:"32px 28px" }}>
+                <div style={{ fontFamily:DM, fontSize:11, letterSpacing:3, color:C.gold, marginBottom:12 }}>{s.num}</div>
+                <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:10, fontWeight:600, lineHeight:1.3 }}>{s.heading}</div>
+                <p style={{ fontFamily:DM, fontSize:14, color:C.muted, margin:0, lineHeight:1.75 }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center", gap:14 }}>
+            <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+              style={{ fontSize:16, padding:"14px 40px" }}
+              onClick={() => window.track("book_call_click",{location:"what_a_call_looks_like"})}>
+              Book that 30 minutes
+            </Btn>
+            <button onClick={() => setPage("assessment")} style={{ background:"none", border:"none", fontFamily:DM, fontSize:14, color:C.muted, cursor:"pointer", textDecoration:"underline" }}>
+              Not ready to talk? Find your pressure point first →
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* ── SERVICES ─────────────────────────────────────── */}
       <section style={{ background:C.cream, padding:"96px 24px" }}>
@@ -2355,12 +2399,54 @@ function HomePage() {
         </div>
       </section>
 
+      {/* ── RESOURCES BRIDGE ──────────────────────────────── */}
+      <section style={{ background:C.creamDark, padding:"72px 24px", borderTop:`1px solid ${C.border}` }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"center" }}>
+          <div>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>Before You Decide Anything</div>
+            <h2 style={{ fontFamily:PF, fontSize:"clamp(24px,3.5vw,36px)", color:C.navy, margin:"0 0 16px", fontWeight:600, lineHeight:1.2 }}>The practice publishes its thinking. Read it first.</h2>
+            <p style={{ fontFamily:DM, fontSize:16, color:C.muted, margin:"0 0 28px", lineHeight:1.75 }}>Articles on decision quality, team dynamics, identity under pressure, and what the research actually says about how leaders develop. No content calendar filler.</p>
+            <div style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
+              <Btn onClick={() => setPage("resources")}>Browse the Library</Btn>
+              <Btn variant="outline" onClick={() => setPage("assessment")}>Find Your Pressure Point →</Btn>
+            </div>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+            {ARTICLES.filter(a => a.status === "published").slice(0,4).map(a => {
+              const pillar = CONTENT_PILLARS.find(p => p.id === a.pillar);
+              return (
+                <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
+                  style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.white, border:`1px solid ${C.border}`, borderRadius:4, textDecoration:"none", transition:"border-color 0.15s" }}
+                  onClick={() => window.track("article_click",{event_label:a.title,article_id:a.id})}>
+                  <div style={{ width:3, height:40, background:pillar?.color||C.gold, borderRadius:2, flexShrink:0, marginTop:3 }}/>
+                  <div>
+                    <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy, lineHeight:1.3, marginBottom:3 }}>{a.title}</div>
+                    <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{pillar?.label} · {a.mins} min</div>
+                  </div>
+                </a>
+              );
+            })}
+            <button onClick={() => setPage("resources")} style={{ background:"none", border:"none", fontFamily:DM, fontSize:13, color:C.gold, cursor:"pointer", textAlign:"left", padding:"6px 0", textDecoration:"underline" }}>
+              View all {ARTICLES.filter(a=>a.status==="published").length} published articles →
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* ── FINAL CTA ────────────────────────────────────── */}
       <section style={{ background:C.navy, padding:"80px 24px", textAlign:"center" }}>
-        <div style={{ maxWidth:600, margin:"0 auto" }}>
-          <h2 style={{ fontFamily:PF, fontSize:36, color:C.white, margin:"0 0 20px", fontStyle:"italic" }}>30 minutes to find out if this is the right fit.</h2>
-          <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 32px", lineHeight:1.7 }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ fontSize:16, padding:"16px 40px" }}>Book a Discovery Call</Btn>
+        <div style={{ maxWidth:640, margin:"0 auto" }}>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>The Simplest Next Step</div>
+          <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.white, margin:"0 0 20px", fontStyle:"italic", fontWeight:500 }}>30 minutes to find out if this is the right fit.</h2>
+          <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 36px", lineHeight:1.75, maxWidth:500, marginLeft:"auto", marginRight:"auto" }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+            style={{ fontSize:16, padding:"16px 40px" }}
+            onClick={() => window.track("book_call_click",{location:"final_cta"})}>
+            Book a Discovery Call
+          </Btn>
+          <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.3)", marginTop:20 }}>
+            Or start with 8 minutes: <button onClick={() => setPage("assessment")} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.45)", fontFamily:DM, fontSize:13, cursor:"pointer", textDecoration:"underline" }}>Take the Leadership Pressure Point Assessment</button>
+          </p>
         </div>
       </section>
     </div>
@@ -2826,7 +2912,11 @@ function CoachingPage() {
                 ))}
               </div>
               <div style={{ marginTop:40, textAlign:"center" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Book a 30-minute discovery call</Btn>
+                <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+  style={{ fontSize:16, padding:"14px 36px" }}
+  onClick={() => window.track("book_call_click",{location:"coaching_page"})}>
+  Book a 30-minute Discovery Call
+</Btn>
                 <div style={{ fontFamily:DM, fontSize:13, color:C.muted, marginTop:12 }}>No commitment. Discovery calls typically happen within 48 hours of scheduling.</div>
               </div>
             </div>
@@ -3020,6 +3110,34 @@ function ResourcesPage() {
       </section>
 
       {/* Email signup */}
+      {/* ── CONVERSION BRIDGE ─────────────────────────────── */}
+      <section style={{ background:C.navy, padding:"72px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:2 }}>
+            {/* Path 1: Book a call */}
+            <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRight:"none", padding:"40px 36px" }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>For leaders who know what they need</div>
+              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>The content resonated. Now have the conversation.</h3>
+              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.55)", margin:"0 0 28px", lineHeight:1.75 }}>30 minutes. A real conversation about your specific situation. No obligation, no pitch, and you'll leave with something useful regardless of what happens next.</p>
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+                style={{ padding:"12px 28px" }}
+                onClick={() => window.track("book_call_click",{location:"resources_bridge"})}>
+                Book a Discovery Call
+              </Btn>
+              <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.25)", margin:"14px 0 0" }}>Julian Johnson · ICF PCC · contact@unifiedsolutionsinc.com</p>
+            </div>
+            {/* Path 2: Assessment */}
+            <div style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.1)", padding:"40px 36px" }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", marginBottom:14 }}>For leaders who want the data first</div>
+              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>Find out exactly where the pressure is before any conversation.</h3>
+              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.45)", margin:"0 0 28px", lineHeight:1.75 }}>18 questions across 6 leadership domains. 8 minutes. A domain-specific breakdown of where your capacity is being pulled and where it's holding. Free, no email required.</p>
+              <Btn variant="white" onClick={() => setPage("assessment")}>Find Your Pressure Point →</Btn>
+              <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.2)", margin:"14px 0 0" }}>Takes ~8 minutes · Results are immediate · No account required</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section style={{ background:C.creamDark, padding:"56px 24px", borderTop:`1px solid ${C.border}` }}>
         <div style={{ maxWidth:520, margin:"0 auto", textAlign:"center" }}>
           <h2 style={{ fontFamily:PF, fontSize:28, color:C.navy, margin:"0 0 12px" }}>New articles when they're worth reading.</h2>
