@@ -468,7 +468,7 @@
        after deploying google-apps-script-webhook.gs — see that file
        for setup instructions. Safe no-op until configured.
     ───────────────────────────────────────────────────────────────── */
-    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbykE-AtWVyKjJqcIYk5u8sMFuEtAIGKTyyD-3pm8ECA-GAuPtbrXQjnWipPEsUX73gx/exec"; // Apps Script Web App URL
+    const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbwS8yfowwdJAdMLRZReBVge2FUpqDJAfqRSWWALa0KZk11Eq97lFQv92-qykvWSnkww/exec"; // Apps Script Web App URL
     function logToSheet(payload) {
       if (!LOGGING_ENDPOINT) return;
       // Use regular fetch with redirect:follow so the Apps Script /exec redirect
@@ -1764,8 +1764,17 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
     try {
       const res  = await fetch(loggingEndpoint + "?type=ga4_article_clicks", { method:"GET", redirect:"follow" });
       const data = await res.json();
-      if (data.success) { setGa4Data(data); setGa4At(new Date().toLocaleTimeString()); setGa4State("done"); setSource("ga4"); }
-      else { setGa4Err(data.error||"GA4 query failed. See setup steps below."); setGa4State("error"); }
+      if (data.success) {
+        setGa4Data(data); setGa4At(new Date().toLocaleTimeString()); setGa4State("done"); setSource("ga4");
+      } else {
+        // data.status present but no success/error = old script without GA4 support deployed
+        const isOldScript = data.status && !data.error;
+        const errMsg = isOldScript
+          ? "Apps Script needs to be redeployed. The current deployed version does not include GA4 support yet. Replace your Apps Script code with the latest .gs file, then: Deploy → Manage deployments → Edit → New version → Update."
+          : (data.error || "GA4 query returned an unexpected response. Check the Apps Script logs.");
+        setGa4Err(errMsg);
+        setGa4State("error");
+      }
     } catch(e) { setGa4Err("Could not reach Apps Script: " + e.message); setGa4State("error"); }
   }
 
@@ -1839,14 +1848,14 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
         <div style={{ background:"#FFFBEB", border:`1px solid ${C.gold}40`, borderRadius:4, padding:"8px 12px",
           marginBottom:8, fontFamily:DM, fontSize:11, color:C.goldDark, lineHeight:1.6 }}>
           <strong>GA4:</strong> {ga4Err}
-          {ga4Err.includes("not set") && (
-            <span> Set <code>GA4_PROPERTY_ID</code> in your Apps Script and redeploy.</span>
-          )}
-          {(ga4Err.includes("not found") || ga4Err.includes("dimension")) && (
-            <span> Register <code>event_label</code> as a custom dimension in GA4 → Configure → Custom definitions → Create (scope: Event, parameter: event_label) then wait 24 hrs.</span>
-          )}
           {ga4Err.includes("not available") && (
-            <span> Add Google Analytics Data API as a service in Apps Script: Services (+) → Google Analytics Data API → Add.</span>
+            <span> Add Google Analytics Data API: in Apps Script editor, click Services (+) → Google Analytics Data API → Add. Then redeploy.</span>
+          )}
+          {ga4Err.includes("permission") && (
+            <span> Check your GA4_PROPERTY_ID is the numeric 9-digit ID (not G-XXXXXXX) and that your Google account has access to that GA4 property.</span>
+          )}
+          {ga4Err.includes("dimension") && (
+            <span> Register event_label as a custom dimension: GA4 → Configure → Custom definitions → Create (Scope: Event, Parameter: event_label). Wait 24 hrs after creating.</span>
           )}
         </div>
       )}
