@@ -1706,103 +1706,157 @@ Do not add any other text after the URL lines.`;
 // local browser counts as a fallback. Lives in Admin → Dashboard.
 // ═══════════════════════════════════════════════════════════════════
 function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
-  const [serverData,   setServerData]   = useState(null);   // from Apps Script
-  const [fetchState,   setFetchState]   = useState("idle"); // idle | loading | done | error
-  const [errorMsg,     setErrorMsg]     = useState("");
-  const [fetchedAt,    setFetchedAt]    = useState(null);
+  const [sheetData,  setSheetData]  = useState(null);   // {counts:{id:{title,count}}, totalEvents}
+  const [ga4Data,    setGa4Data]    = useState(null);   // {counts:{title:{title,count}}, totalEvents}
+  const [source,     setSource]     = useState("local"); // local | sheet | ga4
+  const [sheetState, setSheetState] = useState("idle"); // idle|loading|done|error
+  const [ga4State,   setGa4State]   = useState("idle");
+  const [sheetErr,   setSheetErr]   = useState("");
+  const [ga4Err,     setGa4Err]     = useState("");
+  const [sheetAt,    setSheetAt]    = useState(null);
+  const [ga4At,      setGa4At]      = useState(null);
 
-  // Decide which data source to display
-  const usingServer  = serverData !== null;
-  const counts       = usingServer ? serverData.counts : {};
-  const totalClicks  = usingServer
-    ? Object.values(counts).reduce((s,c) => s + (c.count||0), 0)
-    : Object.values(localClicks).reduce((s,n) => s + n, 0);
-  const articlesRead = usingServer
-    ? Object.values(counts).filter(c => c.count > 0).length
-    : Object.keys(localClicks).filter(k => localClicks[k] > 0).length;
-
-  // Top article
-  let topArticle = null, topCount = 0;
-  if (usingServer) {
-    const topEntry = Object.values(counts).sort((a,b) => b.count - a.count)[0];
-    if (topEntry) { topArticle = topEntry; topCount = topEntry.count; }
-  } else {
-    const topEntry = Object.entries(localClicks).sort((a,b) => b[1]-a[1])[0];
-    if (topEntry) {
-      const found = ARTICLES.find(a => a.id === Number(topEntry[0]));
-      if (found) { topArticle = { title: found.title }; topCount = topEntry[1]; }
+  // ── Derived stats for currently active source ───────────────────
+  function getStats(src) {
+    if (src === "local") {
+      const total = Object.values(localClicks).reduce((s,n)=>s+n, 0);
+      const read  = Object.keys(localClicks).filter(k=>localClicks[k]>0).length;
+      const top   = Object.entries(localClicks).sort((a,b)=>b[1]-a[1])[0];
+      const topA  = top ? ARTICLES.find(a=>a.id===Number(top[0])) : null;
+      return { total, read, top: topA ? { title:topA.title, count:top[1] } : null };
     }
+    if (src === "sheet" && sheetData) {
+      const counts = Object.values(sheetData.counts||{});
+      const total  = counts.reduce((s,c)=>s+(c.count||0), 0);
+      const read   = counts.filter(c=>c.count>0).length;
+      const top    = [...counts].sort((a,b)=>b.count-a.count)[0];
+      return { total, read, top: top||null };
+    }
+    if (src === "ga4" && ga4Data) {
+      const counts = Object.values(ga4Data.counts||{});
+      const total  = counts.reduce((s,c)=>s+(c.count||0), 0);
+      const read   = counts.filter(c=>c.count>0).length;
+      const top    = [...counts].sort((a,b)=>b.count-a.count)[0];
+      return { total, read, top: top||null };
+    }
+    return { total:0, read:0, top:null };
   }
 
-  async function loadFromServer() {
-    if (!loggingEndpoint) {
-      setErrorMsg("LOGGING_ENDPOINT not configured. Deploy the Apps Script and paste the URL in index.html.");
-      setFetchState("error");
-      return;
-    }
-    setFetchState("loading");
-    setErrorMsg("");
+  const stats = getStats(source);
+  const published = ARTICLES.filter(a=>a.status==="published").length;
+
+  // ── Load from Google Sheet (Apps Script) ────────────────────────
+  async function loadSheet() {
+    if (!loggingEndpoint) { setSheetErr("LOGGING_ENDPOINT not configured in index.html."); setSheetState("error"); return; }
+    setSheetState("loading"); setSheetErr("");
     try {
-      const url = loggingEndpoint + "?type=article_clicks";
-      const res = await fetch(url, { method:"GET", redirect:"follow" });
+      const res  = await fetch(loggingEndpoint + "?type=article_clicks", { method:"GET", redirect:"follow" });
       const data = await res.json();
-      if (data.success) {
-        setServerData(data);
-        setFetchedAt(new Date().toLocaleTimeString());
-        setFetchState("done");
-      } else {
-        setErrorMsg(data.error || "Apps Script returned an error.");
-        setFetchState("error");
-      }
-    } catch(e) {
-      setErrorMsg("Could not reach the Apps Script endpoint. Check the URL and re-deploy if needed. Error: " + e.message);
-      setFetchState("error");
-    }
+      if (data.success) { setSheetData(data); setSheetAt(new Date().toLocaleTimeString()); setSheetState("done"); setSource("sheet"); }
+      else { setSheetErr(data.error||"Apps Script returned an error."); setSheetState("error"); }
+    } catch(e) { setSheetErr("Could not reach Apps Script: " + e.message); setSheetState("error"); }
   }
 
-  const published = ARTICLES.filter(a => a.status === "published").length;
-  const notOpened = published - articlesRead;
+  // ── Load from GA4 via Apps Script proxy ─────────────────────────
+  async function loadGA4() {
+    if (!loggingEndpoint) { setGa4Err("LOGGING_ENDPOINT not configured in index.html."); setGa4State("error"); return; }
+    setGa4State("loading"); setGa4Err("");
+    try {
+      const res  = await fetch(loggingEndpoint + "?type=ga4_article_clicks", { method:"GET", redirect:"follow" });
+      const data = await res.json();
+      if (data.success) { setGa4Data(data); setGa4At(new Date().toLocaleTimeString()); setGa4State("done"); setSource("ga4"); }
+      else { setGa4Err(data.error||"GA4 query failed. See setup steps below."); setGa4State("error"); }
+    } catch(e) { setGa4Err("Could not reach Apps Script: " + e.message); setGa4State("error"); }
+  }
+
+  // ── Source tab config ───────────────────────────────────────────
+  const sources = [
+    { id:"local", label:"This Browser",  dot:C.orange, ready:true,                  timestamp:null,     reload:null },
+    { id:"sheet", label:"Google Sheet",  dot:sheetState==="done"?C.green:C.muted,   ready:sheetState==="done", timestamp:sheetAt, reload:loadSheet },
+    { id:"ga4",   label:"Google Analytics", dot:ga4State==="done"?C.gold:C.muted,  ready:ga4State==="done",   timestamp:ga4At,   reload:loadGA4   },
+  ];
 
   return (
     <div style={{ marginBottom:20 }}>
 
-      {/* Header row with source indicator + refresh button */}
-      <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
-        <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:C.muted }}>
+      {/* ── Source tabs ─────────────────────────────────────────── */}
+      <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:12, flexWrap:"wrap" }}>
+        <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1.5, textTransform:"uppercase", color:C.muted, flexShrink:0 }}>
           Article Activity
         </div>
-        <div style={{ flex:1, height:1, background:C.border }}/>
-        {usingServer ? (
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <div style={{ width:7, height:7, borderRadius:"50%", background:C.green }}/>
-            <span style={{ fontFamily:DM, fontSize:11, color:C.green }}>All visitors · fetched {fetchedAt}</span>
-            <button onClick={loadFromServer} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:4, padding:"2px 8px", fontFamily:DM, fontSize:11, color:C.muted, cursor:"pointer" }}>Refresh</button>
-          </div>
-        ) : (
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <div style={{ width:7, height:7, borderRadius:"50%", background:C.orange }}/>
-            <span style={{ fontFamily:DM, fontSize:11, color:C.muted }}>This browser only</span>
-            <button onClick={loadFromServer} disabled={fetchState==="loading"}
-              style={{ background:fetchState==="loading"?C.border:C.navy, color:C.white, border:"none", borderRadius:4, padding:"4px 12px", fontFamily:DM, fontSize:11, fontWeight:600, cursor:fetchState==="loading"?"not-allowed":"pointer" }}>
-              {fetchState==="loading" ? "Loading…" : "Load all-visitor totals"}
+        <div style={{ flex:1, height:1, background:C.border, minWidth:20 }}/>
+        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+          {sources.map(s => (
+            <button key={s.id} onClick={() => s.ready && setSource(s.id)}
+              style={{ display:"flex", alignItems:"center", gap:5, padding:"4px 10px",
+                background: source===s.id ? C.navy : "transparent",
+                color: source===s.id ? C.white : C.muted,
+                border: `1px solid ${source===s.id ? C.navy : C.border}`,
+                borderRadius:20, fontFamily:DM, fontSize:11, fontWeight:source===s.id?600:400,
+                cursor: s.ready ? "pointer" : "default",
+                opacity: !s.ready && source!==s.id ? 0.6 : 1 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:s.dot, flexShrink:0 }}/>
+              {s.label}
+              {s.timestamp && <span style={{ fontSize:9, opacity:0.6 }}>{s.timestamp}</span>}
             </button>
-          </div>
-        )}
+          ))}
+        </div>
       </div>
 
-      {/* Error message */}
-      {fetchState==="error" && (
-        <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"8px 12px", marginBottom:10, fontFamily:DM, fontSize:12, color:C.red, lineHeight:1.6 }}>
-          {errorMsg}
+      {/* ── Load buttons for non-local sources ──────────────────── */}
+      {(sheetState==="idle"||ga4State==="idle"||sheetState==="error"||ga4State==="error") && (
+        <div style={{ display:"flex", gap:8, marginBottom:12, flexWrap:"wrap" }}>
+          {sheetState!=="done" && (
+            <button onClick={loadSheet} disabled={sheetState==="loading"}
+              style={{ background:sheetState==="loading"?C.border:C.navyMid, color:C.white, border:"none",
+                borderRadius:4, padding:"5px 14px", fontFamily:DM, fontSize:11, fontWeight:600,
+                cursor:sheetState==="loading"?"not-allowed":"pointer", display:"flex", alignItems:"center", gap:5 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:C.green }}/>
+              {sheetState==="loading" ? "Loading sheet…" : sheetState==="error" ? "Retry Sheet" : "Load from Google Sheet"}
+            </button>
+          )}
+          {ga4State!=="done" && (
+            <button onClick={loadGA4} disabled={ga4State==="loading"}
+              style={{ background:ga4State==="loading"?C.border:"transparent", color:ga4State==="loading"?C.muted:C.navy,
+                border:`1px solid ${ga4State==="loading"?C.border:C.gold}`, borderRadius:4, padding:"5px 14px",
+                fontFamily:DM, fontSize:11, fontWeight:600, cursor:ga4State==="loading"?"not-allowed":"pointer",
+                display:"flex", alignItems:"center", gap:5 }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:C.gold }}/>
+              {ga4State==="loading" ? "Querying GA4…" : ga4State==="error" ? "Retry GA4" : "Load from Google Analytics"}
+            </button>
+          )}
         </div>
       )}
 
-      {/* Stats grid */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom: topArticle ? 8 : 0 }}>
+      {/* ── Error messages ───────────────────────────────────────── */}
+      {sheetState==="error" && sheetErr && (
+        <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"8px 12px",
+          marginBottom:8, fontFamily:DM, fontSize:11, color:C.red, lineHeight:1.6 }}>
+          Sheet: {sheetErr}
+        </div>
+      )}
+      {ga4State==="error" && ga4Err && (
+        <div style={{ background:"#FFFBEB", border:`1px solid ${C.gold}40`, borderRadius:4, padding:"8px 12px",
+          marginBottom:8, fontFamily:DM, fontSize:11, color:C.goldDark, lineHeight:1.6 }}>
+          <strong>GA4:</strong> {ga4Err}
+          {ga4Err.includes("not set") && (
+            <span> Set <code>GA4_PROPERTY_ID</code> in your Apps Script and redeploy.</span>
+          )}
+          {(ga4Err.includes("not found") || ga4Err.includes("dimension")) && (
+            <span> Register <code>event_label</code> as a custom dimension in GA4 → Configure → Custom definitions → Create (scope: Event, parameter: event_label) then wait 24 hrs.</span>
+          )}
+          {ga4Err.includes("not available") && (
+            <span> Add Google Analytics Data API as a service in Apps Script: Services (+) → Google Analytics Data API → Add.</span>
+          )}
+        </div>
+      )}
+
+      {/* ── Stats grid ──────────────────────────────────────────── */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom: stats.top ? 8 : 0 }}>
         {[
-          [totalClicks,  "Total Clicks",     C.gold],
-          [articlesRead, "Articles Opened",  C.navy],
-          [notOpened,    "Not Yet Opened",   C.muted],
+          [stats.total,            "Total Clicks",    C.gold],
+          [stats.read,             "Articles Opened", C.navy],
+          [published - stats.read, "Not Yet Opened",  C.muted],
         ].map(([v,l,c],i) => (
           <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"14px 18px" }}>
             <div style={{ fontFamily:PF, fontSize:26, color:c, fontWeight:700 }}>{v}</div>
@@ -1811,21 +1865,52 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
         ))}
       </div>
 
-      {/* Most-read article */}
-      {topArticle && (
-        <div style={{ background:`${C.gold}10`, border:`1px solid ${C.gold}30`, borderRadius:6, padding:"9px 14px", display:"flex", alignItems:"center", gap:10 }}>
-          <span style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, whiteSpace:"nowrap" }}>Most read</span>
-          <span style={{ fontFamily:DM, fontSize:12, color:C.navy, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{topArticle.title}</span>
-          <span style={{ fontFamily:PF, fontSize:16, color:C.gold, fontWeight:700, flexShrink:0 }}>{topCount} {topCount===1?"click":"clicks"}</span>
+      {/* ── Cross-source comparison (only when both Sheet + GA4 loaded) ── */}
+      {sheetData && ga4Data && (
+        <div style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6,
+          padding:"10px 14px", marginBottom:8 }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1.5, textTransform:"uppercase",
+            color:C.muted, marginBottom:8 }}>Source comparison</div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+            {[
+              ["Google Sheet",      C.green, Object.values(sheetData.counts||{}).reduce((s,c)=>s+(c.count||0),0), "rows logged since webhook launch"],
+              ["Google Analytics",  C.gold,  Object.values(ga4Data.counts||{}).reduce((s,c)=>s+(c.count||0),0),  "events tracked (all time)"],
+            ].map(([label,color,total,note],i) => (
+              <div key={i} style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <div style={{ width:3, height:32, background:color, borderRadius:2, flexShrink:0 }}/>
+                <div>
+                  <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
+                    <span style={{ fontFamily:PF, fontSize:20, color:C.navy, fontWeight:700 }}>{total}</span>
+                    <span style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{label}</span>
+                  </div>
+                  <div style={{ fontFamily:DM, fontSize:10, color:C.muted, fontStyle:"italic" }}>{note}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Empty state */}
-      {totalClicks === 0 && fetchState !== "error" && (
-        <div style={{ fontFamily:DM, fontSize:12, color:C.muted, fontStyle:"italic", padding:"6px 0" }}>
-          {usingServer
-            ? "No article clicks in the Google Sheet yet — clicks appear as visitors use the site."
-            : "No clicks in this browser yet. Click "Load all-visitor totals" to pull real counts from your Google Sheet."}
+      {/* ── Most-read strip ──────────────────────────────────────── */}
+      {stats.top && (
+        <div style={{ background:`${C.gold}10`, border:`1px solid ${C.gold}30`, borderRadius:6,
+          padding:"9px 14px", display:"flex", alignItems:"center", gap:10, marginBottom:6 }}>
+          <span style={{ fontFamily:DM, fontSize:10, color:C.gold, fontWeight:700,
+            letterSpacing:1, textTransform:"uppercase", whiteSpace:"nowrap" }}>Most read</span>
+          <span style={{ fontFamily:DM, fontSize:12, color:C.navy, flex:1,
+            overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{stats.top.title}</span>
+          <span style={{ fontFamily:PF, fontSize:16, color:C.gold, fontWeight:700, flexShrink:0 }}>
+            {stats.top.count} {stats.top.count===1?"click":"clicks"}
+          </span>
+        </div>
+      )}
+
+      {/* ── Empty state ──────────────────────────────────────────── */}
+      {stats.total === 0 && sheetState !== "error" && ga4State !== "error" && (
+        <div style={{ fontFamily:DM, fontSize:11, color:C.muted, fontStyle:"italic", padding:"4px 0" }}>
+          {source==="local"   && "No clicks in this browser. Load Sheet or GA4 totals above to see all-visitor data."}
+          {source==="sheet"   && "No rows in the ArticleClicks tab yet — clicks appear as visitors use the site."}
+          {source==="ga4"     && "No article_click events in GA4 yet, or custom dimension not registered."}
         </div>
       )}
     </div>
