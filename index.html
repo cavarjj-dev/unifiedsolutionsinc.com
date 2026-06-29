@@ -1700,6 +1700,139 @@ Do not add any other text after the URL lines.`;
 }
 
 
+// ═══════════════════════════════════════════════════════════════════
+// ARTICLE STATS PANEL
+// Shows cross-visitor totals (from Apps Script / Google Sheet) and
+// local browser counts as a fallback. Lives in Admin → Dashboard.
+// ═══════════════════════════════════════════════════════════════════
+function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
+  const [serverData,   setServerData]   = useState(null);   // from Apps Script
+  const [fetchState,   setFetchState]   = useState("idle"); // idle | loading | done | error
+  const [errorMsg,     setErrorMsg]     = useState("");
+  const [fetchedAt,    setFetchedAt]    = useState(null);
+
+  // Decide which data source to display
+  const usingServer  = serverData !== null;
+  const counts       = usingServer ? serverData.counts : {};
+  const totalClicks  = usingServer
+    ? Object.values(counts).reduce((s,c) => s + (c.count||0), 0)
+    : Object.values(localClicks).reduce((s,n) => s + n, 0);
+  const articlesRead = usingServer
+    ? Object.values(counts).filter(c => c.count > 0).length
+    : Object.keys(localClicks).filter(k => localClicks[k] > 0).length;
+
+  // Top article
+  let topArticle = null, topCount = 0;
+  if (usingServer) {
+    const topEntry = Object.values(counts).sort((a,b) => b.count - a.count)[0];
+    if (topEntry) { topArticle = topEntry; topCount = topEntry.count; }
+  } else {
+    const topEntry = Object.entries(localClicks).sort((a,b) => b[1]-a[1])[0];
+    if (topEntry) {
+      const found = ARTICLES.find(a => a.id === Number(topEntry[0]));
+      if (found) { topArticle = { title: found.title }; topCount = topEntry[1]; }
+    }
+  }
+
+  async function loadFromServer() {
+    if (!loggingEndpoint) {
+      setErrorMsg("LOGGING_ENDPOINT not configured. Deploy the Apps Script and paste the URL in index.html.");
+      setFetchState("error");
+      return;
+    }
+    setFetchState("loading");
+    setErrorMsg("");
+    try {
+      const url = loggingEndpoint + "?type=article_clicks";
+      const res = await fetch(url, { method:"GET", redirect:"follow" });
+      const data = await res.json();
+      if (data.success) {
+        setServerData(data);
+        setFetchedAt(new Date().toLocaleTimeString());
+        setFetchState("done");
+      } else {
+        setErrorMsg(data.error || "Apps Script returned an error.");
+        setFetchState("error");
+      }
+    } catch(e) {
+      setErrorMsg("Could not reach the Apps Script endpoint. Check the URL and re-deploy if needed. Error: " + e.message);
+      setFetchState("error");
+    }
+  }
+
+  const published = ARTICLES.filter(a => a.status === "published").length;
+  const notOpened = published - articlesRead;
+
+  return (
+    <div style={{ marginBottom:20 }}>
+
+      {/* Header row with source indicator + refresh button */}
+      <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
+        <div style={{ fontFamily:DM, fontSize:11, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:C.muted }}>
+          Article Activity
+        </div>
+        <div style={{ flex:1, height:1, background:C.border }}/>
+        {usingServer ? (
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ width:7, height:7, borderRadius:"50%", background:C.green }}/>
+            <span style={{ fontFamily:DM, fontSize:11, color:C.green }}>All visitors · fetched {fetchedAt}</span>
+            <button onClick={loadFromServer} style={{ background:"none", border:`1px solid ${C.border}`, borderRadius:4, padding:"2px 8px", fontFamily:DM, fontSize:11, color:C.muted, cursor:"pointer" }}>Refresh</button>
+          </div>
+        ) : (
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ width:7, height:7, borderRadius:"50%", background:C.orange }}/>
+            <span style={{ fontFamily:DM, fontSize:11, color:C.muted }}>This browser only</span>
+            <button onClick={loadFromServer} disabled={fetchState==="loading"}
+              style={{ background:fetchState==="loading"?C.border:C.navy, color:C.white, border:"none", borderRadius:4, padding:"4px 12px", fontFamily:DM, fontSize:11, fontWeight:600, cursor:fetchState==="loading"?"not-allowed":"pointer" }}>
+              {fetchState==="loading" ? "Loading…" : "Load all-visitor totals"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Error message */}
+      {fetchState==="error" && (
+        <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"8px 12px", marginBottom:10, fontFamily:DM, fontSize:12, color:C.red, lineHeight:1.6 }}>
+          {errorMsg}
+        </div>
+      )}
+
+      {/* Stats grid */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom: topArticle ? 8 : 0 }}>
+        {[
+          [totalClicks,  "Total Clicks",     C.gold],
+          [articlesRead, "Articles Opened",  C.navy],
+          [notOpened,    "Not Yet Opened",   C.muted],
+        ].map(([v,l,c],i) => (
+          <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"14px 18px" }}>
+            <div style={{ fontFamily:PF, fontSize:26, color:c, fontWeight:700 }}>{v}</div>
+            <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Most-read article */}
+      {topArticle && (
+        <div style={{ background:`${C.gold}10`, border:`1px solid ${C.gold}30`, borderRadius:6, padding:"9px 14px", display:"flex", alignItems:"center", gap:10 }}>
+          <span style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, whiteSpace:"nowrap" }}>Most read</span>
+          <span style={{ fontFamily:DM, fontSize:12, color:C.navy, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{topArticle.title}</span>
+          <span style={{ fontFamily:PF, fontSize:16, color:C.gold, fontWeight:700, flexShrink:0 }}>{topCount} {topCount===1?"click":"clicks"}</span>
+        </div>
+      )}
+
+      {/* Empty state */}
+      {totalClicks === 0 && fetchState !== "error" && (
+        <div style={{ fontFamily:DM, fontSize:12, color:C.muted, fontStyle:"italic", padding:"6px 0" }}>
+          {usingServer
+            ? "No article clicks in the Google Sheet yet — clicks appear as visitors use the site."
+            : "No clicks in this browser yet. Click "Load all-visitor totals" to pull real counts from your Google Sheet."}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 // ═══════════════════════════════════════════════════════════════
 // ARTICLE ANALYTICS PANEL
 // Shows per-article click counts stored in localStorage
@@ -1814,12 +1947,14 @@ function AdminPanel({ onClose, initialTab="crm" }) {
   const [selected, setSelected]     = useState(null);
   const [notionStatus, setNotionStatus] = useState({});
   const [adminTab, setAdminTab]     = useState(initialTab);
+  const [articleClicks, setArticleClicks] = useState({});
 
   useEffect(() => { loadRecords(); }, []);
 
   async function loadRecords() {
     setLoading(true);
     try { const r = await storage.get("assessment-results"); if (r) setRecords(JSON.parse(r.value)); } catch(e) {}
+    try { const raw = localStorage.getItem("usi-article-clicks"); if (raw) setArticleClicks(JSON.parse(raw)); } catch(e) {}
     setLoading(false);
   }
 
@@ -1893,14 +2028,19 @@ function AdminPanel({ onClose, initialTab="crm" }) {
           {/* ── CRM TAB ── */}
           {adminTab==="crm" && (
             <div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14, marginBottom:24 }}>
-                {[[records.length,"Total Submissions"],[records.filter(r=>r.email).length,"With Email"],[Object.values(notionStatus).filter(s=>s==="synced").length,"Synced to Notion"]].map(([v,l],i)=>(
+              {/* ── Assessment stats ── */}
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom:10 }}>
+                {[[records.length,"Assessment Submissions"],[records.filter(r=>r.email).length,"With Email"],[Object.values(notionStatus).filter(s=>s==="synced").length,"Synced to Notion"]].map(([v,l],i)=>(
                   <div key={i} style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6, padding:"14px 18px" }}>
                     <div style={{ fontFamily:PF, fontSize:26, color:C.navy, fontWeight:700 }}>{v}</div>
                     <div style={{ fontFamily:DM, fontSize:11, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:4 }}>{l}</div>
                   </div>
                 ))}
               </div>
+
+              {/* ── Article click stats — cross-visitor via Apps Script + local browser ── */}
+              <ArticleStatsPanel loggingEndpoint={LOGGING_ENDPOINT} localClicks={articleClicks} />
+
               <div style={{ display:"flex", gap:8, marginBottom:16 }}>
                 <button onClick={loadRecords} style={{ background:C.navyMid, color:C.white, border:"none", borderRadius:4, padding:"6px 14px", fontFamily:DM, fontSize:12, cursor:"pointer" }}>↻ Refresh</button>
                 <button onClick={clearAll} style={{ background:"rgba(155,34,38,0.15)", color:"#E07070", border:"1px solid rgba(155,34,38,0.3)", borderRadius:4, padding:"6px 14px", fontFamily:DM, fontSize:12, cursor:"pointer" }}>Clear All</button>
