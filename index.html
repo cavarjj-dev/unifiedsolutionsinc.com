@@ -3896,8 +3896,12 @@ function BookPage() {
           </div>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
             <div
-              className="calendly-inline-widget"
-              data-url="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone?hide_gdpr_banner=1"
+              ref={el => {
+                if (el && !el.dataset.loaded && typeof Calendly !== 'undefined') {
+                  el.dataset.loaded = 'true';
+                  Calendly.initInlineWidget({ url: 'https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone?hide_gdpr_banner=1', parentElement: el });
+                }
+              }}
               style={{ minWidth:280, height:660, overflow:"hidden" }}
             />
             <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:12 }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
