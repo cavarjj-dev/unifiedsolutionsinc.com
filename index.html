@@ -422,6 +422,9 @@
       if (typeof gtag === 'function') { gtag('event', eventName, params); }
     };
   </script>
+  <!-- Calendly embed -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
   <!-- WCAG 2.1 SC 2.4.1 — Bypass Blocks: Skip Navigation Link -->
@@ -2421,27 +2424,27 @@ function HomePage() {
   const [activeService, setActiveService] = useState(0);
   const [activeTesti, setActiveTesti] = useState(0);
   const statsRef = useRef(null);
-  const [counted, setCounted] = useState(false);
+  const countedRef = useRef(false);
   const [counts, setCounts] = useState({ hrs:0, clients:0, years:0, partners:0 });
   useEffect(() => {
     const ob = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !counted) { setCounted(true); animateStats(); }
-    }, { threshold:0.5 });
+      if (e.isIntersecting && !countedRef.current) {
+        countedRef.current = true;
+        const targets = { hrs:1200, clients:222, years:25, partners:9 };
+        const dur = 1600, steps = 50;
+        let step = 0;
+        const t = setInterval(() => {
+          step++;
+          const p = step/steps;
+          const ease = 1 - Math.pow(1-p, 3);
+          setCounts({ hrs:Math.round(ease*targets.hrs), clients:Math.round(ease*targets.clients), years:Math.round(ease*targets.years), partners:Math.round(ease*targets.partners) });
+          if (step >= steps) clearInterval(t);
+        }, dur/steps);
+      }
+    }, { threshold:0.2 });
     if (statsRef.current) ob.observe(statsRef.current);
     return () => ob.disconnect();
-  }, [counted]);
-  function animateStats() {
-    const targets = { hrs:1200, clients:222, years:25, partners:9 };
-    const dur = 1600, steps = 50;
-    let step = 0;
-    const t = setInterval(() => {
-      step++;
-      const p = step/steps;
-      const e = 1 - Math.pow(1-p, 3);
-      setCounts({ hrs:Math.round(e*targets.hrs), clients:Math.round(e*targets.clients), years:Math.round(e*targets.years), partners:Math.round(e*targets.partners) });
-      if (step >= steps) clearInterval(t);
-    }, dur/steps);
-  }
+  }, []);
 
   const h = content.hero;
   return (
@@ -3892,13 +3895,12 @@ function BookPage() {
             </div>
           </div>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
-            <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)", marginBottom:20 }}>Calendly scheduling widget loads here</div>
-            <div style={{ background:"rgba(255,255,255,0.04)", border:`1px dashed ${C.gold}40`, borderRadius:4, padding:48, marginBottom:20 }}>
-              <div style={{ fontFamily:PF, fontSize:20, color:C.white, marginBottom:8 }}>Discovery Call</div>
-              <div style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", marginBottom:24 }}>30 min · Zoom · Free</div>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Schedule via Calendly</Btn>
-            </div>
-            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)" }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
+            <div
+              className="calendly-inline-widget"
+              data-url="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone?hide_gdpr_banner=1"
+              style={{ minWidth:280, height:660, overflow:"hidden" }}
+            />
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:12 }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
           </div>
         </div>
       </section>
