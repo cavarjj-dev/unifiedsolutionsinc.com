@@ -99,27 +99,11 @@
 
   <!--
   ═══════════════════════════════════════════════════════════════
-  VIDEO PLACEHOLDER — HOW TO ACTIVATE
+  VIDEO — ACTIVATED (YouTube embed)
   ═══════════════════════════════════════════════════════════════
-  Find the div with id="intro-video" inside the AboutPage component
-  (search for "intro-video" in the script below).
-
-  To show the video:
-    Change  display:"none"  →  display:"block"
-
-  To use YouTube:
-    Set src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-    (e.g. for https://youtube.com/watch?v=dQw4w9WgXcQ → use dQw4w9WgXcQ)
-
-  To use Vimeo:
-    Set src="https://player.vimeo.com/video/YOUR_VIMEO_ID"
-
-  To use a self-hosted MP4 (uploaded to your GitHub repo):
-    Replace the entire <iframe ... /> with:
-    <video controls style={{width:"100%",borderRadius:4}}
-      src="./videos/julian-intro.mp4" />
-
-  File: upload your video as /videos/julian-intro.mp4 in the repo root.
+  YouTube ID: 7BhvW68aabA
+  Privacy-enhanced embed via youtube-nocookie.com
+  Embedded in AboutPage between bio header and Career Arc.
   ═══════════════════════════════════════════════════════════════
   -->
 
@@ -3039,29 +3023,35 @@ function AboutPage() {
                 <div key={c} style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.55)", background:"rgba(255,255,255,0.05)", borderRadius:2, padding:"5px 12px" }}>{c}</div>
               ))}
 
-            {/* ── VIDEO PLACEHOLDER ─────────────────────────────────────
-                TO ACTIVATE: find the div below with display:"none" and change to display:"block"
-                YOUTUBE:  set src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-                VIMEO:    set src="https://player.vimeo.com/video/YOUR_VIMEO_ID"
-                SELF-HOSTED: replace iframe with <video controls src="./videos/julian-intro.mp4" />
-            ─────────────────────────────────────────────────────────── */}
-            <div id="intro-video" style={{ display:"none", marginTop:28 }}>
-              <div style={{ position:"relative", paddingBottom:"56.25%", height:0, overflow:"hidden", borderRadius:4, background:"rgba(0,0,0,0.3)" }}>
-                <iframe
-                  src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-                  title="Julian Johnson — Introduction"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", borderRadius:4 }}
-                />
-              </div>
-              <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:8, textAlign:"center" }}>
-                60–90 second introduction from Julian
-              </div>
-            </div>
+            {/* Video moved to dedicated section below */}
           </div>
         </div>
+        </div>
+      </section>
+
+      {/* ── INTRO VIDEO SHOWCASE ────────────────────────────────── */}
+      <section style={{ background:`linear-gradient(180deg, ${C.navy} 0%, #0F2840 100%)`, padding:"64px 24px 80px", borderTop:"1px solid rgba(196,144,58,0.15)" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", flexDirection:"column", alignItems:"center" }}>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Hear It Directly</div>
+          <h2 style={{ fontFamily:PF, fontSize:28, color:C.white, fontWeight:600, marginBottom:8, textAlign:"center" }}>Two Minutes with Julian</h2>
+          <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.5)", marginBottom:36, textAlign:"center", maxWidth:480, lineHeight:1.6 }}>
+            Before we ever sit down together, you should know who you are sitting across from. No script. Just the truth.
+          </p>
+          <div style={{ position:"relative", width:"100%", maxWidth:720, borderRadius:12, overflow:"hidden", boxShadow:"0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,144,58,0.2)" }}>
+            <div style={{ position:"relative", paddingBottom:"56.25%", height:0, overflow:"hidden" }}>
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/7BhvW68aabA?rel=0&modestbranding=1&color=white"
+                title="Julian Johnson — Executive Coaching for the Whole Person"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", borderRadius:12 }}
+              />
+            </div>
+          </div>
+          <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.3)", marginTop:16, textAlign:"center", letterSpacing:0.3 }}>
+            2 min · Direct to camera · Plymouth, MN
+          </p>
         </div>
       </section>
 
