@@ -1,5 +1,5 @@
 # Unified Solutions Inc. — robots.txt
-# https://www.unifiedsolutionsinc.com
+# https://unifiedsolutionsinc.com
 
 User-agent: *
 Allow: /
@@ -19,4 +19,4 @@ Disallow: /book.html
 # Block Google verification file from showing in search results
 Disallow: /googleddfca5e5d59e2d8d.html
 
-Sitemap: https://www.unifiedsolutionsinc.com/sitemap.xml
+Sitemap: https://unifiedsolutionsinc.com/sitemap.xml

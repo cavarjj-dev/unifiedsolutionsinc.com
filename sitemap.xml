@@ -6,82 +6,160 @@
 
   <!-- ── Core Pages ─────────────────────────────────────────────────── -->
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/about</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/about</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/coaching</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/coaching</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/resources</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/resources</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/assessment</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/assessment</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/book</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/book</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/privacy</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 
-  <!-- ── Articles ───────────────────────────────────────────────────── -->
+  <!-- ── Articles (19 total) ─────────────────────────────────────────── -->
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/laser-focused-coaching</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/agile-transformation-leading-change</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/big-five-vs-hexaco</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/big-five-vs-hexaco</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/group-vs-team-coaching</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/consulting-mindset-vs-coaching-mindset</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/decision-making-under-pressure</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/csuite-board-communication</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/psychological-safety</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/decision-making-under-pressure</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/identity-senior-leadership</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.unifiedsolutionsinc.com/articles/personal-sustainability</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://unifiedsolutionsinc.com/articles/external-partnership-pattern-recognition</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/group-vs-team-coaching</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/holistic-coaching-what-it-actually-means</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/kolb-learning-cycle-leadership</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/laser-focused-coaching</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/leadership-identity</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/leading-through-ma</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/personal-sustainability-leadership</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/psychological-safety-leadership</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/succession-planning-senior-leaders</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/sustainable-high-performance</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/tactical-leadership-war-zone-executive-coaching</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://unifiedsolutionsinc.com/articles/why-peer-learning-leadership-development-tools</loc>
+    <lastmod>2026-07-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
