@@ -97,7 +97,7 @@
     X-Content-Type-Options  = "nosniff"
     Referrer-Policy         = "strict-origin-when-cross-origin"
     Permissions-Policy      = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://mcp.notion.com https://calendly.com; frame-src https://calendly.com https://www.youtube.com https://player.vimeo.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://mcp.notion.com https://calendly.com; frame-src https://calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com;"
 
 [[headers]]
   for = "/assets/*"

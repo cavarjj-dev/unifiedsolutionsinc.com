@@ -5,25 +5,32 @@
   <title>Unified Solutions Inc.</title>
   <script>
     var path = window.location.pathname;
+    if (path.length > 1 && path.endsWith('/')) {
+      path = path.slice(0, -1);
+    }
 
     // ── Legacy URL aliases (Squarespace-era routes) ──────────────────
     var aliases = {
-      '/book-a-call':      '/',
-      '/privacy-policy':   '/?spa=%2Fprivacy',
-      '/contractingopportunities': '/',
+      '/book-a-call': '/book',
+      '/privacy-policy': '/privacy',
+      '/contractingopportunities': '/'
     };
-    if (aliases[path]) {
-      // For book-a-call: store the /book SPA route then go to index
-      if (path === '/book-a-call') {
-        sessionStorage.setItem('spa-redirect', window.location.origin + '/book');
-      }
-      window.location.replace('/');
 
-    // ── Article paths: if we get here the file truly doesn't exist ───
+    if (Object.prototype.hasOwnProperty.call(aliases, path)) {
+      var target = aliases[path];
+      if (target === '/') {
+        window.location.replace('/');
+      } else {
+        // Prefer static route copies (HTTP 200). Fall back to SPA recovery if missing.
+        sessionStorage.setItem('spa-redirect', window.location.origin + target);
+        window.location.replace(target);
+      }
+
+    // ── Article paths: if we get here the file truly does not exist ───
     } else if (path.indexOf('/articles/') === 0) {
       window.location.replace('/resources');
 
-    // ── SPA routes (/about, /coaching, etc.) ─────────────────────────
+    // ── Unknown SPA-ish routes: recover via homepage SPA router ───────
     } else {
       sessionStorage.setItem('spa-redirect', window.location.href);
       window.location.replace('/');

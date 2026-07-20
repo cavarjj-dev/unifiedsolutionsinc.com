@@ -5,28 +5,48 @@ ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson
 
 ---
 
-## Deployment (Netlify)
+## Deployment (GitHub Pages — live)
 
-1. Replace all files in this repo with the files in this folder
-2. Commit and push to `main`
-3. Netlify auto-deploys — no build step, no npm, no config needed
-4. `netlify.toml` handles all routing and security headers automatically
+**Live host:** GitHub Pages (`Server: GitHub.com`) via repo `cavarjj-dev/unifiedsolutionsinc.com`, branch `main`, custom domain `unifiedsolutionsinc.com` (`CNAME`).
+
+1. Edit source files in this repo (root `index.html` is the SPA source of truth)
+2. After changing `index.html`, sync SPA route copies:
+   ```bash
+   python scripts/sync-spa-routes.py
+   ```
+3. Commit and push to `main`
+4. GitHub Pages deploys automatically — no build step, no npm
+
+**Why route copies exist:** GitHub Pages does not apply `netlify.toml` rewrites. Folders like `about/index.html` make `/about` return **HTTP 200** with the SPA. Without them, core routes return **HTTP 404** (only rescued in-browser via `404.html` + `sessionStorage`).
 
 **File structure:**
 ```
 /
-├── index.html          ← Full single-page app (all 6 pages)
-├── netlify.toml        ← Routing rules + security headers (required)
-├── 404.html            ← Fallback for non-Netlify hosts (GitHub Pages)
-├── README.md
-└── assets/             ← Add your images here
-    ├── og-home.jpg     ← 1200×630 social share image
-    └── headshot.jpg    ← Your headshot (add when ready)
+├── index.html              ← SPA source of truth (all core pages)
+├── about/index.html        ← GH Pages 200 copy (synced)
+├── coaching/index.html
+├── resources/index.html
+├── assessment/index.html
+├── book/index.html
+├── privacy/index.html
+├── articles/               ← Static article pages (real files)
+├── 404.html                ← Legacy / unknown path recovery
+├── netlify.toml            ← Optional Netlify config (CSP + rewrites if rehosted)
+├── scripts/sync-spa-routes.py
+├── sitemap.xml
+├── robots.txt
+├── llms.txt
+├── CNAME
+└── assets/
 ```
+
+### Optional: Netlify
+
+`netlify.toml` remains valid if the site is ever pointed at Netlify again (200 rewrites + security headers). Until then it is **inert on the live host**. Prefer keeping it in sync (especially CSP `frame-src` for `youtube-nocookie.com`) so a host move does not break embeds.
 
 ---
 
-## Netlify Analytics — Per-Page Tracking
+## Per-Page URLs
 
 The site uses `history.pushState` so each page navigation updates the URL:
 
@@ -38,38 +58,25 @@ The site uses `history.pushState` so each page navigation updates the URL:
 | Resources | `/resources` |
 | Assessment | `/assessment` |
 | Book a Call | `/book` |
-
-Netlify Analytics (server-side) reads these as distinct page hits — you'll see
-per-page traffic, bounce rate, and top pages in your Netlify dashboard.
-
-The `netlify.toml` redirect rules (`status = 200`) ensure that visiting
-`/about` directly or refreshing any page serves `index.html` without a 404,
-while keeping the URL clean in the browser bar.
+| Privacy | `/privacy` |
 
 ---
 
-## Activating the Video (When Ready)
+## Activating / Editing the Video
 
-1. Open `index.html` in any text editor
-2. Search for `id="intro-video"`
-3. Change `display:"none"` → `display:"block"`
-4. For YouTube: set `src="https://www.youtube.com/embed/YOUR_VIDEO_ID"`
-5. For Vimeo: set `src="https://player.vimeo.com/video/YOUR_VIMEO_ID"`
-6. For self-hosted MP4: upload as `videos/julian-intro.mp4`, then replace
-   the `<iframe>` with `<video controls src="./videos/julian-intro.mp4" />`
-
-Full instructions also in the `<!-- VIDEO PLACEHOLDER -->` comment at the
-top of `index.html`.
+1. Open root `index.html` in any text editor
+2. Search for `Two Minutes with Julian` / the About iframe
+3. Privacy-enhanced embed uses `https://www.youtube-nocookie.com/embed/...`
+4. Re-run `python scripts/sync-spa-routes.py` after edits
+5. Commit and push
 
 ---
 
 ## Admin Access (Assessment CRM Dashboard)
 
 1. Go to `unifiedsolutionsinc.com/assessment`
-2. Scroll to the bottom of the intro page
-3. Click the subtle "Admin Access" link
-4. Enter PIN: `USC2026`
-   *(to change: find `const ADMIN_PIN = "USC2026"` in index.html)*
+2. Use Ctrl+Shift+A for admin (no public nav link)
+3. PIN is hashed client-side (see admin Security tab / code comments)
 
 **First-time setup — Notion sync:**
 - In the Admin dashboard, paste your Anthropic API key in the field at the top
@@ -80,9 +87,9 @@ top of `index.html`.
 
 ## CMS / Content Editing
 
-1. Click the ✏️ icon in the top-right of the nav bar
-2. Any editable text shows a gold dashed outline — click to edit
-3. Click "Save Changes" in the gold bar at the top
+1. Enter admin mode (Ctrl+Shift+A)
+2. Editable text shows a gold dashed outline — click to edit
+3. Save changes in the gold bar
 4. Changes persist in localStorage for this browser session
 
 ---
@@ -103,15 +110,10 @@ top of `index.html`.
 **Stack:** React 18 (CDN) · Babel Standalone · Google Fonts · localStorage
 
 **No build step required.** Babel Standalone compiles JSX in the browser.
-If you want faster first-load (~1–2s improvement), run once:
-```bash
-npx @babel/core --presets @babel/preset-react index.html > index.min.html
-```
-Then swap the file and remove the `<script src="...babel...">` tag.
 
-**Analytics:** Netlify server-side analytics reads real page URLs.
-For additional event tracking (CTA clicks, assessment completions),
-add Plausible or a `gtag` call — the hooks are already in the component.
+**Hosting truth:** Production is GitHub Pages. Do not assume Netlify redirects or headers are live unless DNS/hosting is switched.
+
+**Articles expected in sitemap:** 19 (plus 7 core URLs = 26 total).
 
 ---
 
