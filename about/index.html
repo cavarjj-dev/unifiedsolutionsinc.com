@@ -395,17 +395,24 @@
   </script>
 
   <script>
-    /* Article click tracking helper — safe no-op until GA4 is configured.
-       To add GA4: uncomment and fill in YOUR-MEASUREMENT-ID below, then
-       also add the GA4 loader: <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-ID"><\/script>
-       window.dataLayer = window.dataLayer || [];
-       function gtag(){window.dataLayer.push(arguments);}
-       gtag('js', new Date()); gtag('config', 'YOUR-MEASUREMENT-ID', {send_page_view:false});
-    */
-    window.track = function(eventName, params) {
-      if (typeof gtag === 'function') { gtag('event', eventName, params); }
-    };
-  </script>
+      /* GA4 helpers. Base tag is in <head> (G-JES4VXETRS, send_page_view:false).
+         SPA routes must fire page_view manually on every client navigation.
+         Articles are separate HTML files and load their own gtag snippet.
+      */
+      window.track = function(eventName, params) {
+        if (typeof gtag === 'function') { gtag('event', eventName, params || {}); }
+      };
+      window.trackPageView = function(path, title) {
+        if (typeof gtag !== 'function') return;
+        var pagePath = path || (window.location.pathname + window.location.search);
+        var pageTitle = title || document.title;
+        gtag('event', 'page_view', {
+          page_path: pagePath,
+          page_title: pageTitle,
+          page_location: window.location.origin + pagePath
+        });
+      };
+    </script>
   <!-- Calendly embed -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -4328,29 +4335,33 @@ function UnifiedSolutions() {
   }, []);
 
   // ── Sync URL + update meta tags on page change ───────────
-  useEffect(() => {
-    const urls = {
-      home:'/', about:'/about', coaching:'/coaching',
-      resources:'/resources', assessment:'/assessment', book:'/book', privacy:'/privacy'
-    };
-    const newUrl = urls[page] || '/';
-    if (window.location.pathname !== newUrl) {
-      window.history.pushState({ page }, '', newUrl);
-    }
-    // Update document title
-    const meta = PAGE_META[page] || PAGE_META.home;
-    document.title = meta.title;
-    // Update meta description
-    let descTag = document.querySelector('meta[name="description"]');
-    if (!descTag) { descTag = document.createElement('meta'); descTag.name = 'description'; document.head.appendChild(descTag); }
-    descTag.content = meta.description;
-    // Update OG tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const ogDesc  = document.querySelector('meta[property="og:description"]');
-    if (ogTitle) ogTitle.content = meta.title;
-    if (ogDesc)  ogDesc.content  = meta.description;
-    window.scrollTo(0, 0);
-  }, [page]);
+    useEffect(() => {
+      const urls = {
+        home:'/', about:'/about', coaching:'/coaching',
+        resources:'/resources', assessment:'/assessment', book:'/book', privacy:'/privacy'
+      };
+      const newUrl = urls[page] || '/';
+      if (window.location.pathname !== newUrl) {
+        window.history.pushState({ page }, '', newUrl);
+      }
+      // Update document title
+      const meta = PAGE_META[page] || PAGE_META.home;
+      document.title = meta.title;
+      // Update meta description
+      let descTag = document.querySelector('meta[name="description"]');
+      if (!descTag) { descTag = document.createElement('meta'); descTag.name = 'description'; document.head.appendChild(descTag); }
+      descTag.content = meta.description;
+      // Update OG tags
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      const ogDesc  = document.querySelector('meta[property="og:description"]');
+      if (ogTitle) ogTitle.content = meta.title;
+      if (ogDesc)  ogDesc.content  = meta.description;
+      window.scrollTo(0, 0);
+      // GA4 SPA page_view (config uses send_page_view:false — must fire here)
+      if (typeof window.trackPageView === 'function') {
+        window.trackPageView(newUrl, meta.title);
+      }
+    }, [page]);
 
   // ── Handle browser back / forward buttons ────────────
   useEffect(() => {
