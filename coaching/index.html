@@ -3007,6 +3007,148 @@ function HeadshotAvatar() {
 }
 
 // ═══════════════════════════════════════════════════════
+// YOUTUBE (nocookie) + GA4 watch events
+// Events: video_start, video_progress (25/50/75), video_complete
+// ═══════════════════════════════════════════════════════
+function TrackedYouTubeEmbed({ videoId, title }) {
+  const hostRef = useRef(null);
+  const playerRef = useRef(null);
+  const pollRef = useRef(null);
+  const startedRef = useRef(false);
+  const completeRef = useRef(false);
+  const marksRef = useRef({ 25: false, 50: false, 75: false });
+
+  useEffect(() => {
+    let cancelled = false;
+    const VIDEO_TITLE = title || "Two Minutes with Julian";
+
+    function send(eventName, extra) {
+      if (typeof window.track !== "function") return;
+      window.track(eventName, Object.assign({
+        video_id: videoId,
+        video_title: VIDEO_TITLE,
+        video_provider: "youtube",
+        video_url: "https://www.youtube-nocookie.com/embed/" + videoId
+      }, extra || {}));
+    }
+
+    function clearPoll() {
+      if (pollRef.current) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    }
+
+    function checkProgress() {
+      const p = playerRef.current;
+      if (!p || typeof p.getCurrentTime !== "function" || typeof p.getDuration !== "function") return;
+      const dur = p.getDuration();
+      const cur = p.getCurrentTime();
+      if (!dur || dur <= 0) return;
+      const pct = Math.floor((cur / dur) * 100);
+      [25, 50, 75].forEach(function (mark) {
+        if (pct >= mark && !marksRef.current[mark]) {
+          marksRef.current[mark] = true;
+          send("video_progress", { video_percent: mark });
+        }
+      });
+    }
+
+    function onStateChange(event) {
+      // 1=PLAYING, 2=PAUSED, 0=ENDED
+      if (event.data === 1) {
+        if (!startedRef.current) {
+          startedRef.current = true;
+          send("video_start", { video_percent: 0 });
+        }
+        clearPoll();
+        pollRef.current = setInterval(checkProgress, 1000);
+      } else if (event.data === 2) {
+        clearPoll();
+      } else if (event.data === 0) {
+        clearPoll();
+        checkProgress();
+        if (!completeRef.current) {
+          completeRef.current = true;
+          send("video_complete", { video_percent: 100 });
+        }
+      } else {
+        clearPoll();
+      }
+    }
+
+    function mountPlayer() {
+      if (cancelled || !hostRef.current || playerRef.current || !window.YT || !window.YT.Player) return;
+      // YT.Player replaces the target element; keep a stable child node
+      const target = document.createElement("div");
+      target.style.position = "absolute";
+      target.style.inset = "0";
+      target.style.width = "100%";
+      target.style.height = "100%";
+      hostRef.current.innerHTML = "";
+      hostRef.current.appendChild(target);
+      playerRef.current = new window.YT.Player(target, {
+        videoId: videoId,
+        host: "https://www.youtube-nocookie.com",
+        width: "100%",
+        height: "100%",
+        playerVars: {
+          rel: 0,
+          modestbranding: 1,
+          color: "white",
+          enablejsapi: 1,
+          origin: window.location.origin
+        },
+        events: { onStateChange: onStateChange }
+      });
+    }
+
+    function loadApi() {
+      if (window.YT && window.YT.Player) {
+        mountPlayer();
+        return;
+      }
+      const prior = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof prior === "function") prior();
+        mountPlayer();
+      };
+      if (!document.getElementById("usi-youtube-iframe-api")) {
+        const tag = document.createElement("script");
+        tag.id = "usi-youtube-iframe-api";
+        tag.src = "https://www.youtube.com/iframe_api";
+        tag.async = true;
+        document.head.appendChild(tag);
+      }
+    }
+
+    loadApi();
+    return function () {
+      cancelled = true;
+      clearPoll();
+      try {
+        if (playerRef.current && typeof playerRef.current.destroy === "function") {
+          playerRef.current.destroy();
+        }
+      } catch (e) {}
+      playerRef.current = null;
+    };
+  }, [videoId, title]);
+
+  return (
+    <div style={{ position: "relative", width: "100%", maxWidth: 720, borderRadius: 12, overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,144,58,0.2)" }}>
+      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
+        <div
+          ref={hostRef}
+          title={title}
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", borderRadius: 12, background: "#000" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
 // ABOUT PAGE
 // ═══════════════════════════════════════════════════════
 function AboutPage() {
@@ -3045,18 +3187,10 @@ function AboutPage() {
           <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.5)", marginBottom:36, textAlign:"center", maxWidth:480, lineHeight:1.6 }}>
             Before we ever sit down together, you should know who you are sitting across from. No script. Just the truth.
           </p>
-          <div style={{ position:"relative", width:"100%", maxWidth:720, borderRadius:12, overflow:"hidden", boxShadow:"0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,144,58,0.2)" }}>
-            <div style={{ position:"relative", paddingBottom:"56.25%", height:0, overflow:"hidden" }}>
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/7BhvW68aabA?rel=0&modestbranding=1&color=white"
-                title="Julian Johnson — Executive Coaching for the Whole Person"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", borderRadius:12 }}
-              />
-            </div>
-          </div>
+          <TrackedYouTubeEmbed
+                      videoId="7BhvW68aabA"
+                      title="Julian Johnson — Executive Coaching for the Whole Person"
+                    />
           <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.3)", marginTop:16, textAlign:"center", letterSpacing:0.3 }}>
             2 min · Direct to camera · Plymouth, MN
           </p>
