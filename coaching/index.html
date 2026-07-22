@@ -720,7 +720,7 @@ const SERVICES = [
     tagline:"Coaching for leaders who are ready to go deeper than their circumstances.",
     bullets:["Holistic in scope, laser-focused in method","Assessment debrief woven throughout","Bi-weekly sessions, 3–6 month engagement, schedule built around you"],
     price:"From $300/hr equivalent · 3-month minimum · invoiceable to org",
-    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" },
+    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
   { id:"group", icon:"⬡", label:"Group Coaching", badge:null,
     tagline:"Peer cohort work proven at scale across Cornell, Yale SOM, MIT Sloan & Wharton.",
     bullets:["Business school group coaching methodology + positive psychology","6–12 week structured programs with clear development objectives","Individual debrief touchpoints included in every cohort"],
@@ -735,12 +735,12 @@ const SERVICES = [
     tagline:"Addresses the patterns that live between people — not just within them.",
     bullets:["ICF ACTC-level team coaching competency applied to your actual dynamics","Trust, alignment, accountability addressed at the level where they actually break down","60–90 day structured engagement + individual coaching touchpoints"],
     price:"Project-based · scoped to team size and need",
-    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" },
+    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
   { id:"enterprise", icon:"◈", label:"Organizations", badge:null,
     tagline:"VP cohorts, custom workshops, and coaching culture built deliberately.",
     bullets:["Delivered across senior leadership teams in financial services, technology, and healthcare","Access to a small network of vetted practitioners for programs requiring scale","Custom SOW, full confidentiality, organizational reporting limited to aggregate themes"],
     price:"Enterprise pricing · contact for scope discussion",
-    cta:"Schedule a scoping call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30-minute-meeting-clone" },
+    cta:"Schedule a scoping call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
 ];
 
 const TESTIMONIALS = [
@@ -2415,28 +2415,9 @@ function HomePage() {
   const { setPage, content, updateContent } = useSite();
   const [activeService, setActiveService] = useState(0);
   const [activeTesti, setActiveTesti] = useState(0);
-  const statsRef = useRef(null);
-  const countedRef = useRef(false);
-  const [counts, setCounts] = useState({ hrs:0, clients:0, years:0, partners:0 });
-  useEffect(() => {
-    const ob = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !countedRef.current) {
-        countedRef.current = true;
-        const targets = { hrs:1200, clients:222, years:25, partners:9 };
-        const dur = 1600, steps = 50;
-        let step = 0;
-        const t = setInterval(() => {
-          step++;
-          const p = step/steps;
-          const ease = 1 - Math.pow(1-p, 3);
-          setCounts({ hrs:Math.round(ease*targets.hrs), clients:Math.round(ease*targets.clients), years:Math.round(ease*targets.years), partners:Math.round(ease*targets.partners) });
-          if (step >= steps) clearInterval(t);
-        }, dur/steps);
-      }
-    }, { threshold:0.2 });
-    if (statsRef.current) ob.observe(statsRef.current);
-    return () => ob.disconnect();
-  }, []);
+  // Static finals only. Animated counters previously painted 0 when IO failed.
+    // Never trade a polish animation for a trust failure on the gold bar.
+    const counts = { hrs:1200, clients:222, years:25, partners:9 };
 
   const h = content.hero;
   return (
@@ -2466,7 +2447,7 @@ function HomePage() {
                 style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
               />
               <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+                <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
                   onClick={() => window.track("book_call_click",{location:"hero"})}>
                   Book a Discovery Call
                 </Btn>
@@ -2579,7 +2560,7 @@ function HomePage() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────── */}
-      <section ref={statsRef} style={{ background:C.gold, padding:"40px 24px" }}>
+      <section style={{ background:C.gold, padding:"40px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:24 }}>
           {[
             { val:counts.hrs, suffix:"+", label:"Coaching Hours" },
@@ -2624,7 +2605,7 @@ function HomePage() {
             ))}
           </div>
           <div style={{ textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center", gap:14 }}>
-            <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+            <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
               style={{ fontSize:16, padding:"14px 40px" }}
               onClick={() => window.track("book_call_click",{location:"what_a_call_looks_like"})}>
               Book that 30 minutes
@@ -2764,7 +2745,7 @@ function HomePage() {
           <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>The Simplest Next Step</div>
           <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.white, margin:"0 0 20px", fontStyle:"italic", fontWeight:500 }}>30 minutes to find out if this is the right fit.</h2>
           <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 36px", lineHeight:1.75, maxWidth:500, marginLeft:"auto", marginRight:"auto" }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
             style={{ fontSize:16, padding:"16px 40px" }}
             onClick={() => window.track("book_call_click",{location:"final_cta"})}>
             Book a Discovery Call
@@ -3223,7 +3204,7 @@ function AboutPage() {
         <div style={{ maxWidth:600, margin:"0 auto" }}>
           <EditableBlock text={content.about?.ctaHeadline||"Ready to find out if this is the right fit?"} onSave={v=>updateContent("about.ctaHeadline",v)} fieldName="about.ctaHeadline" tag="h2" style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }} />
           <EditableBlock text={content.about?.ctaBody||"30 minutes. No obligation. A real conversation."} onSave={v=>updateContent("about.ctaBody",v)} fieldName="about.ctaBody" tag="p" style={{ fontFamily:DM, fontSize:17, color:C.muted, margin:"0 0 28px" }} />
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone">Book a Discovery Call</Btn>
+          <Btn href="https://calendly.com/unifiedsolutionsinc/30min">Book a Discovery Call</Btn>
         </div>
       </section>
     </div>
@@ -3377,7 +3358,7 @@ function CoachingPage() {
                 ))}
               </div>
               <div style={{ marginTop:40, textAlign:"center" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+                <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
   style={{ fontSize:16, padding:"14px 36px" }}
   onClick={() => window.track("book_call_click",{location:"coaching_page"})}>
   Book a 30-minute Discovery Call
@@ -3584,7 +3565,7 @@ function ResourcesPage() {
               <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>30 minutes · no pitch · real conversation</div>
               <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>The content resonated. Now have the conversation.</h3>
               <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.55)", margin:"0 0 28px", lineHeight:1.75 }}>30 minutes. A real conversation about your specific situation. No obligation, no pitch, and you'll leave with something useful regardless of what happens next.</p>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone"
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
                 style={{ padding:"12px 28px" }}
                 onClick={() => window.track("book_call_click",{location:"resources_bridge"})}>
                 Book a Discovery Call
@@ -3741,7 +3722,7 @@ function DomainInsightCard({ domain, score, isPrimary }) {
                 <div style={{ fontFamily:PF, fontSize:16, color:C.white, marginBottom:3 }}>This is exactly what coaching is built for.</div>
                 <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)" }}>30 minutes to find out if this is the right conversation.</div>
               </div>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
+              <Btn href="https://calendly.com/unifiedsolutionsinc/30min" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
             </div>
           )}
         </div>
@@ -4001,6 +3982,36 @@ function AssessmentPage() {
 // ═══════════════════════════════════════════════════════
 function BookPage() {
   const { content, updateContent } = useSite();
+  const calRef = useRef(null);
+  const [calStatus, setCalStatus] = useState("loading"); // loading | ready | failed
+  useEffect(() => {
+    let cancelled = false;
+    let attempts = 0;
+    const CAL_URL = "https://calendly.com/unifiedsolutionsinc/30min?hide_gdpr_banner=1";
+    const mount = () => {
+      if (cancelled || !calRef.current) return;
+      if (calRef.current.dataset.loaded === "true") return;
+      if (typeof window.Calendly === "undefined") {
+        attempts += 1;
+        if (attempts < 60) {
+          setTimeout(mount, 250);
+        } else if (!cancelled) {
+          setCalStatus("failed");
+        }
+        return;
+      }
+      try {
+        calRef.current.innerHTML = "";
+        calRef.current.dataset.loaded = "true";
+        window.Calendly.initInlineWidget({ url: CAL_URL, parentElement: calRef.current });
+        if (!cancelled) setCalStatus("ready");
+      } catch (err) {
+        if (!cancelled) setCalStatus("failed");
+      }
+    };
+    mount();
+    return () => { cancelled = true; };
+  }, []);
   return (
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
@@ -4028,15 +4039,19 @@ function BookPage() {
           </div>
           <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
             <div
-              ref={el => {
-                if (el && !el.dataset.loaded && typeof Calendly !== 'undefined') {
-                  el.dataset.loaded = 'true';
-                  Calendly.initInlineWidget({ url: 'https://calendly.com/unifiedsolutionsinc/30-mins-to-connect-clone?hide_gdpr_banner=1', parentElement: el });
-                }
-              }}
-              style={{ minWidth:280, height:660, overflow:"hidden" }}
+              ref={calRef}
+              style={{ minWidth:280, height:660, overflow:"hidden", background: calStatus === "ready" ? "transparent" : "rgba(255,255,255,0.03)" }}
             />
-            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:12 }}>After scheduling, you'll receive a confirmation email with the meeting link and a brief pre-call context form.</div>
+            {calStatus === "loading" && (
+              <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.55)", marginTop:8 }}>Loading scheduler…</div>
+            )}
+            {calStatus === "failed" && (
+              <div style={{ marginTop:12 }}>
+                <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.7)", marginBottom:12 }}>Scheduler did not load in this view.</div>
+                <Btn href="https://calendly.com/unifiedsolutionsinc/30min" style={{ fontSize:15, padding:"12px 28px" }}>Open scheduling page</Btn>
+              </div>
+            )}
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:12 }}>After scheduling, you will receive a confirmation email with the meeting link and a brief pre-call context form.</div>
           </div>
         </div>
       </section>
