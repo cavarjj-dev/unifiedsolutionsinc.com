@@ -434,24 +434,61 @@
   </script>
 
   <script>
-      /* GA4 helpers. Base tag is in <head> (G-JES4VXETRS, send_page_view:false).
-         SPA routes must fire page_view manually on every client navigation.
-         Articles are separate HTML files and load their own gtag snippet.
-      */
-      window.track = function(eventName, params) {
-        if (typeof gtag === 'function') { gtag('event', eventName, params || {}); }
-      };
-      window.trackPageView = function(path, title) {
-        if (typeof gtag !== 'function') return;
-        var pagePath = path || (window.location.pathname + window.location.search);
-        var pageTitle = title || document.title;
-        gtag('event', 'page_view', {
-          page_path: pagePath,
-          page_title: pageTitle,
-          page_location: window.location.origin + pagePath
-        });
-      };
-    </script>
+        /* GA4 helpers. Base tag is in <head> (G-JES4VXETRS, send_page_view:false).
+           SPA routes must fire page_view manually on every client navigation.
+           Articles are separate HTML files and load their own gtag snippet.
+           Custom dimensions (Admin): section_id, section_name, location, article_id,
+           event_label, video_*, content_type, item_id — register via ga4-admin-setup.py
+        */
+        window.__gaSectionSeen = window.__gaSectionSeen || {};
+        window.track = function(eventName, params) {
+          if (typeof gtag !== 'function') return;
+          var p = params || {};
+          // Normalize ids to strings for stable custom-dimension reporting
+          if (p.article_id != null) p.article_id = String(p.article_id);
+          if (p.section_id != null) p.section_id = String(p.section_id);
+          if (p.item_id != null) p.item_id = String(p.item_id);
+          if (p.location != null) p.location = String(p.location);
+          if (!p.page_path) p.page_path = window.location.pathname + window.location.search;
+          gtag('event', eventName, p);
+        };
+        window.trackPageView = function(path, title) {
+          if (typeof gtag !== 'function') return;
+          var pagePath = path || (window.location.pathname + window.location.search);
+          var pageTitle = title || document.title;
+          gtag('event', 'page_view', {
+            page_path: pagePath,
+            page_title: pageTitle,
+            page_location: window.location.origin + pagePath
+          });
+        };
+        /** Fire section_view once per session when ~35% visible (scroll-friendly). */
+        window.trackSectionView = function(sectionId, sectionName) {
+          if (!sectionId || window.__gaSectionSeen[sectionId]) return;
+          window.__gaSectionSeen[sectionId] = true;
+          window.track('section_view', {
+            section_id: sectionId,
+            section_name: sectionName || sectionId
+          });
+        };
+        window.bindSectionView = function(el, sectionId, sectionName) {
+          if (!el || !sectionId || el.dataset.gaSectionBound === '1') return;
+          el.dataset.gaSectionBound = '1';
+          if (!('IntersectionObserver' in window)) {
+            window.trackSectionView(sectionId, sectionName);
+            return;
+          }
+          var ob = new IntersectionObserver(function(entries) {
+            entries.forEach(function(en) {
+              if (en.isIntersecting && en.intersectionRatio >= 0.35) {
+                window.trackSectionView(sectionId, sectionName);
+                ob.disconnect();
+              }
+            });
+          }, { threshold: [0, 0.35, 0.5] });
+          ob.observe(el);
+        };
+      </script>
   <!-- Calendly embed -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -2618,7 +2655,7 @@ function HomePage() {
 
       {/* ── WHOLE-PERSON CATALYST ───────────────────────── */}
       <section id="whole-person-catalyst" style={{ background:C.cream, padding:"88px 24px", borderTop:`1px solid ${C.border}` }}
-        onMouseEnter={() => window.track && window.track("section_view", { section_id:"whole_person_catalyst", section_name:"Whole-Person Catalyst" })}>
+              ref={el => window.bindSectionView && window.bindSectionView(el, "whole_person_catalyst", "Whole-Person Catalyst")}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div className="wpc-grid" style={{ display:"grid", gridTemplateColumns:"280px 1fr", gap:64, alignItems:"center" }}>
             <div style={{ textAlign:"center" }}>
@@ -2668,7 +2705,7 @@ function HomePage() {
 
       {/* ── NAMED PROOF ──────────────────────────────────── */}
       <section id="proof" style={{ background:C.white, padding:"72px 24px" }}
-        onMouseEnter={() => window.track && window.track("section_view", { section_id:"named_proof", section_name:"Named Proof" })}>
+              ref={el => window.bindSectionView && window.bindSectionView(el, "named_proof", "Named Proof")}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:40 }}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:12 }}>Proof, not theater</div>
@@ -2733,7 +2770,8 @@ function HomePage() {
       </section>
 
       {/* ── SERVICES ─────────────────────────────────────── */}
-      <section style={{ background:C.cream, padding:"96px 24px" }}>
+      <section id="services" style={{ background:C.cream, padding:"96px 24px" }}
+        ref={el => window.bindSectionView && window.bindSectionView(el, "services", "Coaching Services")}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:60 }}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Coaching Services</div>
@@ -2786,7 +2824,8 @@ function HomePage() {
       </section>
 
       {/* ── UNIFIED METHOD ───────────────────────────────── */}
-      <section style={{ background:C.navy, padding:"96px 24px" }}>
+      <section id="unified-method" style={{ background:C.navy, padding:"96px 24px" }}
+        ref={el => window.bindSectionView && window.bindSectionView(el, "unified_method", "Unified Method")}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:64 }}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>The Unified Method · Whole-Person Catalyst</div>
