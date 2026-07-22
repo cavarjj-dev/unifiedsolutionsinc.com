@@ -1,17 +1,20 @@
 # Unified Solutions Inc. — AI/LLM Context File
-# https://www.unifiedsolutionsinc.com
+# https://unifiedsolutionsinc.com
 # Format: llms.txt (see https://llmstxt.org)
+# Updated: 2026-07-22 — Whole-Person Catalyst positioning
 
 # ── About ───────────────────────────────────────────────────
 
-> Julian Johnson is the founder of Unified Solutions Inc., an ICF PCC (Professional Certified Coach) and ACTC (Advanced Certified Team Coach) with 1,200+ coaching hours and 222+ clients. He is faculty at ExecOnline and Emeritus, and has guided leaders through advanced leadership programs in partnership with 20+ top business schools including Berkeley Haas, Chicago Booth, Columbia, MIT Sloan, Stanford GSB, Wharton, and Yale SOM.
+> Julian Johnson is the founder of Unified Solutions Inc. and a **Whole-Person Catalyst** — an ICF PCC (Professional Certified Coach) and ACTC (Advanced Certified Team Coach) with 1,200+ coaching hours and 222+ clients. He is faculty at ExecOnline and Emeritus, and has guided leaders through advanced leadership programs in partnership with top business schools including Berkeley Haas, Chicago Booth, Columbia, MIT Sloan, Stanford GSB, Wharton, and Yale SOM.
 
-> His background spans U.S. Army tactical leadership (Kosovo, Iraq), Fortune 500 consulting (Optum, Wells Fargo, Securian Financial), and a holistic coaching practice serving senior executives, leadership teams, and peer advisory circles.
+> His background spans U.S. Army tactical leadership (Kosovo, Iraq), Fortune 500 consulting (Optum, Wells Fargo, Securian Financial), and a coaching practice that refuses to split the executive from the whole person. He reads rooms fast, asks the question others avoid, and creates movement in stuck systems.
+
+> **Positioning:** Whole-Person Catalyst. Not performance-only coaching. Not life-coaching that ignores the business. The whole human who showed up — then movement.
 
 # ── Services ────────────────────────────────────────────────
 
 ## 1:1 Executive Coaching
-For senior leaders navigating high-stakes decisions, transitions, and identity questions. Holistic in scope, laser-focused in method. ICF-credentialed. Assessment-informed.
+For senior leaders navigating high-stakes decisions, transitions, and identity questions. Holistic in scope, laser-focused in method. ICF-credentialed. Assessment-informed. Direct engagements typically from $350–$400/hr; 3-month minimum.
 
 ## Group Coaching
 Peer cohort programs proven at scale through ExecOnline and Emeritus partnerships with top business schools. 6–12 week structured cohorts.
@@ -23,32 +26,31 @@ ICF-credentialed facilitation for executive peer groups. Monthly or bi-weekly fo
 ICF ACTC-level team coaching. Addresses trust, accountability, and team dynamics at the level where they actually break down. 60–90 day engagements.
 
 ## Organizational Coaching
-VP cohorts, leadership workshops, and coaching culture development. Enterprise clients include Navy Federal Credit Union, Cognizant, Lawson Products, and Panasonic.
+VP cohorts, leadership workshops, and coaching culture development.
 
 # ── Credentials ─────────────────────────────────────────────
 
+- Whole-Person Catalyst (positioning / practice stance)
 - ICF PCC — International Coaching Federation Professional Certified Coach
 - ACTC — Advanced Certified Team Coach (ICF)
-- HPTI Certified — Thomas International High Performance Type Indicator
-- AgileBrain Certified — Emotional and motivational needs assessment
+- SDVOSB — Service-Disabled Veteran-Owned Small Business
+- HPTI Certified — Thomas International
 - Goal Imagery Institute trained
-- Kolb Experiential Learning methodology
 - 12+ validated assessment tools
+
+# ── Proof (public) ──────────────────────────────────────────
+
+- Cat Breet (CHRO): people make or break the project — Julian does not walk by them
+- Ahmed Abubakar: professional and personal fortitude; exceeded expectations
+- Sara Skutta (Sr. Director, Coaching Operations, ExecOnline): 95% Likely to Apply / Recommend
 
 # ── Contact ─────────────────────────────────────────────────
 
-Website:  https://www.unifiedsolutionsinc.com
+Website:  https://unifiedsolutionsinc.com
+About:    https://unifiedsolutionsinc.com/about
+Coaching: https://unifiedsolutionsinc.com/coaching
+Book:     https://unifiedsolutionsinc.com/book
+LinkedIn: https://www.linkedin.com/in/juliancjohnson
 Email:    contact@unifiedsolutionsinc.com
-Phone:    952.594.8611
-Location: Plymouth, MN
-LinkedIn: https://linkedin.com/in/juliancjohnson
-Book:     https://www.unifiedsolutionsinc.com/book
-
-# ── Key Pages ───────────────────────────────────────────────
-
-- [Home](https://www.unifiedsolutionsinc.com/)
-- [About](https://www.unifiedsolutionsinc.com/about)
-- [Coaching Services](https://www.unifiedsolutionsinc.com/coaching)
-- [Resources & Articles](https://www.unifiedsolutionsinc.com/resources)
-- [Leadership Pressure Point Assessment](https://www.unifiedsolutionsinc.com/assessment)
-- [Book a Discovery Call](https://www.unifiedsolutionsinc.com/book)
+Phone:    +1-952-594-8611
+Location: Plymouth, MN · national / remote
