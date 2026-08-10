@@ -1,29 +1,29 @@
 # Unified Solutions Inc. — AI/LLM Context File
 # https://unifiedsolutionsinc.com
 # Format: llms.txt (see https://llmstxt.org)
-# Updated: 2026-07-22 — Whole-Person Catalyst positioning
+# Updated: 2026-08-10 — Movement not theater + CHRO market language
 
 # ── About ───────────────────────────────────────────────────
 
-> Julian Johnson is the founder of Unified Solutions Inc. and a **Whole-Person Catalyst** — an ICF PCC (Professional Certified Coach) and ACTC (Advanced Certified Team Coach) with 1,200+ coaching hours and 222+ clients. He is faculty at ExecOnline and Emeritus, and has guided leaders through advanced leadership programs in partnership with top business schools including Berkeley Haas, Chicago Booth, Columbia, MIT Sloan, Stanford GSB, Wharton, and Yale SOM.
+> Julian Johnson is the founder of Unified Solutions Inc. Direct executive and team coach for leaders and groups who need **movement, not theater**. ICF PCC and ACTC. 1,200+ coaching hours. 222+ leaders. Faculty at ExecOnline and Emeritus. Seventeen years inside Fortune 500 transformations.
 
-> His background spans U.S. Army tactical leadership (Kosovo, Iraq), Fortune 500 consulting (Optum, Wells Fargo, Securian Financial), and a coaching practice that refuses to split the executive from the whole person. He reads rooms fast, asks the question others avoid, and creates movement in stuck systems.
+> He works where organizations are already investing: **leader and manager development**, **change management and workforce resiliency**, and the human side of **HR tech and AI strategy**. With leaders, teams, and cohorts he pushes past theory into application: problem and solution statements, decision quality, operating metrics, risk and gaps, work that holds under customer, peer, and sponsor pressure.
 
-> **Positioning:** Whole-Person Catalyst. Not performance-only coaching. Not life-coaching that ignores the business. The whole human who showed up — then movement.
+> **Positioning:** Whole-Person Catalyst is the method, not a soft category. Read the room, challenge what is avoided, create movement. The leader carrying the P&L is the same human carrying the weight underneath it. Decision quality and execution are the point.
 
 # ── Services ────────────────────────────────────────────────
 
 ## 1:1 Executive Coaching
-For senior leaders navigating high-stakes decisions, transitions, and identity questions. Holistic in scope, laser-focused in method. ICF-credentialed. Assessment-informed. Direct engagements typically from $350–$400/hr; 3-month minimum.
+For senior leaders navigating high-stakes decisions, transitions, and identity questions. Holistic in scope, laser-focused in method. ICF-credentialed. Assessment-informed. Direct engagements typically from $350–$400/hr; 3-month minimum. Keep at the margin of the practice when platform volume is team/group.
 
 ## Group Coaching
-Peer cohort programs proven at scale through ExecOnline and Emeritus partnerships with top business schools. 6–12 week structured cohorts.
+Peer cohort programs proven at scale through ExecOnline and Emeritus partnerships with top business schools. 6–12 week structured cohorts. Capstone-style applied work (including HR tech / AI strategy themes when the program calls for it).
 
 ## Peer Advisory Circles
 ICF-credentialed facilitation for executive peer groups. Monthly or bi-weekly format. Grounded in COO Forum and UFacilitate peer circle methodology.
 
 ## Team Coaching
-ICF ACTC-level team coaching. Addresses trust, accountability, and team dynamics at the level where they actually break down. 60–90 day engagements.
+ICF ACTC-level team coaching. Addresses trust, accountability, and team dynamics at the level where they actually break down. 60–90 day engagements. Ops assigners value adaptability and mid-flight value checks over script fidelity.
 
 ## Organizational Coaching
 VP cohorts, leadership workshops, and coaching culture development.
