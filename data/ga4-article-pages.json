@@ -1,0 +1,138 @@
+{
+  "success": true,
+  "source": "ga4",
+  "range": "28daysAgo-today",
+  "fetchedAt": "2026-08-24T19:35:56.278340Z",
+  "pages7d": [
+    {
+      "path": "/articles/decision-making-under-pressure/",
+      "views": 14,
+      "users": 9,
+      "sessions": 14,
+      "avgDurationSec": 62.02909278571428,
+      "engagementRate": 0.2857142857142857
+    },
+    {
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/group-vs-team-coaching/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/laser-focused-coaching/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/decision-making-under-pressure",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/holistic-coaching-what-it-actually-means/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    }
+  ],
+  "pages28d": [
+    {
+      "path": "/articles/decision-making-under-pressure/",
+      "views": 29,
+      "users": 24,
+      "sessions": 29,
+      "avgDurationSec": 34.139267068965516,
+      "engagementRate": 0.20689655172413793
+    },
+    {
+      "path": "/articles/laser-focused-coaching/",
+      "views": 7,
+      "users": 7,
+      "sessions": 9,
+      "avgDurationSec": 0.26310833333333333,
+      "engagementRate": 0.1111111111111111
+    },
+    {
+      "path": "/articles/group-vs-team-coaching/",
+      "views": 5,
+      "users": 5,
+      "sessions": 5,
+      "avgDurationSec": 0.2352338,
+      "engagementRate": 0.2
+    },
+    {
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 4,
+      "users": 4,
+      "sessions": 4,
+      "avgDurationSec": 0.09382625,
+      "engagementRate": 0.25
+    },
+    {
+      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
+      "views": 2,
+      "users": 1,
+      "sessions": 2,
+      "avgDurationSec": 2.9684635,
+      "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/holistic-coaching-what-it-actually-means/",
+      "views": 2,
+      "users": 1,
+      "sessions": 2,
+      "avgDurationSec": 11.2915115,
+      "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/decision-making-under-pressure",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/external-partnership-pattern-recognition/",
+      "views": 1,
+      "users": 1,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/personal-sustainability-leadership/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 5.401579,
+      "engagementRate": 1.0
+    },
+    {
+      "path": "/articles/psychological-safety-leadership/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 45.346158,
+      "engagementRate": 1.0
+    }
+  ]
+}

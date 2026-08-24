@@ -2053,41 +2053,105 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
 
 // ═══════════════════════════════════════════════════════════════
 // ARTICLE ANALYTICS PANEL
-// Shows per-article click counts stored in localStorage
-// Visible in Admin → Dashboard → scroll down
+// Published articles lined up with public GA4 pageviews (not this browser).
+// Live webhook ?type=ga4_article_pages first; /data/ga4-article-pages.json fallback.
 // ═══════════════════════════════════════════════════════════════
-function ArticleAnalyticsPanel() {
-  const [counts, setCounts] = useState({});
-  const [sortBy, setSortBy] = useState("clicks");
+function normalizeArticlePath(p) {
+  if (!p) return "";
+  var s = String(p);
+  try { s = new URL(s, window.location.origin).pathname; } catch(e) {}
+  return s.split("?")[0].split("#")[0].replace(/\/+$/, "") || "/";
+}
 
-  useEffect(() => {
-    function load() {
+function rollupArticlePages(rows) {
+  var map = {};
+  (rows || []).forEach(function(r) {
+    var key = normalizeArticlePath(r.path);
+    if (!key || key.indexOf("/articles/") !== 0) return;
+    if (!map[key]) map[key] = { path:key, views:0, users:0, sessions:0, avgDurationSec:0, engagementRate:0 };
+    map[key].views += Number(r.views || 0);
+    map[key].users += Number(r.users || 0);
+    map[key].sessions += Number(r.sessions || 0);
+    if (Number(r.avgDurationSec || 0) > map[key].avgDurationSec) map[key].avgDurationSec = Number(r.avgDurationSec || 0);
+    if (Number(r.engagementRate || 0) > map[key].engagementRate) map[key].engagementRate = Number(r.engagementRate || 0);
+  });
+  return map;
+}
+
+function fmtDuration(sec) {
+  var s = Number(sec || 0);
+  if (!s) return "—";
+  if (s < 10) return Math.round(s) + "s";
+  var m = Math.floor(s / 60);
+  var r = Math.round(s % 60);
+  return m ? (m + "m " + String(r).padStart(2,"0") + "s") : (r + "s");
+}
+
+function ArticleAnalyticsPanel({ loggingEndpoint }) {
+  const [payload, setPayload] = useState(null);
+  const [state, setState] = useState("idle");
+  const [err, setErr] = useState("");
+  const [range, setRange] = useState("28d");
+  const [sortBy, setSortBy] = useState("views");
+
+  async function load() {
+    setState("loading"); setErr("");
+    var live = null;
+    if (loggingEndpoint) {
       try {
-        const raw = localStorage.getItem("usi-article-clicks");
-        if (raw) setCounts(JSON.parse(raw));
-      } catch(e) {}
+        var res = await fetch(loggingEndpoint + "?type=ga4_article_pages", { method:"GET", redirect:"follow" });
+        var data = await res.json();
+        if (data && data.success && (data.pages28d || data.pages7d)) live = data;
+      } catch(e) { /* fall through to snapshot */ }
     }
-    load();
-    const t = setInterval(load, 15000);
-    return () => clearInterval(t);
-  }, []);
+    if (!live) {
+      try {
+        var snap = await fetch("/data/ga4-article-pages.json", { cache:"no-store" });
+        var snapData = await snap.json();
+        if (snapData && snapData.success) live = Object.assign({ via:"snapshot" }, snapData);
+      } catch(e) {
+        setErr("Could not load public article reads. " + e.message);
+        setState("error");
+        return;
+      }
+    }
+    setPayload(live);
+    setState("done");
+  }
+
+  useEffect(() => { load(); }, []);
 
   const published = ARTICLES.filter(a => a.status === "published");
-  const withCounts = published.map(a => ({ ...a, clicks: counts[a.id] || 0 }));
-  const sorted = [...withCounts].sort((a,b) => sortBy === "clicks" ? b.clicks - a.clicks : a.id - b.id);
-  const total = Object.values(counts).reduce((s,n) => s+n, 0);
-  const max = Math.max(...sorted.map(a => a.clicks), 1);
+  const pages = range === "7d" ? (payload && payload.pages7d) : (payload && payload.pages28d);
+  const byPath = rollupArticlePages(pages);
+  const withCounts = published.map(a => {
+    const key = normalizeArticlePath(a.url);
+    const row = byPath[key] || { views:0, users:0, sessions:0, avgDurationSec:0, engagementRate:0 };
+    return Object.assign({}, a, row);
+  });
+  const sorted = [...withCounts].sort((a,b) => {
+    if (sortBy === "title") return a.title.localeCompare(b.title);
+    if (sortBy === "id") return a.id - b.id;
+    return (b.views - a.views) || (b.users - a.users) || a.title.localeCompare(b.title);
+  });
+  const totalViews = sorted.reduce((s,a) => s + a.views, 0);
+  const totalUsers = sorted.reduce((s,a) => s + a.users, 0);
+  const read = sorted.filter(a => a.views > 0);
+  const max = Math.max(...sorted.map(a => a.views), 1);
   const top = sorted[0];
+  const fetchedLabel = payload && payload.fetchedAt
+    ? new Date(payload.fetchedAt).toLocaleString()
+    : "";
+  const via = payload && payload.via === "snapshot" ? "GA4 snapshot" : (payload ? "Google Analytics" : "");
 
   return (
     <div>
-      {/* Summary row */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10, marginBottom:18 }}>
         {[
-          [total, "Total Clicks", C.gold],
-          [sorted.filter(a=>a.clicks>0).length, "Articles Clicked", C.navy],
-          [top?.clicks||0, "Top Article", C.green],
-          [sorted.filter(a=>a.clicks===0).length, "Not Yet Clicked", C.muted],
+          [totalViews, "Public reads", C.gold],
+          [totalUsers, "Readers", C.navy],
+          [read.length, "Articles with traffic", C.green],
+          [sorted.filter(a=>a.views===0).length, "No public reads yet", C.muted],
         ].map(([v,l,c],i) => (
           <div key={i} style={{ background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px" }}>
             <div style={{ fontFamily:PF, fontSize:22, color:c, fontWeight:700 }}>{v}</div>
@@ -2096,60 +2160,67 @@ function ArticleAnalyticsPanel() {
         ))}
       </div>
 
-      {/* Top article highlight */}
-      {top && top.clicks > 0 && (
+      {top && top.views > 0 && (
         <div style={{ background:`${C.gold}12`, border:`1px solid ${C.gold}40`, borderRadius:6, padding:"12px 16px", marginBottom:14, display:"flex", gap:12, alignItems:"center" }}>
           <span style={{ fontSize:18 }}>★</span>
           <div style={{ flex:1 }}>
-            <div style={{ fontFamily:DM, fontSize:10, color:C.gold, fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:2 }}>Most Clicked</div>
+            <div style={{ fontFamily:DM, fontSize:10, color:C.gold, fontWeight:700, letterSpacing:1, textTransform:"uppercase", marginBottom:2 }}>Most read</div>
             <div style={{ fontFamily:PF, fontSize:14, color:C.navy, fontWeight:600 }}>{top.title}</div>
           </div>
           <div style={{ textAlign:"right", flexShrink:0 }}>
-            <div style={{ fontFamily:PF, fontSize:22, color:C.gold, fontWeight:700 }}>{top.clicks}</div>
-            <div style={{ fontFamily:DM, fontSize:10, color:C.muted }}>clicks</div>
+            <div style={{ fontFamily:PF, fontSize:22, color:C.gold, fontWeight:700 }}>{top.views}</div>
+            <div style={{ fontFamily:DM, fontSize:10, color:C.muted }}>{top.users} reader{top.users===1?"":"s"}</div>
           </div>
         </div>
       )}
 
-      {/* Sort controls */}
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10, flexWrap:"wrap", gap:8 }}>
         <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy }}>
-          All Published Articles ({sorted.length})
+          All published articles ({sorted.length})
         </div>
-        <div style={{ display:"flex", gap:4 }}>
-          {[["clicks","By Clicks"],["id","By Number"]].map(([v,l]) => (
+        <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+          {[["28d","Last 28 days"],["7d","Last 7 days"]].map(([v,l]) => (
+            <button key={v} onClick={() => setRange(v)} style={{ background:range===v?C.gold:"transparent", color:range===v?C.navy:C.muted, border:`1px solid ${range===v?C.gold:C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>{l}</button>
+          ))}
+          {[["views","By reads"],["title","A–Z"]].map(([v,l]) => (
             <button key={v} onClick={() => setSortBy(v)} style={{ background:sortBy===v?C.navy:"transparent", color:sortBy===v?C.white:C.muted, border:`1px solid ${sortBy===v?C.navy:C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>{l}</button>
           ))}
+          <button onClick={load} disabled={state==="loading"} style={{ background:"transparent", color:C.muted, border:`1px solid ${C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>
+            {state==="loading" ? "Loading…" : "Refresh"}
+          </button>
         </div>
       </div>
 
-      {/* Article bars */}
+      {state==="error" && (
+        <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"8px 12px", marginBottom:10, fontFamily:DM, fontSize:11, color:C.red }}>{err}</div>
+      )}
+
       <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
         {sorted.map(a => (
           <div key={a.id} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"10px 14px" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:10, marginBottom:5 }}>
               <div style={{ flex:1 }}>
                 <div style={{ fontFamily:DM, fontSize:12, fontWeight:600, color:C.navy, lineHeight:1.3 }}>{a.title}</div>
-                {a.tag && <div style={{ fontFamily:DM, fontSize:10, color:C.muted, marginTop:2 }}>{a.tag} · {a.mins} min</div>}
+                {a.tag && <div style={{ fontFamily:DM, fontSize:10, color:C.muted, marginTop:2 }}>{a.tag} · {a.mins} min · {fmtDuration(a.avgDurationSec)}</div>}
               </div>
               <div style={{ textAlign:"right", flexShrink:0 }}>
-                <span style={{ fontFamily:PF, fontSize:20, color:a.clicks>0?C.navy:C.muted, fontWeight:700 }}>{a.clicks}</span>
-                <span style={{ fontFamily:DM, fontSize:10, color:C.muted, display:"block" }}>{a.clicks===1?"click":"clicks"}</span>
+                <span style={{ fontFamily:PF, fontSize:20, color:a.views>0?C.navy:C.muted, fontWeight:700 }}>{a.views}</span>
+                <span style={{ fontFamily:DM, fontSize:10, color:C.muted, display:"block" }}>{a.users} reader{a.users===1?"":"s"}</span>
               </div>
             </div>
             <div style={{ background:C.creamDark, borderRadius:3, height:5 }}>
-              <div style={{ width:`${(a.clicks/max)*100}%`, height:"100%", background:a.clicks>0?C.gold:C.border, borderRadius:3, transition:"width 0.4s" }}/>
+              <div style={{ width:`${(a.views/max)*100}%`, height:"100%", background:a.views>0?C.gold:C.border, borderRadius:3, transition:"width 0.4s" }}/>
             </div>
             {a.url && <a href={a.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily:DM, fontSize:10, color:C.goldDark, display:"inline-block", marginTop:4 }}>View article →</a>}
           </div>
         ))}
       </div>
 
-      {/* Note */}
       <div style={{ marginTop:14, background:C.navyMid, borderRadius:6, padding:"10px 14px" }}>
         <div style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, marginBottom:3 }}>About these counts</div>
         <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.55)", lineHeight:1.6 }}>
-          Counts are stored in this browser only. For cross-visitor totals, add Google Analytics 4 — the tracking calls are already wired in. Contact your developer or follow the GA4 setup guide in the code comments.
+          Public Google Analytics pageviews on live article URLs{via ? " · " + via : ""}. Not this browser. Card clicks (`article_click`) are a different event and stay in the strip above.
+          {fetchedLabel ? " Pulled " + fetchedLabel + "." : ""}
         </div>
       </div>
     </div>
@@ -2311,9 +2382,9 @@ function AdminPanel({ onClose, initialTab="crm" }) {
           {adminTab === "crm" && (
             <div style={{ padding:"0 28px 28px" }}>
               <div style={{ height:1, background:C.border, margin:"0 0 22px" }}/>
-              <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:4 }}>Article Click Analytics</div>
-              <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:16 }}>Clicks tracked from this browser · See code comments to add GA4 for cross-visitor totals</div>
-              <ArticleAnalyticsPanel />
+              <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:4 }}>Published article reads</div>
+              <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:16 }}>Public Google Analytics pageviews, lined up to each live article. Not this browser.</div>
+              <ArticleAnalyticsPanel loggingEndpoint={LOGGING_ENDPOINT} />
             </div>
           )}
           {/* ── CONTENT TAB ── */}

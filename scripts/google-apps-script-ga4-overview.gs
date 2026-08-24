@@ -9,13 +9,67 @@
  *   article_clicks           → Sheet rollup
  *   ga4_article_clicks       → GA4 article_click by event_label
  *
- * Paste the two functions below into the SAME project, then:
+ * Paste the functions below into the SAME project, then:
  *   1. Services (+) → Google Analytics Data API (already added if ga4_article_clicks works)
  *   2. Confirm Script Property GA4_PROPERTY_ID = 540138354
  *   3. Deploy → Manage deployments → Edit (pencil) → New version → Update
  *
- * After deploy, the admin panel requests ?type=ga4_overview and shows 7-day site totals.
+ * After deploy, the admin panel requests:
+ *   ?type=ga4_overview       → 7-day site totals
+ *   ?type=ga4_article_pages  → 7d + 28d /articles/* pageviews
+ *
+ * Until those types are deployed, the admin panel falls back to
+ * /data/ga4-article-pages.json (refreshed by HQ snapshot).
  */
+
+function handleGa4ArticlePages() {
+  var propertyId = PropertiesService.getScriptProperties().getProperty('GA4_PROPERTY_ID');
+  if (!propertyId) {
+    return { success: false, error: 'GA4_PROPERTY_ID script property is not set. Use the numeric property id 540138354, not G-JES4VXETRS.' };
+  }
+  function pull(startDate) {
+    var req = {
+      dateRanges: [{ startDate: startDate, endDate: 'today' }],
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [
+        { name: 'screenPageViews' },
+        { name: 'totalUsers' },
+        { name: 'sessions' },
+        { name: 'averageSessionDuration' },
+        { name: 'engagementRate' }
+      ],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'pagePath',
+          stringFilter: { matchType: 'CONTAINS', value: '/articles/' }
+        }
+      },
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+      limit: 100
+    };
+    var resp = AnalyticsData.Properties.runReport('properties/' + propertyId, req);
+    var rows = [];
+    (resp.rows || []).forEach(function (r) {
+      rows.push({
+        path: r.dimensionValues[0].value,
+        views: Number(r.metricValues[0].value),
+        users: Number(r.metricValues[1].value),
+        sessions: Number(r.metricValues[2].value),
+        avgDurationSec: Number(r.metricValues[3].value),
+        engagementRate: Number(r.metricValues[4].value)
+      });
+    });
+    return rows;
+  }
+  return {
+    success: true,
+    source: 'ga4',
+    range: '28daysAgo-today',
+    pages7d: pull('7daysAgo'),
+    pages28d: pull('28daysAgo'),
+    fetchedAt: new Date().toISOString()
+  };
+}
 
 function handleGa4Overview() {
   var propertyId = PropertiesService.getScriptProperties().getProperty('GA4_PROPERTY_ID');
@@ -87,11 +141,16 @@ function handleGa4Overview() {
 }
 
 /**
- * Inside the existing doGet(e), add this branch next to ga4_article_clicks:
+ * Inside the existing doGet(e), add these branches next to ga4_article_clicks:
  *
  *   if (type === 'ga4_overview') {
  *     return ContentService
  *       .createTextOutput(JSON.stringify(handleGa4Overview()))
+ *       .setMimeType(ContentService.MimeType.JSON);
+ *   }
+ *   if (type === 'ga4_article_pages') {
+ *     return ContentService
+ *       .createTextOutput(JSON.stringify(handleGa4ArticlePages()))
  *       .setMimeType(ContentService.MimeType.JSON);
  *   }
  */
