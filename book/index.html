@@ -888,7 +888,8 @@ const ARTICLES = [
   { id:51, status:"published", pillar:"methodology", audience:["leaders","ld","sales"], url:"/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences", title:"Executive Coaching, Business Coaching, Sports Coaching, and Consulting Are Not the Same Thing — Here's Why It Matters", mins:7, tag:"Methodology", summary:"Each modality has genuine value. But conflating them leaves leaders with the right tool for the wrong problem. Here is how to tell the difference — and why it matters for how you grow."},
   { id:52, status:"published", pillar:"arc", audience:["leaders","ld","sales"], url:"/articles/external-partnership-pattern-recognition", title:"Why External Partnership and Cross-Organizational Pattern Recognition Matter More Than Internal Expertise", mins:6, tag:"The Arc", summary:"The certified experts rarely moved the needle. The people who could speak across factions, see what others were too close to see, and bring pattern recognition from outside the walls did." },
   { id:53, status:"published", pillar:"identity", audience:["leaders"], url:"/articles/succession-planning-senior-leaders", title:"The Succession Conversation Most Senior Leaders Are Not Having", mins:7, tag:"Succession", summary:"Succession planning is framed as a talent process. For the leader at the center of it, it is a reckoning with identity, legacy, and what comes next." },
-  { id:54, status:"published", pillar:"strategy", audience:["leaders"], url:"/articles/csuite-board-communication", title:"C-Suite and Board Communication: What Senior Leaders Get Wrong and Why", mins:6, tag:"Communication", summary:"Communication at the C-suite and board level operates under constraints that do not exist anywhere else. Most leaders discover this too late." }
+  { id:54, status:"published", pillar:"strategy", audience:["leaders"], url:"/articles/csuite-board-communication", title:"C-Suite and Board Communication: What Senior Leaders Get Wrong and Why", mins:6, tag:"Communication", summary:"Communication at the C-suite and board level operates under constraints that do not exist anywhere else. Most leaders discover this too late." },
+  { id:55, status:"published", pillar:"strategy", audience:["leaders","ld"], url:"/articles/adoption-is-not-a-course", title:"The Adoption Gap No Dashboard Will Show You", mins:7, tag:"Adoption", publishedAt:"2026-08-24", featuredUntil:"2026-08-31", summary:"Anticipation from the top is not adoption. CHROs already have the tools. What is missing is protected space for leaders to connect those tools to what is real." }
 ];
 
 
@@ -3004,23 +3005,35 @@ function HomePage() {
             </div>
           </div>
           <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-            {ARTICLES.filter(a => a.status === "published").slice(0,4).map(a => {
-              const pillar = CONTENT_PILLARS.find(p => p.id === a.pillar);
-              return (
+            {(() => {
+              const today = new Date().toISOString().slice(0,10);
+              const published = ARTICLES.filter(a => a.status === "published");
+              const featured = published.find(a => a.featuredUntil && a.featuredUntil >= today);
+              const rest = published
+                .filter(a => !featured || a.id !== featured.id)
+                .slice()
+                .sort((a,b) => String(b.publishedAt||"").localeCompare(String(a.publishedAt||"")));
+              const cards = featured ? [featured, ...rest.slice(0,3)] : rest.slice(0,4);
+              return cards.map((a,i) => {
+                const pillar = CONTENT_PILLARS.find(p => p.id === a.pillar);
+                const isLatest = i === 0;
+                return (
                 <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
-                  style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.white, border:`1px solid ${C.border}`, borderRadius:4, textDecoration:"none", transition:"border-color 0.15s" }}
+                  style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.white, border:`1px solid ${isLatest?C.gold:C.border}`, borderRadius:4, textDecoration:"none", transition:"border-color 0.15s" }}
                   onClick={() => {
-                    window.track("article_click",{event_label:a.title,article_id:a.id});
+                    window.track("article_click",{event_label:a.title,article_id:a.id,location:isLatest?"home_latest":"home_library"});
                     logToSheet({ type: "article_click", articleId: a.id, title: a.title, pillar: a.pillar, referrer: document.referrer || "(direct)" });
                   }}>
                   <div style={{ width:3, height:40, background:pillar?.color||C.gold, borderRadius:2, flexShrink:0, marginTop:3 }}/>
                   <div>
+                    {isLatest && <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1.5, textTransform:"uppercase", color:C.gold, fontWeight:700, marginBottom:4 }}>Latest</div>}
                     <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy, lineHeight:1.3, marginBottom:3 }}>{a.title}</div>
                     <div style={{ fontFamily:DM, fontSize:11, color:C.muted }}>{pillar?.label} · {a.mins} min</div>
                   </div>
                 </a>
-              );
-            })}
+                );
+              });
+            })()}
             <button onClick={() => setPage("resources")} style={{ background:"none", border:"none", fontFamily:DM, fontSize:13, color:C.gold, cursor:"pointer", textAlign:"left", padding:"6px 0", textDecoration:"underline" }}>
               View all {ARTICLES.filter(a=>a.status==="published").length} published articles →
             </button>
