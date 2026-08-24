@@ -190,7 +190,7 @@
         "@id": "https://unifiedsolutionsinc.com/#organization",
         "name": "Unified Solutions Inc.",
         "legalName": "Unified Solutions Inc.",
-        "description": "Unified Solutions Inc. is the executive coaching practice of Julian Johnson, Whole-Person Catalyst, ICF PCC and ACTC. 1:1 executive coaching, team coaching, peer advisory circles, and group cohorts for senior leaders. 1,500+ hours. Faculty at ExecOnline and Emeritus. SDVOSB. Based in Plymouth, MN; serving leaders nationally and globally.",
+        "description": "Unified Solutions Inc. is the executive coaching practice of Julian Johnson, Whole-Person Catalyst, ICF PCC and ACTC. 1:1 executive coaching, team coaching, Succession Circle, and group cohorts for senior leaders in large systems. 1,500+ hours. Faculty at ExecOnline and Emeritus. SDVOSB. Based in Plymouth, MN; serving leaders nationally and globally.",
         "url": "https://unifiedsolutionsinc.com",
         "logo": "https://unifiedsolutionsinc.com/assets/logo.png",
         "telephone": "+1-952-594-8611",
@@ -224,7 +224,7 @@
               "itemOffered": {
                 "@type": "Service",
                 "name": "1:1 Executive Coaching",
-                "description": "Whole-person executive coaching for senior leaders navigating high-stakes decisions, role transitions, identity questions, and leadership development. ICF PCC. Assessment-informed. Bi-weekly sessions over 3-6 month engagements. Direct engagements typically from $350–$400/hr.",
+                "description": "Executive coaching for senior leaders in large systems when a seat is changing, or the work is moving faster than they can adopt it. Bi-weekly. Three to six months. Direct engagements from $400/hr. Typical $500/hr.",
                 "url": "https://unifiedsolutionsinc.com/coaching",
                 "provider": { "@id": "https://unifiedsolutionsinc.com/#organization" },
                 "audience": { "@type": "Audience", "audienceType": "Senior Executives, VP, SVP, C-Suite, Directors" }
@@ -232,7 +232,7 @@
               "priceSpecification": {
                 "@type": "UnitPriceSpecification",
                 "priceCurrency": "USD",
-                "price": "350",
+                "price": "400",
                 "unitText": "HOUR"
               }
             },
@@ -240,8 +240,8 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Peer Advisory Circle Facilitation",
-                "description": "ICF-credentialed facilitation of executive peer advisory groups and leadership circles. Monthly or bi-weekly format. Grounded in COO Forum and UFacilitate peer methodology. Offers what franchise peer advisory models cannot: coaching-informed facilitation.",
+                "name": "Succession Circle",
+                "description": "A peer room for leaders in a seat change. Pre-operations and post-transition. Who they are, legacy, what is next. Not org-chart work. Already delivered with executive directors and presidents of national mission-driven organizations.",
                 "url": "https://unifiedsolutionsinc.com/coaching",
                 "provider": { "@id": "https://unifiedsolutionsinc.com/#organization" }
               }
@@ -262,16 +262,6 @@
                 "@type": "Service",
                 "name": "Group Coaching and Leadership Cohorts",
                 "description": "Peer cohort coaching programs proven at scale through ExecOnline and Emeritus partnerships with Berkeley Haas, Chicago Booth, Columbia, MIT Sloan, Stanford GSB, Wharton, and Yale SOM.",
-                "url": "https://unifiedsolutionsinc.com/coaching",
-                "provider": { "@id": "https://unifiedsolutionsinc.com/#organization" }
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Organizational Leadership Coaching",
-                "description": "VP cohorts, custom leadership workshops, coaching culture development, and enterprise leadership programs for senior leaders and organizations. Supported by a small network of vetted practitioners for programs requiring scale.",
                 "url": "https://unifiedsolutionsinc.com/coaching",
                 "provider": { "@id": "https://unifiedsolutionsinc.com/#organization" }
               }
@@ -365,10 +355,10 @@
           },
           {
             "@type": "Question",
-            "name": "What is peer advisory circle facilitation and how is it different from Vistage or TAB?",
+            "name": "What is a Succession Circle?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Peer advisory circles are structured groups of senior leaders who meet regularly to work on real challenges with the benefit of peer perspective and facilitated conversation. What differentiates ICF-credentialed facilitation from franchise models like Vistage or TAB is coaching depth: the facilitation draws on ICF competencies, holistic coaching methodology, and positive psychology — not just peer advisory format. Leaders in these circles get both the peer dynamic and the quality of conversation that a certified coach creates."
+              "text": "A Succession Circle is a peer room for leaders who are leaving a way of working, or stepping into one. The work is who they are going in, what they leave, and who they are after. Not the search or the org chart. Already held with executive directors and presidents of national mission-driven organizations. Franchise peer groups sell a chair and a format. This is the human passage, held with people in the same one."
             }
           },
           {
@@ -416,7 +406,7 @@
             "name": "What does 1:1 executive coaching cost with Julian Johnson?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Direct 1:1 executive coaching typically starts from $350 per hour, with standard engagements around $400 per hour. Most work is structured as a 3-month minimum with bi-weekly sessions and is invoiceable to the organization. Team, group, peer advisory, and enterprise work is scoped by engagement rather than sold as pure hourly blocks."
+              "text": "Direct 1:1 executive coaching starts from $400 per hour. Typical engagements are $500 per hour. Three-month minimum. Bi-weekly sessions. Invoiceable to the organization. Team work typically $10,000 to $15,000 for 60 to 90 days. Group cohorts typically $8,000 to $12,000. Succession Circles start at $500 per month per member. Most work is scoped. Send the situation and I will quote."
             }
           },
           {
@@ -793,30 +783,25 @@ function generateAssessmentSession() {
 
 const SERVICES = [
   { id:"executive", icon:"◎", label:"1:1 Executive", badge:null,
-    tagline:"Coaching for leaders who are ready to go deeper than their circumstances.",
-    bullets:["Holistic in scope, laser-focused in method","Assessment debrief woven throughout","Bi-weekly sessions, 3–6 month engagement, schedule built around you"],
-    price:"From $350/hr · typical $400/hr · 3-month minimum · invoiceable to org",
+    tagline:"The tools are already here. I make it possible to use them, and to say the thing the room has been managing around.",
+    bullets:["For senior leaders in large systems when a seat is changing, or the work is moving faster than the conversation","I will challenge what good even is. Not five steps. Not a costume called executive presence.","Bi-weekly sessions. Three-month minimum. Often scoped as six months."],
+    price:"From $400/hr · typical $500/hr · 3-month minimum. Most work is scoped. Send the situation and I will quote.",
+    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
+  { id:"team", icon:"◍", label:"Team Coaching", badge:null,
+    tagline:"I am brought in so busy leaders adopt the change, not perform another program.",
+    bullets:["Intact leadership teams. The patterns between people, not a stack of 1:1s in a conference room.","Honest conversation across title. Time to learn is part of the work, not hoped for after.","60 to 90 days. Sponsor 1:1 inside the engagement. ACTC."],
+    price:"Typical $10,000–$15,000 · 60–90 days. Most work is scoped. Send the situation and I will quote.",
     cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
   { id:"group", icon:"⬡", label:"Group Coaching", badge:null,
-    tagline:"Peer cohort work proven at scale across Cornell, Yale SOM, MIT Sloan & Wharton.",
-    bullets:["Business school group coaching methodology + positive psychology","6–12 week structured programs with clear development objectives","Individual debrief touchpoints included in every cohort"],
-    price:"Project-based or retainer · cohort pricing available",
-    cta:"Inquire about cohorts", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
-  { id:"peer", icon:"◉", label:"Peer Advisory Circles", badge:"NEW",
-    tagline:"ICF-credentialed facilitation for executive peer groups — what franchise models can't deliver.",
-    bullets:["Structured peer advisory facilitation grounded in coaching methodology","Monthly or bi-weekly format built for your circle's specific context","COO Forum directorship + UFacilitate experience as proof of delivery"],
-    price:"Retainer-based · contact for circle pricing",
-    cta:"Learn about peer circles", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
-  { id:"team", icon:"◍", label:"Team Coaching", badge:null,
-    tagline:"Addresses the patterns that live between people — not just within them.",
-    bullets:["ICF ACTC-level team coaching competency applied to your actual dynamics","Trust, alignment, accountability addressed at the level where they actually break down","60–90 day structured engagement + individual coaching touchpoints"],
-    price:"Project-based · scoped to team size and need",
-    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
-  { id:"enterprise", icon:"◈", label:"Organizations", badge:null,
-    tagline:"VP cohorts, custom workshops, and coaching culture built deliberately.",
-    bullets:["Delivered across senior leadership teams in financial services, technology, and healthcare","Access to a small network of vetted practitioners for programs requiring scale","Custom SOW, full confidentiality, organizational reporting limited to aggregate themes"],
-    price:"Enterprise pricing · contact for scope discussion",
-    cta:"Schedule a scoping call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
+    tagline:"Adoption, not another course. Support for leaders who have no time, and no honest room.",
+    bullets:["Cohorts that stop performing the learning and start saying what they actually think","The same craft used in university-partnered rooms with senior leaders from large systems","6 to 12 weeks. Individual debrief touchpoints inside the cohort."],
+    price:"Typical $8,000–$12,000 per cohort. Or $500–$600/hr. Starting point, then a concrete quote.",
+    cta:"Inquire about a cohort", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
+  { id:"succession", icon:"◉", label:"Succession Circle", badge:null,
+    tagline:"Who you are going into the seat change. Who you are after. Legacy. What is next. Not the org chart.",
+    bullets:["Pre-operations and post-transition. The person leaving. The person coming in.","Already held with executive directors and presidents of national mission-driven organizations.","A room of peers in the same passage. Monthly or bi-weekly."],
+    price:"From $500/month per member. Circles are scoped. Send the situation and I will quote.",
+    cta:"Inquire about a circle", ctaUrl:"mailto:contact@unifiedsolutionsinc.com" },
 ];
 
 const TESTIMONIALS = [
@@ -1088,8 +1073,8 @@ const PAGE_META = {
     description: "Direct executive and team coach for leaders and groups who need movement, not theater. Leader and manager development, change and workforce resiliency, HR tech and AI strategy. 1,500+ hours. Fortune 500 operator. ICF PCC / ACTC."
   },
   coaching: {
-    title: "Executive Coaching for Senior Leaders | 1:1 · Team · Peer Advisory | Julian Johnson ICF PCC",
-    description: "ICF-certified coaching for senior leaders: private 1:1 coaching, peer advisory circles, team coaching, group cohorts & organizational programs. Proven across Fortune 500 and top business schools."
+    title: "Executive Coaching for Senior Leaders | 1:1 · Team · Group · Succession Circle | Julian Johnson ICF PCC",
+    description: "Executive and team coaching for senior leaders in large systems: 1:1, team, group, and Succession Circle. Adoption in an honest room. From $400/hr. ICF PCC / ACTC."
   },
   resources: {
     title: "Leadership Resources & Articles | Executive Coach Julian Johnson",
@@ -2773,10 +2758,15 @@ function HomePage() {
       <section id="services" style={{ background:C.cream, padding:"96px 24px" }}
         ref={el => window.bindSectionView && window.bindSectionView(el, "services", "Coaching Services")}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ textAlign:"center", marginBottom:60 }}>
-            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>Coaching Services</div>
-            <h2 style={{ fontFamily:PF, fontSize:40, color:C.navy, margin:"0 0 16px", letterSpacing:-0.5 }}>Five ways to work together.</h2>
-            <p style={{ fontFamily:DM, fontSize:18, color:C.muted, maxWidth:500, margin:"0 auto" }}>The format shifts to fit what you need. The depth never does.</p>
+          <div style={{ textAlign:"center", marginBottom:36 }}>
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>How the work is held</div>
+            <h2 style={{ fontFamily:PF, fontSize:40, color:C.navy, margin:"0 0 16px", letterSpacing:-0.5 }}>How we work together.</h2>
+            <p style={{ fontFamily:DM, fontSize:18, color:C.muted, maxWidth:640, margin:"0 auto 28px", lineHeight:1.7 }}>Executive directors and presidents of national mission-driven organizations. Vice presidents of national financial institutions. Faculty rooms with senior leaders from Fortune 500 and large private companies. Not startups. The format changes. The job does not: adoption in an honest room, especially when a seat is changing.</p>
+            <div style={{ maxWidth:640, margin:"0 auto 24px", textAlign:"left", background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"22px 24px" }}>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>How the work is done</div>
+              <div style={{ fontFamily:PF, fontSize:22, color:C.navy, margin:"0 0 12px", fontWeight:600 }}>I do not teach the model. I use it, then I put it down.</div>
+              <p style={{ fontFamily:DM, fontSize:16, color:C.muted, margin:0, lineHeight:1.7 }}>I have the certifications and the coaching methods. I use them. I do not get stuck to them. I am not here to teach you what you already sat through in a program. I am here so you apply it, and so the decision is challenged before you have to live with it. The thing nobody else will make you think about. Neutral. Direct. Not a second opinion that agrees with you. Laser-focused method: get to what matters. Assessments used, never worshipped. The debrief is the work.</p>
+            </div>
           </div>
           {/* Service tab nav */}
           <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:36, borderBottom:`1px solid ${C.border}`, paddingBottom:0 }}>
@@ -3468,8 +3458,8 @@ function CoachingPage() {
                   a:"Most executive coaching was built for a particular kind of leader — not the one navigating real organizational pressure with real complexity. Julian brings a rare arc: tactical team leader deployed to Iraq and Kosovo, embedded Fortune 500 consultant at Optum, Wells Fargo, and Securian, and 1,500+ hours as an ICF PCC coach. The Unified Method integrates holistic awareness, laser-focused questioning methodology, positive psychology research, and assessment-informed data. It is built for leaders who have outgrown generic coaching." },
                 { q:"Do you work with clients remotely?",
                   a:"All 1:1 coaching and group programs are available remotely, and the majority of clients engage this way. Sessions are typically conducted via video. Team coaching and organizational programs can be delivered remotely or on-site. Julian is based in Plymouth, MN and works with senior leaders nationally and globally." },
-                { q:"What is peer advisory circle facilitation and how is it different from Vistage or TAB?",
-                  a:"Peer advisory circles are structured groups of senior leaders who meet regularly to work on real challenges with the benefit of peer perspective and facilitated conversation. What differentiates ICF-credentialed facilitation from franchise models is coaching depth — the facilitation draws on ICF competencies, holistic coaching methodology, and positive psychology, not just advisory format. Leaders get both the peer dynamic and the quality of conversation that only a certified coach creates." },
+                { q:"What is a Succession Circle?",
+                  a:"A Succession Circle is a peer room for leaders who are leaving a way of working, or stepping into one. The work is who they are going in, what they leave, and who they are after. Not the search or the org chart. Already held with executive directors and presidents of national mission-driven organizations. Franchise peer groups sell a chair and a format. This is the human passage, held with people in the same one." },
                 { q:"How long does an executive coaching engagement last?",
                   a:"1:1 executive coaching engagements typically run 3–6 months with bi-weekly sessions, building toward a 12-month relationship for leaders doing sustained developmental work. The minimum is 3 months because meaningful behavioral and identity-level change requires consistency, not one-off sessions. Team coaching runs 60–90 days. Organizational programs are scoped to the initiative." },
                 { q:"I need coaching support quickly. How fast can we start?",
@@ -3495,8 +3485,8 @@ function CoachingPage() {
                   { icon:"◉", label:"Something is broken on your team", body:"High capability, but the dynamic between people is costing you results. You need to address what lives in the room, not just the individuals in it.", tag:"Team Coaching" },
                   { icon:"◎", label:"You've outgrown your internal feedback", body:"The people around you can no longer give you what you need — honest, informed, outside perspective without a political cost.", tag:"1:1 Coaching" },
                   { icon:"◈", label:"A decision that won't resolve", body:"A high-stakes, complex call that keeps returning. You need structured thinking with someone who can hold the complexity with you.", tag:"Decision Quality" },
-                  { icon:"◍", label:"Leading through a transformation", body:"M&A, reorganization, digital transformation — you're the one who has to lead people through uncertainty you're also navigating yourself.", tag:"Transition Leadership" },
-                  { icon:"◐", label:"You're building a peer group", body:"You need a facilitator who brings ICF coaching depth, not just advisory format — someone who can make the conversation worth having every time.", tag:"Peer Advisory" },
+                  { icon:"◍", label:"The tools arrived faster than the team", body:"The spend is past the pilot. Calendars are full. Playing it safe has become the strategy. You need the room to adopt the work, not perform another program.", tag:"Adoption" },
+                  { icon:"◐", label:"You are leaving a seat, or taking one", body:"The operations will get handled. The question is who you are in it, what you leave, and how the next leader is made room for. That is a Succession Circle, or 1:1 if the work is private.", tag:"Succession" },
                   { icon:"◑", label:"Your identity and your role are in tension", body:"At a certain level of leadership, the constraint isn't capability. It's the clarity, stability, and coherence of who you are as a leader.", tag:"Identity & Presence" },
                   { icon:"⬡", label:"An urgent need — right now", body:"Something is happening in your organization and you need a skilled, confidential outside perspective immediately. Discovery calls typically happen within 48 hours.", tag:"Just-in-Time" },
                 ].map((s,i) => (
@@ -4178,7 +4168,7 @@ function BookPage() {
             <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
               {[
                 { icon:"📅", label:"Discovery Call", detail:"30 min · No cost · Genuine fit assessment" },
-                { icon:"📞", label:"Scoping Call (Organizations)", detail:"30 min · Enterprise programs · Custom SOW" },
+                { icon:"📞", label:"Scoping Call", detail:"30 min · Team, group, or Succession Circle · Custom SOW" },
                 { icon:"✉️", label:"Direct Email", detail:"contact@unifiedsolutionsinc.com" },
                 { icon:"📱", label:"Phone", detail:"952.594.8611" },
               ].map((c,i) => (
@@ -4413,7 +4403,7 @@ function Footer() {
         </div>
         {[
           { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Book a Call","book"],["Privacy Policy","privacy"]] },
-          { head:"Services", items:[["1:1 Executive","coaching"],["Group Coaching","coaching"],["Peer Advisory Circles","coaching"],["Team Coaching","coaching"],["Organizations","coaching"]] },
+          { head:"Services", items:[["1:1 Executive","coaching"],["Team Coaching","coaching"],["Group Coaching","coaching"],["Succession Circle","coaching"]] },
           { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
           <div key={i}>
@@ -4458,7 +4448,7 @@ const DEFAULT_CONTENT = {
   },
   coaching: {
     headline: "A coach doesn't tell you what to do with your organization. A coach helps you become the leader who can figure that out and do it well.",
-    subtitle: "That distinction matters — and not every coaching practice holds it. This one does. ICF PCC, ACTC, 1,500+ hours. Four ways to engage — each designed for genuine fit before any commitment is made.",
+    subtitle: "1:1, team, group, and Succession Circle. Same practice. Different container. ICF PCC, ACTC, 1,500+ hours.",
   },
   resources: {
     headline: "Tools, frameworks, and thinking for leaders who do serious work.",
