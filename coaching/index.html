@@ -1765,6 +1765,7 @@ Do not add any other text after the URL lines.`;
 function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
   const [sheetData,  setSheetData]  = useState(null);   // {counts:{id:{title,count}}, totalEvents}
   const [ga4Data,    setGa4Data]    = useState(null);   // {counts:{title:{title,count}}, totalEvents}
+  const [ga4Overview,setGa4Overview]= useState(null);   // 7d sessions/users/pageviews/events
   const [source,     setSource]     = useState("local"); // local | sheet | ga4
   const [sheetState, setSheetState] = useState("idle"); // idle|loading|done|error
   const [ga4State,   setGa4State]   = useState("idle");
@@ -1819,8 +1820,19 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
     if (!loggingEndpoint) { setGa4Err("LOGGING_ENDPOINT not configured in index.html."); setGa4State("error"); return; }
     setGa4State("loading"); setGa4Err("");
     try {
-      const res  = await fetch(loggingEndpoint + "?type=ga4_article_clicks", { method:"GET", redirect:"follow" });
-      const data = await res.json();
+      const [clickRes, overviewRes] = await Promise.all([
+        fetch(loggingEndpoint + "?type=ga4_article_clicks", { method:"GET", redirect:"follow" }),
+        fetch(loggingEndpoint + "?type=ga4_overview", { method:"GET", redirect:"follow" }).catch(() => null),
+      ]);
+      const data = await clickRes.json();
+      if (overviewRes && overviewRes.ok) {
+        try {
+          const overview = await overviewRes.json();
+          if (overview && overview.success && typeof overview.sessions === "number") {
+            setGa4Overview(overview);
+          }
+        } catch (ignore) { /* older webhook has no ga4_overview — article clicks still count as connected */ }
+      }
       if (data.success) {
         setGa4Data(data); setGa4At(new Date().toLocaleTimeString()); setGa4State("done"); setSource("ga4");
       } else {
@@ -1834,6 +1846,12 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
       }
     } catch(e) { setGa4Err("Could not reach Apps Script: " + e.message); setGa4State("error"); }
   }
+
+  useEffect(() => {
+    loadSheet();
+    loadGA4();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ── Source tab config ───────────────────────────────────────────
   const sources = [
@@ -1914,6 +1932,53 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
           {ga4Err.includes("dimension") && (
             <span> Register event_label as a custom dimension: GA4 → Configure → Custom definitions → Create (Scope: Event, Parameter: event_label). Wait 24 hrs after creating.</span>
           )}
+        </div>
+      )}
+
+      {/* ── Site-wide 7-day GA4 (needs ga4_overview on the webhook) ── */}
+      {ga4Overview && (
+        <div style={{ marginBottom:12 }}>
+          <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1.5, textTransform:"uppercase", color:C.muted, marginBottom:8 }}>
+            Site traffic · last 7 days
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:10, marginBottom:8 }}>
+            {[
+              [ga4Overview.sessions,   "Sessions",   C.gold],
+              [ga4Overview.users,      "Users",      C.navy],
+              [ga4Overview.pageviews,  "Pageviews",  C.navy],
+              [ga4Overview.events,     "Events",     C.muted],
+            ].map(([v,l,c],i) => (
+              <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px" }}>
+                <div style={{ fontFamily:PF, fontSize:22, color:c, fontWeight:700 }}>{v}</div>
+                <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1, textTransform:"uppercase", color:C.muted, marginTop:3 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+          {Array.isArray(ga4Overview.topPages) && ga4Overview.topPages.length > 0 && (
+            <div style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"10px 12px", marginBottom:8 }}>
+              <div style={{ fontFamily:DM, fontSize:10, letterSpacing:1.5, textTransform:"uppercase", color:C.muted, marginBottom:6 }}>Top pages</div>
+              {ga4Overview.topPages.slice(0,8).map((p,i) => (
+                <div key={i} style={{ display:"flex", justifyContent:"space-between", gap:12, fontFamily:DM, fontSize:12, color:C.navy, padding:"3px 0" }}>
+                  <span style={{ overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.path}</span>
+                  <span style={{ flexShrink:0, color:C.muted }}>{p.views} views</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {ga4Overview.eventBreakdown && (
+            <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:4 }}>
+              {Object.values(ga4Overview.eventBreakdown).slice(0,10).map((ev,i) => (
+                <span key={i} style={{ fontFamily:DM, fontSize:10, background:C.creamDark, border:`1px solid ${C.border}`, borderRadius:12, padding:"3px 8px", color:C.navy }}>
+                  {ev.name} · {ev.count}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {ga4State==="done" && !ga4Overview && (
+        <div style={{ fontFamily:DM, fontSize:11, color:C.muted, marginBottom:10, lineHeight:1.55 }}>
+          GA4 article clicks are connected. Site-wide sessions, pages, and events need one Apps Script addition (`scripts/google-apps-script-ga4-overview.gs`) then Deploy → New version.
         </div>
       )}
 
@@ -2868,7 +2933,10 @@ function HomePage() {
               return (
                 <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
                   style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", background:C.white, border:`1px solid ${C.border}`, borderRadius:4, textDecoration:"none", transition:"border-color 0.15s" }}
-                  onClick={() => window.track("article_click",{event_label:a.title,article_id:a.id})}>
+                  onClick={() => {
+                    window.track("article_click",{event_label:a.title,article_id:a.id});
+                    logToSheet({ type: "article_click", articleId: a.id, title: a.title, pillar: a.pillar, referrer: document.referrer || "(direct)" });
+                  }}>
                   <div style={{ width:3, height:40, background:pillar?.color||C.gold, borderRadius:2, flexShrink:0, marginTop:3 }}/>
                   <div>
                     <div style={{ fontFamily:DM, fontSize:13, fontWeight:600, color:C.navy, lineHeight:1.3, marginBottom:3 }}>{a.title}</div>
