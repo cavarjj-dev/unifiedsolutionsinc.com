@@ -25,20 +25,32 @@
 </head>
 <body>
 <h1>Article URL Checker</h1>
-<p>Checks whether each of the 7 published article files actually exists on unifiedsolutionsinc.com. Run this from any browser while logged into the site or standalone.</p>
+<p>Checks whether each published article URL actually exists on unifiedsolutionsinc.com.</p>
 <button id="btn" onclick="runCheck()">▶ Run Check</button>
 <div id="summary"></div>
 <div id="results"></div>
 
 <script>
 const ARTICLES = [
-  { id: 1, title: "Why Laser-Focused Coaching Gets Results Faster",             url: "/articles/laser-focused-coaching" },
-  { id: 2, title: "Big Five vs HEXACO: Which Model Is Right for Leadership Development?", url: "/articles/big-five-vs-hexaco" },
-  { id: 3, title: "Group Coaching vs Team Coaching: What Senior Leaders Need to Know", url: "/articles/group-vs-team-coaching" },
-  { id: 4, title: "What the Research Actually Says About Decision-Making Under Pressure", url: "/articles/decision-making-under-pressure" },
-  { id: 5, title: "What Psychological Safety Actually Requires — and What Most Leaders Get Wrong", url: "/articles/psychological-safety-leadership" },
-  { id: 6, title: "The Identity Problem at the Heart of Senior Leadership",     url: "/articles/leadership-identity" },
-  { id: 7, title: "Personal Sustainability Is a Leadership Responsibility",      url: "/articles/personal-sustainability" },
+  { id: 1, title: "Why Laser-Focused Coaching Gets Results Faster", url: "/articles/laser-focused-coaching" },
+  { id: 2, title: "Big Five vs HEXACO", url: "/articles/big-five-vs-hexaco" },
+  { id: 3, title: "Group Coaching vs Team Coaching", url: "/articles/group-vs-team-coaching" },
+  { id: 4, title: "Decision-Making Under Pressure", url: "/articles/decision-making-under-pressure" },
+  { id: 5, title: "Psychological Safety", url: "/articles/psychological-safety-leadership" },
+  { id: 6, title: "The Identity Problem", url: "/articles/leadership-identity" },
+  { id: 7, title: "Personal Sustainability", url: "/articles/personal-sustainability-leadership" },
+  { id: 17, title: "Why Peer Learning", url: "/articles/why-peer-learning-leadership-development-tools" },
+  { id: 21, title: "Tactical Team Leadership in a War Zone", url: "/articles/tactical-leadership-war-zone-executive-coaching" },
+  { id: 23, title: "Leading Through M&A", url: "/articles/leading-through-ma" },
+  { id: 24, title: "Consulting vs Coaching Mindset", url: "/articles/consulting-mindset-vs-coaching-mindset" },
+  { id: 30, title: "Holistic Coaching", url: "/articles/holistic-coaching-what-it-actually-means" },
+  { id: 35, title: "Kolb Cycle", url: "/articles/kolb-learning-cycle-leadership" },
+  { id: 42, title: "Sustainable High Performance", url: "/articles/sustainable-high-performance" },
+  { id: 50, title: "Agile Transformation", url: "/articles/agile-transformation-leading-change" },
+  { id: 51, title: "Coaching Modalities", url: "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences" },
+  { id: 52, title: "External Partnership", url: "/articles/external-partnership-pattern-recognition" },
+  { id: 53, title: "The Succession Conversation", url: "/articles/succession-planning-senior-leaders" },
+  { id: 54, title: "C-Suite and Board Communication", url: "/articles/csuite-board-communication" },
 ];
 
 // Common naming variants to auto-suggest
