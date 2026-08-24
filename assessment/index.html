@@ -2055,6 +2055,7 @@ function ArticleStatsPanel({ loggingEndpoint, localClicks }) {
 // ARTICLE ANALYTICS PANEL
 // Published articles lined up with public GA4 pageviews (not this browser).
 // Live webhook ?type=ga4_article_pages first; /data/ga4-article-pages.json fallback.
+// Lifetime = GA4 pageviews since day-zero 2026-07-21 (trustworthy tag date). Not weekly increments.
 // ═══════════════════════════════════════════════════════════════
 function normalizeArticlePath(p) {
   if (!p) return "";
@@ -2091,7 +2092,7 @@ function ArticleAnalyticsPanel({ loggingEndpoint }) {
   const [payload, setPayload] = useState(null);
   const [state, setState] = useState("idle");
   const [err, setErr] = useState("");
-  const [range, setRange] = useState("28d");
+  const [range, setRange] = useState("life");
   const [sortBy, setSortBy] = useState("views");
 
   async function load() {
@@ -2101,7 +2102,7 @@ function ArticleAnalyticsPanel({ loggingEndpoint }) {
       try {
         var res = await fetch(loggingEndpoint + "?type=ga4_article_pages", { method:"GET", redirect:"follow" });
         var data = await res.json();
-        if (data && data.success && (data.pages28d || data.pages7d)) live = data;
+        if (data && data.success && (data.pagesLifetime || data.pages28d || data.pages7d)) live = data;
       } catch(e) { /* fall through to snapshot */ }
     }
     if (!live) {
@@ -2122,7 +2123,9 @@ function ArticleAnalyticsPanel({ loggingEndpoint }) {
   useEffect(() => { load(); }, []);
 
   const published = ARTICLES.filter(a => a.status === "published");
-  const pages = range === "7d" ? (payload && payload.pages7d) : (payload && payload.pages28d);
+  const pages = range === "7d" ? (payload && payload.pages7d)
+    : range === "28d" ? (payload && payload.pages28d)
+    : ((payload && payload.pagesLifetime) || (payload && payload.pages28d));
   const byPath = rollupArticlePages(pages);
   const withCounts = published.map(a => {
     const key = normalizeArticlePath(a.url);
@@ -2179,7 +2182,7 @@ function ArticleAnalyticsPanel({ loggingEndpoint }) {
           All published articles ({sorted.length})
         </div>
         <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
-          {[["28d","Last 28 days"],["7d","Last 7 days"]].map(([v,l]) => (
+          {[["life","Lifetime"],["28d","Last 28 days"],["7d","Last 7 days"]].map(([v,l]) => (
             <button key={v} onClick={() => setRange(v)} style={{ background:range===v?C.gold:"transparent", color:range===v?C.navy:C.muted, border:`1px solid ${range===v?C.gold:C.border}`, borderRadius:4, padding:"3px 10px", fontFamily:DM, fontSize:11, cursor:"pointer" }}>{l}</button>
           ))}
           {[["views","By reads"],["title","A–Z"]].map(([v,l]) => (
@@ -2219,7 +2222,7 @@ function ArticleAnalyticsPanel({ loggingEndpoint }) {
       <div style={{ marginTop:14, background:C.navyMid, borderRadius:6, padding:"10px 14px" }}>
         <div style={{ fontFamily:DM, fontSize:11, color:C.gold, fontWeight:700, marginBottom:3 }}>About these counts</div>
         <div style={{ fontFamily:DM, fontSize:11, color:"rgba(255,255,255,0.55)", lineHeight:1.6 }}>
-          Public Google Analytics pageviews on live article URLs{via ? " · " + via : ""}. Not this browser. Card clicks (`article_click`) are a different event and stay in the strip above.
+          Public Google Analytics pageviews on live article URLs since 21 Jul 2026 (the day the tag was trustworthy). Lifetime is one running total, refreshed weekly. Not this browser. Not weekly increments stacked.{via ? " Source: " + via + "." : ""} Card clicks stay in the strip above.
           {fetchedLabel ? " Pulled " + fetchedLabel + "." : ""}
         </div>
       </div>
@@ -2383,7 +2386,7 @@ function AdminPanel({ onClose, initialTab="crm" }) {
             <div style={{ padding:"0 28px 28px" }}>
               <div style={{ height:1, background:C.border, margin:"0 0 22px" }}/>
               <div style={{ fontFamily:PF, fontSize:18, color:C.navy, marginBottom:4 }}>Published article reads</div>
-              <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:16 }}>Public Google Analytics pageviews, lined up to each live article. Not this browser.</div>
+              <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginBottom:16 }}>Public Google Analytics pageviews since 21 Jul 2026. Lifetime is the running total. Not this browser.</div>
               <ArticleAnalyticsPanel loggingEndpoint={LOGGING_ENDPOINT} />
             </div>
           )}

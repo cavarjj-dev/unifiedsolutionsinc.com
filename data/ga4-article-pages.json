@@ -1,8 +1,9 @@
 {
   "success": true,
   "source": "ga4",
-  "range": "28daysAgo-today",
-  "fetchedAt": "2026-08-24T19:35:56.278340Z",
+  "range": "2026-07-21-today",
+  "dayZero": "2026-07-21",
+  "fetchedAt": "2026-08-24T20:07:42.979067Z",
   "pages7d": [
     {
       "path": "/articles/decision-making-under-pressure/",
@@ -117,6 +118,88 @@
       "sessions": 2,
       "avgDurationSec": 0.0,
       "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/personal-sustainability-leadership/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 5.401579,
+      "engagementRate": 1.0
+    },
+    {
+      "path": "/articles/psychological-safety-leadership/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 45.346158,
+      "engagementRate": 1.0
+    }
+  ],
+  "pagesLifetime": [
+    {
+      "path": "/articles/decision-making-under-pressure/",
+      "views": 30,
+      "users": 25,
+      "sessions": 30,
+      "avgDurationSec": 33.0012915,
+      "engagementRate": 0.2
+    },
+    {
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 8,
+      "users": 8,
+      "sessions": 8,
+      "avgDurationSec": 0.046913125,
+      "engagementRate": 0.125
+    },
+    {
+      "path": "/articles/laser-focused-coaching/",
+      "views": 7,
+      "users": 7,
+      "sessions": 9,
+      "avgDurationSec": 0.26310833333333333,
+      "engagementRate": 0.1111111111111111
+    },
+    {
+      "path": "/articles/group-vs-team-coaching/",
+      "views": 5,
+      "users": 5,
+      "sessions": 5,
+      "avgDurationSec": 0.2352338,
+      "engagementRate": 0.2
+    },
+    {
+      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
+      "views": 2,
+      "users": 1,
+      "sessions": 2,
+      "avgDurationSec": 2.9684635,
+      "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/external-partnership-pattern-recognition/",
+      "views": 2,
+      "users": 1,
+      "sessions": 3,
+      "avgDurationSec": 1.689958,
+      "engagementRate": 0.6666666666666666
+    },
+    {
+      "path": "/articles/holistic-coaching-what-it-actually-means/",
+      "views": 2,
+      "users": 1,
+      "sessions": 2,
+      "avgDurationSec": 11.2915115,
+      "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/decision-making-under-pressure",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
       "path": "/articles/personal-sustainability-leadership/",

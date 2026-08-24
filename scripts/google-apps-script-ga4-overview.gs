@@ -16,10 +16,13 @@
  *
  * After deploy, the admin panel requests:
  *   ?type=ga4_overview       → 7-day site totals
- *   ?type=ga4_article_pages  → 7d + 28d /articles/* pageviews
+ *   ?type=ga4_article_pages  → 7d + 28d + lifetime /articles/* pageviews
  *
  * Until those types are deployed, the admin panel falls back to
- * /data/ga4-article-pages.json (refreshed by HQ snapshot).
+ * /data/ga4-article-pages.json (refreshed every Monday by ga4-weekly-pull.py).
+ *
+ * Exact click-by-click paste steps:
+ *   C:/Users/BizDev/HQ/unifiedsolutionsinc.com/scripts/APPS-SCRIPT-PASTE-STEPS.md
  */
 
 function handleGa4ArticlePages() {
@@ -64,9 +67,11 @@ function handleGa4ArticlePages() {
   return {
     success: true,
     source: 'ga4',
-    range: '28daysAgo-today',
+    range: '2026-07-21-today',
+    dayZero: '2026-07-21',
     pages7d: pull('7daysAgo'),
     pages28d: pull('28daysAgo'),
+    pagesLifetime: pull('2026-07-21'),
     fetchedAt: new Date().toISOString()
   };
 }
