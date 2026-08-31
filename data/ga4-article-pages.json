@@ -3,73 +3,73 @@
   "source": "ga4",
   "range": "2026-07-21-today",
   "dayZero": "2026-07-21",
-  "fetchedAt": "2026-08-24T20:07:42.979067Z",
+  "fetchedAt": "2026-08-31T14:15:20.829104Z",
   "pages7d": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 14,
-      "users": 9,
-      "sessions": 14,
-      "avgDurationSec": 62.02909278571428,
-      "engagementRate": 0.2857142857142857
+      "views": 7,
+      "users": 7,
+      "sessions": 8,
+      "avgDurationSec": 36.726900625,
+      "engagementRate": 0.25
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
-      "views": 2,
-      "users": 2,
-      "sessions": 2,
-      "avgDurationSec": 0.0,
+      "views": 3,
+      "users": 3,
+      "sessions": 3,
+      "avgDurationSec": 2.0947656666666665,
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/group-vs-team-coaching/",
+      "path": "/articles/adoption-is-not-a-course/",
       "views": 2,
       "users": 2,
       "sessions": 2,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
+      "avgDurationSec": 447.1314955,
+      "engagementRate": 1.0
     },
     {
-      "path": "/articles/laser-focused-coaching/",
-      "views": 2,
-      "users": 2,
-      "sessions": 2,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/decision-making-under-pressure",
+      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
       "views": 1,
       "users": 1,
       "sessions": 1,
       "avgDurationSec": 0.0,
-      "engagementRate": 0.0
+      "engagementRate": 1.0
     },
     {
-      "path": "/articles/holistic-coaching-what-it-actually-means/",
+      "path": "/articles/what-i-witnessed-inside-fortune-500/",
       "views": 1,
       "users": 1,
       "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
+      "avgDurationSec": 6.041155,
+      "engagementRate": 1.0
     }
   ],
   "pages28d": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 29,
-      "users": 24,
-      "sessions": 29,
-      "avgDurationSec": 34.139267068965516,
-      "engagementRate": 0.20689655172413793
+      "views": 30,
+      "users": 25,
+      "sessions": 31,
+      "avgDurationSec": 41.414643548387104,
+      "engagementRate": 0.25806451612903225
+    },
+    {
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 6,
+      "users": 6,
+      "sessions": 6,
+      "avgDurationSec": 1.1099336666666666,
+      "engagementRate": 0.16666666666666666
     },
     {
       "path": "/articles/laser-focused-coaching/",
-      "views": 7,
-      "users": 7,
-      "sessions": 9,
-      "avgDurationSec": 0.26310833333333333,
-      "engagementRate": 0.1111111111111111
+      "views": 6,
+      "users": 6,
+      "sessions": 7,
+      "avgDurationSec": 0.33828214285714286,
+      "engagementRate": 0.14285714285714285
     },
     {
       "path": "/articles/group-vs-team-coaching/",
@@ -80,20 +80,12 @@
       "engagementRate": 0.2
     },
     {
-      "path": "/articles/big-five-vs-hexaco/",
-      "views": 4,
-      "users": 4,
-      "sessions": 4,
-      "avgDurationSec": 0.09382625,
-      "engagementRate": 0.25
-    },
-    {
-      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
+      "path": "/articles/adoption-is-not-a-course/",
       "views": 2,
-      "users": 1,
+      "users": 2,
       "sessions": 2,
-      "avgDurationSec": 2.9684635,
-      "engagementRate": 0.5
+      "avgDurationSec": 447.1314955,
+      "engagementRate": 1.0
     },
     {
       "path": "/articles/holistic-coaching-what-it-actually-means/",
@@ -112,6 +104,14 @@
       "engagementRate": 0.0
     },
     {
+      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 1.0
+    },
+    {
       "path": "/articles/external-partnership-pattern-recognition/",
       "views": 1,
       "users": 1,
@@ -128,30 +128,30 @@
       "engagementRate": 1.0
     },
     {
-      "path": "/articles/psychological-safety-leadership/",
+      "path": "/articles/what-i-witnessed-inside-fortune-500/",
       "views": 1,
       "users": 1,
       "sessions": 1,
-      "avgDurationSec": 45.346158,
+      "avgDurationSec": 6.041155,
       "engagementRate": 1.0
     }
   ],
   "pagesLifetime": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 30,
-      "users": 25,
-      "sessions": 30,
-      "avgDurationSec": 33.0012915,
-      "engagementRate": 0.2
+      "views": 37,
+      "users": 32,
+      "sessions": 38,
+      "avgDurationSec": 33.7856302631579,
+      "engagementRate": 0.21052631578947367
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
-      "views": 8,
-      "users": 8,
-      "sessions": 8,
-      "avgDurationSec": 0.046913125,
-      "engagementRate": 0.125
+      "views": 11,
+      "users": 11,
+      "sessions": 11,
+      "avgDurationSec": 0.6054183636363636,
+      "engagementRate": 0.09090909090909091
     },
     {
       "path": "/articles/laser-focused-coaching/",
@@ -171,11 +171,19 @@
     },
     {
       "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
-      "views": 2,
+      "views": 3,
       "users": 1,
+      "sessions": 3,
+      "avgDurationSec": 1.9789756666666667,
+      "engagementRate": 0.6666666666666666
+    },
+    {
+      "path": "/articles/adoption-is-not-a-course/",
+      "views": 2,
+      "users": 2,
       "sessions": 2,
-      "avgDurationSec": 2.9684635,
-      "engagementRate": 0.5
+      "avgDurationSec": 447.1314955,
+      "engagementRate": 1.0
     },
     {
       "path": "/articles/external-partnership-pattern-recognition/",
@@ -215,6 +223,14 @@
       "users": 1,
       "sessions": 1,
       "avgDurationSec": 45.346158,
+      "engagementRate": 1.0
+    },
+    {
+      "path": "/articles/what-i-witnessed-inside-fortune-500/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 6.041155,
       "engagementRate": 1.0
     }
   ]
