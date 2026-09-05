@@ -174,7 +174,7 @@
         ],
         "knowsAbout": [
           "Whole-Person Catalyst", "Whole-Person Executive Coaching", "Executive Coaching", "Leadership Development",
-          "Team Coaching", "Peer Advisory Facilitation", "Holistic Coaching", "Positive Psychology",
+          "Team Coaching", "Peer Advisory Facilitation", "Executive Coaching",
           "Authentic Leadership", "Decision-Making Under Pressure", "Psychological Safety",
           "Adult Developmental Theory", "ICF Coaching Competencies", "Assessment-Informed Leadership Development",
           "Military Leadership", "Agile Transformation", "M&A Leadership Integration", "COO Advisory", "Group Facilitation"
@@ -479,9 +479,6 @@
           ob.observe(el);
         };
       </script>
-  <!-- Calendly embed -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
   <!-- WCAG 2.1 SC 2.4.1 — Bypass Blocks: Skip Navigation Link -->
@@ -786,12 +783,12 @@ const SERVICES = [
     tagline:"The tools are already here. I make it possible to use them, and to say the thing the room has been managing around.",
     bullets:["For senior leaders in large systems when a seat is changing, or the work is moving faster than the conversation","I will challenge what good even is. Not five steps. Not a costume called executive presence.","Bi-weekly sessions. Three-month minimum. Often scoped as six months."],
     price:"From $400/hr · typical $500/hr · 3-month minimum. Most work is scoped. Send the situation and I will quote.",
-    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
+    cta:"Inquire", ctaUrl:"/book" },
   { id:"team", icon:"◍", label:"Team Coaching", badge:null,
     tagline:"I am brought in so busy leaders adopt the change, not perform another program.",
     bullets:["Intact leadership teams. The patterns between people, not a stack of 1:1s in a conference room.","Honest conversation across title. Time to learn is part of the work, not hoped for after.","60 to 90 days. Sponsor 1:1 inside the engagement. ACTC."],
     price:"Typical $10,000–$15,000 · 60–90 days. Most work is scoped. Send the situation and I will quote.",
-    cta:"Book a discovery call", ctaUrl:"https://calendly.com/unifiedsolutionsinc/30min" },
+    cta:"Inquire", ctaUrl:"/book" },
   { id:"group", icon:"⬡", label:"Group Coaching", badge:null,
     tagline:"Adoption, not another course. Support for leaders who have no time, and no honest room.",
     bullets:["Cohorts that stop performing the learning and start saying what they actually think","The same craft used in university-partnered rooms with senior leaders from large systems","6 to 12 weeks. Individual debrief touchpoints inside the cohort."],
@@ -902,7 +899,7 @@ const useSite = () => useContext(Ctx);
 // ═══════════════════════════════════════════════════════
 // UTILITY COMPONENTS
 // ═══════════════════════════════════════════════════════
-function Btn({ children, variant="gold", onClick, href, style={} }) {
+function Btn({ children, variant="gold", onClick, href, style={}, type }) {
   const base = { fontFamily:DM, fontWeight:600, fontSize:16, letterSpacing:1, textTransform:"uppercase", padding:"12px 28px", borderRadius:2, cursor:"pointer", border:"none", transition:"all 0.2s", display:"inline-block", textDecoration:"none" };
   const variants = {
     gold:  { background:C.gold, color:C.white, ...base },
@@ -912,7 +909,114 @@ function Btn({ children, variant="gold", onClick, href, style={} }) {
   };
   const s = { ...variants[variant], ...style };
   if (href) return <a href={href} target="_blank" rel="noopener noreferrer" style={s}>{children}</a>;
-  return <button style={s} onClick={onClick}>{children}</button>;
+  return <button type={type || "button"} style={s} onClick={onClick}>{children}</button>;
+}
+
+function OfferCta({ svc, style={} }) {
+  const { setPage } = useSite();
+  if (svc.ctaUrl && String(svc.ctaUrl).startsWith("mailto:")) {
+    return <Btn href={svc.ctaUrl} style={style}>{svc.cta}</Btn>;
+  }
+  return <Btn onClick={() => setPage("book")} style={style}>{svc.cta}</Btn>;
+}
+
+function InquiryForm({ location = "book", variant = "navy" }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [role, setRole] = useState("");
+  const [door, setDoor] = useState("not-sure");
+  const [situation, setSituation] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
+  const light = variant === "light";
+  const inputStyle = {
+    width: "100%", boxSizing: "border-box", padding: "12px 14px", fontFamily: DM, fontSize: 15,
+    border: `1px solid ${light ? C.border : "rgba(255,255,255,0.18)"}`, borderRadius: 2,
+    background: light ? C.white : "rgba(255,255,255,0.06)", color: light ? C.navy : C.white, outline: "none"
+  };
+  const labelStyle = {
+    fontFamily: DM, fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase",
+    color: light ? C.goldDark : C.gold, marginBottom: 6, display: "block"
+  };
+  function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim()); }
+  function submit(e) {
+    e.preventDefault();
+    if (!name.trim() || !validEmail(email) || !situation.trim() || !consent) {
+      setError("Name, a working email, the situation, and consent are required.");
+      return;
+    }
+    setError("");
+    setStatus("sending");
+    logToSheet({
+      type: "inquiry",
+      location,
+      name: name.trim(),
+      email: email.trim(),
+      organization: organization.trim(),
+      role: role.trim(),
+      door,
+      situation: situation.trim(),
+      timestamp: new Date().toISOString(),
+    });
+    if (window.track) window.track("generate_lead", { location, door });
+    setStatus("sent");
+  }
+  if (status === "sent") {
+    return (
+      <div style={{ textAlign: "left", padding: light ? 0 : "8px 0" }}>
+        <div style={{ fontFamily: PF, fontSize: 26, color: light ? C.navy : C.white, margin: "0 0 12px" }}>Received.</div>
+        <p style={{ fontFamily: DM, fontSize: 16, color: light ? C.muted : "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: 0 }}>
+          If this looks like a fit, you will hear back with times. If it does not, you will hear that too. The 30 minutes is not on an open calendar.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 14, textAlign: "left" }}>
+      <div>
+        <label htmlFor={`inq-name-${location}`} style={labelStyle}>Name</label>
+        <input id={`inq-name-${location}`} value={name} onChange={e => setName(e.target.value)} autoComplete="name" style={inputStyle} />
+      </div>
+      <div>
+        <label htmlFor={`inq-email-${location}`} style={labelStyle}>Email</label>
+        <input id={`inq-email-${location}`} type="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" style={inputStyle} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div>
+          <label htmlFor={`inq-org-${location}`} style={labelStyle}>Organization</label>
+          <input id={`inq-org-${location}`} value={organization} onChange={e => setOrganization(e.target.value)} autoComplete="organization" style={inputStyle} />
+        </div>
+        <div>
+          <label htmlFor={`inq-role-${location}`} style={labelStyle}>Seat / role</label>
+          <input id={`inq-role-${location}`} value={role} onChange={e => setRole(e.target.value)} autoComplete="organization-title" style={inputStyle} />
+        </div>
+      </div>
+      <div>
+        <label htmlFor={`inq-door-${location}`} style={labelStyle}>Which door</label>
+        <select id={`inq-door-${location}`} value={door} onChange={e => setDoor(e.target.value)} style={{ ...inputStyle, height: 44 }}>
+          <option value="not-sure">Not sure yet</option>
+          <option value="1-1">1:1 Executive</option>
+          <option value="team">Team Coaching</option>
+          <option value="group">Group Coaching</option>
+          <option value="circle">Succession Circle</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor={`inq-sit-${location}`} style={labelStyle}>The situation</label>
+        <textarea id={`inq-sit-${location}`} value={situation} onChange={e => setSituation(e.target.value)} rows={5}
+          placeholder="Seat changing, or the work moving faster than the conversation. What is actually on the table."
+          style={{ ...inputStyle, resize: "vertical", minHeight: 120, lineHeight: 1.55 }} />
+      </div>
+      <label style={{ display: "flex", gap: 10, alignItems: "flex-start", fontFamily: DM, fontSize: 13, color: light ? C.muted : "rgba(255,255,255,0.65)", lineHeight: 1.55, cursor: "pointer" }}>
+        <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} style={{ marginTop: 3 }} />
+        <span>I understand this is a fit inquiry, not a booking. Unified Solutions may email me about this inquiry.</span>
+      </label>
+      {error && <div style={{ fontFamily: DM, fontSize: 13, color: light ? C.red : "#F3C6C8" }}>{error}</div>}
+      <Btn type="submit" style={{ width: "100%", textAlign: "center" }}>{status === "sending" ? "Sending…" : "Send the situation"}</Btn>
+    </form>
+  );
 }
 
 function Divider({ color = C.border }) {
@@ -1084,12 +1188,12 @@ const PAGE_META = {
     description: "Frameworks, research & tools from 1,500+ hours of executive coaching. Decision-making under pressure, team vitality, identity & presence, strategic clarity, personal sustainability."
   },
   assessment: {
-    title: "Free Leadership Pressure Point Assessment | 18 Questions | 6 Domains | ICF PCC",
-    description: "Free 18-question behavioral leadership assessment. Find your primary pressure point in under 8 minutes. Used by VPs, SVPs and senior leaders to identify the highest-leverage development area."
+    title: "Leadership Pressure Point Assessment | 18 Questions | 6 Domains | ICF PCC",
+    description: "18-question behavioral leadership assessment for senior leaders in large systems. Email required. A starting point, not a public lead magnet."
   },
   book: {
-    title: "Book a Discovery Call | Executive Coaching | Julian Johnson ICF PCC ACTC",
-    description: "30-minute discovery call to find out if executive coaching is the right fit. No pitch, no commitment. Schedule directly with Julian C. Johnson, ICF PCC."
+    title: "Inquire | Senior Leaders in Large Systems | Julian Johnson ICF PCC ACTC",
+    description: "Send the situation first. If it is a fit, a 30-minute conversation follows. Direct 1:1 from $400/hr, typical $500/hr. Not an open calendar."
   },
   privacy: {
     title: "Privacy Policy | Unified Solutions Inc.",
@@ -1208,7 +1312,7 @@ function Nav() {
           {links.map(l => (
             <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
           ))}
-          <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Book a Call</Btn>
+          <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Inquire</Btn>
 
         </div>
       </div>
@@ -2651,16 +2755,15 @@ function HomePage() {
                 style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
               />
               <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-                  onClick={() => window.track("book_call_click",{location:"hero"})}>
-                  Book a Discovery Call
+                <Btn onClick={() => { window.track && window.track("book_call_click",{location:"hero"}); setPage("book"); }}>
+                  Inquire
                 </Btn>
                 <Btn variant="white" onClick={() => setPage("assessment")}>
-                  Find Your Pressure Point →
+                  Pressure Point Assessment
                 </Btn>
               </div>
               <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", margin:"16px 0 0", letterSpacing:0.3 }}>
-                30 minutes · No pitch · A real conversation about what you are navigating
+                Situation first. If it is a fit, 30 minutes follows. Direct from $400/hr · typical $500/hr.
               </p>
             </div>
             {/* Right: Arc — vertical timeline */}
@@ -2816,9 +2919,8 @@ function HomePage() {
                 ))}
               </div>
               <div style={{ display:"flex", gap:14, flexWrap:"wrap", alignItems:"center" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-                  onClick={() => window.track("book_call_click",{location:"whole_person_catalyst"})}>
-                  Book a Discovery Call
+                <Btn onClick={() => { window.track && window.track("book_call_click",{location:"whole_person_catalyst"}); setPage("book"); }}>
+                  Inquire
                 </Btn>
                 <button onClick={() => { window.track && window.track("select_content",{content_type:"section", item_id:"about_from_catalyst"}); setPage("about"); }}
                   style={{ background:"none", border:"none", fontFamily:DM, fontSize:15, color:C.navy, cursor:"pointer", textDecoration:"underline", textUnderlineOffset:3 }}>
@@ -2863,9 +2965,9 @@ function HomePage() {
         <div style={{ maxWidth:960, margin:"0 auto" }}>
           <div style={{ textAlign:"center", marginBottom:52 }}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>The First Step</div>
-            <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.navy, margin:"0 0 16px", fontWeight:600 }}>30 minutes. No pitch. A real conversation.</h2>
+            <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.navy, margin:"0 0 16px", fontWeight:600 }}>Send the situation. The 30 minutes is not on an open calendar.</h2>
             <p style={{ fontFamily:DM, fontSize:17, color:C.muted, maxWidth:560, margin:"0 auto", lineHeight:1.75 }}>
-              Most discovery calls are thinly veiled sales conversations. This one isn't. You'll walk away with clarity on where the real pressure is — whether we work together or not.
+              Direct work starts from $400/hr, typical $500/hr. That number is ordinary for senior leaders in large systems. It is not ordinary as a public booking link. Write the situation. If it is a fit, times follow.
             </p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 2px 1fr 2px 1fr", gap:0, marginBottom:48 }}>
@@ -2884,13 +2986,12 @@ function HomePage() {
             ))}
           </div>
           <div style={{ textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center", gap:14 }}>
-            <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-              style={{ fontSize:16, padding:"14px 40px" }}
-              onClick={() => window.track("book_call_click",{location:"what_a_call_looks_like"})}>
-              Book that 30 minutes
+            <Btn onClick={() => { window.track && window.track("book_call_click",{location:"what_a_call_looks_like"}); setPage("book"); }}
+              style={{ fontSize:16, padding:"14px 40px" }}>
+              Send the situation
             </Btn>
             <button onClick={() => setPage("assessment")} style={{ background:"none", border:"none", fontFamily:DM, fontSize:14, color:C.muted, cursor:"pointer", textDecoration:"underline" }}>
-              Not ready to talk? Find your pressure point first →
+              Or start with the Pressure Point Assessment →
             </button>
           </div>
         </div>
@@ -2936,7 +3037,7 @@ function HomePage() {
                     ))}
                   </ul>
                   <div style={{ fontFamily:DM, fontSize:14, color:C.slate, marginBottom:24 }}>{svc.price}</div>
-                  <Btn href={svc.ctaUrl}>{svc.cta}</Btn>
+                  <OfferCta svc={svc} />
                 </div>
                 {/* Testimonial for service */}
                 <div style={{ background:C.navyMid, borderRadius:4, padding:40 }}>
@@ -2966,10 +3067,10 @@ function HomePage() {
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:1, background:C.navyLight }}>
             {[
-              { n:"01", tag:"Foundation", title:"Holistic Awareness", body:"Development that accounts for the whole person produces results that hold. Rooted in Goal Imagery Institute training — addresses what actually drives outcomes." },
-              { n:"02", tag:"Precision", title:"Laser-Focused Method", body:"Getting to what matters quickly isn't rushing — it's disciplined listening and precise questioning. Grounded in Marion Franklin's laser-focused methodology." },
-              { n:"03", tag:"Science", title:"Positive Psychology", body:"The evidence base for what shifts in human development is richer than most coaching reflects. This pillar brings the science — rigorously applied, not superficially referenced." },
-              { n:"04", tag:"Data", title:"Assessment-Informed Clarity", body:"Your development should be built on real data — how you think, relate, and lead. 12+ validated tools, certified debriefing, the right tool for the right goal." },
+              { n:"01", tag:"Whole person", title:"The whole system in the chair", body:"The leader carrying the P&L is the same human carrying the weight underneath it. Whole-person is how the work runs. It is not a category." },
+              { n:"02", tag:"Precision", title:"Laser-focused questions", body:"Getting to what matters quickly is disciplined listening, not rushing. Grounded in Marion Franklin. The model is a tool. Then it goes down." },
+              { n:"03", tag:"Evidence", title:"What actually shifts", body:"The evidence base for human development is richer than most coaching reflects. Applied in the room. Not taught as a course." },
+              { n:"04", tag:"Data", title:"Assessment-informed, then put down", body:"Development should rest on real data about how you think, relate, and lead. The right tool for the right goal. Not a 12-tool catalog." },
             ].map((p,i) => (
               <div key={i} style={{ background:C.navyMid, padding:36 }}>
                 <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>{p.n} · {p.tag}</div>
@@ -2984,9 +3085,9 @@ function HomePage() {
       {/* ── ASSESSMENT CTA ───────────────────────────────── */}
       <section style={{ background:C.creamDark, padding:"80px 24px", borderTop:`4px solid ${C.gold}` }}>
         <div style={{ maxWidth:800, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free · No email required</div>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>For senior leaders in large systems · Email required</div>
           <h2 style={{ fontFamily:PF, fontSize:38, color:C.navy, margin:"0 0 20px" }}>Find your leadership pressure point.</h2>
-          <p style={{ fontFamily:DM, fontSize:18, color:C.muted, lineHeight:1.7, margin:"0 0 36px" }}>18 behaviorally-anchored questions across 6 validated leadership domains. Under 8 minutes. A clear read on where your leadership — or your team's leadership — needs the most attention right now.</p>
+          <p style={{ fontFamily:DM, fontSize:18, color:C.muted, lineHeight:1.7, margin:"0 0 36px" }}>18 questions across 6 domains. Under 8 minutes. Built for operators already carrying a seat, not as a public lead magnet. Email is required to see the result.</p>
           <Btn onClick={() => setPage("assessment")} style={{ fontSize:16, padding:"16px 40px" }}>Take the Assessment</Btn>
           <div style={{ fontFamily:DM, fontSize:14, color:C.muted, marginTop:16 }}>Grounded in Authentic Leadership theory, Kahneman dual-process research, Rock SCARF, and Kegan developmental theory.</div>
         </div>
@@ -3045,15 +3146,14 @@ function HomePage() {
       <section style={{ background:C.navy, padding:"80px 24px", textAlign:"center" }}>
         <div style={{ maxWidth:640, margin:"0 auto" }}>
           <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>The Simplest Next Step</div>
-          <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.white, margin:"0 0 20px", fontStyle:"italic", fontWeight:500 }}>30 minutes to find out if this is the right fit.</h2>
-          <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 36px", lineHeight:1.75, maxWidth:500, marginLeft:"auto", marginRight:"auto" }}>No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.</p>
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-            style={{ fontSize:16, padding:"16px 40px" }}
-            onClick={() => window.track("book_call_click",{location:"final_cta"})}>
-            Book a Discovery Call
+          <h2 style={{ fontFamily:PF, fontSize:"clamp(28px,4vw,40px)", color:C.white, margin:"0 0 20px", fontStyle:"italic", fontWeight:500 }}>Send the situation first.</h2>
+          <p style={{ fontFamily:DM, fontSize:17, color:"rgba(255,255,255,0.6)", margin:"0 0 36px", lineHeight:1.75, maxWidth:500, marginLeft:"auto", marginRight:"auto" }}>If it is a fit, 30 minutes follows. Direct 1:1 from $400/hr, typical $500/hr. The calendar is not public.</p>
+          <Btn onClick={() => { window.track && window.track("book_call_click",{location:"final_cta"}); setPage("book"); }}
+            style={{ fontSize:16, padding:"16px 40px" }}>
+            Inquire
           </Btn>
           <p style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.3)", marginTop:20 }}>
-            Or start with 8 minutes: <button onClick={() => setPage("assessment")} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.45)", fontFamily:DM, fontSize:13, cursor:"pointer", textDecoration:"underline" }}>Take the Leadership Pressure Point Assessment</button>
+            Or start with 8 minutes: <button onClick={() => setPage("assessment")} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.45)", fontFamily:DM, fontSize:13, cursor:"pointer", textDecoration:"underline" }}>Leadership Pressure Point Assessment</button>
           </p>
         </div>
       </section>
@@ -3486,7 +3586,7 @@ function AboutPage() {
           {[
             { phase:"Phase 1 · U.S. Army · 1999–2003", headline:"Led under fire.", body:"Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did." },
             { phase:"Phase 2 · Fortune 500 Consulting · 2013–Present", headline:"Built inside the pressure.", body:"Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services." },
-            { phase:"Phase 3 · Holistic Coaching Practice · Present", headline:"Applied at depth.", body:"Certified holistic coach. ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it." },
+            { phase:"Phase 3 · Executive and team coaching · Present", headline:"Applied at depth.", body:"ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it." },
           ].map((ph,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:"240px 1fr", gap:48, marginBottom:56, paddingBottom:56, borderBottom: i<2 ? `1px solid ${C.border}` : "none" }}>
               <div>
@@ -3506,7 +3606,7 @@ function AboutPage() {
         <div style={{ maxWidth:600, margin:"0 auto" }}>
           <EditableBlock text={content.about?.ctaHeadline||"Ready to find out if this is the right fit?"} onSave={v=>updateContent("about.ctaHeadline",v)} fieldName="about.ctaHeadline" tag="h2" style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }} />
           <EditableBlock text={content.about?.ctaBody||"30 minutes. No obligation. A real conversation."} onSave={v=>updateContent("about.ctaBody",v)} fieldName="about.ctaBody" tag="p" style={{ fontFamily:DM, fontSize:17, color:C.muted, margin:"0 0 28px" }} />
-          <Btn href="https://calendly.com/unifiedsolutionsinc/30min">Book a Discovery Call</Btn>
+          <Btn onClick={() => setPage("book")}>Inquire</Btn>
         </div>
       </section>
     </div>
@@ -3536,7 +3636,7 @@ function FaqItem({ question, answer }) {
 // COACHING PAGE
 // ═══════════════════════════════════════════════════════
 function CoachingPage() {
-  const { content, updateContent } = useSite();
+  const { setPage, content, updateContent } = useSite();
   const [active, setActive] = useState(0);
   return (
     <div style={{ paddingTop:64 }}>
@@ -3575,7 +3675,7 @@ function CoachingPage() {
                   <div style={{ background:C.goldPale, border:`1px solid ${C.gold}30`, borderRadius:4, padding:"12px 16px", marginBottom:32 }}>
                     <div style={{ fontFamily:DM, fontSize:14, color:C.goldDark, letterSpacing:1 }}>{s.price}</div>
                   </div>
-                  <Btn href={s.ctaUrl}>{s.cta}</Btn>
+                  <OfferCta svc={s} />
                 </div>
                 <div>
                   <div style={{ background:C.navyMid, borderRadius:4, padding:40, marginBottom:24 }}>
@@ -3620,7 +3720,7 @@ function CoachingPage() {
                 { q:"How long does an executive coaching engagement last?",
                   a:"1:1 executive coaching engagements typically run 3–6 months with bi-weekly sessions, building toward a 12-month relationship for leaders doing sustained developmental work. The minimum is 3 months because meaningful behavioral and identity-level change requires consistency, not one-off sessions. Team coaching runs 60–90 days. Organizational programs are scoped to the initiative." },
                 { q:"I need coaching support quickly. How fast can we start?",
-                  a:"Discovery calls typically happen within 48 hours of scheduling. If there's genuine fit, an engagement can begin within the same week. For organizations with urgent team or leadership needs, expedited scoping is available." },
+                  a:"Send the situation first. If it is a fit, times typically follow within two business days. For organizations with urgent team or leadership needs, say so in the inquiry." },
                 { q:"What is the difference between coaching and consulting or therapy?",
                   a:"Consulting arrives with answers. Therapy addresses clinical mental health. Coaching is something distinct — it creates conditions for a leader to do their own best thinking, surface what they already know, challenge assumptions, and build the capacity to navigate complexity. A coach does not tell you what to do with your organization. A coach helps you become the leader who can figure that out and do it well." },
               ].map(({q, a}, i) => (
@@ -3645,7 +3745,7 @@ function CoachingPage() {
                   { icon:"◍", label:"The tools arrived faster than the team", body:"The spend is past the pilot. Calendars are full. Playing it safe has become the strategy. You need the room to adopt the work, not perform another program.", tag:"Adoption" },
                   { icon:"◐", label:"You are leaving a seat, or taking one", body:"The operations will get handled. The question is who you are in it, what you leave, and how the next leader is made room for. That is a Succession Circle, or 1:1 if the work is private.", tag:"Succession" },
                   { icon:"◑", label:"Your identity and your role are in tension", body:"At a certain level of leadership, the constraint isn't capability. It's the clarity, stability, and coherence of who you are as a leader.", tag:"Identity & Presence" },
-                  { icon:"⬡", label:"An urgent need — right now", body:"Something is happening in your organization and you need a skilled, confidential outside perspective immediately. Discovery calls typically happen within 48 hours.", tag:"Just-in-Time" },
+                  { icon:"⬡", label:"An urgent need — right now", body:"Something is happening in your organization and you need a skilled, confidential outside perspective immediately. Write that in the inquiry. If it is a fit, times follow quickly.", tag:"Just-in-Time" },
                 ].map((s,i) => (
                   <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"22px 24px", transition:"all 0.2s" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor=C.gold; e.currentTarget.style.boxShadow="0 6px 24px rgba(0,0,0,0.07)"; }}
@@ -3660,12 +3760,11 @@ function CoachingPage() {
                 ))}
               </div>
               <div style={{ marginTop:40, textAlign:"center" }}>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-  style={{ fontSize:16, padding:"14px 36px" }}
-  onClick={() => window.track("book_call_click",{location:"coaching_page"})}>
-  Book a 30-minute Discovery Call
+                <Btn onClick={() => { window.track && window.track("book_call_click",{location:"coaching_page"}); setPage("book"); }}
+  style={{ fontSize:16, padding:"14px 36px" }}>
+  Inquire
 </Btn>
-                <div style={{ fontFamily:DM, fontSize:13, color:C.muted, marginTop:12 }}>No commitment. Discovery calls typically happen within 48 hours of scheduling.</div>
+                <div style={{ fontFamily:DM, fontSize:13, color:C.muted, marginTop:12 }}>Situation in writing first. If it is a fit, times follow.</div>
               </div>
             </div>
           </section>
@@ -3864,23 +3963,22 @@ function ResourcesPage() {
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:2 }}>
             {/* Path 1: Book a call */}
             <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRight:"none", padding:"40px 36px" }}>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>30 minutes · no pitch · real conversation</div>
-              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>The content resonated. Now have the conversation.</h3>
-              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.55)", margin:"0 0 28px", lineHeight:1.75 }}>30 minutes. A real conversation about your specific situation. No obligation, no pitch, and you'll leave with something useful regardless of what happens next.</p>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30min"
-                style={{ padding:"12px 28px" }}
-                onClick={() => window.track("book_call_click",{location:"resources_bridge"})}>
-                Book a Discovery Call
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:C.gold, marginBottom:14 }}>Situation first · then 30 minutes if it is a fit</div>
+              <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>The content resonated. Now send the situation.</h3>
+              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.55)", margin:"0 0 28px", lineHeight:1.75 }}>Direct work starts from $400/hr, typical $500/hr. Write what is on the table. If it is a fit, you will get times. If it is not, you will hear that too.</p>
+              <Btn onClick={() => { window.track && window.track("book_call_click",{location:"resources_bridge"}); setPage("book"); }}
+                style={{ padding:"12px 28px" }}>
+                Inquire
               </Btn>
               <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.25)", margin:"14px 0 0" }}>Julian Johnson · ICF PCC · contact@unifiedsolutionsinc.com</p>
             </div>
             {/* Path 2: Assessment */}
             <div style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.1)", padding:"40px 36px" }}>
-              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", marginBottom:14 }}>8 minutes · 6 domains · no sign-up required</div>
+              <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2.5, textTransform:"uppercase", color:"rgba(255,255,255,0.4)", marginBottom:14 }}>8 minutes · 6 domains · email required</div>
               <h3 style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 14px", fontWeight:600, lineHeight:1.25 }}>Find out exactly where the pressure is before any conversation.</h3>
-              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.45)", margin:"0 0 28px", lineHeight:1.75 }}>18 questions across 6 leadership domains. 8 minutes. A domain-specific breakdown of where your capacity is being pulled and where it's holding. Free, no email required.</p>
-              <Btn variant="white" onClick={() => setPage("assessment")}>Find Your Pressure Point →</Btn>
-              <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.2)", margin:"14px 0 0" }}>Takes ~8 minutes · Results are immediate · No account required</p>
+              <p style={{ fontFamily:DM, fontSize:15, color:"rgba(255,255,255,0.45)", margin:"0 0 28px", lineHeight:1.75 }}>18 questions across 6 leadership domains. Built for senior leaders already in a large system. Email is required to see the result.</p>
+              <Btn variant="white" onClick={() => setPage("assessment")}>Pressure Point Assessment</Btn>
+              <p style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.2)", margin:"14px 0 0" }}>Takes ~8 minutes · Results after email · Not a public lead magnet</p>
             </div>
           </div>
         </div>
@@ -3925,6 +4023,7 @@ function FilterBtn({ active, color, onClick, children }) {
 // Shows research context, coaching questions, article links
 // ═══════════════════════════════════════════════════════
 function DomainInsightCard({ domain, score, isPrimary }) {
+  const { setPage } = useSite();
   const [open, setOpen] = useState(isPrimary);
   const insight = DOMAIN_INSIGHTS[domain.id];
   if (!insight) return null;
@@ -4022,9 +4121,9 @@ function DomainInsightCard({ domain, score, isPrimary }) {
             <div style={{ padding:"18px 20px", background:C.navy, display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, flexWrap:"wrap", borderRadius:"0 0 6px 6px" }}>
               <div>
                 <div style={{ fontFamily:PF, fontSize:16, color:C.white, marginBottom:3 }}>This is exactly what coaching is built for.</div>
-                <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)" }}>30 minutes to find out if this is the right conversation.</div>
+                <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.6)" }}>Send the situation. If it is a fit, 30 minutes follows.</div>
               </div>
-              <Btn href="https://calendly.com/unifiedsolutionsinc/30min" style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Book a Discovery Call</Btn>
+              <Btn onClick={() => setPage("book")} style={{ whiteSpace:"nowrap", padding:"10px 24px" }}>Inquire</Btn>
             </div>
           )}
         </div>
@@ -4099,11 +4198,11 @@ function AssessmentPage() {
     <div style={{ paddingTop:64, background:C.cream, minHeight:"100vh" }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
         <div style={{ maxWidth:720, margin:"0 auto", textAlign:"center" }}>
-          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Free Diagnostic</div>
+          <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>For senior leaders in large systems</div>
           <EditableBlock text={content.assessment?.headline||"Where is the gap between where you are and where you need to be costing you most?"} onSave={v=>updateContent("assessment.headline",v)} fieldName="assessment.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px", letterSpacing:-0.5 }} />
-          <EditableBlock text={content.assessment?.subtitle||"18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result."} onSave={v=>updateContent("assessment.subtitle",v)} fieldName="assessment.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.7, margin:"0 0 40px" }} />
+          <EditableBlock text={content.assessment?.subtitle||"18 questions across 6 leadership domains. Under 8 minutes. Email is required to see the result. Built for operators already carrying a seat, not as a public lead magnet."} onSave={v=>updateContent("assessment.subtitle",v)} fieldName="assessment.subtitle" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.7, margin:"0 0 40px" }} />
           <div style={{ display:"flex", gap:32, justifyContent:"center", marginBottom:40 }}>
-            {[["18","Questions"],["6","Domains"],["<8 min","To complete"],["Free","No signup"]].map(([v,l]) => (
+            {[["18","Questions"],["6","Domains"],["<8 min","To complete"],["Email","Required"]].map(([v,l]) => (
               <div key={l} style={{ textAlign:"center" }}>
                 <div style={{ fontFamily:PF, fontSize:28, color:C.gold, fontWeight:700 }}>{v}</div>
                 <div style={{ fontFamily:DM, fontSize:12, letterSpacing:2, color:"rgba(255,255,255,0.5)", textTransform:"uppercase" }}>{l}</div>
@@ -4190,8 +4289,22 @@ function AssessmentPage() {
         ) : (
           <section style={{ padding:"64px 24px", textAlign:"center" }}>
             <div style={{ maxWidth:500, margin:"0 auto" }}>
-              <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 20px" }}>All 18 questions complete.</h2>
-              <Btn onClick={() => setStep("results")} style={{ fontSize:16, padding:"14px 40px" }}>See My Results</Btn>
+              <h2 style={{ fontFamily:PF, fontSize:32, color:C.navy, margin:"0 0 16px" }}>All 18 questions complete.</h2>
+              <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.7, margin:"0 0 24px" }}>Email is required to see the result. This is a starting point for a conversation, not a public lead magnet.</p>
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" type="email"
+                id="gate-email" aria-label="Email address required to see assessment results"
+                style={{ width:"100%", boxSizing:"border-box", padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, marginBottom:16, background:C.white }} />
+              <label style={{ display:"flex", gap:10, alignItems:"flex-start", textAlign:"left", fontFamily:DM, fontSize:13, color:C.muted, lineHeight:1.55, marginBottom:20, cursor:"pointer" }}>
+                <input type="checkbox" checked={consentGiven} onChange={e => setConsentGiven(e.target.checked)} style={{ marginTop:3 }} />
+                <span>I consent to Unified Solutions storing this email with my scores and sending a coaching note. See the Privacy Policy.</span>
+              </label>
+              <Btn onClick={async () => {
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) || !consentGiven) return;
+                const scoresNow = computeScores();
+                await saveResults(scoresNow);
+                setSubmitted(true);
+                setStep("results");
+              }} style={{ fontSize:16, padding:"14px 40px", opacity: (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) && consentGiven) ? 1 : 0.45 }}>See My Results</Btn>
             </div>
           </section>
         )}
@@ -4256,21 +4369,12 @@ function AssessmentPage() {
 
             <div style={{ background:C.navyMid, borderRadius:4, padding:36, textAlign:"center" }}>
               <EditableBlock text={content.assessment?.resultsCTA||"Get a personalized note from Julian."} onSave={v=>updateContent("assessment.resultsCTA",v)} fieldName="assessment.resultsCTA" tag="h3" style={{ fontFamily:PF, fontSize:24, color:C.white, margin:"0 0 12px" }} />
-              <EditableBlock text={content.assessment?.resultsCTAbody||"Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach."} onSave={v=>updateContent("assessment.resultsCTAbody",v)} fieldName="assessment.resultsCTAbody" tag="p" style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }} />
+              <EditableBlock text={content.assessment?.resultsCTAbody||"Your email is already on this result. Julian will send a note on the primary pressure point, and what it would actually take to address it. Not a sequence. A real message."} onSave={v=>updateContent("assessment.resultsCTAbody",v)} fieldName="assessment.resultsCTAbody" tag="p" style={{ fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.65)", margin:"0 0 24px", lineHeight:1.6 }} />
               {submitted ? (
                 <div style={{ fontFamily:DM, fontSize:16, color:C.gold }}>✓ {savedMsg || "Results saved. Julian will be in touch."}</div>
               ) : (
-                <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
-                  <input value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com"
-                    id="result-email" aria-label="Your email address to receive a personalized coaching note"
-                    style={{ padding:"12px 16px", fontFamily:DM, fontSize:16, border:`1px solid ${C.border}`, borderRadius:2, minWidth:240, background:C.cream }} />
-                  <Btn onClick={async () => { setSubmitted(true); await saveResults(scores); }}>Send My Results</Btn>
-                </div>
+                <Btn onClick={async () => { setSubmitted(true); await saveResults(scores); }}>Send my results to Julian</Btn>
               )}
-              <button onClick={async () => { await saveResults(scores); setSavedMsg("Saved locally ✓"); setSubmitted(true); }}
-                style={{ background:"none", border:"none", fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.35)", cursor:"pointer", marginTop:12, textDecoration:"underline" }}>
-                Save results without sharing email
-              </button>
             </div>
           </div>
         </section>
@@ -4284,53 +4388,23 @@ function AssessmentPage() {
 // ═══════════════════════════════════════════════════════
 function BookPage() {
   const { content, updateContent } = useSite();
-  const calRef = useRef(null);
-  const [calStatus, setCalStatus] = useState("loading"); // loading | ready | failed
-  useEffect(() => {
-    let cancelled = false;
-    let attempts = 0;
-    const CAL_URL = "https://calendly.com/unifiedsolutionsinc/30min?hide_gdpr_banner=1";
-    const mount = () => {
-      if (cancelled || !calRef.current) return;
-      if (calRef.current.dataset.loaded === "true") return;
-      if (typeof window.Calendly === "undefined") {
-        attempts += 1;
-        if (attempts < 60) {
-          setTimeout(mount, 250);
-        } else if (!cancelled) {
-          setCalStatus("failed");
-        }
-        return;
-      }
-      try {
-        calRef.current.innerHTML = "";
-        calRef.current.dataset.loaded = "true";
-        window.Calendly.initInlineWidget({ url: CAL_URL, parentElement: calRef.current });
-        if (!cancelled) setCalStatus("ready");
-      } catch (err) {
-        if (!cancelled) setCalStatus("failed");
-      }
-    };
-    mount();
-    return () => { cancelled = true; };
-  }, []);
   return (
     <div style={{ paddingTop:64 }}>
       <section style={{ background:C.navy, padding:"80px 24px 64px" }}>
-        <div style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"start" }}>
+        <div style={{ maxWidth:980, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"start" }}>
           <div>
-            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Book a Call</div>
-            <EditableBlock text={content.book?.headline||"30 minutes to find out if this is the right fit."} onSave={v=>updateContent("book.headline",v)} fieldName="book.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px" }} />
-            <EditableBlock text={content.book?.body||"No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating."} onSave={v=>updateContent("book.body",v)} fieldName="book.body" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75, margin:"0 0 32px" }} />
+            <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>Inquire first</div>
+            <EditableBlock text={content.book?.headline||"Send the situation. The 30 minutes is not on an open calendar."} onSave={v=>updateContent("book.headline",v)} fieldName="book.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 20px" }} />
+            <EditableBlock text={content.book?.body||"Direct 1:1 from $400/hr, typical $500/hr. Write what is on the table. If it is a fit, you will hear back with times. If it is not, you will hear that too."} onSave={v=>updateContent("book.body",v)} fieldName="book.body" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75, margin:"0 0 32px" }} />
             <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
               {[
-                { icon:"📅", label:"Discovery Call", detail:"30 min · No cost · Genuine fit assessment" },
-                { icon:"📞", label:"Scoping Call", detail:"30 min · Team, group, or Succession Circle · Custom SOW" },
-                { icon:"✉️", label:"Direct Email", detail:"contact@unifiedsolutionsinc.com" },
-                { icon:"📱", label:"Phone", detail:"952.594.8611" },
+                { icon:"1", label:"You write the situation", detail:"Seat changing, or the work moving faster than the conversation. Who is in it. What is actually on the table." },
+                { icon:"2", label:"I decide if 30 minutes is useful", detail:"Not every willing buyer is the right buyer. That is the point." },
+                { icon:"3", label:"If it is a fit, times follow", detail:"The 30 minutes stays. The public calendar does not." },
+                { icon:"@", label:"Direct email still works", detail:"contact@unifiedsolutionsinc.com · 952.594.8611" },
               ].map((c,i) => (
                 <div key={i} style={{ display:"flex", gap:16, alignItems:"center", background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:"14px 20px" }}>
-                  <span style={{ fontSize:20 }}>{c.icon}</span>
+                  <span style={{ fontFamily:DM, fontSize:13, fontWeight:700, color:C.gold, minWidth:18 }}>{c.icon}</span>
                   <div>
                     <div style={{ fontFamily:DM, fontSize:16, fontWeight:600, color:C.white }}>{c.label}</div>
                     <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.5)" }}>{c.detail}</div>
@@ -4339,21 +4413,8 @@ function BookPage() {
               ))}
             </div>
           </div>
-          <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36, textAlign:"center" }}>
-            <div
-              ref={calRef}
-              style={{ minWidth:280, height:660, overflow:"hidden", background: calStatus === "ready" ? "transparent" : "rgba(255,255,255,0.03)" }}
-            />
-            {calStatus === "loading" && (
-              <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.55)", marginTop:8 }}>Loading scheduler…</div>
-            )}
-            {calStatus === "failed" && (
-              <div style={{ marginTop:12 }}>
-                <div style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.7)", marginBottom:12 }}>Scheduler did not load in this view.</div>
-                <Btn href="https://calendly.com/unifiedsolutionsinc/30min" style={{ fontSize:15, padding:"12px 28px" }}>Open scheduling page</Btn>
-              </div>
-            )}
-            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.4)", marginTop:12 }}>After scheduling, you will receive a confirmation email with the meeting link and a brief pre-call context form.</div>
+          <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:36 }}>
+            <InquiryForm location="book" variant="navy" />
           </div>
         </div>
       </section>
@@ -4428,10 +4489,11 @@ function PrivacyPolicyPage() {
             <>
               {p("We collect the following categories of personal data:")}
               <ul style={{ paddingLeft:24, margin:"0 0 16px" }}>
-                {li("Email address — collected voluntarily when you submit your Leadership Pressure Point Assessment results for a personalized coaching note.")}
+                {li("Email address — required to see Leadership Pressure Point Assessment results, and collected on fit inquiries.")}
+                {li("Inquiry fields — name, organization, seat, which door, and the situation you describe, when you submit the inquire form.")}
                 {li("Assessment responses — your answers to 18 behavioral questions across 6 leadership domains. These are behavioral self-report data, not clinical or diagnostic data.")}
                 {li("Assessment scores — computed domain scores derived from your responses.")}
-                {li("Browser storage data — the site uses browser localStorage to store your results locally on your device. This data is not transmitted to us unless you submit your email.")}
+                {li("Browser storage data — the site uses browser localStorage to store your results locally on your device. Identifiable assessment data is not transmitted to us unless you provide your email.")}
               </ul>
               {p("We do not collect payment information, health data, government identification, or data from minors under 18.")}
             </>
@@ -4559,7 +4621,7 @@ function Footer() {
           </div>
         </div>
         {[
-          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Book a Call","book"],["Privacy Policy","privacy"]] },
+          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]] },
           { head:"Services", items:[["1:1 Executive","coaching"],["Team Coaching","coaching"],["Group Coaching","coaching"],["Succession Circle","coaching"]] },
           { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
@@ -4599,9 +4661,9 @@ const DEFAULT_CONTENT = {
     arc1headline: "Built inside the pressure.",
     arc1body: "Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services.",
     arc2headline: "Applied at depth.",
-    arc2body: "Certified holistic coach. ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience — it was built on top of it.",
-    ctaHeadline: "Ready to find out if this is the right fit?",
-    ctaBody: "30 minutes. No obligation. A real conversation.",
+    arc2body: "ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it.",
+    ctaHeadline: "Send the situation first.",
+    ctaBody: "If it is a fit, 30 minutes follows. Direct from $400/hr, typical $500/hr.",
   },
   coaching: {
     headline: "A coach doesn't tell you what to do with your organization. A coach helps you become the leader who can figure that out and do it well.",
@@ -4611,27 +4673,27 @@ const DEFAULT_CONTENT = {
     headline: "Tools, frameworks, and thinking for leaders who do serious work.",
     subtitle: "Grounded in research and real operational experience. Not inspiration — application.",
     assessmentHeadline: "Leadership Pressure Point Assessment",
-    assessmentSub: "18 questions · 6 domains · Under 8 minutes · Free, no email required",
+    assessmentSub: "18 questions · 6 domains · Under 8 minutes · Email required",
     emailHeadline: "Leadership insights, when they're worth reading.",
     emailSub: "Frameworks, assessment perspectives, and development thinking from 1,500+ hours of coaching. No content calendar filler.",
   },
   method: {
     headline: "The model is a tool. The work is the decision.",
     subtitle: "Four pillars behind the work. I use them. I put them down. I do not teach another course.",
-    p0title: "Holistic Awareness", p0body: "Development that accounts for the whole person produces results that hold. Rooted in Goal Imagery Institute training — addresses what actually drives outcomes.",
-    p1title: "Laser-Focused Method", p1body: "Getting to what matters quickly isn't rushing — it's disciplined listening and precise questioning. Grounded in Marion Franklin's laser-focused methodology.",
-    p2title: "Positive Psychology", p2body: "The evidence base for what shifts in human development is richer than most coaching reflects. This pillar brings the science — rigorously applied, not superficially referenced.",
-    p3title: "Assessment-Informed Clarity", p3body: "Your development should be built on real data — how you think, relate, and lead. 12+ validated tools, certified debriefing, the right tool for the right goal.",
+    p0title: "The whole system in the chair", p0body: "The leader carrying the P&L is the same human carrying the weight underneath it. Whole-person is how the work runs. It is not a category.",
+    p1title: "Laser-focused questions", p1body: "Getting to what matters quickly is disciplined listening, not rushing. Grounded in Marion Franklin. The model is a tool. Then it goes down.",
+    p2title: "What actually shifts", p2body: "The evidence base for human development is richer than most coaching reflects. Applied in the room. Not taught as a course.",
+    p3title: "Assessment-informed, then put down", p3body: "Development should rest on real data about how you think, relate, and lead. The right tool for the right goal. Not a 12-tool catalog.",
   },
   assessment: {
     headline: "Where is the gap between where you are and where you need to be costing you most?",
-    subtitle: "18 behaviorally-anchored questions across 6 validated leadership domains. No right answers — honest answers only. Under 8 minutes. Free, no email required to see your result.",
+    subtitle: "18 questions across 6 leadership domains. Under 8 minutes. Email is required to see the result. Built for operators already carrying a seat, not as a public lead magnet.",
     resultsCTA: "Get a personalized note from Julian.",
-    resultsCTAbody: "Share your email and Julian will send you a personalized note based on your specific results — what the research says about your primary pressure point, and what it would actually take to address it. No automation. A real message from a real coach.",
+    resultsCTAbody: "Your email is already on this result. Julian will send a note on the primary pressure point, and what it would actually take to address it. Not a sequence. A real message.",
   },
   book: {
-    headline: "30 minutes to find out if this is the right fit.",
-    body: "No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.",
+    headline: "Send the situation. The 30 minutes is not on an open calendar.",
+    body: "Direct 1:1 from $400/hr, typical $500/hr. Write what is on the table. If it is a fit, you will hear back with times. If it is not, you will hear that too.",
     notFit0: "You want to be validated rather than challenged",
     notFit1: "You want a consultant to arrive with answers",
     notFit2: "You are in acute crisis requiring clinical support",
@@ -4642,8 +4704,8 @@ const DEFAULT_CONTENT = {
     fit3: "You are willing to be challenged, not merely validated",
   },
   finalCta: {
-    headline: "30 minutes to find out if this is the right fit.",
-    body: "No obligation. No pitch. A real conversation about where you are and whether this kind of coaching is built for what you are navigating.",
+    headline: "Send the situation first.",
+    body: "If it is a fit, 30 minutes follows. Direct 1:1 from $400/hr, typical $500/hr. The calendar is not public.",
   },
 };
 
