@@ -527,21 +527,28 @@
     ───────────────────────────────────────────────────────────────── */
     const LOGGING_ENDPOINT = "https://script.google.com/macros/s/AKfycbx5eHYEMTSyN4trCBNiMKQVkcGYB3tFIkXtaRTsol-KyYgmV3YVrr1lWOXX43hJG6Dt/exec"; // Apps Script Web App URL
     function logToSheet(payload) {
-      if (!LOGGING_ENDPOINT) return;
-      // Use regular fetch with redirect:follow so the Apps Script /exec redirect
-      // is handled correctly. Apps Script web apps set Access-Control-Allow-Origin:*
-      // automatically when deployed with "Anyone" access, so CORS works fine.
+      if (!LOGGING_ENDPOINT) return Promise.resolve({ success: false, error: "LOGGING_ENDPOINT missing" });
       // Content-Type: text/plain keeps it a simple CORS request (no preflight).
-      // Errors are logged to console so you can diagnose them in DevTools.
-      fetch(LOGGING_ENDPOINT, {
+      // Returns a promise so InquiryForm can refuse to paint "Received" on a failed write.
+      // Article clicks and assessment still fire-and-forget by ignoring the return.
+      return fetch(LOGGING_ENDPOINT, {
         method: "POST",
         redirect: "follow",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payload),
       }).then(function(r) {
-        if (!r.ok) console.warn("[USI log] Server returned " + r.status + " for event: " + payload.type);
+        return r.json().then(function(j) {
+          if (!r.ok || (j && j.success === false)) {
+            console.warn("[USI log] Server rejected event '" + payload.type + "':", (j && j.error) || r.status);
+          }
+          return j && typeof j === "object" ? j : { success: r.ok };
+        }).catch(function() {
+          if (!r.ok) console.warn("[USI log] Server returned " + r.status + " for event: " + payload.type);
+          return { success: r.ok, error: r.ok ? "" : ("HTTP " + r.status) };
+        });
       }).catch(function(err) {
         console.warn("[USI log] Request failed for event '" + payload.type + "':", err.message);
+        return { success: false, error: err.message || "network" };
       });
     }
 
@@ -941,6 +948,24 @@ function InquiryForm({ location = "book", variant = "navy" }) {
     color: light ? C.goldDark : C.gold, marginBottom: 6, display: "block"
   };
   function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim()); }
+  function inquiryMailto(p) {
+    const subject = "Fit inquiry" + (p.name ? " — " + p.name : "");
+    const body = [
+      "A fit inquiry from unifiedsolutionsinc.com/" + (p.location || "book") + ".",
+      "",
+      "Name: " + (p.name || ""),
+      "Email: " + (p.email || ""),
+      "Organization: " + (p.organization || ""),
+      "Seat: " + (p.role || ""),
+      "Door: " + (p.door || ""),
+      "",
+      "Situation:",
+      p.situation || "",
+      "",
+      "If it is a fit, times follow. If it is not, say so."
+    ].join("\n");
+    return "mailto:julian@unifiedsolutionsinc.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
   function submit(e) {
     e.preventDefault();
     if (!name.trim() || !validEmail(email) || !situation.trim() || !consent) {
@@ -949,7 +974,7 @@ function InquiryForm({ location = "book", variant = "navy" }) {
     }
     setError("");
     setStatus("sending");
-    logToSheet({
+    const payload = {
       type: "inquiry",
       location,
       name: name.trim(),
@@ -959,9 +984,17 @@ function InquiryForm({ location = "book", variant = "navy" }) {
       door,
       situation: situation.trim(),
       timestamp: new Date().toISOString(),
+    };
+    try { localStorage.setItem("usi-last-inquiry", JSON.stringify(payload)); } catch (ignore) {}
+    logToSheet(payload).then(function(res) {
+      if (window.track) window.track("generate_lead", { location, door });
+      if (res && res.success) {
+        setStatus("sent");
+      } else {
+        setStatus("failed");
+        setError((res && res.error) ? String(res.error) : "The inquiry did not land on the sheet.");
+      }
     });
-    if (window.track) window.track("generate_lead", { location, door });
-    setStatus("sent");
   }
   if (status === "sent") {
     return (
@@ -970,6 +1003,19 @@ function InquiryForm({ location = "book", variant = "navy" }) {
         <p style={{ fontFamily: DM, fontSize: 16, color: light ? C.muted : "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: 0 }}>
           If this looks like a fit, you will hear back with times. If it does not, you will hear that too. The 30 minutes is not on an open calendar.
         </p>
+      </div>
+    );
+  }
+  if (status === "failed") {
+    const failPayload = { name, email, organization, role, door, situation, location };
+    return (
+      <div style={{ textAlign: "left", padding: light ? 0 : "8px 0" }}>
+        <div style={{ fontFamily: PF, fontSize: 26, color: light ? C.navy : C.white, margin: "0 0 12px" }}>Not landed.</div>
+        <p style={{ fontFamily: DM, fontSize: 16, color: light ? C.muted : "rgba(255,255,255,0.7)", lineHeight: 1.7, margin: "0 0 16px" }}>
+          The form did not save this inquiry. Use email so Julian actually has it. Direct: contact@unifiedsolutionsinc.com.
+        </p>
+        {error && <div style={{ fontFamily: DM, fontSize: 13, color: light ? C.red : "#F3C6C8", marginBottom: 14 }}>{error}</div>}
+        <a href={inquiryMailto(failPayload)} style={{ display: "inline-block", fontFamily: DM, fontSize: 13, letterSpacing: 1.5, textTransform: "uppercase", color: light ? C.navy : C.navy, background: C.gold, padding: "12px 18px", textDecoration: "none" }}>Email this inquiry</a>
       </div>
     );
   }
@@ -2345,14 +2391,34 @@ function AdminPanel({ onClose, initialTab="crm" }) {
   const [notionStatus, setNotionStatus] = useState({});
   const [adminTab, setAdminTab]     = useState(initialTab);
   const [articleClicks, setArticleClicks] = useState({});
+  const [inquiries, setInquiries] = useState([]);
+  const [inqState, setInqState] = useState("idle");
 
-  useEffect(() => { loadRecords(); }, []);
+  useEffect(() => { loadRecords(); loadInquiries(); }, []);
 
   async function loadRecords() {
     setLoading(true);
     try { const r = await storage.get("assessment-results"); if (r) setRecords(JSON.parse(r.value)); } catch(e) {}
     try { const raw = localStorage.getItem("usi-article-clicks"); if (raw) setArticleClicks(JSON.parse(raw)); } catch(e) {}
     setLoading(false);
+  }
+
+  async function loadInquiries() {
+    setInqState("loading");
+    try {
+      const res = await fetch(LOGGING_ENDPOINT + "?type=inquiries", { method: "GET", redirect: "follow" });
+      const data = await res.json();
+      if (data && data.success && Array.isArray(data.rows)) {
+        setInquiries(data.rows);
+        setInqState("done");
+      } else {
+        setInquiries([]);
+        setInqState("missing");
+      }
+    } catch (e) {
+      setInquiries([]);
+      setInqState("error");
+    }
   }
 
   async function syncToNotion(record, idx) {
@@ -2425,6 +2491,46 @@ function AdminPanel({ onClose, initialTab="crm" }) {
           {/* ── CRM TAB ── */}
           {adminTab==="crm" && (
             <div>
+              {/* ── Fit inquiries (Sheet, all visitors) ── */}
+              <div style={{ marginBottom: 22 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10, gap:8, flexWrap:"wrap" }}>
+                  <div>
+                    <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, textTransform:"uppercase", color:C.goldDark }}>Fit inquiries</div>
+                    <div style={{ fontFamily:DM, fontSize:12, color:C.muted, marginTop:3 }}>From the Google Sheet. Not this browser. Refresh after a live submit.</div>
+                  </div>
+                  <button onClick={loadInquiries} style={{ background:C.navyMid, color:C.white, border:"none", borderRadius:4, padding:"6px 14px", fontFamily:DM, fontSize:12, cursor:"pointer" }}>{inqState==="loading" ? "Loading…" : "↻ Inquiries"}</button>
+                </div>
+                {inqState==="missing" && (
+                  <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:C.red, marginBottom:10 }}>
+                    Webhook does not list inquiries yet. Paste scripts/google-apps-script-inquiry-notify.gs into USI Activity Log, then Deploy → New version. Until then the form will say Not landed.
+                  </div>
+                )}
+                {inqState==="error" && (
+                  <div style={{ background:"#FFF5F5", border:`1px solid ${C.red}30`, borderRadius:4, padding:"10px 14px", fontFamily:DM, fontSize:13, color:C.red, marginBottom:10 }}>Could not reach the Sheet webhook.</div>
+                )}
+                {inqState==="done" && inquiries.length===0 && (
+                  <div style={{ textAlign:"center", padding:28, background:C.creamDark, borderRadius:6, fontFamily:DM, fontSize:14, color:C.muted }}>No inquiries in the Sheet. The public form only paints Received after a successful write.</div>
+                )}
+                {inqState==="done" && inquiries.length>0 && (
+                  <table style={{ width:"100%", borderCollapse:"collapse", background:C.white, border:`1px solid ${C.border}`, borderRadius:6, overflow:"hidden", marginBottom:8 }}>
+                    <thead><tr style={{ background:C.creamDark }}>
+                      {["When","Name","Email","Org / seat","Door","Situation"].map((h,i)=><th key={i} style={th}>{h}</th>)}
+                    </tr></thead>
+                    <tbody>
+                      {[...inquiries].reverse().map((row,i) => (
+                        <tr key={i}>
+                          <td style={td}>{row.timestamp ? new Date(row.timestamp).toLocaleString() : ""}</td>
+                          <td style={td}>{row.name||""}</td>
+                          <td style={td}>{row.email||""}</td>
+                          <td style={td}>{(row.organization||"")}{row.role ? " · "+row.role : ""}</td>
+                          <td style={td}>{row.door||""}</td>
+                          <td style={{...td, maxWidth:280, whiteSpace:"pre-wrap"}}>{String(row.situation||"").slice(0,280)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
               {/* ── Assessment stats ── */}
               <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom:10 }}>
                 {[[records.length,"Assessment Submissions"],[records.filter(r=>r.email).length,"With Email"],[Object.values(notionStatus).filter(s=>s==="synced").length,"Synced to Notion"]].map(([v,l],i)=>(

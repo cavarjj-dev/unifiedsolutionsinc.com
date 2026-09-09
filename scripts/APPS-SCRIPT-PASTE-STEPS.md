@@ -87,6 +87,67 @@ were not saved or the new version was not deployed.
 Then: hard refresh `/assessment` → Ctrl+Shift+A → CRM → **Published article reads**.
 The footer should say Google Analytics, not snapshot.
 
+---
+
+# Inquiry notify (2026-09-09) — same project, same URL
+
+Do this so `/book` actually lands a row and emails `julian@unifiedsolutionsinc.com`.
+Until this ships, the live form will say **Not landed** (that is the honest state).
+
+Do **not** open Drive project **The Watcher**. Stay in **USI Activity Log**.
+
+## Paste
+
+1. Open the Sheet while signed in as `cavarjj@gmail.com`:
+   https://docs.google.com/spreadsheets/d/19drfHMGxAEV0gyB14SbQxvFVYZGlyh8b4ys36oQcXnQ/edit
+2. **Extensions → Apps Script**. Confirm this is the logging project, not The Watcher.
+3. Open `C:\Users\BizDev\HQ\unifiedsolutionsinc.com\scripts\google-apps-script-inquiry-notify.gs` and copy **everything**.
+4. Paste at the **bottom** of the existing `.gs` file. Do not delete `doGet`, `doPost`, `article_click`, or `assessment_complete`.
+
+## Wire two branches
+
+Inside existing `doPost`, after the JSON is parsed, **before** the unknown-type error:
+
+```javascript
+if (data.type === 'inquiry') {
+  return handleInquiryPost(data);
+}
+```
+
+Inside existing `doGet`, next to `article_clicks`:
+
+```javascript
+if (type === 'inquiries') {
+  return handleInquiryGet();
+}
+```
+
+Optional, after the existing `assessment_complete` write (do not duplicate the write):
+
+```javascript
+notifyAssessment_(data);
+```
+
+Save (Ctrl+S).
+
+## Grant mail, then deploy
+
+1. In the editor: function dropdown → `testInquiryNotify` → **Run**.
+2. Accept the Gmail permission if Google asks. This is the step that makes owner mail work.
+3. Delete the `TRE AUTH TEST` row from the new **Inquiries** tab.
+4. **Deploy → Manage deployments** → existing **Web app** (URL ending `AKfycbx5eHYEMTSyN4trCBNiMKQVkcGYB3tFIkXtaRTsol-...`) → pencil → **Version → New version** → Deploy.
+5. Do **not** create a second web app.
+
+## Prove it
+
+Ask Tre, or run:
+
+POST `type=inquiry` should return `{"success":true,"event":"inquiry","notified":true}` — not `Unknown event type: inquiry`.
+
+GET `?type=inquiries` should return `{success:true, rows:[...]}` — not the health ping.
+
+Then submit `/book` from a non-Jules address. Expect: **Received.** on the page, a row on **Inquiries**, and mail to `julian@unifiedsolutionsinc.com` with Reply-To set to the inquirer.
+
 ## If anything looks wrong
 
 Stop. Message Tre. Do not overwrite The Watcher. Do not create a new project.
