@@ -3,38 +3,38 @@
   "source": "ga4",
   "range": "2026-07-21-today",
   "dayZero": "2026-07-21",
-  "fetchedAt": "2026-08-31T14:15:20.829104Z",
+  "fetchedAt": "2026-09-14T14:15:55.191924Z",
   "pages7d": [
     {
-      "path": "/articles/decision-making-under-pressure/",
-      "views": 7,
-      "users": 7,
-      "sessions": 8,
-      "avgDurationSec": 36.726900625,
+      "path": "/articles/laser-focused-coaching/",
+      "views": 4,
+      "users": 4,
+      "sessions": 4,
+      "avgDurationSec": 0.604806,
       "engagementRate": 0.25
-    },
-    {
-      "path": "/articles/big-five-vs-hexaco/",
-      "views": 3,
-      "users": 3,
-      "sessions": 3,
-      "avgDurationSec": 2.0947656666666665,
-      "engagementRate": 0.0
     },
     {
       "path": "/articles/adoption-is-not-a-course/",
       "views": 2,
       "users": 2,
       "sessions": 2,
-      "avgDurationSec": 447.1314955,
+      "avgDurationSec": 1.820443,
       "engagementRate": 1.0
     },
     {
-      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
+      "path": "/articles/decision-making-under-pressure/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 3.2759175,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/big-five-vs-hexaco/",
       "views": 1,
       "users": 1,
       "sessions": 1,
-      "avgDurationSec": 0.0,
+      "avgDurationSec": 2.457002,
       "engagementRate": 1.0
     },
     {
@@ -42,58 +42,66 @@
       "views": 1,
       "users": 1,
       "sessions": 1,
-      "avgDurationSec": 6.041155,
+      "avgDurationSec": 4.291588,
       "engagementRate": 1.0
     }
   ],
   "pages28d": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 30,
+      "views": 32,
       "users": 25,
-      "sessions": 31,
-      "avgDurationSec": 41.414643548387104,
-      "engagementRate": 0.25806451612903225
+      "sessions": 35,
+      "avgDurationSec": 47.484454971428576,
+      "engagementRate": 0.2
+    },
+    {
+      "path": "/articles/adoption-is-not-a-course/",
+      "views": 7,
+      "users": 5,
+      "sessions": 7,
+      "avgDurationSec": 130.7612132857143,
+      "engagementRate": 0.7142857142857143
+    },
+    {
+      "path": "/articles/laser-focused-coaching/",
+      "views": 7,
+      "users": 7,
+      "sessions": 7,
+      "avgDurationSec": 0.34560342857142856,
+      "engagementRate": 0.14285714285714285
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
       "views": 6,
       "users": 6,
       "sessions": 6,
-      "avgDurationSec": 1.1099336666666666,
+      "avgDurationSec": 1.4568831666666666,
       "engagementRate": 0.16666666666666666
     },
     {
-      "path": "/articles/laser-focused-coaching/",
-      "views": 6,
-      "users": 6,
-      "sessions": 7,
-      "avgDurationSec": 0.33828214285714286,
-      "engagementRate": 0.14285714285714285
-    },
-    {
       "path": "/articles/group-vs-team-coaching/",
-      "views": 5,
-      "users": 5,
-      "sessions": 5,
-      "avgDurationSec": 0.2352338,
-      "engagementRate": 0.2
-    },
-    {
-      "path": "/articles/adoption-is-not-a-course/",
       "views": 2,
       "users": 2,
       "sessions": 2,
-      "avgDurationSec": 447.1314955,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/what-i-witnessed-inside-fortune-500/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 5.1663715,
       "engagementRate": 1.0
     },
     {
-      "path": "/articles/holistic-coaching-what-it-actually-means/",
-      "views": 2,
+      "path": "/articles/consulting-mindset-vs-coaching-mindset/",
+      "views": 1,
       "users": 1,
-      "sessions": 2,
-      "avgDurationSec": 11.2915115,
-      "engagementRate": 0.5
+      "sessions": 1,
+      "avgDurationSec": 14.296879,
+      "engagementRate": 1.0
     },
     {
       "path": "/articles/decision-making-under-pressure",
@@ -112,54 +120,46 @@
       "engagementRate": 1.0
     },
     {
-      "path": "/articles/external-partnership-pattern-recognition/",
+      "path": "/articles/holistic-coaching-what-it-actually-means/",
       "views": 1,
       "users": 1,
-      "sessions": 2,
+      "sessions": 1,
       "avgDurationSec": 0.0,
-      "engagementRate": 0.5
-    },
-    {
-      "path": "/articles/personal-sustainability-leadership/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 5.401579,
-      "engagementRate": 1.0
-    },
-    {
-      "path": "/articles/what-i-witnessed-inside-fortune-500/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 6.041155,
-      "engagementRate": 1.0
+      "engagementRate": 0.0
     }
   ],
   "pagesLifetime": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 37,
-      "users": 32,
-      "sessions": 38,
-      "avgDurationSec": 33.7856302631579,
-      "engagementRate": 0.21052631578947367
+      "views": 48,
+      "users": 41,
+      "sessions": 51,
+      "avgDurationSec": 34.972301372549026,
+      "engagementRate": 0.17647058823529413
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
-      "views": 11,
-      "users": 11,
-      "sessions": 11,
-      "avgDurationSec": 0.6054183636363636,
-      "engagementRate": 0.09090909090909091
+      "views": 12,
+      "users": 12,
+      "sessions": 12,
+      "avgDurationSec": 0.7597169999999999,
+      "engagementRate": 0.16666666666666666
     },
     {
       "path": "/articles/laser-focused-coaching/",
+      "views": 12,
+      "users": 12,
+      "sessions": 14,
+      "avgDurationSec": 0.3419427857142857,
+      "engagementRate": 0.14285714285714285
+    },
+    {
+      "path": "/articles/adoption-is-not-a-course/",
       "views": 7,
-      "users": 7,
-      "sessions": 9,
-      "avgDurationSec": 0.26310833333333333,
-      "engagementRate": 0.1111111111111111
+      "users": 5,
+      "sessions": 7,
+      "avgDurationSec": 130.7612132857143,
+      "engagementRate": 0.7142857142857143
     },
     {
       "path": "/articles/group-vs-team-coaching/",
@@ -178,14 +178,6 @@
       "engagementRate": 0.6666666666666666
     },
     {
-      "path": "/articles/adoption-is-not-a-course/",
-      "views": 2,
-      "users": 2,
-      "sessions": 2,
-      "avgDurationSec": 447.1314955,
-      "engagementRate": 1.0
-    },
-    {
       "path": "/articles/external-partnership-pattern-recognition/",
       "views": 2,
       "users": 1,
@@ -200,6 +192,22 @@
       "sessions": 2,
       "avgDurationSec": 11.2915115,
       "engagementRate": 0.5
+    },
+    {
+      "path": "/articles/what-i-witnessed-inside-fortune-500/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 5.1663715,
+      "engagementRate": 1.0
+    },
+    {
+      "path": "/articles/consulting-mindset-vs-coaching-mindset/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 14.296879,
+      "engagementRate": 1.0
     },
     {
       "path": "/articles/decision-making-under-pressure",
@@ -223,14 +231,6 @@
       "users": 1,
       "sessions": 1,
       "avgDurationSec": 45.346158,
-      "engagementRate": 1.0
-    },
-    {
-      "path": "/articles/what-i-witnessed-inside-fortune-500/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 6.041155,
       "engagementRate": 1.0
     }
   ]
