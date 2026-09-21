@@ -1,0 +1,61 @@
+name: Unpack HC full HTML from gzip chunks
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'honest-calibration/b0.txt'
+      - 'honest-calibration/b1.txt'
+      - 'honest-calibration/b2.txt'
+      - 'honest-calibration/b3.txt'
+      - 'honest-calibration/b4.txt'
+      - 'honest-calibration/b5.txt'
+      - 'honest-calibration/b6.txt'
+      - '.github/workflows/unpack-hc-full-html.yml'
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Decompress b0-b6 into honest-calibration/index.html
+        run: |
+          python3 << 'PY'
+          import base64, gzip, pathlib
+          root = pathlib.Path('honest-calibration')
+          parts = [(root / f'b{i}.txt').read_text().strip() for i in range(7)]
+          html = gzip.decompress(base64.b64decode(''.join(parts))).decode('utf-8')
+          out = root / 'index.html'
+          prev = out.read_text() if out.exists() else ''
+          if prev == html:
+            print('index.html already matches decompressed chunks; no write')
+            open('/tmp/hc_changed', 'w').write('0')
+          else:
+            out.write_text(html)
+            open('/tmp/hc_changed', 'w').write('1')
+            print('wrote index.html', len(html), 'bytes')
+          PY
+      - name: Commit full HTML index if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "$(cat /tmp/hc_changed)" = "1" ]; then
+            git add honest-calibration/index.html
+            git commit -m "fix(hc): unpack full Honest Calibration HTML from gzip chunks (SEO)"
+            git push origin HEAD:main
+          else
+            echo "No commit needed"
+          fi
+      - name: Remove agent write probe if present
+        run: |
+          if [ -f honest-calibration/_agent_write_probe.txt ]; then
+            git rm -f honest-calibration/_agent_write_probe.txt || rm -f honest-calibration/_agent_write_probe.txt
+            git add -A
+            if ! git diff --staged --quiet; then
+              git commit -m "chore(hc): remove agent write probe"
+              git push origin HEAD:main || true
+            fi
+          fi
