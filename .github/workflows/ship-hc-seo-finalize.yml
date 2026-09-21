@@ -1,6 +1,11 @@
 name: Ship HC SEO finalize
 on:
   workflow_dispatch:
+  push:
+    branches: [publish/hc-full-html-seo-20260921]
+    paths:
+      - scripts/ship_hc_patch.py
+      - .github/workflows/ship-hc-seo-finalize.yml
 jobs:
   ship:
     runs-on: ubuntu-latest
@@ -20,7 +25,8 @@ jobs:
             sudo apt-get install -y -qq ffmpeg
             ffmpeg -y -f lavfi -i color=c=0x0B1D30:s=1200x630 \
               -vf "drawtext=text='Honest Calibration':fontcolor=white:fontsize=64:x=(w-text_w)/2:y=(h-text_h)/2" \
-              -frames:v 1 assets/og-honest-calibration.jpg
+              -frames:v 1 assets/og-honest-calibration.jpg || \
+            ffmpeg -y -f lavfi -i color=c=0x0B1D30:s=1200x630 -frames:v 1 assets/og-honest-calibration.jpg
           fi
           ls -la assets/og-honest-calibration.jpg
           file assets/og-honest-calibration.jpg
