@@ -41,7 +41,9 @@ gtag('config','G-JES4VXETRS',{send_page_view:true,page_title:'Honest Calibration
 <script>
 (async function(){
   const n=4;
-  const chunks=await Promise.all(Array.from({length:n},(_,i)=>fetch('./c'+i+'.txt').then(r=>{if(!r.ok)throw new Error('c'+i);return r.text();})));
+  const patches={0:[[3722,'d']],1:[[1317,'n'],[1318,'p'],[1319,'z'],[6683,'d']]};
+  let chunks=await Promise.all(Array.from({length:n},(_,i)=>fetch('./c'+i+'.txt').then(r=>{if(!r.ok)throw new Error('c'+i);return r.text();})));
+  chunks=chunks.map((t,i)=>{const p=patches[i];if(!p)return t;const a=t.split('');for(const [pos,ch] of p)a[pos]=ch;return a.join('');});
   const b64=chunks.join('');
   const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
   const ds=new DecompressionStream('gzip');
