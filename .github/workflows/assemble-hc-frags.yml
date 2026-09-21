@@ -1,0 +1,55 @@
+name: Assemble HC from fragments
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'honest-calibration/frags/**'
+      - '.github/workflows/assemble-hc-frags.yml'
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Join frags into b0-b6 and unpack index.html
+        run: |
+          python3 << 'PY'
+          import base64, gzip, pathlib
+          root = pathlib.Path('honest-calibration')
+          frag = root / 'frags'
+          parts = []
+          for i in range(7):
+              chunks = []
+              k = 0
+              while True:
+                  p = frag / f'b{i}_{k}.txt'
+                  if not p.exists():
+                      break
+                  chunks.append(p.read_text().strip())
+                  k += 1
+              if not chunks:
+                  raise SystemExit(f'missing frags for b{i}')
+              joined = ''.join(chunks)
+              (root / f'b{i}.txt').write_text(joined)
+              parts.append(joined)
+              print(f'b{i}', len(joined))
+          html = gzip.decompress(base64.b64decode(''.join(parts))).decode('utf-8')
+          (root / 'index.html').write_text(html)
+          print('wrote index.html', len(html))
+          assert 'Sara Skutta' in html
+          assert 'Black ERG leader' in html
+          assert 'Hollie' not in html
+          PY
+      - name: Commit assembled files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add honest-calibration/b0.txt honest-calibration/b1.txt honest-calibration/b2.txt honest-calibration/b3.txt honest-calibration/b4.txt honest-calibration/b5.txt honest-calibration/b6.txt honest-calibration/index.html
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "fix(hc): assemble Sara+ERG page from verified fragments"
+            git push origin HEAD:main
+          fi
