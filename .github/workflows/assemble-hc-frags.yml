@@ -1,6 +1,11 @@
 name: Assemble HC from fragments
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'honest-calibration/frags/**'
+      - '.github/workflows/assemble-hc-frags.yml'
 jobs:
   assemble:
     runs-on: ubuntu-latest
