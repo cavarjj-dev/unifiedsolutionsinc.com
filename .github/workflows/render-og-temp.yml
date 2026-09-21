@@ -40,6 +40,8 @@ jobs:
             <text x="1040" y="607" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#c4963b">unifiedsolutionsinc.com</text>
           </svg>
           SVG
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick
           convert -background none /tmp/og.svg -quality 94 assets/og-honest-calibration.jpg
           test "$(wc -c < assets/og-honest-calibration.jpg)" -gt 3039
           git config user.name "github-actions[bot]"
