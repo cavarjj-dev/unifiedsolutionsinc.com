@@ -12,18 +12,14 @@
 <script>
 (async function () {
   try {
-    var n = 7;
+    var n = 4;
     var chunks = await Promise.all(Array.from({length: n}, function (_, i) {
-      return fetch("./b" + i + ".txt").then(function (r) {
-        if (!r.ok) throw new Error("b" + i + " " + r.status);
+      return fetch("./c" + i + ".txt").then(function (r) {
+        if (!r.ok) throw new Error("c" + i + " " + r.status);
         return r.text();
       });
     }));
-    var b64 = chunks.map(function (t) { return t.trim(); }).join("");
-    var bin = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
-    var ds = new DecompressionStream("gzip");
-    var stream = new Blob([bin]).stream().pipeThrough(ds);
-    var html = await new Response(stream).text();
+    var html = chunks.join("");
     document.open();
     document.write(html);
     document.close();
