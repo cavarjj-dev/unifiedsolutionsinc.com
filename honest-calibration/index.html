@@ -826,6 +826,36 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  padding: 0 0.2em;
 }
 
+
+/* From Inside the Room - feedback */
+.voice-grid { display: grid; grid-template-columns: 1fr; gap: 1.15rem; }
+@media (min-width: 720px) { .voice-grid { grid-template-columns: 1fr 1fr; } }
+.voice-card {
+ background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+ padding: 1.35rem 1.4rem 1.25rem; box-shadow: var(--shadow-sm);
+ transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.alt .voice-card { background: #fff; }
+.voice-card:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(11,29,48,0.10); }
+.voice-card blockquote {
+ margin: 0 0 1rem; font-family: var(--font-display); font-size: 1.05rem;
+ line-height: 1.5; color: var(--navy); font-style: italic;
+}
+.voice-card .voice-metric {
+ margin: -0.35rem 0 1rem; font-family: var(--font-sans); font-size: 0.88rem;
+ font-weight: 700; font-style: normal; color: var(--gold); letter-spacing: 0.01em;
+}
+.voice-card footer { font-style: normal; font-size: 0.88rem; color: var(--navy-mid); line-height: 1.4; }
+.voice-card footer strong { color: var(--navy); font-weight: 700; }
+.voice-card.is-placeholder {
+ border-style: dashed; background: transparent; display: flex; flex-direction: column;
+ justify-content: center; min-height: 11rem; opacity: 0.85;
+}
+.voice-card.is-placeholder blockquote {
+ font-style: normal; font-family: var(--font-sans); font-size: 0.95rem;
+ color: var(--navy-mid); font-weight: 600;
+}
+
 </style>
 </head>
 <body>
@@ -937,7 +967,7 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <h2 class="section-title" id="convergence-title">From many rooms to one calibration</h2>
  <p class="section-intro">Work across very different rooms (IT services pods, Fortune 500 transformation, credit-union VP capstones, regulated utilities, nonprofit succession circles, ops-leader forums) comes together as Unified Solutions. That lived pattern is what feeds Honest Calibration™ when the cohort sits down.</p>
  <figure class="diagram-frame">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" role="img" aria-label="From many rooms and ongoing personal structural alignment to Unified Solutions, which feeds Honest Calibration™. Loop clockwise: 1 Surface honest input at 9 o’clock, 2 Calibrate at 12, 3 New input at 3, 4 Calibrate at 6, 5 Action as payoff.">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" role="img" aria-label="From many rooms and ongoing personal structural alignment to Unified Solutions, which feeds Honest Calibration™. Loop clockwise: 1 Surface honest input at 9 o’clock, 2 Calibrate at 12, 3 New input at 3, 4 Calibrate at 6, 5 Action as payoff.">
  <defs>
  <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stop-color="#0B1D30"/>
@@ -954,7 +984,7 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <path d="M0,0 L6,3 L0,6 Z" fill="#C4903A"/>
  </marker>
  </defs>
- <rect width="1120" height="620" fill="#F7F3ED"/>
+ <rect width="1120" height="640" fill="#F7F3ED"/>
  <text x="560" y="36" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="22" font-weight="700" fill="#0B1D30">From many rooms to one calibration</text>
 
  <!-- Source chips (upper left) -->
@@ -988,18 +1018,16 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <path d="M284 295 C360 295, 400 282, 470 268"/>
  </g>
 
- <!-- Left node: Ongoing personal structural alignment -->
- <g filter="url(#softShadow)">
- <rect x="36" y="340" width="248" height="118" rx="16" fill="#FFFFFF" stroke="#C4903A" stroke-width="2"/>
+ <!-- Left node: ongoing personal structural alignment (same chip size as row above) -->
+ <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="600">
+ <rect x="36" y="322" width="248" height="34" rx="17" fill="#FFFFFF" stroke="#C4903A" stroke-width="2"/>
+ <text x="160" y="343" text-anchor="middle" fill="#0B1D30">ongoing personal structural alignment</text>
  </g>
- <text x="160" y="368" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="13" font-weight="700" fill="#0B1D30">Ongoing personal</text>
- <text x="160" y="386" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="13" font-weight="700" fill="#0B1D30">structural alignment</text>
- <text x="160" y="410" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#5A6570">Father · husband · son · stepfather</text>
- <text x="160" y="428" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#5A6570">Health · life domains</text>
- <text x="160" y="446" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4903A" letter-spacing="0.06em">INFORMS THE METHOD</text>
+ <text x="160" y="372" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" fill="#5A6570">Father, husband, son, stepfather · health / life domains</text>
+ <text x="160" y="388" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="700" fill="#C4903A" letter-spacing="0.06em">INFORMS THE METHOD</text>
 
- <!-- Path from personal alignment into hub -->
- <path d="M284 400 C360 400, 420 320, 470 290" fill="none" stroke="#C4903A" stroke-width="2.25" stroke-opacity="0.85" marker-end="url(#arrowGold)"/>
+ <!-- Path from personal alignment into hub: same endpoint (470,268) as room lines above -->
+ <path d="M284 339 C360 339, 400 290, 470 268" fill="none" stroke="#C4903A" stroke-width="1.75" stroke-opacity="0.55"/>
 
  <!-- Unified Solutions hub -->
  <g filter="url(#softShadow)">
@@ -1054,18 +1082,18 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <text x="880" y="418" text-anchor="middle" font-size="12" font-weight="700" fill="#0B1D30">Calibrate</text>
  </g>
 
- <!-- 5 Action as payoff (off to the lower-right side) -->
- <path d="M976 300 C1005 340, 1015 390, 1030 430" fill="none" stroke="#C4903A" stroke-width="2.25" marker-end="url(#arrowGold)"/>
+ <!-- 5 Action as payoff: off clockwise between 4 (Calibrate) and 1 (Surface) -->
+ <path d="M812 340 C760 380, 720 420, 700 455" fill="none" stroke="#C4903A" stroke-width="2.25" marker-end="url(#arrowGold)"/>
  <g filter="url(#softShadow)">
- <rect x="980" y="438" width="120" height="72" rx="16" fill="url(#hcGrad)"/>
+ <rect x="618" y="450" width="148" height="72" rx="16" fill="url(#hcGrad)"/>
  </g>
- <circle cx="1008" cy="474" r="12" fill="#0B1D30"/>
- <text x="1008" y="479" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#F7F3ED">5</text>
- <text x="1048" y="470" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="16" font-weight="700" fill="#0B1D30">Action</text>
- <text x="1048" y="490" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="rgba(11,29,48,0.8)">payoff</text>
+ <circle cx="646" cy="486" r="12" fill="#0B1D30"/>
+ <text x="646" y="491" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#F7F3ED">5</text>
+ <text x="710" y="480" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="16" font-weight="700" fill="#0B1D30">Action</text>
+ <text x="710" y="500" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="rgba(11,29,48,0.8)">calibrate into action</text>
 
- <text x="560" y="580" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#5A6570">Many rooms + personal alignment → Unified Solutions → Honest Calibration™ → Action</text>
- <text x="560" y="600" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" fill="#8A939C">Loop: 1 Surface honest input → 2 Calibrate → 3 New input → 4 Calibrate → 5 Action</text>
+ <text x="560" y="600" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#5A6570">Many rooms + personal alignment → Unified Solutions → Honest Calibration™ → Action</text>
+ <text x="560" y="620" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" fill="#8A939C">Loop: 1 Surface honest input → 2 Calibrate → 3 New input → 4 Calibrate → Action (off between 4 and 1)</text>
 </svg>
  <figcaption>Honesty cuts both ways, with the group and with yourself. Inside-out work, not sage on the stage.</figcaption>
  </figure>
@@ -1210,80 +1238,39 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  </div>
  </section>
 
- <section class="block navy" id="who" data-hc-section="who" aria-labelledby="who-title">
- <div class="wrap two-col">
- <div>
- <div class="section-kicker">Who it’s for</div>
- <h2 class="section-title" id="who-title">Buyers who need adoption, not theater</h2>
- <p class="section-intro" style="margin-bottom:1rem">
- CHROs, L&amp;D, and transformation directors, and the program directors who sit beside them. Intact teams that need peer honesty strong enough to turn learning into behavior. Already partnered with exec-ed? Bring the room that makes the investment land. Sitting on programs, assessments, or post-transformation friction? Convert what you already have.
- </p>
- <p style="color:rgba(247,243,237,0.9);margin-bottom:0">Whole-person catalyst is how the facilitator shows up inside Honest Calibration™. It’s a stance, not a second product name.</p>
- <div class="quote-block">
- <p>“What I appreciate most is the way Julian communicates succinctly what participants have said. He has a gift for clarifying what is really being expressed, and that changes the quality of the conversation.”</p>
- <cite>Sr. Director, Coaching Operations, leading executive education platform</cite>
+  <section class="block" id="inside-the-room" data-hc-section="inside_the_room" aria-labelledby="inside-title">
+ <div class="wrap">
+ <div class="section-kicker">Proof · lived experience</div>
+ <h2 class="section-title" id="inside-title">From Inside the Room</h2>
+ <p class="section-intro">Ongoing collection of feedback from leaders who experienced the Honest Calibration™ approach and methodology. Names stay when we have them.</p>
+ <div class="voice-grid" id="voice-grid" data-voice-grid>
+ <!-- Static cards (easy to extend). VOICE_QUOTES in page script mirrors this list. -->
+ <article class="voice-card">
+ <blockquote>“While most consultants do a good job of looking at the technology and the business, they walk right by the people. Julian, in sharp contrast, knows that the people will make or break your next project.”</blockquote>
+ <footer><strong>Cat Breet</strong> · CHRO</footer>
+ </article>
+ <article class="voice-card">
+ <blockquote>“Every single session with him was worth it, to strengthen my mental fitness and fortitude professionally and personally. Both times, he not only delivered but exceeded expectations.”</blockquote>
+ <footer><strong>Ahmed Abubakar</strong></footer>
+ </article>
+ <article class="voice-card">
+ <blockquote>“What I appreciate most is the way Julian communicates succinctly what participants have said. He has a gift for clarifying what is really being expressed, and that changes the quality of the conversation.”</blockquote>
+ <p class="voice-metric">95% Likely to Apply and Likely to Recommend satisfaction rating</p>
+ <footer><strong>Sara Skutta</strong> · Sr. Director, Coaching Operations, ExecOnline</footer>
+ </article>
+ <article class="voice-card">
+ <blockquote>“Julian does an excellent job of distilling what I communicate into clear concepts, and challenges my thinking in ways that I genuinely appreciate.”</blockquote>
+ <footer><strong>Senior Leader</strong> · Corporate Development &amp; M&amp;A</footer>
+ </article>
+ <article class="voice-card is-placeholder" aria-label="More feedback landing here">
+ <blockquote>More feedback landing here</blockquote>
+ <footer>Additional voices from leaders in the room will appear as they arrive.</footer>
+ </article>
  </div>
- </div>
- <div>
- <div class="section-kicker">Unified Solutions</div>
- <h2 class="section-title" style="font-size:clamp(1.45rem,2.8vw,1.8rem)">The umbrella</h2>
- <ul class="rich-list">
- <li>Positive psychology</li>
- <li>Valid, predictive, reliable assessments that don’t put you in a box</li>
- <li>Life / executive / leadership coaching</li>
- <li>Group facilitation · leading through transformations</li>
- <li>Board &amp; nonprofit · applied science · military &amp; consulting</li>
- </ul>
- <p style="margin-top:1rem;color:var(--gold-soft);font-size:0.95rem">Not career coaching. Faculty with leading executive education partners.</p>
- </div>
- </div>
-
- <div class="wrap arc-block" id="arc">
- <div class="section-kicker">The arc</div>
- <h2 class="section-title" style="font-size:clamp(1.45rem,2.8vw,1.8rem);margin-bottom:1rem">Many rooms → Unified Solutions → Honest Calibration™</h2>
- <p class="section-intro">Different rooms, different industries. That experience converges into Unified Solutions, then feeds Honest Calibration™ when the cohort is in the chair.</p>
- <figure class="diagram-frame">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 280" role="img" aria-label="Many rooms converge into Unified Solutions, which feeds Honest Calibration™.">
- <defs>
- <linearGradient id="hubGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
- <stop offset="0%" stop-color="#0B1D30"/><stop offset="100%" stop-color="#16324A"/>
- </linearGradient>
- <marker id="arrowGold2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
- <path d="M0,0 L6,3 L0,6 Z" fill="#C4903A"/>
- </marker>
- </defs>
- <rect width="1120" height="280" fill="#F7F3ED"/>
- <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#0B1D30">
- <rect x="40" y="40" width="200" height="30" rx="15" fill="#fff" stroke="rgba(11,29,48,0.12)"/>
- <text x="140" y="59" text-anchor="middle">IT services pods</text>
- <rect x="40" y="82" width="200" height="30" rx="15" fill="#fff" stroke="rgba(11,29,48,0.12)"/>
- <text x="140" y="101" text-anchor="middle">F500 transformation</text>
- <rect x="40" y="124" width="200" height="30" rx="15" fill="#fff" stroke="rgba(11,29,48,0.12)"/>
- <text x="140" y="143" text-anchor="middle">Credit-union VPs</text>
- <rect x="40" y="166" width="200" height="30" rx="15" fill="#fff" stroke="rgba(11,29,48,0.12)"/>
- <text x="140" y="185" text-anchor="middle">Utilities · nonprofit · ops</text>
- </g>
- <g fill="none" stroke="#C4903A" stroke-width="1.5" stroke-opacity="0.5">
- <path d="M240 55 C320 55, 340 130, 420 140"/>
- <path d="M240 97 C320 97, 350 135, 420 140"/>
- <path d="M240 139 C320 139, 360 140, 420 140"/>
- <path d="M240 181 C320 181, 350 150, 420 140"/>
- </g>
- <rect x="420" y="100" width="180" height="80" rx="14" fill="url(#hubGrad2)"/>
- <text x="510" y="136" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#E8C48A">Unified Solutions</text>
- <text x="510" y="158" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="rgba(247,243,237,0.75)">synthesis</text>
- <path d="M600 140 H680" stroke="#C4903A" stroke-width="2.5" marker-end="url(#arrowGold2)"/>
- <circle cx="800" cy="140" r="58" fill="#fff" stroke="#C4903A" stroke-width="3"/>
- <text x="800" y="134" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="700" fill="#0B1D30">Honest</text>
- <text x="800" y="152" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="700" fill="#0B1D30">Calibration™</text>
- <text x="560" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#0B1D30">Inside-out work, not sage on the stage.</text>
- </svg>
- <figcaption>Honesty cuts both ways, with the group and with yourself.</figcaption>
- </figure>
  </div>
  </section>
 
- <section class="block" id="horizon" data-hc-section="practice" aria-labelledby="horizon-title">
+<section class="block" id="horizon" data-hc-section="practice" aria-labelledby="horizon-title">
  <div class="wrap horizon">
  <div class="section-kicker">Behind the method</div>
  <h2 class="section-title" id="horizon-title">Practice behind the room</h2>
@@ -1351,6 +1338,14 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
 
 <script>
 (function () {
+
+ var VOICE_QUOTES = [
+ { quote: "While most consultants do a good job of looking at the technology and the business, they walk right by the people. Julian, in sharp contrast, knows that the people will make or break your next project.", name: "Cat Breet", attr: "CHRO" },
+ { quote: "Every single session with him was worth it, to strengthen my mental fitness and fortitude professionally and personally. Both times, he not only delivered but exceeded expectations.", name: "Ahmed Abubakar", attr: "" },
+ { quote: "What I appreciate most is the way Julian communicates succinctly what participants have said. He has a gift for clarifying what is really being expressed, and that changes the quality of the conversation.", name: "Sara Skutta", attr: "Sr. Director, Coaching Operations, ExecOnline", metric: "95% Likely to Apply and Likely to Recommend satisfaction rating" },
+ { quote: "Julian does an excellent job of distilling what I communicate into clear concepts, and challenges my thinking in ways that I genuinely appreciate.", name: "Senior Leader", attr: "Corporate Development & M&A" }
+ ];
+ /* Add later: VOICE_QUOTES.push({ quote: "...", name: "First L.", attr: "Group session · topic" }); */
  var PHASE_NAMES = {
  1: 'Honest Ground',
  2: 'Honest Name',
@@ -1651,7 +1646,7 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  phases: 'Five phases',
  proof: 'Where this work has already run',
  rooms: 'How Honest Calibration sounded',
- who: 'Buyers who need adoption',
+ inside_the_room: 'From Inside the Room',
  practice: 'Practice behind the room',
  faq: 'FAQ',
  footer_cta: 'Footer CTA'
