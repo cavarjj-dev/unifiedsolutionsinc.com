@@ -1339,6 +1339,7 @@ function Nav() {
   }, []);
   const links = [
     { id:"home", label:"Home" },{ id:"about", label:"About" },
+    { id:"honestCalibration", label:"Honest Calibration™" },
     { id:"coaching", label:"Coaching" },{ id:"resources", label:"Resources" },
     { id:"assessment", label:"Assessment" },
   ];
@@ -1356,7 +1357,7 @@ function Nav() {
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:4 }}>
           {links.map(l => (
-            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
+            <button key={l.id} onClick={() => { if (l.id === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(l.id); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
           ))}
           <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Inquire</Btn>
 
@@ -4727,7 +4728,7 @@ function Footer() {
           </div>
         </div>
         {[
-          { head:"Navigation", items:[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]] },
+          { head:"Navigation", items:[["Home","home"],["About","about"],["Honest Calibration™","honestCalibration"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]] },
           { head:"Services", items:[["1:1 Executive","coaching"],["Team Coaching","coaching"],["Group Coaching","coaching"],["Succession Circle","coaching"]] },
           { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
@@ -4735,7 +4736,7 @@ function Footer() {
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
             {col.items.map(([label, page]) => (
               <div key={label} style={{ marginBottom:8 }}>
-                {page ? <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
+                {page ? <button onClick={() => { if (page === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(page); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
                       : <span>{label}</span>}
               </div>
             ))}
