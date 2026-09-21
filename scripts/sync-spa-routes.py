@@ -13,7 +13,7 @@ import shutil
 import sys
 from pathlib import Path
 
-ROUTES = ("about", "coaching", "resources", "assessment", "book", "privacy")
+ROUTES = ("about", "coaching", "resources", "assessment", "book", "privacy", "honest-calibration")
 
 
 def main() -> int:
