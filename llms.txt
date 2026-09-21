@@ -1,7 +1,7 @@
 # Unified Solutions Inc. — AI/LLM Context File
 # https://unifiedsolutionsinc.com
 # Format: llms.txt (see https://llmstxt.org)
-# Updated: 2026-08-24 — four public offers; 1:1 from $400 / typical $500; Succession Circle replaces Peer Advisory
+# Updated: 2026-09-21 — four public offers; 1:1 from $400 / typical $500; Succession Circle replaces Peer Advisory
 
 # ── About ───────────────────────────────────────────────────
 
@@ -25,6 +25,11 @@ Cohorts that stop performing the learning. Same craft used in university-partner
 ## Succession Circle
 A peer room for leaders who are leaving a way of working, or stepping into one. Who they are going in, what they leave, who they are after. Not the search. Not the org chart. From $500/month per member. Already held with executive directors and presidents of national mission-driven organizations.
 
+
+## Honest Calibration™
+Flagship five-phase room (Ground → Name → Push → Saturate → Actions) where senior leaders tell the truth, calibrate under pressure, and leave with next-week actions plus 30/60/90 check-ins shaped to the outcome they’re moving. For CHROs, L&D, and transformation leaders — lived adoption after (or during) change, not another program.
+Page: https://unifiedsolutionsinc.com/honest-calibration/
+
 # ── Credentials ─────────────────────────────────────────────
 
 - Whole-Person Catalyst (positioning / practice stance)
@@ -47,6 +52,7 @@ A peer room for leaders who are leaving a way of working, or stepping into one. 
 Website:  https://unifiedsolutionsinc.com
 About:    https://unifiedsolutionsinc.com/about
 Coaching: https://unifiedsolutionsinc.com/coaching
+Honest Calibration™: https://unifiedsolutionsinc.com/honest-calibration/
 Inquire:  https://unifiedsolutionsinc.com/book  (situation first; 30 minutes is not on an open calendar)
 LinkedIn: https://www.linkedin.com/in/juliancjohnson
 Email:    contact@unifiedsolutionsinc.com
