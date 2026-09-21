@@ -1,11 +1,6 @@
 name: Assemble HC from fragments
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'honest-calibration/frags/**'
-      - '.github/workflows/assemble-hc-frags.yml'
 jobs:
   assemble:
     runs-on: ubuntu-latest
@@ -40,6 +35,10 @@ jobs:
           print('wrote index.html', len(html))
           assert 'Sara Skutta' in html
           assert 'Black ERG leader' in html
+          assert 'Mike D.' in html
+          assert 'Lawson Products participant' in html
+          assert 'Panasonic participant' in html
+          assert 'American Water Works participant' in html
           assert 'Hollie' not in html
           PY
       - name: Commit assembled files
@@ -50,6 +49,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes"
           else
-            git commit -m "fix(hc): assemble Sara+ERG page from verified fragments"
+            git commit -m "fix(hc): assemble Sara+ERG+team coaching feedback from verified fragments"
             git push origin HEAD:main
           fi
