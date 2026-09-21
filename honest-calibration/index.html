@@ -10,16 +10,19 @@
 <body>
 <script>
 (async function() {
-  const n = 12;
-  const parts = await Promise.all(
-    Array.from({length: n}, (_, i) => fetch("./part" + i + ".txt").then(r => {
-      if (!r.ok) throw new Error("part" + i + " " + r.status);
+  const n = 5;
+  const chunks = await Promise.all(
+    Array.from({length: n}, (_, i) => fetch("./b" + i + ".txt").then(r => {
+      if (!r.ok) throw new Error("b" + i + " " + r.status);
       return r.text();
     }))
   );
-  document.open();
-  document.write(parts.join(""));
-  document.close();
+  const b64 = chunks.join("");
+  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const ds = new DecompressionStream("gzip");
+  const stream = new Blob([bin]).stream().pipeThrough(ds);
+  const html = await new Response(stream).text();
+  document.open(); document.write(html); document.close();
 })().catch(err => {
   document.body.innerHTML = '<p style="font-family:system-ui;padding:2rem">Failed to load Honest Calibration™. <a href="/book">Inquire</a>.</p>';
   console.error(err);
