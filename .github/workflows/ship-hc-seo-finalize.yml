@@ -1,0 +1,30 @@
+name: Ship HC SEO finalize
+on:
+  workflow_dispatch:
+  push:
+    branches: [publish/hc-full-html-seo-20260921]
+    paths:
+      - scripts/ship_hc_patch.py
+      - assets/og-parts/**
+jobs:
+  ship:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: publish/hc-full-html-seo-20260921
+      - name: Apply SPA nav + OG decode
+        run: python3 scripts/ship_hc_patch.py
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "ship: Honest Calibration™ SPA nav/footer + OG image"
+            git push
+          fi
