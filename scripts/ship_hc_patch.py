@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Surgical SPA: add Honest Calibration™ nav+footer (+ hard nav). Also write OG if b64 parts present."""
+"""Surgical SPA: add Honest Calibration™ nav+footer (+ hard nav to /honest-calibration/)."""
 from pathlib import Path
-import base64
 
 ROOT = Path(".")
 SPA_FILES = [
@@ -14,28 +13,32 @@ SPA_FILES = [
     "resources/index.html",
 ]
 
-OLD_LINKS = """    { id:\"home\", label:\"Home\" },{ id:\"about\", label:\"About\" },
-    { id:\"coaching\", label:\"Coaching\" },{ id:\"resources\", label:\"Resources\" },
-    { id:\"assessment\", label:\"Assessment\" },"""
+OLD_LINKS = (
+    '    { id:"home", label:"Home" },{ id:"about", label:"About" },\n'
+    '    { id:"coaching", label:"Coaching" },{ id:"resources", label:"Resources" },\n'
+    '    { id:"assessment", label:"Assessment" },'
+)
+NEW_LINKS = (
+    '    { id:"home", label:"Home" },{ id:"about", label:"About" },\n'
+    '    { id:"honestCalibration", label:"Honest Calibration™" },\n'
+    '    { id:"coaching", label:"Coaching" },{ id:"resources", label:"Resources" },\n'
+    '    { id:"assessment", label:"Assessment" },'
+)
 
-NEW_LINKS = """    { id:\"home\", label:\"Home\" },{ id:\"about\", label:\"About\" },
-    { id:\"honestCalibration\", label:\"Honest Calibration™\" },
-    { id:\"coaching\", label:\"Coaching\" },{ id:\"resources\", label:\"Resources\" },
-    { id:\"assessment\", label:\"Assessment\" },"""
+OLD_NAV_BTN = (
+    '{links.map(l => (\n'
+    '            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>'
+)
+NEW_NAV_BTN = (
+    '{links.map(l => (\n'
+    '            <button key={l.id} onClick={() => { if (l.id === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(l.id); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>'
+)
 
-OLD_NAV_BTN = """{links.map(l => (
-            <button key={l.id} onClick={() => setPage(l.id)} style={{ background:\"none\", border:\"none\", cursor:\"pointer\", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:\"6px 12px\", transition:\"color 0.2s\" }}>{l.label}</button>"""
+OLD_FOOTER_ITEMS = '[["Home","home"],["About","about"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]]'
+NEW_FOOTER_ITEMS = '[["Home","home"],["About","about"],["Honest Calibration™","honestCalibration"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]]'
 
-NEW_NAV_BTN = """{links.map(l => (
-            <button key={l.id} onClick={() => { if (l.id === \"honestCalibration\") { window.location.href = \"/honest-calibration\"; return; } setPage(l.id); }} style={{ background:\"none\", border:\"none\", cursor:\"pointer\", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:\"6px 12px\", transition:\"color 0.2s\" }}>{l.label}</button>"""
-
-OLD_FOOTER_ITEMS = """[[\"Home\",\"home\"],[\"About\",\"about\"],[\"Coaching\",\"coaching\"],[\"Resources\",\"resources\"],[\"Assessment\",\"assessment\"],[\"Inquire\",\"book\"],[\"Privacy Policy\",\"privacy\"]]"""
-
-NEW_FOOTER_ITEMS = """[[\"Home\",\"home\"],[\"About\",\"about\"],[\"Honest Calibration™\",\"honestCalibration\"],[\"Coaching\",\"coaching\"],[\"Resources\",\"resources\"],[\"Assessment\",\"assessment\"],[\"Inquire\",\"book\"],[\"Privacy Policy\",\"privacy\"]]"""
-
-OLD_FOOTER_BTN = """{page ? <button onClick={() => setPage(page)} style={{ background:\"none\", border:\"none\", cursor:\"pointer\", fontFamily:DM, fontSize:16, color:\"rgba(255,255,255,0.5)\", padding:0, textAlign:\"left\" }}>{label}</button>"""
-
-NEW_FOOTER_BTN = """{page ? <button onClick={() => { if (page === \"honestCalibration\") { window.location.href = \"/honest-calibration\"; return; } setPage(page); }} style={{ background:\"none\", border:\"none\", cursor:\"pointer\", fontFamily:DM, fontSize:16, color:\"rgba(255,255,255,0.5)\", padding:0, textAlign:\"left\" }}>{label}</button>"""
+OLD_FOOTER_BTN = '{page ? <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>'
+NEW_FOOTER_BTN = '{page ? <button onClick={() => { if (page === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(page); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>'
 
 
 def patch_one(path: Path) -> bool:
@@ -45,7 +48,6 @@ def patch_one(path: Path) -> bool:
         t = t.replace('label:"Approach"', 'label:"Honest Calibration™"')
         t = t.replace('["Approach","honestCalibration"]', '["Honest Calibration™","honestCalibration"]')
         if 'window.location.href = "/honest-calibration"' not in t:
-            # upgrade click handlers if missing
             if OLD_NAV_BTN in t:
                 t = t.replace(OLD_NAV_BTN, NEW_NAV_BTN, 1)
             if OLD_FOOTER_BTN in t:
@@ -80,24 +82,3 @@ for rel in SPA_FILES:
     else:
         print("unchanged", rel)
 print("spa changed", changed)
-
-parts_dir = ROOT / "assets" / "og-parts"
-out = ROOT / "assets" / "og-honest-calibration.jpg"
-if parts_dir.exists():
-    parts = sorted(parts_dir.glob("og-honest-calibration.b64.*"), key=lambda p: int(p.name.rsplit(".", 1)[-1]))
-    if parts:
-        data = base64.b64decode("".join(p.read_text().strip() for p in parts))
-        assert data[:3] == bytes([0xFF, 0xD8, 0xFF]), data[:10]
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_bytes(data)
-        print("wrote OG", len(data))
-        for p in parts:
-            p.unlink()
-        try:
-            parts_dir.rmdir()
-        except OSError:
-            pass
-elif out.exists():
-    print("OG already present", out.stat().st_size)
-else:
-    print("WARN: no OG parts and no existing OG")
