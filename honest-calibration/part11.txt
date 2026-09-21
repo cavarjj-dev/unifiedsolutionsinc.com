@@ -1,0 +1,15 @@
+ => t.addEventListener('click', () => showPhase(Number(t.dataset.phase))));
+jumpBtns.forEach(b => b.addEventListener('click', () => {
+  showPhase(Number(b.getAttribute('data-jump').split('-')[1]));
+  document.getElementById('phases').scrollIntoView({ behavior: 'smooth' });
+}));
+
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+}, { passive: true });
+</script>
+</body>
+</html>
