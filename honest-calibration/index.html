@@ -1,1 +1,38 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://unifiedsolutionsinc.com/honest-calibration/"/>
+<title>Honest Calibration™ | Unified Solutions</title>
+<meta name="description" content="Honest Calibration™ is a five-phase room where senior leaders tell the truth, calibrate under pressure, and leave with next-week actions plus 30/60/90 check-ins."/>
+<meta name="robots" content="index, follow"/>
+</head>
+<body>
+<script>
+(async function () {
+  try {
+    var n = 7;
+    var chunks = await Promise.all(Array.from({length: n}, function (_, i) {
+      return fetch("./b" + i + ".txt").then(function (r) {
+        if (!r.ok) throw new Error("b" + i + " " + r.status);
+        return r.text();
+      });
+    }));
+    var b64 = chunks.map(function (t) { return t.trim(); }).join("");
+    var bin = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+    var ds = new DecompressionStream("gzip");
+    var stream = new Blob([bin]).stream().pipeThrough(ds);
+    var html = await new Response(stream).text();
+    document.open();
+    document.write(html);
+    document.close();
+  } catch (e) {
+    document.body.textContent = "Unable to load Honest Calibration™. Please refresh.";
+    console.error(e);
+  }
+})();
+</script>
+<noscript><p>JavaScript is required to view Honest Calibration™. See <a href="https://unifiedsolutionsinc.com/">Unified Solutions</a>.</p></noscript>
+</body>
+</html>
