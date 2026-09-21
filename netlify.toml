@@ -3,11 +3,14 @@
 # ═══════════════════════════════════════════════════════════
 
 [build]
+  command = "python3 scripts/apply-hc-spa-patch.py"
   publish = "."
 
 # ── Clean URL routing (SPA pages) ───────────────────────────
 # status = 200 = silent rewrite — URL stays as /about etc. in browser
 # Netlify Analytics sees each as a distinct page hit
+# NOTE: /honest-calibration is a dedicated page (folder index.html),
+# not an SPA rewrite — do not add it to [[redirects]] or ROUTES.
 
 [[redirects]]
   from   = "/about"
