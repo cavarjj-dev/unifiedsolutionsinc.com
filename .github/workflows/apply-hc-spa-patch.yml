@@ -1,0 +1,25 @@
+name: Apply HC SPA patch
+on:
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/honest-calibration
+      - name: Apply Honest Calibration™ SPA patch
+        run: python3 scripts/apply-hc-spa-patch.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --staged --quiet; then
+            echo "No index.html changes"
+          else
+            git commit -m "Apply Honest Calibration™ SPA nav/CTA patch to index.html"
+            git push origin HEAD:feat/honest-calibration
+          fi
