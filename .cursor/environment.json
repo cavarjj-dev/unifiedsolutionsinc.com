@@ -1,0 +1,17 @@
+{
+  "name": "Unified Solutions Inc. Website",
+  "install": "python3 scripts/sync-spa-routes.py",
+  "terminals": [
+    {
+      "name": "site-server",
+      "command": "python3 -m http.server 8000",
+      "description": "Serves the static site (root index.html SPA + synced route folders + article pages) at http://localhost:8000. No build step: React 18 + Babel Standalone compile JSX in the browser."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 8000
+    }
+  ]
+}
