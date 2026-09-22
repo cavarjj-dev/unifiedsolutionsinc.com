@@ -982,7 +982,7 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <h2 class="section-title" id="convergence-title">From many rooms to one calibration</h2>
  <p class="section-intro">Work across very different rooms (IT services pods, Fortune 500 transformation, credit-union VP capstones, regulated utilities, nonprofit succession circles, ops-leader forums) comes together as Unified Solutions. That lived pattern is what feeds Honest Calibration™ when the cohort sits down.</p>
  <figure class="diagram-frame">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 640" role="img" aria-label="From many rooms and Ongoing personal structural alignment to Unified Solutions, which feeds Honest Calibration™. Loop clockwise: 1 Honest Calibration at 9 o’clock, 2 Calibrate at 12, 3 New input at 3, 4 Calibrate at 6, 5 Action as payoff.">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 640" role="img" aria-label="From many rooms and Ongoing personal structural alignment to Unified Solutions, which feeds Honest Calibration™. Loop clockwise: 1 Honest Input at 9 o’clock, 2 Calibrate at 12, 3 New input at 3, 4 Calibrate at 6, 5 Action as payoff. Click numbered nodes to open each phase.">
  <defs>
  <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stop-color="#0B1D30"/>
@@ -1001,49 +1001,53 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <marker id="arrowGoldLg" markerWidth="14" markerHeight="14" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
  <path d="M0,0 L12,5 L0,10 Z" fill="#C4903A"/>
  </marker>
+ <style>
+ .hc-hit { cursor: pointer; }
+ .hc-hit:hover circle.hc-num { fill: #C4903A; }
+ .hc-hit:focus { outline: none; }
+ .hc-hit:focus circle.hc-num { stroke: #C4903A; stroke-width: 3; }
+ </style>
  </defs>
  <rect width="1140" height="640" fill="#F7F3ED"/>
  <text x="560" y="36" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="22" font-weight="700" fill="#0B1D30">From many rooms to one calibration</text>
 
- <!-- Source chips (upper left) -->
+ <!-- Source chips: spread vertically, symmetrical around hub y=268 -->
  <g font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="600">
- <rect x="36" y="58" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="79" text-anchor="middle" fill="#0B1D30">Global IT services leadership pods</text>
+ <rect x="36" y="48" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="69" text-anchor="middle" fill="#0B1D30">Global IT services leadership pods</text>
 
- <rect x="36" y="102" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="123" text-anchor="middle" fill="#0B1D30">Fortune 500 transformation rooms</text>
+ <rect x="36" y="116" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="137" text-anchor="middle" fill="#0B1D30">Fortune 500 transformation rooms</text>
 
- <rect x="36" y="146" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="167" text-anchor="middle" fill="#0B1D30">Credit-union VP capstones</text>
+ <rect x="36" y="184" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="205" text-anchor="middle" fill="#0B1D30">Credit-union VP capstones</text>
 
- <rect x="36" y="190" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="211" text-anchor="middle" fill="#0B1D30">Regulated utility cohorts</text>
+ <rect x="36" y="252" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="273" text-anchor="middle" fill="#0B1D30">Regulated utility cohorts</text>
 
- <rect x="36" y="234" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="255" text-anchor="middle" fill="#0B1D30">Nonprofit succession peer circles</text>
+ <rect x="36" y="320" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="341" text-anchor="middle" fill="#0B1D30">Nonprofit succession peer circles</text>
 
- <rect x="36" y="278" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="299" text-anchor="middle" fill="#0B1D30">Ops-leader peer forums</text>
+ <rect x="36" y="388" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="409" text-anchor="middle" fill="#0B1D30">Ops-leader peer forums</text>
  </g>
 
- <!-- Convergence paths from rooms -->
+ <!-- Convergence paths from rooms into hub (470,268) -->
  <g fill="none" stroke="#C4903A" stroke-width="1.75" stroke-opacity="0.55">
- <path d="M284 75 C360 75, 390 248, 470 268"/>
- <path d="M284 119 C360 119, 400 252, 470 268"/>
- <path d="M284 163 C360 163, 410 258, 470 268"/>
- <path d="M284 207 C360 207, 410 266, 470 268"/>
- <path d="M284 251 C360 251, 410 275, 470 268"/>
- <path d="M284 295 C360 295, 400 282, 470 268"/>
+ <path d="M284 65 C360 65, 390 230, 470 268"/>
+ <path d="M284 133 C360 133, 400 245, 470 268"/>
+ <path d="M284 201 C360 201, 410 258, 470 268"/>
+ <path d="M284 269 C360 269, 420 268, 470 268"/>
+ <path d="M284 337 C360 337, 410 285, 470 268"/>
+ <path d="M284 405 C360 405, 400 295, 470 268"/>
  </g>
 
- <!-- Left node: Ongoing personal structural alignment (chip matches room row; no gold circle) -->
+ <!-- Left node: Ongoing personal structural alignment (kept; balanced below rooms) -->
  <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="600">
- <rect x="36" y="322" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
- <text x="160" y="343" text-anchor="middle" fill="#0B1D30">Ongoing personal structural alignment</text>
+ <rect x="36" y="456" width="248" height="34" rx="17" fill="#FFFFFF" stroke="rgba(11,29,48,0.12)"/>
+ <text x="160" y="477" text-anchor="middle" fill="#0B1D30">Ongoing personal structural alignment</text>
  </g>
-
- <!-- Path from personal alignment into hub: same endpoint (470,268) as room lines above -->
- <path d="M284 339 C360 339, 400 290, 470 268" fill="none" stroke="#C4903A" stroke-width="1.75" stroke-opacity="0.55"/>
+ <path d="M284 473 C360 473, 400 320, 470 268" fill="none" stroke="#C4903A" stroke-width="1.75" stroke-opacity="0.55"/>
 
  <!-- Unified Solutions hub -->
  <g filter="url(#softShadow)">
@@ -1052,63 +1056,71 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <text x="570" y="260" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="15" font-weight="700" fill="#E8C48A">Unified Solutions</text>
  <text x="570" y="284" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="rgba(247,243,237,0.78)">synthesis · method · stance</text>
 
- <!-- Feed arrow US → HC (lengthened; FEEDS above arrow, left of number 1) -->
- <path d="M670 268 H748" stroke="#C4903A" stroke-width="2.75" marker-end="url(#arrowGoldLg)"/>
- <text x="700" y="254" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4903A" letter-spacing="0.08em">FEEDS</text>
+ <!-- Feed arrow US → HC: longer gap; FEEDS mid-arrow, clear of #1 and circle -->
+ <path d="M670 268 H780" stroke="#C4903A" stroke-width="2.75" marker-end="url(#arrowGoldLg)"/>
+ <text x="725" y="246" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4903A" letter-spacing="0.08em">FEEDS</text>
 
- <!-- Honest Calibration™ mark -->
+ <!-- Honest Calibration™ mark (shifted right for FEEDS / #1 spacing) -->
  <g filter="url(#softShadow)">
- <circle cx="880" cy="268" r="96" fill="#FFFFFF" stroke="url(#hcGrad)" stroke-width="4.5"/>
- <circle cx="880" cy="268" r="78" fill="none" stroke="rgba(196,144,58,0.35)" stroke-width="1.75" stroke-dasharray="5 6"/>
+ <circle cx="920" cy="268" r="96" fill="#FFFFFF" stroke="url(#hcGrad)" stroke-width="4.5"/>
+ <circle cx="920" cy="268" r="78" fill="none" stroke="rgba(196,144,58,0.35)" stroke-width="1.75" stroke-dasharray="5 6"/>
  </g>
- <ellipse cx="880" cy="268" rx="62" ry="36" fill="rgba(196,144,58,0.10)"/>
- <text x="880" y="252" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="17" font-weight="700" fill="#0B1D30">Honest</text>
- <text x="880" y="276" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="17" font-weight="700" fill="#0B1D30">Calibration™</text>
- <text x="880" y="296" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4903A" letter-spacing="0.12em">FLAGSHIP ROOM</text>
+ <ellipse cx="920" cy="268" rx="62" ry="36" fill="rgba(196,144,58,0.10)"/>
+ <text x="920" y="252" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="17" font-weight="700" fill="#0B1D30">Honest</text>
+ <text x="920" y="276" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="17" font-weight="700" fill="#0B1D30">Calibration™</text>
+ <text x="920" y="296" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4903A" letter-spacing="0.12em">FLAGSHIP ROOM</text>
 
- <!-- Loop arcs first (under numbers): clockwise 1(9)→2(12)→3(3)→4(6)→1 -->
+ <!-- Loop arcs: clockwise around new center 920,268 -->
  <g fill="none" stroke="#C4903A" stroke-width="1.6" stroke-opacity="0.7" stroke-linecap="round">
- <path d="M784 268 A96 96 0 0 1 880 172" marker-end="url(#arrowGold)"/>
- <path d="M880 172 A96 96 0 0 1 976 268" marker-end="url(#arrowGold)"/>
- <path d="M976 268 A96 96 0 0 1 880 364" marker-end="url(#arrowGold)"/>
- <path d="M880 364 A96 96 0 0 1 784 268" marker-end="url(#arrowGold)"/>
+ <path d="M824 268 A96 96 0 0 1 920 172" marker-end="url(#arrowGold)"/>
+ <path d="M920 172 A96 96 0 0 1 1016 268" marker-end="url(#arrowGold)"/>
+ <path d="M1016 268 A96 96 0 0 1 920 364" marker-end="url(#arrowGold)"/>
+ <path d="M920 364 A96 96 0 0 1 824 268" marker-end="url(#arrowGold)"/>
  </g>
 
- <!-- Numbered loop: 1@9 and 3@3 equal distance same plane (labels above); 2@12 and 4@6 equal -->
+ <!-- Numbered loop (clickable): labels closer to nodes; #1 = Honest Input -->
  <g font-family="'DM Sans', system-ui, sans-serif">
- <!-- 1 at 9 o’clock: Honest Calibration directly above 1; FEEDS stays on feed arrow -->
- <circle cx="740" cy="268" r="13" fill="#0B1D30"/>
- <text x="740" y="273" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED">1</text>
- <text x="740" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#0B1D30">Honest Calibration</text>
+ <!-- 1 at 9 o’clock -->
+ <g class="hc-hit" role="button" tabindex="0" data-diagram-phase="1" aria-label="Open phase 1 Honest Input">
+ <circle class="hc-num" cx="780" cy="268" r="13" fill="#0B1D30"/>
+ <text x="780" y="273" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED" pointer-events="none">1</text>
+ <text x="780" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#0B1D30" pointer-events="none">Honest Input</text>
+ </g>
 
  <!-- 2 at 12 o’clock -->
- <circle cx="880" cy="136" r="13" fill="#0B1D30"/>
- <text x="880" y="141" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED">2</text>
- <text x="880" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#0B1D30">Calibrate</text>
-
- <!-- 3 at 3 o’clock: New input above at same height as Honest Calibration -->
- <circle cx="1020" cy="268" r="13" fill="#0B1D30"/>
- <text x="1020" y="273" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED">3</text>
- <text x="1020" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#0B1D30">New input</text>
-
- <!-- 4 at 6 o’clock (equal distance from center as 2) -->
- <circle cx="880" cy="400" r="13" fill="#0B1D30"/>
- <text x="880" y="405" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED">4</text>
- <text x="880" y="430" text-anchor="middle" font-size="12" font-weight="700" fill="#0B1D30">Calibrate</text>
+ <g class="hc-hit" role="button" tabindex="0" data-diagram-phase="2" aria-label="Open phase 2 Calibrate">
+ <circle class="hc-num" cx="920" cy="136" r="13" fill="#0B1D30"/>
+ <text x="920" y="141" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED" pointer-events="none">2</text>
+ <text x="920" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#0B1D30" pointer-events="none">Calibrate</text>
  </g>
 
- <!-- 5 Action as payoff: calibrate-into-action path (arrowhead enlarged) -->
- <path d="M812 340 C760 380, 720 420, 700 455" fill="none" stroke="#C4903A" stroke-width="2.75" marker-end="url(#arrowGoldLg)"/>
- <g filter="url(#softShadow)">
- <rect x="618" y="450" width="148" height="72" rx="16" fill="url(#hcGrad)"/>
+ <!-- 3 at 3 o’clock: New input at same relative height as Honest Input -->
+ <g class="hc-hit" role="button" tabindex="0" data-diagram-phase="3" aria-label="Open phase 3 New input">
+ <circle class="hc-num" cx="1060" cy="268" r="13" fill="#0B1D30"/>
+ <text x="1060" y="273" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED" pointer-events="none">3</text>
+ <text x="1060" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#0B1D30" pointer-events="none">New input</text>
  </g>
- <circle cx="646" cy="486" r="12" fill="#0B1D30"/>
- <text x="646" y="491" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#F7F3ED">5</text>
- <text x="710" y="480" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="16" font-weight="700" fill="#0B1D30">Action</text>
- <text x="710" y="500" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="rgba(11,29,48,0.8)">calibrate into action</text>
+
+ <!-- 4 at 6 o’clock -->
+ <g class="hc-hit" role="button" tabindex="0" data-diagram-phase="4" aria-label="Open phase 4 Calibrate">
+ <circle class="hc-num" cx="920" cy="400" r="13" fill="#0B1D30"/>
+ <text x="920" y="405" text-anchor="middle" font-size="12" font-weight="700" fill="#F7F3ED" pointer-events="none">4</text>
+ <text x="920" y="430" text-anchor="middle" font-size="12" font-weight="700" fill="#0B1D30" pointer-events="none">Calibrate</text>
+ </g>
+ </g>
+
+ <!-- 5 Action as payoff -->
+ <path d="M852 340 C800 380, 760 420, 740 455" fill="none" stroke="#C4903A" stroke-width="2.75" marker-end="url(#arrowGoldLg)"/>
+ <g class="hc-hit" role="button" tabindex="0" data-diagram-phase="5" aria-label="Open phase 5 Action" filter="url(#softShadow)">
+ <rect x="658" y="450" width="148" height="72" rx="16" fill="url(#hcGrad)"/>
+ <circle class="hc-num" cx="686" cy="486" r="12" fill="#0B1D30"/>
+ <text x="686" y="491" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#F7F3ED" pointer-events="none">5</text>
+ <text x="750" y="480" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="16" font-weight="700" fill="#0B1D30" pointer-events="none">Action</text>
+ <text x="750" y="500" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="rgba(11,29,48,0.8)" pointer-events="none">calibrate into action</text>
+ </g>
 
  <text x="560" y="600" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="11" fill="#5A6570">Many rooms + personal alignment → Unified Solutions → Honest Calibration™ → Action</text>
- <text x="560" y="620" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" fill="#8A939C">Loop: 1 Honest Calibration → 2 Calibrate → 3 New input → 4 Calibrate → Action</text>
+ <text x="560" y="620" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" fill="#8A939C">Loop: 1 Honest Input → 2 Calibrate → 3 New input → 4 Calibrate → Action</text>
 </svg>
  <figcaption>Honesty cuts both ways, with the group and with yourself. Inside-out work, not sage on the stage.</figcaption>
  </figure>
@@ -1285,10 +1297,6 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <blockquote>“Julian had a great way of communicating his thoughts and listening to ours. His perspective was refreshing, and you could tell he really was invested in listening to our thoughts and creating a collaborative group session. I look forward to the next one.”</blockquote>
  <footer>American Water Works participant · Impactful Communications</footer>
  </article>
- <article class="voice-card is-placeholder" aria-label="More feedback landing here">
- <blockquote>More feedback landing here</blockquote>
- <footer>Additional voices from leaders in the room will appear as they arrive.</footer>
- </article>
  </div>
  </div>
  </section>
@@ -1364,9 +1372,7 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
 
  var VOICE_QUOTES = [
  { quote: "What I appreciate most is the way Julian communicates succinctly what participants have said. He has a gift for clarifying what is really being expressed, and that changes the quality of the conversation.", name: "Sara Skutta", attr: "Sr. Director, Coaching Operations, ExecOnline", metric: "95% Likely to Apply and Likely to Recommend satisfaction rating" },
- { quote: "Thank you for challenging our ideas and giving me space to express myself freely, and to explore how I'm thinking and how others are thinking too. That room with the group has sharpened my approach and helped me see things differently. I'm already seeing the dividends in how I manage and communicate with stakeholders and team members across the department, and it's making me more effective in the work I do for AEG worldwide and for our clients.
-
-What I appreciate most is your facilitation: the way you help us think deeper together and as individuals, and how you support change from session to session by listening to what we've done, acknowledging it, and pushing us to see what we might try next.", name: "A Black ERG leader at a global live-entertainment company", attr: "" },
+ { quote: "Thank you for challenging our ideas and giving me space to express myself freely, and to explore how I'm thinking and how others are thinking too. That room with the group has sharpened my approach and helped me see things differently. I'm already seeing the dividends in how I manage and communicate with stakeholders and team members across the department, and it's making me more effective in the work I do for AEG worldwide and for our clients.\n\nWhat I appreciate most is your facilitation: the way you help us think deeper together and as individuals, and how you support change from session to session by listening to what we've done, acknowledging it, and pushing us to see what we might try next.", name: "A Black ERG leader at a global live-entertainment company", attr: "" },
  { quote: "Thank you Julian. With your guidance, I felt like yesterday's conversation was a strong start toward finding the best ways to drive more engagement through our field Sales partners. I look forward to our next session.", name: "Mike D.", attr: "Lawson Products · Driving Engagement through field sales partners (Dec 10, 2024)" },
  { quote: "Coach Julian Johnson did a great job of leading us in a collaborative and participatory series of 3 sessions where we gained insights from each other on boosting engagement from our teams. Thank you Julian for these sessions.", name: "Lawson Products participant", attr: "Driving Engagement (3 sessions)" },
  { quote: "Julian is a great coach with a good insight on each person's comments in the group sessions, that not only keeps the conversation interesting but also everyone engaged. Overall, a rewarding experience and highly recommended to others who may take the course. Julian is very engaging and provides very positive and constructive feedback. Julian was a phenomenal coach. He was poised, thoughtful, engaging, and insightful. I really enjoyed meeting him.", name: "Panasonic participant", attr: "Impactful Communications" },
@@ -1593,13 +1599,32 @@ What I appreciate most is your facilitation: the way you help us think deeper to
  });
  });
 
+ /* Diagram numbered nodes drive phase panels */
+ var diagramHits = Array.prototype.slice.call(document.querySelectorAll('[data-diagram-phase]'));
+ function openPhaseFromDiagram(n) {
+ showPhase(n, 'diagram');
+ var stages = document.getElementById('phases');
+ if (stages) stages.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+ }
+ diagramHits.forEach(function (g) {
+ g.addEventListener('click', function () {
+ openPhaseFromDiagram(Number(g.getAttribute('data-diagram-phase')));
+ });
+ g.addEventListener('keydown', function (e) {
+ if (e.key === 'Enter' || e.key === ' ') {
+ e.preventDefault();
+ openPhaseFromDiagram(Number(g.getAttribute('data-diagram-phase')));
+ }
+ });
+ });
 
- /* Hero five-phases peek (hover + click/tap) */
+ /* Hero five-phases peek (hover + click/tap) and drive phase panels */
  var heroPhases = Array.prototype.slice.call(document.querySelectorAll('.hero-phase'));
  heroPhases.forEach(function (btn) {
  btn.addEventListener('click', function () {
  var li = btn.closest('li');
  var open = btn.getAttribute('aria-expanded') === 'true';
+ var phaseN = Number(btn.getAttribute('data-hero-phase') || '0');
  heroPhases.forEach(function (b) {
  b.setAttribute('aria-expanded', 'false');
  if (b.closest('li')) b.closest('li').classList.remove('is-open');
@@ -1607,6 +1632,7 @@ What I appreciate most is your facilitation: the way you help us think deeper to
  if (!open) {
  btn.setAttribute('aria-expanded', 'true');
  if (li) li.classList.add('is-open');
+ if (phaseN >= 1 && phaseN <= 5) showPhase(phaseN, 'hero');
  }
  track('hero_phase_peek', {
  event_category: 'honest_calibration',
