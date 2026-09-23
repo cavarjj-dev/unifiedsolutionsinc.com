@@ -1357,7 +1357,9 @@ function Nav() {
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:4 }}>
           {links.map(l => (
-            <button key={l.id} onClick={() => { if (l.id === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(l.id); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
+            l.id === "honestCalibration"
+              ? <a key={l.id} href="/honest-calibration" style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s", textDecoration:"none", display:"inline-block" }}>{l.label}</a>
+              : <button key={l.id} onClick={() => setPage(l.id)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, fontWeight: page===l.id?600:400, color: page===l.id?C.gold:textCol, padding:"6px 12px", transition:"color 0.2s" }}>{l.label}</button>
           ))}
           <Btn onClick={() => setPage("book")} style={{ marginLeft:8 }}>Inquire</Btn>
 
@@ -4736,8 +4738,11 @@ function Footer() {
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
             {col.items.map(([label, page]) => (
               <div key={label} style={{ marginBottom:8 }}>
-                {page ? <button onClick={() => { if (page === "honestCalibration") { window.location.href = "/honest-calibration"; return; } setPage(page); }} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
-                      : <span>{label}</span>}
+                {page ? (
+                  page === "honestCalibration"
+                    ? <a href="/honest-calibration" style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left", textDecoration:"none", display:"inline-block" }}>{label}</a>
+                    : <button onClick={() => setPage(page)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:DM, fontSize:16, color:"rgba(255,255,255,0.5)", padding:0, textAlign:"left" }}>{label}</button>
+                ) : <span>{label}</span>}
               </div>
             ))}
           </div>
