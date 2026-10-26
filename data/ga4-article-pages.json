@@ -3,18 +3,26 @@
   "source": "ga4",
   "range": "2026-07-21-today",
   "dayZero": "2026-07-21",
-  "fetchedAt": "2026-10-12T14:15:29.950913Z",
+  "fetchedAt": "2026-10-26T14:15:58.548438Z",
   "pages7d": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 5,
-      "users": 5,
-      "sessions": 5,
-      "avgDurationSec": 8.007832,
-      "engagementRate": 0.2
+      "views": 6,
+      "users": 6,
+      "sessions": 6,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
+      "views": 3,
+      "users": 3,
+      "sessions": 3,
+      "avgDurationSec": 8.020712333333334,
+      "engagementRate": 0.3333333333333333
+    },
+    {
+      "path": "/articles/psychological-safety-leadership/",
       "views": 3,
       "users": 3,
       "sessions": 3,
@@ -22,18 +30,26 @@
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/laser-focused-coaching/",
-      "views": 3,
-      "users": 3,
-      "sessions": 3,
-      "avgDurationSec": 0.3988936666666667,
+      "path": "/articles/adoption-is-not-a-course/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/group-vs-team-coaching/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
     {
       "path": "/articles/leadership-identity/",
       "views": 1,
       "users": 1,
-      "sessions": 1,
+      "sessions": 2,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
@@ -41,47 +57,7 @@
       "path": "/articles/personal-sustainability-leadership/",
       "views": 1,
       "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/psychological-safety-leadership/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/succession-planning-senior-leaders/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/tactical-leadership-war-zone-executive-coaching/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/what-i-witnessed-inside-fortune-500/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/why-peer-learning-leadership-development-tools/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
+      "sessions": 2,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     }
@@ -89,34 +65,50 @@
   "pages28d": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 14,
-      "users": 13,
-      "sessions": 14,
-      "avgDurationSec": 27.946455500000003,
-      "engagementRate": 0.21428571428571427
+      "views": 17,
+      "users": 17,
+      "sessions": 17,
+      "avgDurationSec": 12.50253405882353,
+      "engagementRate": 0.11764705882352941
     },
     {
-      "path": "/articles/laser-focused-coaching/",
-      "views": 9,
-      "users": 9,
-      "sessions": 10,
-      "avgDurationSec": 0.9184074000000001,
-      "engagementRate": 0.0
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 8,
+      "users": 8,
+      "sessions": 8,
+      "avgDurationSec": 3.269540875,
+      "engagementRate": 0.125
     },
     {
       "path": "/articles/personal-sustainability-leadership/",
-      "views": 8,
+      "views": 7,
       "users": 7,
       "sessions": 8,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/big-five-vs-hexaco/",
-      "views": 4,
-      "users": 4,
-      "sessions": 4,
-      "avgDurationSec": 0.5235475,
+      "path": "/articles/psychological-safety-leadership/",
+      "views": 7,
+      "users": 7,
+      "sessions": 7,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/laser-focused-coaching/",
+      "views": 6,
+      "users": 6,
+      "sessions": 6,
+      "avgDurationSec": 0.19944683333333335,
+      "engagementRate": 0.0
+    },
+    {
+      "path": "/articles/adoption-is-not-a-course/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
     {
@@ -128,26 +120,18 @@
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/holistic-coaching-what-it-actually-means/",
+      "path": "/articles/leadership-identity/",
       "views": 2,
       "users": 2,
-      "sessions": 2,
-      "avgDurationSec": 19.5062695,
-      "engagementRate": 0.5
+      "sessions": 3,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
       "path": "/articles/what-i-witnessed-inside-fortune-500/",
       "views": 2,
       "users": 2,
       "sessions": 2,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/adoption-is-not-a-course/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
@@ -168,14 +152,6 @@
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
       "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
       "views": 1,
       "users": 1,
@@ -184,23 +160,7 @@
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/kolb-learning-cycle-leadership/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/leadership-identity/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/psychological-safety-leadership/",
+      "path": "/articles/holistic-coaching-what-it-actually-means/",
       "views": 1,
       "users": 1,
       "sessions": 1,
@@ -235,51 +195,59 @@
   "pagesLifetime": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 62,
-      "users": 54,
-      "sessions": 65,
-      "avgDurationSec": 33.459042261538464,
-      "engagementRate": 0.18461538461538463
+      "views": 72,
+      "users": 64,
+      "sessions": 75,
+      "avgDurationSec": 29.14552624,
+      "engagementRate": 0.16
     },
     {
       "path": "/articles/laser-focused-coaching/",
-      "views": 20,
-      "users": 20,
-      "sessions": 23,
-      "avgDurationSec": 0.607446652173913,
-      "engagementRate": 0.08695652173913043
+      "views": 22,
+      "users": 22,
+      "sessions": 25,
+      "avgDurationSec": 0.55885092,
+      "engagementRate": 0.08
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
-      "views": 16,
-      "users": 16,
-      "sessions": 16,
-      "avgDurationSec": 0.700674625,
-      "engagementRate": 0.125
+      "views": 20,
+      "users": 20,
+      "sessions": 20,
+      "avgDurationSec": 1.76364655,
+      "engagementRate": 0.15
     },
     {
       "path": "/articles/personal-sustainability-leadership/",
-      "views": 9,
-      "users": 8,
-      "sessions": 9,
-      "avgDurationSec": 0.6001754444444445,
-      "engagementRate": 0.1111111111111111
+      "views": 11,
+      "users": 10,
+      "sessions": 12,
+      "avgDurationSec": 0.4501315833333333,
+      "engagementRate": 0.08333333333333333
     },
     {
       "path": "/articles/adoption-is-not-a-course/",
-      "views": 8,
-      "users": 6,
-      "sessions": 8,
-      "avgDurationSec": 114.416061625,
-      "engagementRate": 0.625
+      "views": 9,
+      "users": 7,
+      "sessions": 9,
+      "avgDurationSec": 101.70316588888889,
+      "engagementRate": 0.5555555555555556
     },
     {
       "path": "/articles/group-vs-team-coaching/",
-      "views": 7,
-      "users": 7,
-      "sessions": 7,
-      "avgDurationSec": 0.16802414285714287,
-      "engagementRate": 0.14285714285714285
+      "views": 8,
+      "users": 8,
+      "sessions": 8,
+      "avgDurationSec": 0.147021125,
+      "engagementRate": 0.125
+    },
+    {
+      "path": "/articles/psychological-safety-leadership/",
+      "views": 8,
+      "users": 8,
+      "sessions": 8,
+      "avgDurationSec": 5.66826975,
+      "engagementRate": 0.125
     },
     {
       "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
@@ -322,12 +290,12 @@
       "engagementRate": 0.6666666666666666
     },
     {
-      "path": "/articles/psychological-safety-leadership/",
+      "path": "/articles/leadership-identity/",
       "views": 2,
       "users": 2,
-      "sessions": 2,
-      "avgDurationSec": 22.673079,
-      "engagementRate": 0.5
+      "sessions": 3,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
       "path": "/articles/agile-transformation-leading-change/",
@@ -355,14 +323,6 @@
     },
     {
       "path": "/articles/kolb-learning-cycle-leadership/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/leadership-identity/",
       "views": 1,
       "users": 1,
       "sessions": 1,
