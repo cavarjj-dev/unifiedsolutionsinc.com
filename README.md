@@ -11,7 +11,7 @@ ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson
 
 **Not the live host:** GitHub Pages still builds on every push to `main`. `cavarjj-dev.github.io/unifiedsolutionsinc.com` then redirects to the custom domain. A green Pages run is not a publish.
 
-**Why a push can sit:** as of 2026-11-09 this repo has zero GitHub webhooks. Netlify does not hear the push. Do not call the site live until `https://unifiedsolutionsinc.com` contains the change.
+**Why a push can sit:** Netlify is connected to this repo and does hear a push to `main`. If `scripts/apply-hc-spa-patch.py` exits non-zero, Netlify keeps the last successful deploy. That is what happened from 2026-09-23 through 2026-11-09: the public page stayed on the 22 September deploy while GitHub Pages kept going green. Do not call the site live until `https://unifiedsolutionsinc.com` contains the change.
 
 1. Edit source files in this repo (root `index.html` is the SPA source of truth)
 2. After changing `index.html`, sync SPA route copies:

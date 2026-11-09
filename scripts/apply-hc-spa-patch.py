@@ -74,6 +74,12 @@ REPLACEMENTS = [
 
 def main() -> int:
     text = INDEX.read_text(encoding="utf-8")
+    # The committed page already links the room. Do not fail the deploy
+    # because an older button snippet is gone. A failed build leaves the
+    # last successful deploy up.
+    if 'href="/honest-calibration"' in text and 'id:"honestCalibration"' in text:
+        print("index.html already links Honest Calibration; leaving the committed page")
+        return 0
     if 'label:"Approach"' in text and 'window.location.href = "/honest-calibration"' in text and "The Unified Method" not in text:
         print("index.html already patched for Honest Calibration™")
         return 0
