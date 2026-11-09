@@ -131,7 +131,7 @@
         "familyName": "Johnson",
         "jobTitle": "Whole-Person Catalyst · ICF PCC Executive Coach",
         "alternateName": "JJ Johnson",
-        "description": "Julian Johnson is a Whole-Person Catalyst and ICF PCC / ACTC executive coach for leaders and groups who need movement, not theater. Over 1,500 coaching hours with 250+ senior leaders and founders, globally. Fortune 500 transformation consultant and faculty at ExecOnline and Emeritus. He works leader and manager development, change and workforce resiliency, and the human side of HR tech and AI strategy: reading rooms fast, challenging what is avoided, and driving decision quality and execution.",
+        "description": "Julian Johnson is a Whole-Person Catalyst and ICF PCC / ACTC executive coach for leaders and groups who need movement, not theater. Over 1,500 coaching hours with 250+ senior leaders and founders, globally. Fortune 500 transformation consultant and workshop facilitator with ExecOnline and Emeritus. He works leader and manager development, change and workforce resiliency, and the human side of HR tech and AI strategy: reading rooms fast, challenging what is avoided, and driving decision quality and execution.",
         "url": "https://unifiedsolutionsinc.com/about",
         "image": "https://unifiedsolutionsinc.com/assets/headshot.jpg",
         "email": "contact@unifiedsolutionsinc.com",
@@ -190,7 +190,7 @@
         "@id": "https://unifiedsolutionsinc.com/#organization",
         "name": "Unified Solutions Inc.",
         "legalName": "Unified Solutions Inc.",
-        "description": "Unified Solutions Inc. is the executive coaching practice of Julian Johnson, Whole-Person Catalyst, ICF PCC and ACTC. 1:1 executive coaching, team coaching, Succession Circle, and group cohorts for senior leaders in large systems. 1,500+ hours. Faculty at ExecOnline and Emeritus. SDVOSB. Based in Plymouth, MN; serving leaders nationally and globally.",
+        "description": "Unified Solutions Inc. is the executive coaching practice of Julian Johnson, Whole-Person Catalyst, ICF PCC and ACTC. 1:1 executive coaching, team coaching, Succession Circle, and group cohorts for senior leaders in large systems. 1,500+ hours. Workshop facilitator with ExecOnline and Emeritus. SDVOSB. Based in Plymouth, MN; serving leaders nationally and globally.",
         "url": "https://unifiedsolutionsinc.com",
         "logo": "https://unifiedsolutionsinc.com/assets/logo.png",
         "telephone": "+1-952-594-8611",
@@ -1351,9 +1351,12 @@ function Nav() {
   return (
     <nav style={{ position:"fixed", top:editMode?40:0, left:0, right:0, zIndex:100, background:bg, boxShadow:shadow, transition:"all 0.3s", fontFamily:DM }}>
       <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", justifyContent:"space-between", height:64 }}>
-        <div style={{ cursor:"pointer" }} onClick={() => setPage("home")}>
-          <div style={{ fontFamily:PF, fontSize:19, fontWeight:700, color:textCol, letterSpacing:-0.3 }}>Unified Solutions Inc.</div>
-          <div style={{ fontSize:11, letterSpacing:2, textTransform:"uppercase", color:(!isHome||scrolled)?C.gold:"rgba(255,255,255,0.7)", marginTop:-1 }}>ICF PCC · ACTC · ExecOnline Faculty</div>
+        <div style={{ cursor:"pointer", display:"flex", alignItems:"center", gap:10, flexShrink:0 }} onClick={() => setPage("home")}>
+          <img src="/assets/mark-circle.png" alt="" width="36" height="36" style={{ width:36, height:36, display:"block", flexShrink:0 }} />
+          <div style={{ whiteSpace:"nowrap" }}>
+            <div style={{ fontFamily:PF, fontSize:19, fontWeight:700, color:textCol, letterSpacing:-0.3 }}>Unified Solutions Inc.</div>
+            <div style={{ fontSize:11, letterSpacing:2, textTransform:"uppercase", color:(!isHome||scrolled)?C.gold:"rgba(255,255,255,0.7)", marginTop:-1 }}>ICF PCC · ACTC · ExecOnline Facilitator</div>
+          </div>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:4 }}>
           {links.map(l => (
@@ -2849,7 +2852,7 @@ function HomePage() {
           <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:80, alignItems:"center" }}>
             <div>
               <div style={{ fontFamily:DM, fontSize:13, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:20 }}>
-                Adoption and succession · ICF PCC · ACTC · ExecOnline and Emeritus Faculty
+                Adoption and succession · ICF PCC · ACTC · ExecOnline and Emeritus facilitator
               </div>
               <EditableBlock
                 text={h.headline}
@@ -2914,7 +2917,7 @@ function HomePage() {
                     years:"Present", num:"III",
                     title:"Executive Coaching Practice",
                     role:"ICF PCC · ACTC · 1,500+ hrs",
-                    note:"250+ leaders · ExecOnline & Emeritus Faculty",
+                    note:"250+ leaders · ExecOnline & Emeritus facilitator",
                     dotOpacity:1, labelOpacity:1, current:true
                   },
                 ].map((p,i) => (
@@ -3113,7 +3116,7 @@ function HomePage() {
           <div style={{ textAlign:"center", marginBottom:36 }}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:12 }}>How the work is held</div>
             <h2 style={{ fontFamily:PF, fontSize:40, color:C.navy, margin:"0 0 16px", letterSpacing:-0.5 }}>How we work together.</h2>
-            <p style={{ fontFamily:DM, fontSize:18, color:C.muted, maxWidth:640, margin:"0 auto 28px", lineHeight:1.7 }}>Executive directors and presidents of national mission-driven organizations. Vice presidents of national financial institutions. Faculty rooms with senior leaders from Fortune 500 and large private companies. Not startups. The format changes. The job does not: adoption in an honest room, especially when a seat is changing.</p>
+            <p style={{ fontFamily:DM, fontSize:18, color:C.muted, maxWidth:640, margin:"0 auto 28px", lineHeight:1.7 }}>Executive directors and presidents of national mission-driven organizations. Vice presidents of national financial institutions. Workshop rooms with senior leaders from Fortune 500 and large private companies. Not startups. The format changes. The job does not: adoption in an honest room, especially when a seat is changing.</p>
             <div style={{ maxWidth:640, margin:"0 auto 24px", textAlign:"left", background:C.white, border:`1px solid ${C.border}`, borderRadius:6, padding:"22px 24px" }}>
               <div style={{ fontFamily:DM, fontSize:11, letterSpacing:2, color:C.gold, textTransform:"uppercase", marginBottom:8 }}>How the work is done</div>
               <div style={{ fontFamily:PF, fontSize:22, color:C.navy, margin:"0 0 12px", fontWeight:600 }}>I do not teach the model. I use it, then I put it down.</div>
@@ -3652,14 +3655,14 @@ function AboutPage() {
           <div>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>ICF PCC · ACTC · Founder, Unified Solutions Inc.</div>
             <EditableBlock text={content.about?.headline||"I coach leaders and teams who need movement, not theater."} onSave={v=>updateContent("about.headline",v)} fieldName="about.headline" tag="h1" style={{ fontFamily:PF, fontSize:44, color:C.white, margin:"0 0 24px", letterSpacing:-0.5 }} />
-            <EditableBlock text={content.about?.bio||"Direct executive and team coach for leaders and groups who need movement, not theater. I work where organizations are already investing: leader and manager development, change management and workforce resiliency, and the human side of HR tech and AI strategy. Seventeen years developing business and interpersonal acumen while leading teams inside Fortune 500 transformations. ICF PCC and ACTC. Faculty with ExecOnline and Emeritus. Over 1,500 hours with 250+ senior leaders and founders, globally. With leaders, teams, and cohorts I push past theory into application: clear problem and solution statements, decision quality, operating metrics, risk and gaps, and work that holds under real customer, peer, and sponsor pressure. I read the room fast, challenge what is avoided, and keep checking whether the session is hitting the real goal. Then we adjust. Not stuck to a script. Whole-person is how I do the work, not a soft category. The leader carrying the P&L is the same human carrying the weight underneath it. Decision quality and execution are the point."} onSave={v=>updateContent("about.bio",v)} fieldName="about.bio" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75 }} />
+            <EditableBlock text={content.about?.bio||"Direct executive and team coach for leaders and groups who need movement, not theater. I work where organizations are already investing: leader and manager development, change management and workforce resiliency, and the human side of HR tech and AI strategy. Seventeen years developing business and interpersonal acumen while leading teams inside Fortune 500 transformations. ICF PCC and ACTC. With ExecOnline and Emeritus, workshop facilitator on leadership topics and cohort discussions. Over 1,500 hours with 250+ senior leaders and founders, globally. With leaders, teams, and cohorts I push past theory into application: clear problem and solution statements, decision quality, operating metrics, risk and gaps, and work that holds under real customer, peer, and sponsor pressure. I read the room fast, challenge what is avoided, and keep checking whether the session is hitting the real goal. Then we adjust. Not stuck to a script. Whole-person is how I do the work, not a soft category. The leader carrying the P&L is the same human carrying the weight underneath it. Decision quality and execution are the point."} onSave={v=>updateContent("about.bio",v)} fieldName="about.bio" tag="p" style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.65)", lineHeight:1.75 }} />
           </div>
           <div style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:4, padding:32, textAlign:"center" }}>
             <HeadshotAvatar />
             <div style={{ fontFamily:PF, fontSize:20, color:C.white, fontWeight:600 }}>Julian C. Johnson</div>
             <div style={{ fontFamily:DM, fontSize:14, color:C.gold, marginTop:4 }}>ICF PCC · ACTC</div>
             <div style={{ fontFamily:DM, fontSize:12, color:"rgba(255,255,255,0.4)", marginTop:2 }}>Advanced Certified Team Coach</div>
-            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", marginTop:4 }}>ExecOnline · Emeritus Faculty</div>
+            <div style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.5)", marginTop:4 }}>ExecOnline · Emeritus facilitator</div>
             <div style={{ marginTop:20, display:"flex", flexDirection:"column", gap:6 }}>
               {["ICF PCC","ACTC — Advanced Certified Team Coach","HPTI Certified","AgileBrain Certified"].map(c => (
                 <div key={c} style={{ fontFamily:DM, fontSize:13, color:"rgba(255,255,255,0.55)", background:"rgba(255,255,255,0.05)", borderRadius:2, padding:"5px 12px" }}>{c}</div>
@@ -3695,7 +3698,7 @@ function AboutPage() {
           {[
             { phase:"Phase 1 · U.S. Army · 1999–2003", headline:"Led under fire.", body:"Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did." },
             { phase:"Phase 2 · Fortune 500 Consulting · 2013–Present", headline:"Built inside the pressure.", body:"Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services." },
-            { phase:"Phase 3 · Executive and team coaching · Present", headline:"Applied at depth.", body:"ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it." },
+            { phase:"Phase 3 · Executive and team coaching · Present", headline:"Applied at depth.", body:"ICF PCC. ACTC. Workshop facilitator with ExecOnline and Emeritus. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it." },
           ].map((ph,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:"240px 1fr", gap:48, marginBottom:56, paddingBottom:56, borderBottom: i<2 ? `1px solid ${C.border}` : "none" }}>
               <div>
@@ -4732,7 +4735,7 @@ function Footer() {
         {[
           { head:"Navigation", items:[["Home","home"],["About","about"],["Honest Calibration™","honestCalibration"],["Coaching","coaching"],["Resources","resources"],["Assessment","assessment"],["Inquire","book"],["Privacy Policy","privacy"]] },
           { head:"Services", items:[["1:1 Executive","coaching"],["Team Coaching","coaching"],["Group Coaching","coaching"],["Succession Circle","coaching"]] },
-          { head:"Faculty & Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
+          { head:"Affiliations", items:[["ExecOnline",null],["Emeritus",null],["Torch",null],["UFacilitate",null],["ICF",null]] },
         ].map((col,i) => (
           <div key={i}>
             <div style={{ fontFamily:DM, fontSize:12, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:16 }}>{col.head}</div>
@@ -4750,7 +4753,7 @@ function Footer() {
       </div>
       <div style={{ maxWidth:1100, margin:"0 auto", padding:"24px 24px", borderTop:"1px solid rgba(255,255,255,0.08)", display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
         <span>© 2026 Unified Solutions Inc. · All rights reserved.</span>
-        <span style={{ color:C.gold }}>ICF PCC · ACTC · ExecOnline & Emeritus Faculty</span>
+        <span style={{ color:C.gold }}>ICF PCC · ACTC · ExecOnline & Emeritus facilitator</span>
       </div>
     </footer>
   );
@@ -4767,13 +4770,13 @@ const DEFAULT_CONTENT = {
   about: {
     eyebrow: "ICF PCC · ACTC · Founder, Unified Solutions Inc.",
     headline: "I coach leaders and teams who need movement, not theater.",
-    bio: "Direct executive and team coach for leaders and groups who need movement, not theater. I work where organizations are already investing: leader and manager development, change management and workforce resiliency, and the human side of HR tech and AI strategy. Seventeen years developing business and interpersonal acumen while leading teams inside Fortune 500 transformations. ICF PCC and ACTC. Faculty with ExecOnline and Emeritus. Over 1,500 hours with 250+ senior leaders and founders, globally. With leaders, teams, and cohorts I push past theory into application: clear problem and solution statements, decision quality, operating metrics, risk and gaps, and work that holds under real customer, peer, and sponsor pressure. I read the room fast, challenge what is avoided, and keep checking whether the session is hitting the real goal. Then we adjust. Not stuck to a script. Whole-person is how I do the work, not a soft category. The leader carrying the P&L is the same human carrying the weight underneath it. Decision quality and execution are the point.",
+    bio: "Direct executive and team coach for leaders and groups who need movement, not theater. I work where organizations are already investing: leader and manager development, change management and workforce resiliency, and the human side of HR tech and AI strategy. Seventeen years developing business and interpersonal acumen while leading teams inside Fortune 500 transformations. ICF PCC and ACTC. With ExecOnline and Emeritus, workshop facilitator on leadership topics and cohort discussions. Over 1,500 hours with 250+ senior leaders and founders, globally. With leaders, teams, and cohorts I push past theory into application: clear problem and solution statements, decision quality, operating metrics, risk and gaps, and work that holds under real customer, peer, and sponsor pressure. I read the room fast, challenge what is avoided, and keep checking whether the session is hitting the real goal. Then we adjust. Not stuck to a script. Whole-person is how I do the work, not a soft category. The leader carrying the P&L is the same human carrying the weight underneath it. Decision quality and execution are the point.",
     arc0headline: "Led under fire.",
     arc0body: "Tactical team leader (31R). Deployed to Kosovo and Iraq. Led people and mission outcomes in conditions where clarity, communication, and trust were not aspirational values — they were operational requirements trained for every day. That standard did not leave when the uniform did.",
     arc1headline: "Built inside the pressure.",
     arc1body: "Embedded consultant at Express Scripts, Optum, LifeTouch/Shutterfly, Wells Fargo, National Flood Services, Securian Financial. Chapter Director, COO Forum. Adjunct Professor, University of Minnesota CCAPS. Roles spanning M&A, Agile transitions, international regulatory compliance, and high-stakes business transformation in healthcare and financial services.",
     arc2headline: "Applied at depth.",
-    arc2body: "ICF PCC. ACTC. ExecOnline and Emeritus faculty. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it.",
+    arc2body: "ICF PCC. ACTC. Workshop facilitator with ExecOnline and Emeritus. Over 1,500 hours. 250+ senior leaders and founders. Founder, Unified Solutions Inc. The coaching practice did not replace the operational experience. It was built on top of it.",
     ctaHeadline: "Send the situation first.",
     ctaBody: "If it is a fit, 30 minutes follows. Direct from $400/hr, typical $500/hr.",
   },

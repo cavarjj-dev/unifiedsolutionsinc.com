@@ -281,7 +281,7 @@ button { font: inherit; color: inherit; }
  display: flex; align-items: center; justify-content: space-between;
  min-height: var(--topbar-h); gap: 1rem; padding: 0.65rem 0;
 }
-.brand { text-decoration: none; display: block; min-width: 0; }
+.brand { text-decoration: none; display: flex; align-items: center; gap: 10px; min-width: 0; }
 .brand-name {
  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
  color: var(--navy); letter-spacing: -0.02em; line-height: 1.2;
@@ -879,8 +879,11 @@ footer.cta p { color: var(--muted); max-width: 36rem; margin: 0 auto 1.75rem; fo
  <header class="topbar">
  <div class="wrap topbar-inner">
  <a class="brand" href="/">
+ <img src="/assets/mark-circle.png" alt="" width="36" height="36" style="width:36px;height:36px;display:block;flex-shrink:0">
+ <div>
  <div class="brand-name">Unified Solutions Inc.</div>
  <div class="brand-meta">ICF PCC · ACTC · Emeritus Educator &amp; ExecOnline Facilitator</div>
+ </div>
  </a>
  <div class="topbar-actions">
  <nav class="phase-nav" aria-label="Jump to phases">
