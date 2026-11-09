@@ -14,7 +14,7 @@
 
   <!-- ── SEO ───────────────────────────────────────────── -->
   <title>Julian Johnson | Senior Leaders in Adoption and Succession | Unified Solutions</title>
-  <meta name="description" content="I am brought in so busy leaders adopt the change, not perform another program. Succession Circle for the human passage of a seat change. Whole-person is how. ICF PCC / ACTC." />
+  <meta name="description" content="A safe place to look at what is real, then build your strategic playbook. The playbook comes from your thinking. Adoption and succession for senior leaders. ICF PCC / ACTC." />
   <meta name="keywords" content="whole-person catalyst, executive coaching, ICF PCC, team coaching, leader development, change management, workforce resiliency, HR tech, AI strategy, Julian Johnson, Unified Solutions" />
   <link rel="canonical" href="https://unifiedsolutionsinc.com/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -22,7 +22,7 @@
 
   <!-- ── Open Graph ────────────────────────────────────── -->
   <meta property="og:title" content="Julian Johnson | Senior Leaders in Adoption and Succession" />
-  <meta property="og:description" content="I am brought in so busy leaders adopt the change, not perform another program. Succession Circle for the human passage of a seat change. Whole-person is how." />
+  <meta property="og:description" content="A safe place to look at what is real, then build your strategic playbook. The playbook comes from your thinking." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://unifiedsolutionsinc.com/" />
   <meta property="og:image" content="https://unifiedsolutionsinc.com/assets/og-home.jpg" />
@@ -36,7 +36,7 @@
   <meta name="twitter:creator" content="@juliancjohnson" />
   <meta name="twitter:site" content="@unifiedsolutions" />
   <meta name="twitter:title" content="Julian Johnson | Senior Leaders in Adoption and Succession" />
-  <meta name="twitter:description" content="I am brought in so busy leaders adopt the change, not perform another program. Succession Circle for the seat change. Whole-person is how." />
+  <meta name="twitter:description" content="A safe place to look at what is real, then build your strategic playbook. The playbook comes from your thinking." />
   <meta name="twitter:image" content="https://unifiedsolutionsinc.com/assets/og-home.jpg" />
 
   <!-- ── Google Fonts preconnect ───────────────────────── -->
@@ -91,8 +91,14 @@
     img { max-width: 100%; height: auto; display: block; }
     /* iOS tap highlight */
     * { -webkit-tap-highlight-color: transparent; }
-    @media (max-width: 768px) {
-      /* Mobile nav adjustments handled inline via JS */
+    @media (max-width: 800px) {
+      html, body { overflow-x: hidden; }
+      .hero-section { align-items: flex-start !important; min-height: auto !important; padding-top: 88px !important; padding-bottom: 48px !important; overflow-x: hidden !important; }
+      .hero-inner { min-width: 0 !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }
+      .hero-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 36px !important; min-width: 0 !important; }
+      .hero-copy { min-width: 0 !important; max-width: calc(100vw - 48px) !important; }
+      .hero-copy h1, .hero-copy p { max-width: 100% !important; overflow-wrap: break-word; }
+      .hero-copy h1 { font-size: 34px !important; letter-spacing: -0.5px !important; }
     }
 
     /* Print handled in separate window — see openPrintReport() */
@@ -2843,14 +2849,14 @@ function HomePage() {
   return (
     <div>
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section style={{ background:`linear-gradient(160deg, ${C.navy} 0%, ${C.navyMid} 60%, ${C.navyLight} 100%)`, minHeight:"100vh", display:"flex", alignItems:"center", paddingTop:100, paddingBottom:80, position:"relative", overflow:"hidden" }}>
+      <section className="hero-section" style={{ background:`linear-gradient(160deg, ${C.navy} 0%, ${C.navyMid} 60%, ${C.navyLight} 100%)`, minHeight:"100vh", display:"flex", alignItems:"center", paddingTop:100, paddingBottom:80, position:"relative", overflow:"hidden" }}>
         {/* Decorative grain overlay */}
         <div style={{ position:"absolute", inset:0, backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`, opacity:0.4, pointerEvents:"none" }} />
         {/* Decorative gold line */}
         <div style={{ position:"absolute", top:0, left:64, width:1, height:"100%", background:`linear-gradient(to bottom, transparent, ${C.gold}40, transparent)` }} />
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", position:"relative", zIndex:1 }}>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:80, alignItems:"center" }}>
-            <div>
+        <div className="hero-inner" style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", position:"relative", zIndex:1 }}>
+          <div className="hero-grid" style={{ display:"grid", gridTemplateColumns:"1fr 400px", gap:80, alignItems:"center" }}>
+            <div className="hero-copy" style={{ maxWidth:"calc(100vw - 48px)" }}>
               <div style={{ fontFamily:DM, fontSize:13, letterSpacing:3, textTransform:"uppercase", color:C.gold, marginBottom:20 }}>
                 Adoption and succession · ICF PCC · ACTC · ExecOnline and Emeritus facilitator
               </div>
@@ -2864,8 +2870,16 @@ function HomePage() {
                 text={h.body}
                 onSave={v => updateContent("hero.body", v)}
                 tag="p"
-                style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 40px", maxWidth:540, fontWeight:300 }}
+                style={{ fontFamily:DM, fontSize:20, color:"rgba(255,255,255,0.72)", lineHeight:1.7, margin:"0 0 28px", maxWidth:540, fontWeight:300 }}
               />
+              <div style={{ margin:"0 0 32px", maxWidth:560 }}>
+                <div style={{ fontFamily:PF, fontSize:"clamp(48px, 6vw, 72px)", fontWeight:700, color:C.white, lineHeight:0.9, letterSpacing:-1 }}>17%</div>
+                <p style={{ fontFamily:DM, fontSize:18, color:"rgba(255,255,255,0.82)", lineHeight:1.5, margin:"14px 0 8px" }}>Only 17 percent of leaders feel confident they can see change coming and respond to it.</p>
+                <p style={{ fontFamily:DM, fontSize:14, color:"rgba(255,255,255,0.78)", margin:0, lineHeight:1.45 }}>
+                  <a href="https://www.ddi.com/about/media/global-leadership-forecast-2027" style={{ color:"rgba(255,255,255,0.72)", textDecoration:"underline" }} rel="noopener noreferrer">DDI, Global Leadership Forecast 2027</a>
+                  . 11,395 leaders. Not a result of this practice.
+                </p>
+              </div>
               <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
                 <Btn onClick={() => { window.track && window.track("book_call_click",{location:"hero"}); setPage("book"); }}>
                   Inquire
@@ -2879,7 +2893,7 @@ function HomePage() {
               </p>
             </div>
             {/* Right: Arc — vertical timeline */}
-            <div style={{ padding:"4px 0 4px 4px" }}>
+            <div className="hero-arc" style={{ padding:"4px 0 4px 4px" }}>
 
               {/* Section header with extending rule */}
               <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:36 }}>
@@ -3013,7 +3027,7 @@ function HomePage() {
                 Movement, not theater.
               </h2>
               <p style={{ fontFamily:DM, fontSize:18, color:C.text, lineHeight:1.75, margin:"0 0 22px", maxWidth:640 }}>
-                CHROs name the barrier leadership digital dexterity. The room experiences it as this: the tools arrived, the calendar is full, and playing it safe has become the strategy. I am brought in for that, and for the human passage of a seat change: who they are leaving, and who they become after. Whole-person is how the work runs. It is not the product.
+                The room experiences it as this: the tools arrived, the calendar is full, and playing it safe has become the strategy. I am brought in for that, and for the human passage of a seat change: who they are leaving, and who they become after. Whole-person is how the work runs. It is not the product.
               </p>
               <p style={{ fontFamily:DM, fontSize:16, color:C.muted, lineHeight:1.75, margin:"0 0 28px", maxWidth:640 }}>
                 That is the Whole-Person Catalyst stance: read the room, ask what is avoided, create movement in stuck systems. The leader carrying the P&L is the same human carrying the weight underneath it. Whole-person is how the work runs, not a soft category.
@@ -4764,8 +4778,8 @@ function Footer() {
 // ═══════════════════════════════════════════════════════
 const DEFAULT_CONTENT = {
   hero: {
-    headline: "Most senior leaders are performing a version of the role they haven't yet fully inhabited.",
-    body: "The tools are here and the seat is changing, but the calendar is full. I am brought in so busy leaders adopt the work, not perform another program. Adoption and succession are what I am brought in for. Whole-person is how we get there.",
+    headline: "A safe place to look at what is real, then build your strategic playbook.",
+    body: "The playbook comes from your thinking, and it still fits when things change. The tools are here and the seat is changing, but the calendar is full. Adoption and succession are what I am brought in for.",
   },
   about: {
     eyebrow: "ICF PCC · ACTC · Founder, Unified Solutions Inc.",
