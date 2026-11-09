@@ -99,6 +99,9 @@
       .hero-copy { min-width: 0 !important; max-width: calc(100vw - 48px) !important; }
       .hero-copy h1, .hero-copy p { max-width: 100% !important; overflow-wrap: break-word; }
       .hero-copy h1 { font-size: 34px !important; letter-spacing: -0.5px !important; }
+      .stats-bar { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px !important; }
+      .stats-bar .stat-num { font-size: 28px !important; }
+      .stats-bar .stat-label { font-size: 11px !important; letter-spacing: 0.4px !important; }
     }
 
     /* Print handled in separate window — see openPrintReport() */
@@ -2843,7 +2846,7 @@ function HomePage() {
   const [activeTesti, setActiveTesti] = useState(0);
   // Static finals only. Animated counters previously painted 0 when IO failed.
     // Never trade a polish animation for a trust failure on the gold bar.
-    const counts = { hrs:1500, clients:250, years:25, partners:9 };
+    const counts = { hrs:1500, clients:250, partners:9 };
 
   const h = content.hero;
   return (
@@ -2994,16 +2997,15 @@ function HomePage() {
 
       {/* ── STATS ────────────────────────────────────────── */}
       <section style={{ background:C.gold, padding:"40px 24px" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:24 }}>
+        <div className="stats-bar" style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24 }}>
           {[
             { val:counts.hrs, suffix:"+", label:"Coaching Hours" },
             { val:counts.clients, suffix:"+", label:"Leaders Coached" },
-            { val:counts.years, suffix:"+", label:"Years Experience" },
             { val:counts.partners, suffix:"", label:"Business School Partners" },
           ].map((s,i) => (
-            <div key={i} style={{ textAlign:"center" }}>
-              <div style={{ fontFamily:PF, fontSize:44, fontWeight:700, color:C.white, lineHeight:1 }}>{s.val}<span style={{ fontSize:24 }}>{s.suffix}</span></div>
-              <div style={{ fontFamily:DM, fontSize:13, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginTop:6 }}>{s.label}</div>
+            <div key={i} style={{ textAlign:"center", minWidth:0 }}>
+              <div className="stat-num" style={{ fontFamily:PF, fontSize:44, fontWeight:700, color:C.white, lineHeight:1 }}>{s.val}<span style={{ fontSize:24 }}>{s.suffix}</span></div>
+              <div className="stat-label" style={{ fontFamily:DM, fontSize:13, letterSpacing:2, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginTop:6 }}>{s.label}</div>
             </div>
           ))}
         </div>
