@@ -5,9 +5,13 @@ ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson
 
 ---
 
-## Deployment (GitHub Pages — live)
+## Deployment (Netlify — live)
 
-**Live host:** GitHub Pages (`Server: GitHub.com`) via repo `cavarjj-dev/unifiedsolutionsinc.com`, branch `main`, custom domain `unifiedsolutionsinc.com` (`CNAME`).
+**Live host:** Netlify. `unifiedsolutionsinc.com` resolves to `75.2.60.5`. The response `Server` header is `Netlify`. The site name is `unifiedsolutionsinc.netlify.app`.
+
+**Not the live host:** GitHub Pages still builds on every push to `main`. `cavarjj-dev.github.io/unifiedsolutionsinc.com` then redirects to the custom domain. A green Pages run is not a publish.
+
+**Why a push can sit:** as of 2026-11-09 this repo has zero GitHub webhooks. Netlify does not hear the push. Do not call the site live until `https://unifiedsolutionsinc.com` contains the change.
 
 1. Edit source files in this repo (root `index.html` is the SPA source of truth)
 2. After changing `index.html`, sync SPA route copies:
@@ -15,9 +19,14 @@ ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson
    python scripts/sync-spa-routes.py
    ```
 3. Commit and push to `main`
-4. GitHub Pages deploys automatically — no build step, no npm
+4. Netlify has to build that commit. If continuous deployment is linked, wait for that build. If it is not linked, the push does not change the public site.
+5. Proof: fetch the public URL. The change is in the body. The `Server` header is Netlify.
 
-**Why route copies exist:** GitHub Pages does not apply `netlify.toml` rewrites. Folders like `about/index.html` make `/about` return **HTTP 200** with the SPA. Without them, core routes return **HTTP 404** (only rescued in-browser via `404.html` + `sessionStorage`).
+**Restore the link:** in the Netlify site, Build & deploy, Continuous deployment, link `cavarjj-dev/unifiedsolutionsinc.com`, branch `main`. The build command is already in `netlify.toml`.
+
+**Agent access:** `netlify login --request` on this machine, or `NETLIFY_AUTH_TOKEN` in the local Hermes env. Never paste the token in Slack.
+
+**Why route copies exist:** GitHub Pages does not apply `netlify.toml` rewrites, and the route folders also keep `/about` and the other core paths as real files if a host serves the folder as-is. Folders like `about/index.html` make `/about` return **HTTP 200** with the SPA. Without them, those routes can return **HTTP 404** (only rescued in-browser via `404.html` + `sessionStorage`).
 
 **File structure:**
 ```
@@ -40,9 +49,9 @@ ICF PCC Executive Coach | Holistic Leadership Coaching | Julian Johnson
 └── assets/
 ```
 
-### Optional: Netlify
+### Netlify config
 
-`netlify.toml` remains valid if the site is ever pointed at Netlify again (200 rewrites + security headers). Until then it is **inert on the live host**. Prefer keeping it in sync (especially CSP `frame-src` for `youtube-nocookie.com`) so a host move does not break embeds.
+`netlify.toml` is the live host config: SPA rewrites, security headers, and the build command `python3 scripts/apply-hc-spa-patch.py`. Keep the CSP `frame-src` entry for `youtube-nocookie.com` in that file. Do not treat it as optional.
 
 ---
 
