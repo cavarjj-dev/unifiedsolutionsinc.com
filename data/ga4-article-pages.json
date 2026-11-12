@@ -3,21 +3,21 @@
   "source": "ga4",
   "range": "2026-07-21-today",
   "dayZero": "2026-07-21",
-  "fetchedAt": "2026-11-09T15:15:34.425518Z",
+  "fetchedAt": "2026-11-12T13:41:04.519277Z",
   "pages7d": [
     {
-      "path": "/articles/big-five-vs-hexaco/",
+      "path": "/articles/decision-making-under-pressure/",
       "views": 4,
       "users": 4,
       "sessions": 4,
-      "avgDurationSec": 26.09985525,
-      "engagementRate": 0.25
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
-      "path": "/articles/decision-making-under-pressure/",
+      "path": "/articles/big-five-vs-hexaco/",
       "views": 3,
       "users": 3,
-      "sessions": 3,
+      "sessions": 4,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
@@ -34,8 +34,8 @@
       "views": 2,
       "users": 2,
       "sessions": 2,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
+      "avgDurationSec": 6.0196115,
+      "engagementRate": 0.5
     },
     {
       "path": "/articles/executive-coaching-business-coaching-sports-coaching-consulting-differences/",
@@ -70,7 +70,7 @@
       "engagementRate": 0.0
     },
     {
-      "path": "/articles/what-i-witnessed-inside-fortune-500/",
+      "path": "/articles/tactical-leadership-war-zone-executive-coaching/",
       "views": 1,
       "users": 1,
       "sessions": 1,
@@ -80,28 +80,28 @@
   ],
   "pages28d": [
     {
-      "path": "/articles/decision-making-under-pressure/",
-      "views": 16,
-      "users": 16,
-      "sessions": 16,
-      "avgDurationSec": 0.6922950625,
-      "engagementRate": 0.0
+      "path": "/articles/big-five-vs-hexaco/",
+      "views": 17,
+      "users": 17,
+      "sessions": 19,
+      "avgDurationSec": 11.13896147368421,
+      "engagementRate": 0.21052631578947367
     },
     {
-      "path": "/articles/big-five-vs-hexaco/",
+      "path": "/articles/decision-making-under-pressure/",
       "views": 15,
       "users": 15,
-      "sessions": 16,
-      "avgDurationSec": 13.22751675,
-      "engagementRate": 0.25
+      "sessions": 15,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
     },
     {
       "path": "/articles/psychological-safety-leadership/",
-      "views": 10,
-      "users": 10,
-      "sessions": 10,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
+      "views": 9,
+      "users": 9,
+      "sessions": 9,
+      "avgDurationSec": 1.3376914444444443,
+      "engagementRate": 0.1111111111111111
     },
     {
       "path": "/articles/laser-focused-coaching/",
@@ -113,9 +113,9 @@
     },
     {
       "path": "/articles/personal-sustainability-leadership/",
-      "views": 4,
-      "users": 4,
-      "sessions": 5,
+      "views": 3,
+      "users": 3,
+      "sessions": 4,
       "avgDurationSec": 0.0,
       "engagementRate": 0.0
     },
@@ -168,6 +168,14 @@
       "engagementRate": 0.0
     },
     {
+      "path": "/articles/tactical-leadership-war-zone-executive-coaching/",
+      "views": 1,
+      "users": 1,
+      "sessions": 1,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
       "path": "/articles/what-i-witnessed-inside-fortune-500/",
       "views": 1,
       "users": 1,
@@ -179,19 +187,19 @@
   "pagesLifetime": [
     {
       "path": "/articles/decision-making-under-pressure/",
-      "views": 78,
-      "users": 70,
-      "sessions": 81,
-      "avgDurationSec": 26.98659837037037,
-      "engagementRate": 0.14814814814814814
+      "views": 81,
+      "users": 73,
+      "sessions": 84,
+      "avgDurationSec": 26.022791285714284,
+      "engagementRate": 0.14285714285714285
     },
     {
       "path": "/articles/big-five-vs-hexaco/",
-      "views": 31,
-      "users": 31,
-      "sessions": 32,
-      "avgDurationSec": 6.9640956875,
-      "engagementRate": 0.1875
+      "views": 33,
+      "users": 33,
+      "sessions": 35,
+      "avgDurationSec": 6.367173200000001,
+      "engagementRate": 0.17142857142857143
     },
     {
       "path": "/articles/laser-focused-coaching/",
@@ -202,20 +210,20 @@
       "engagementRate": 0.06451612903225806
     },
     {
+      "path": "/articles/psychological-safety-leadership/",
+      "views": 14,
+      "users": 14,
+      "sessions": 14,
+      "avgDurationSec": 4.098955785714286,
+      "engagementRate": 0.14285714285714285
+    },
+    {
       "path": "/articles/personal-sustainability-leadership/",
       "views": 13,
       "users": 12,
       "sessions": 14,
       "avgDurationSec": 0.3858270714285714,
       "engagementRate": 0.07142857142857142
-    },
-    {
-      "path": "/articles/psychological-safety-leadership/",
-      "views": 12,
-      "users": 12,
-      "sessions": 12,
-      "avgDurationSec": 3.7788465,
-      "engagementRate": 0.08333333333333333
     },
     {
       "path": "/articles/adoption-is-not-a-course/",
@@ -290,6 +298,14 @@
       "engagementRate": 0.0
     },
     {
+      "path": "/articles/tactical-leadership-war-zone-executive-coaching/",
+      "views": 2,
+      "users": 2,
+      "sessions": 2,
+      "avgDurationSec": 0.0,
+      "engagementRate": 0.0
+    },
+    {
       "path": "/articles/agile-transformation-leading-change/",
       "views": 1,
       "users": 1,
@@ -315,14 +331,6 @@
     },
     {
       "path": "/articles/kolb-learning-cycle-leadership/",
-      "views": 1,
-      "users": 1,
-      "sessions": 1,
-      "avgDurationSec": 0.0,
-      "engagementRate": 0.0
-    },
-    {
-      "path": "/articles/tactical-leadership-war-zone-executive-coaching/",
       "views": 1,
       "users": 1,
       "sessions": 1,
